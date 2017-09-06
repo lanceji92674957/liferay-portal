@@ -118,13 +118,13 @@ public class JGroupsClusterChannel implements ClusterChannel {
 	}
 
 	@Override
-	public String getClusterName() {
-		return _clusterName;
+	public String getClusterLogicName() {
+		return _clusterLogicName;
 	}
 
 	@Override
-	public String getClusterLogicName() {
-		return _clusterLogicName;
+	public String getClusterName() {
+		return _clusterName;
 	}
 
 	@Override
@@ -197,8 +197,8 @@ public class JGroupsClusterChannel implements ClusterChannel {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JGroupsClusterChannel.class);
 
-	private final String _clusterName;
 	private final String _clusterLogicName;
+	private final String _clusterName;
 	private final ClusterReceiver _clusterReceiver;
 	private final JChannel _jChannel;
 	private final Address _localAddress;
