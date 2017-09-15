@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -151,6 +152,7 @@ public class ClusterLinkImpl implements ClusterLink {
 
 		String clusterPropertyPrefix;
 		String propertyPrefix;
+		String[] osgiProperties;
 
 		switch (propertyType) {
 			case CHANNEL_LOGIC_NAME:
@@ -158,17 +160,20 @@ public class ClusterLinkImpl implements ClusterLink {
 					ClusterPropsKeys.CHANNEL_LOGIC_NAME_TRANSPORT_PREFIX;
 				propertyPrefix =
 					PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_TRANSPORT;
+				osgiProperties = clusterLinkConfiguration.channelLogicNames();
 				break;
 			case CHANNEL_PROPERTIES:
 				clusterPropertyPrefix =
 					ClusterPropsKeys.CHANNEL_PROPERTIES_TRANSPORT_PREFIX;
 				propertyPrefix =
 					PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT;
+				osgiProperties = clusterLinkConfiguration.channelProperties();
 				break;
 			case CHANNEL_NAME:
 				clusterPropertyPrefix =
 					ClusterPropsKeys.CHANNEL_NAME_TRANSPORT_PREFIX;
 				propertyPrefix = PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT;
+				osgiProperties = clusterLinkConfiguration.channelNames();
 				break;
 			default:
 				throw new IllegalArgumentException(
@@ -194,6 +199,16 @@ public class ClusterLinkImpl implements ClusterLink {
 
 				result.put((String)entry.getKey(), (String)entry.getValue());
 			}
+		}
+
+		int channelCount = 0;
+
+		for (String osgiProperty : osgiProperties) {
+			if (Validator.isNotNull(osgiProperty)) {
+				result.put(StringPool.PERIOD + channelCount, osgiProperty);
+			}
+
+			channelCount++;
 		}
 
 		return result;
