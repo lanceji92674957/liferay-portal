@@ -246,6 +246,61 @@ public class ClusterLinkImpl implements ClusterLink {
 		return channelPropertiesStrings;
 	}
 
+	protected Map<String, String> getChannelProperty(
+		Map<String, Object> properties, PropertyType propertyType) {
+
+		Map<String, String> result = new HashMap<>();
+
+		String clusterPropertyPrefix;
+		String propertyPrefix;
+
+		switch (propertyType) {
+			case CHANNEL_LOGIC_NAME:
+				clusterPropertyPrefix =
+					ClusterPropsKeys.CHANNEL_LOGIC_NAME_TRANSPORT_PREFIX;
+				propertyPrefix =
+					PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_TRANSPORT;
+				break;
+			case CHANNEL_PROPERTIES:
+				clusterPropertyPrefix =
+					ClusterPropsKeys.CHANNEL_PROPERTIES_TRANSPORT_PREFIX;
+				propertyPrefix =
+					PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT;
+				break;
+			case CHANNEL_NAME:
+				clusterPropertyPrefix =
+					ClusterPropsKeys.CHANNEL_NAME_TRANSPORT_PREFIX;
+				propertyPrefix = PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT;
+				break;
+			default:
+				throw new IllegalArgumentException(
+					"Unknown channel property type: " + propertyType);
+		}
+
+		for (Entry<String, Object> entry : properties.entrySet()) {
+			String key = entry.getKey();
+
+			if (key.startsWith(clusterPropertyPrefix)) {
+				result.put(
+					key.substring(clusterPropertyPrefix.length() + 1),
+					(String)entry.getValue());
+			}
+		}
+
+		if (result.isEmpty()) {
+			Properties channelProperties = _props.getProperties(
+				propertyPrefix, true);
+
+			for (Map.Entry<Object, Object> entry :
+					channelProperties.entrySet()) {
+
+				result.put((String)entry.getKey(), (String)entry.getValue());
+			}
+		}
+
+		return result;
+	}
+
 	protected ExecutorService getExecutorService() {
 		return _executorService;
 	}
@@ -395,5 +450,10 @@ public class ClusterLinkImpl implements ClusterLink {
 	private MessageBus _messageBus;
 	private PortalExecutorManager _portalExecutorManager;
 	private Props _props;
+
+	private enum PropertyType {
+
+		CHANNEL_LOGIC_NAME, CHANNEL_PROPERTIES, CHANNEL_NAME
+	};
 
 }
