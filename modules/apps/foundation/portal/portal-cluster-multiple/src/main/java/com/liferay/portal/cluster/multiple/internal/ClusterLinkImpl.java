@@ -14,7 +14,9 @@
 
 package com.liferay.portal.cluster.multiple.internal;
 
+import com.liferay.portal.cluster.multiple.configuration.ClusterLinkConfiguration;
 import com.liferay.portal.cluster.multiple.internal.constants.ClusterPropsKeys;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterLink;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -96,18 +99,24 @@ public class ClusterLinkImpl implements ClusterLink {
 			_props.get(PropsKeys.CLUSTER_LINK_ENABLED));
 
 		if (_enabled) {
+			clusterLinkConfiguration = ConfigurableUtil.createConfigurable(
+				ClusterLinkConfiguration.class, properties);
+
 			initialize(
 				getChannelSettings(
 					properties,
 					ClusterPropsKeys.CHANNEL_LOGIC_NAME_TRANSPORT_PREFIX,
-					PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_TRANSPORT),
+					PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_TRANSPORT,
+					clusterLinkConfiguration.channelLogicNames()),
 				getChannelSettings(
 					properties,
 					ClusterPropsKeys.CHANNEL_PROPERTIES_TRANSPORT_PREFIX,
-					PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT),
+					PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT,
+					clusterLinkConfiguration.channelProperties()),
 				getChannelSettings(
 					properties, ClusterPropsKeys.CHANNEL_NAME_TRANSPORT_PREFIX,
-					PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT));
+					PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT,
+					clusterLinkConfiguration.channelNames()));
 		}
 	}
 
@@ -149,7 +158,7 @@ public class ClusterLinkImpl implements ClusterLink {
 
 	protected Map<String, String> getChannelSettings(
 		Map<String, Object> properties, String channelPropertyPrefix,
-		String propertyPrefix) {
+		String propertyPrefix, String[] osgiSettings) {
 
 		Map<String, String> channelSettings = new HashMap<>();
 
@@ -173,6 +182,17 @@ public class ClusterLinkImpl implements ClusterLink {
 				channelSettings.put(
 					(String)entry.getKey(), (String)entry.getValue());
 			}
+		}
+
+		int channelCount = 0;
+
+		for (String osgiProperty : osgiSettings) {
+			if (Validator.isNotNull(osgiProperty)) {
+				channelSettings.put(
+					StringPool.PERIOD + channelCount, osgiProperty);
+			}
+
+			channelCount++;
 		}
 
 		return channelSettings;
@@ -311,6 +331,8 @@ public class ClusterLinkImpl implements ClusterLink {
 	protected void unsetMessageBus(MessageBus messageBus) {
 		_messageBus = null;
 	}
+
+	protected volatile ClusterLinkConfiguration clusterLinkConfiguration;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterLinkImpl.class);
