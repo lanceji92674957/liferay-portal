@@ -238,6 +238,37 @@ public class ClusterLinkImpl implements ClusterLink {
 		return channelPropertiesStrings;
 	}
 
+	protected Map<String, String> getChannelSettings(
+		Map<String, Object> properties, String channelPropertyPrefix,
+		String propertyPrefix) {
+
+		Map<String, String> channelSettings = new HashMap<>();
+
+		for (Entry<String, Object> entry : properties.entrySet()) {
+			String key = entry.getKey();
+
+			if (key.startsWith(channelPropertyPrefix)) {
+				channelSettings.put(
+					key.substring(channelPropertyPrefix.length() + 1),
+					(String)entry.getValue());
+			}
+		}
+
+		if (channelSettings.isEmpty()) {
+			Properties channelProperties = _props.getProperties(
+				propertyPrefix, true);
+
+			for (Map.Entry<Object, Object> entry :
+					channelProperties.entrySet()) {
+
+				channelSettings.put(
+					(String)entry.getKey(), (String)entry.getValue());
+			}
+		}
+
+		return channelSettings;
+	}
+
 	protected ExecutorService getExecutorService() {
 		return _executorService;
 	}
