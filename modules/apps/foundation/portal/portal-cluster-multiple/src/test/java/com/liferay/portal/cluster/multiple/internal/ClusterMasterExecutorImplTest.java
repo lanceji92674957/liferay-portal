@@ -802,6 +802,22 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 					return false;
 				}
 
+				@Override
+				public String channelLogicName() {
+					if(_log.isInfoEnabled())
+					return null;
+				}
+
+				@Override
+				public String channelName() {
+					return null;
+				}
+
+				@Override
+				public String channelProperties() {
+					return null;
+				}
+
 			};
 
 			setPortalExecutorManager(new MockPortalExecutorManager());
