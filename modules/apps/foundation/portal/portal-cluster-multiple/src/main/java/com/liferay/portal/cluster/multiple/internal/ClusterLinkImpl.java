@@ -45,6 +45,7 @@ import java.util.concurrent.ExecutorService;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -275,6 +276,15 @@ public class ClusterLinkImpl implements ClusterLink {
 
 		for (ClusterReceiver clusterReceiver : _clusterReceivers) {
 			clusterReceiver.openLatch();
+		}
+	}
+
+	@Modified
+	protected synchronized void modified(Map<String, Object> properties) {
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Channel configuration can not be changed after setup." +
+					"Changes will be applied after restart");
 		}
 	}
 
