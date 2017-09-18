@@ -245,15 +245,18 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		String channelLogicName = getChannelSetting(
 			componentContext.getProperties(),
 			ClusterPropsKeys.CHANNEL_LOGIC_NAME_CONTROL,
-			PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_CONTROL);
+			PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_CONTROL,
+			clusterExecutorConfiguration.channelLogicName());
 		String channelPropertiesString = getChannelSetting(
 			componentContext.getProperties(),
 			ClusterPropsKeys.CHANNEL_PROPERTIES_CONTROL,
-			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL);
+			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL,
+			clusterExecutorConfiguration.channelProperties());
 		String channelName = getChannelSetting(
 			componentContext.getProperties(),
 			ClusterPropsKeys.CHANNEL_NAME_CONTROL,
-			PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL);
+			PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL,
+			clusterExecutorConfiguration.channelName());
 
 		initialize(channelLogicName, channelPropertiesString, channelName);
 
@@ -371,7 +374,11 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 
 	protected String getChannelSetting(
 		Dictionary<String, Object> properties, String channelPropsKey,
-		String propsKey) {
+		String propsKey, String osgiSetting) {
+
+		if (Validator.isNotNull(osgiSetting)) {
+			return osgiSetting;
+		}
 
 		String channelSetting = GetterUtil.getString(
 			properties.get(channelPropsKey));
