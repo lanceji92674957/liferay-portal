@@ -16,13 +16,13 @@ package com.liferay.portal.tools.deploy;
 
 import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.plugin.PluginPackage;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolDependencies;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,10 @@ public class ThemeDeployer extends BaseDeployer {
 			}
 		}
 
-		StreamUtil.cleanUp(new ThemeDeployer(wars, jars));
+		try (ThemeDeployer temp = new ThemeDeployer(wars, jars)) {
+		}
+		catch (IOException ioe) {
+		}
 	}
 
 	public ThemeDeployer() {
