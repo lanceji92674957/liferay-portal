@@ -219,7 +219,9 @@ public class PortletResponseUtil {
 		throws IOException {
 
 		if (mimeResponse.isCommitted()) {
-			StreamUtil.cleanUp(inputStream);
+			if (inputStream != null) {
+				inputStream.close();
+			}
 
 			return;
 		}

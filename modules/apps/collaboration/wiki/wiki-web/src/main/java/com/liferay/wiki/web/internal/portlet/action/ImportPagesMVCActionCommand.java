@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.ProgressTrackerThreadLocal;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.service.WikiNodeService;
@@ -116,7 +115,9 @@ public class ImportPagesMVCActionCommand extends BaseMVCActionCommand {
 		}
 		finally {
 			for (InputStream inputStream : inputStreams) {
-				StreamUtil.cleanUp(inputStream);
+				if (inputStream != null) {
+					inputStream.close();
+				}
 			}
 		}
 
