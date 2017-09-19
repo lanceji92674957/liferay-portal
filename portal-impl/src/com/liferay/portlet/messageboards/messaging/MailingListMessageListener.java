@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.PermissionCheckerUtil;
 import com.liferay.portlet.messageboards.util.MBMailMessage;
@@ -256,7 +255,9 @@ public class MailingListMessageListener extends BaseMessageListener {
 
 				InputStream inputStream = inputStreamOVP.getValue();
 
-				StreamUtil.cleanUp(inputStream);
+				if (inputStream != null) {
+					inputStream.close();
+				}
 			}
 		}
 	}

@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
@@ -436,7 +435,9 @@ public class MBMessageStagedModelDataHandler
 
 				InputStream inputStream = inputStreamOVP.getValue();
 
-				StreamUtil.cleanUp(inputStream);
+				if (inputStream != null) {
+					inputStream.close();
+				}
 			}
 		}
 	}
