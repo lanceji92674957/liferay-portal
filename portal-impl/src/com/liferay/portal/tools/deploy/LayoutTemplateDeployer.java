@@ -15,8 +15,9 @@
 package com.liferay.portal.tools.deploy;
 
 import com.liferay.portal.kernel.model.Plugin;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.tools.ToolDependencies;
+
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,11 @@ public class LayoutTemplateDeployer extends BaseDeployer {
 			}
 		}
 
-		StreamUtil.cleanUp(new LayoutTemplateDeployer(wars, jars));
+		try (LayoutTemplateDeployer temp =
+				new LayoutTemplateDeployer(wars, jars)) {
+		}
+		catch (IOException ioe) {
+		}
 	}
 
 	public LayoutTemplateDeployer() {
