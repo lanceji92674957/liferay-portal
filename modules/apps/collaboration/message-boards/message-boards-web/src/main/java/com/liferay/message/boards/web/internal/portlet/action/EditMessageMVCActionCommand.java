@@ -72,7 +72,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -542,7 +541,9 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 				InputStream inputStream = inputStreamOVP.getValue();
 
-				StreamUtil.cleanUp(inputStream);
+				if (inputStream != null) {
+					inputStream.close();
+				}
 			}
 		}
 	}
