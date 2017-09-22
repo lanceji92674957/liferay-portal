@@ -377,7 +377,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			groupId, themeDisplay.getUserId(), folderName);
 
 		try (InputStream inputStream = _dlFileEntryLocalService.getFileAsStream(
-				fileEntry.getFileEntryId(), fileEntry.getVersion(), false);) {
+				fileEntry.getFileEntryId(), fileEntry.getVersion(), false)) {
 
 			MissingReferences missingReferences = validateFile(
 				actionRequest, inputStream);

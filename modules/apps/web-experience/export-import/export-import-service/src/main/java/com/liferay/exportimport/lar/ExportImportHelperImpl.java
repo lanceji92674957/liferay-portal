@@ -557,8 +557,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		ManifestSummary manifestSummary = null;
 
 		try (InputStream inputStream = _dlFileEntryLocalService.getFileAsStream(
-				fileEntry.getFileEntryId(), fileEntry.getVersion(), false))
-		{
+				fileEntry.getFileEntryId(), fileEntry.getVersion(), false)) {
+
 			FileUtil.write(file, inputStream);
 
 			Group group = _groupLocalService.getGroup(groupId);
