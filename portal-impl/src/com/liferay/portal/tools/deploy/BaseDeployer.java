@@ -116,9 +116,15 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			}
 		}
 
-		try (BaseDeployer temp = new BaseDeployer(wars, jars)) {
+		BaseDeployer baseDeployer = new BaseDeployer(wars, jars);
+
+		try {
+			baseDeployer.close();
 		}
 		catch (IOException ioe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioe, ioe);
+			}
 		}
 	}
 

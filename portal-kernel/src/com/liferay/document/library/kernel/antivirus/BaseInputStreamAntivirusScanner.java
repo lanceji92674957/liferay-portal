@@ -15,6 +15,8 @@
 package com.liferay.document.library.kernel.antivirus;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,9 +44,15 @@ public abstract class BaseInputStreamAntivirusScanner
 			throw new SystemException("Unable to scan file", fnfe);
 		}
 		catch (IOException ioe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioe, ioe);
+			}
 		}
 	}
 
 	private static final boolean _ACTIVE = true;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseInputStreamAntivirusScanner.class);
 
 }

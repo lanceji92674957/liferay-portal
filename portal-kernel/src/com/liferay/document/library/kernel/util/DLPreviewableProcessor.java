@@ -572,6 +572,9 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 				binPathName);
 		}
 		catch (IOException ioe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioe, ioe);
+			}
 		}
 	}
 

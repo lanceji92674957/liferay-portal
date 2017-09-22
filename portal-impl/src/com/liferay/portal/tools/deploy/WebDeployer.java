@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.deploy;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.tools.ToolDependencies;
@@ -44,9 +46,15 @@ public class WebDeployer extends BaseDeployer {
 			}
 		}
 
-		try (WebDeployer temp = new WebDeployer(wars, jars)) {
+		WebDeployer webDeployer = new WebDeployer(wars, jars);
+
+		try {
+			webDeployer.close();
 		}
 		catch (IOException ioe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioe, ioe);
+			}
 		}
 	}
 
@@ -71,5 +79,7 @@ public class WebDeployer extends BaseDeployer {
 	public String getPluginType() {
 		return Plugin.TYPE_WEB;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(WebDeployer.class);
 
 }

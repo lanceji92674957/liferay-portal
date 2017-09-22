@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.deploy;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -64,9 +66,15 @@ public class PortletDeployer extends BaseDeployer {
 			}
 		}
 
-		try (PortletDeployer temp = new PortletDeployer(wars, jars)) {
+		PortletDeployer portletDeployer = new PortletDeployer(wars, jars);
+
+		try {
+			portletDeployer.close();
 		}
 		catch (IOException ioe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioe, ioe);
+			}
 		}
 	}
 
@@ -271,5 +279,8 @@ public class PortletDeployer extends BaseDeployer {
 
 		FileUtil.write(portletXML, content);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortletDeployer.class);
 
 }

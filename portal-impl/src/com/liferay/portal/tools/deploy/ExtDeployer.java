@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.deploy;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.tools.ToolDependencies;
 
@@ -44,9 +46,15 @@ public class ExtDeployer extends BaseDeployer {
 			}
 		}
 
-		try (ExtDeployer temp = new ExtDeployer(wars, jars)) {
+		ExtDeployer extDeployer = new ExtDeployer(wars, jars);
+
+		try {
+			extDeployer.close();
 		}
 		catch (IOException ioe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioe, ioe);
+			}
 		}
 	}
 
@@ -61,5 +69,7 @@ public class ExtDeployer extends BaseDeployer {
 	public String getPluginType() {
 		return Plugin.TYPE_EXT;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(ExtDeployer.class);
 
 }
