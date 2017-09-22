@@ -546,7 +546,9 @@ public class ServletResponseUtil {
 		throws IOException {
 
 		if (response.isCommitted()) {
-			StreamUtil.cleanUp(inputStream);
+			if (inputStream != null) {
+				inputStream.close();
+			}
 
 			return;
 		}

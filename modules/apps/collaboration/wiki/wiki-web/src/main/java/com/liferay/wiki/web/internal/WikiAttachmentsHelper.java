@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.trash.service.TrashEntryService;
 import com.liferay.wiki.service.WikiPageService;
 
@@ -96,7 +95,9 @@ public class WikiAttachmentsHelper {
 
 				InputStream inputStream = inputStreamOVP.getValue();
 
-				StreamUtil.cleanUp(inputStream);
+				if (inputStream != null) {
+					inputStream.close();
+				}
 			}
 		}
 	}

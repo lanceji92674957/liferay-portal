@@ -33,13 +33,13 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.HashMap;
@@ -108,14 +108,11 @@ public class KnowledgeBaseUtil {
 		return kbArticle.getKbFolderId();
 	}
 
-	public static String getMimeType(byte[] bytes, String fileName) {
-		InputStream inputStream = new UnsyncByteArrayInputStream(bytes);
+	public static String getMimeType(byte[] bytes, String fileName)
+		throws IOException {
 
-		try {
+		try (InputStream inputStream = new UnsyncByteArrayInputStream(bytes)) {
 			return MimeTypesUtil.getContentType(inputStream, fileName);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
 		}
 	}
 

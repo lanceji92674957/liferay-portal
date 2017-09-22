@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Element;
@@ -44,6 +43,7 @@ import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -251,21 +251,20 @@ public class LayoutSetPrototypeStagedModelDataHandler
 		throws Exception {
 
 		File file = null;
-		InputStream inputStream = null;
 
 		try {
 			file = SitesUtil.exportLayoutSetPrototype(
 				layoutSetPrototype, new ServiceContext());
 
-			inputStream = new FileInputStream(file);
+			try (InputStream inputStream = new FileInputStream(file)) {
+				String layoutSetPrototypeLARPath =
+					ExportImportPathUtil.getModelPath(
+						layoutSetPrototype,
+						getLayoutSetPrototypeLARFileName(layoutSetPrototype));
 
-			String layoutSetPrototypeLARPath =
-				ExportImportPathUtil.getModelPath(
-					layoutSetPrototype,
-					getLayoutSetPrototypeLARFileName(layoutSetPrototype));
-
-			portletDataContext.addZipEntry(
-				layoutSetPrototypeLARPath, inputStream);
+				portletDataContext.addZipEntry(
+					layoutSetPrototypeLARPath, inputStream);
+			}
 
 			List<Layout> layoutSetPrototypeLayouts =
 				_layoutLocalService.getLayouts(
@@ -282,8 +281,6 @@ public class LayoutSetPrototypeStagedModelDataHandler
 			}
 		}
 		finally {
-			StreamUtil.cleanUp(inputStream);
-
 			if (file != null) {
 				file.delete();
 			}
@@ -312,22 +309,18 @@ public class LayoutSetPrototypeStagedModelDataHandler
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		InputStream inputStream = null;
+		String layoutSetPrototypeLARPath = ExportImportPathUtil.getModelPath(
+			layoutSetPrototype,
+			getLayoutSetPrototypeLARFileName(layoutSetPrototype));
 
-		try {
-			String layoutSetPrototypeLARPath =
-				ExportImportPathUtil.getModelPath(
-					layoutSetPrototype,
-					getLayoutSetPrototypeLARFileName(layoutSetPrototype));
-
-			inputStream = portletDataContext.getZipEntryAsInputStream(
-				layoutSetPrototypeLARPath);
+		try (InputStream inputStream =
+				portletDataContext.getZipEntryAsInputStream(
+					layoutSetPrototypeLARPath)) {
 
 			SitesUtil.importLayoutSetPrototype(
 				importedLayoutSetPrototype, inputStream, serviceContext);
 		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
+		catch (IOException ioe) {
 		}
 	}
 
