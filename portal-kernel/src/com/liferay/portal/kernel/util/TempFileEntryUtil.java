@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -59,9 +58,6 @@ public class TempFileEntryUtil {
 		try (InputStream inputStream = new FileInputStream(file)) {
 			return addTempFileEntry(
 				groupId, userId, folderName, fileName, inputStream, mimeType);
-		}
-		catch (FileNotFoundException fnfe) {
-			throw new PortalException(fnfe);
 		}
 		catch (IOException ioe) {
 			throw new PortalException(ioe);
