@@ -2412,8 +2412,75 @@ to version 2.2.4.
 ## 3.4.60 - 2017-09-18
 
 ### Changed
+- [LPS-74315]: Update the [Liferay CSS Builder] dependency to version 1.1.2.
+- [LPS-74315]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
+version 2.1.2.
 - [LPS-74752]: Update the default value of the `jsModuleConfigGenerator.version`
 property to `1.3.3`.
+
+## 3.4.61 - 2017-09-18
+
+### Changed
+- [LPS-74637]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.2.5.
+- [LPS-74637]: Update the [Liferay Source Formatter] dependency to version
+1.0.463.
+
+## 3.4.62 - 2017-09-18
+
+### Changed
+- [LPS-74770]: Update the [Liferay Gradle Plugins Gulp] dependency to version
+2.0.19.
+- [LPS-74770]: Update the [Liferay Gradle Plugins JS Module Config Generator]
+dependency to version 2.1.19.
+- [LPS-74770]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
+version 2.3.19.
+
+## 3.4.63 - 2017-09-19
+
+### Changed
+- [LPS-74657]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.2.6.
+- [LPS-74657]: Update the [Liferay Source Formatter] dependency to version
+1.0.464.
+
+## 3.4.64 - 2017-09-19
+
+### Changed
+- [LPS-74789]: Update the [Liferay CSS Builder] dependency to version 1.1.3.
+- [LPS-74789]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
+version 2.1.3.
+
+## 3.4.65 - 2017-09-19
+
+### Changed
+- [LPS-74657]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.2.7.
+- [LPS-74657]: Update the [Liferay Source Formatter] dependency to version
+1.0.465.
+
+## 3.4.66 - 2017-09-19
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.2.8.
+- [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
+1.0.466.
+
+## 3.4.67 - 2017-09-19
+
+### Changed
+- [LPS-74738]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.2.9.
+- [LPS-74738]: Update the [Liferay Source Formatter] dependency to version
+1.0.467.
+
+## 3.4.68 - 2017-09-21
+
+### Changed
+- [LPS-71117]: Update the [Liferay Gradle Plugins Test Integration] dependency
+to version 2.1.1.
+- [LPS-73070]: Set default Node.js version to 8.4.0.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -2542,6 +2609,7 @@ property to `1.3.3`.
 [LPS-70941]: https://issues.liferay.com/browse/LPS-70941
 [LPS-71005]: https://issues.liferay.com/browse/LPS-71005
 [LPS-71048]: https://issues.liferay.com/browse/LPS-71048
+[LPS-71117]: https://issues.liferay.com/browse/LPS-71117
 [LPS-71118]: https://issues.liferay.com/browse/LPS-71118
 [LPS-71164]: https://issues.liferay.com/browse/LPS-71164
 [LPS-71222]: https://issues.liferay.com/browse/LPS-71222
@@ -2578,6 +2646,7 @@ property to `1.3.3`.
 [LPS-72868]: https://issues.liferay.com/browse/LPS-72868
 [LPS-72914]: https://issues.liferay.com/browse/LPS-72914
 [LPS-73058]: https://issues.liferay.com/browse/LPS-73058
+[LPS-73070]: https://issues.liferay.com/browse/LPS-73070
 [LPS-73124]: https://issues.liferay.com/browse/LPS-73124
 [LPS-73147]: https://issues.liferay.com/browse/LPS-73147
 [LPS-73148]: https://issues.liferay.com/browse/LPS-73148
@@ -2614,6 +2683,7 @@ property to `1.3.3`.
 [LPS-74269]: https://issues.liferay.com/browse/LPS-74269
 [LPS-74278]: https://issues.liferay.com/browse/LPS-74278
 [LPS-74314]: https://issues.liferay.com/browse/LPS-74314
+[LPS-74315]: https://issues.liferay.com/browse/LPS-74315
 [LPS-74328]: https://issues.liferay.com/browse/LPS-74328
 [LPS-74343]: https://issues.liferay.com/browse/LPS-74343
 [LPS-74345]: https://issues.liferay.com/browse/LPS-74345
@@ -2627,5 +2697,8 @@ property to `1.3.3`.
 [LPS-74614]: https://issues.liferay.com/browse/LPS-74614
 [LPS-74637]: https://issues.liferay.com/browse/LPS-74637
 [LPS-74657]: https://issues.liferay.com/browse/LPS-74657
+[LPS-74738]: https://issues.liferay.com/browse/LPS-74738
 [LPS-74752]: https://issues.liferay.com/browse/LPS-74752
+[LPS-74770]: https://issues.liferay.com/browse/LPS-74770
+[LPS-74789]: https://issues.liferay.com/browse/LPS-74789
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023
