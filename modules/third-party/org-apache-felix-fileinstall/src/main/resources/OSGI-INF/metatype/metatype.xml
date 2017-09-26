@@ -19,7 +19,7 @@ under the License.
 -->
 <metatype:MetaData xmlns:metatype="http://www.osgi.org/xmlns/metatype/v1.0.0">
 	<OCD description="FileInstaller"
-	   name="org.apache.felix.fileinstall"
+	   name="Apache Felix File Install"
 	   id="org.apache.felix.fileinstall">
 
 		<AD default="load"  id="felix.fileinstall.dir" name="Poll directory" required="true" type="String" />
