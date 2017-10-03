@@ -140,6 +140,7 @@ public class ClusterLinkImpl implements ClusterLink {
 
 	protected Map<String, String> getChannelSettings(String propertyPrefix) {
 		Map<String, String> channelSettings = new HashMap<>();
+
 		Properties channelProperties = _props.getProperties(
 			propertyPrefix, true);
 

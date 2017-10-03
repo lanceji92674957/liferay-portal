@@ -73,15 +73,12 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 			return;
 		}
 
-		String[] channelSystemPropertiesArray = _props.getArray(
-			PropsKeys.CLUSTER_LINK_CHANNEL_SYSTEM_PROPERTIES);
+		initSystemProperties(
+			_props.getArray(PropsKeys.CLUSTER_LINK_CHANNEL_SYSTEM_PROPERTIES));
 
-		initSystemProperties(channelSystemPropertiesArray);
-
-		String autodetectAddress = GetterUtil.getString(
-			_props.get(PropsKeys.CLUSTER_LINK_AUTODETECT_ADDRESS));
-
-		initBindAddress(autodetectAddress);
+		initBindAddress(
+			GetterUtil.getString(
+				_props.get(PropsKeys.CLUSTER_LINK_AUTODETECT_ADDRESS)));
 	}
 
 	protected void initBindAddress(String autodetectAddress) {

@@ -240,14 +240,10 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 			ClusterExecutorConfiguration.class,
 			componentContext.getProperties());
 
-		String channelLogicName = _props.get(
-			PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_CONTROL);
-		String channelPropertiesString = _props.get(
-			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL);
-		String channelName = _props.get(
-			PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL);
-
-		initialize(channelLogicName, channelPropertiesString, channelName);
+		initialize(
+			_props.get(PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_CONTROL),
+			_props.get(PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL),
+			_props.get(PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL));
 
 		BundleContext bundleContext = componentContext.getBundleContext();
 
