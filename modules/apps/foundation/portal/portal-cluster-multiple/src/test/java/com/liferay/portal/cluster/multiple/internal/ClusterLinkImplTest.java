@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
 import java.io.Serializable;
@@ -327,37 +326,29 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 				public Properties getProperties(
 					String prefix, boolean removePrefix) {
 
-					String resultKeyPrefix = null;
-
-					if (removePrefix) {
-						resultKeyPrefix = StringPool.PERIOD;
-					}
-					else {
-						resultKeyPrefix = prefix + StringPool.PERIOD;
-					}
-
 					Properties properties = new Properties();
-					String logicNamePrefix =
-						PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_TRANSPORT;
-					String namePrefix =
-						PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT;
-					String propertyPrefix =
-						PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT;
 
 					for (int i = 0; i < channels; i++) {
-						if (StringUtil.equals(prefix, logicNamePrefix)) {
+						if (PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_TRANSPORT.
+								equals(prefix)) {
+
 							properties.put(
-								resultKeyPrefix + i,
+								StringPool.PERIOD + i,
 								"test-channel-logic-name-transport-" + i);
 						}
-						else if (StringUtil.equals(prefix, propertyPrefix)) {
+						else if (PropsKeys.
+									CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT.
+										equals(prefix)) {
+
 							properties.put(
-								resultKeyPrefix + i,
+								StringPool.PERIOD + i,
 								"test-channel-properties-transport-" + i);
 						}
-						else if (StringUtil.equals(prefix, namePrefix)) {
+						else if (PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT.
+									equals(prefix)) {
+
 							properties.put(
-								resultKeyPrefix + i,
+								StringPool.PERIOD + i,
 								"test-channel-name-transport-" + i);
 						}
 					}
