@@ -158,7 +158,7 @@ public class ConfigurationLocalizationTest {
 					null) {
 
 			sb.append("\n\t\tObjectClassDefinition {name: ");
-			sb.append(extendedObjectClassDefinition.getName());
+			sb.append(extendedObjectClassDefinition.getID());
 			sb.append("}");
 		}
 
@@ -166,14 +166,12 @@ public class ConfigurationLocalizationTest {
 				extendedObjectClassDefinition.getAttributeDefinitions(
 					ObjectClassDefinition.ALL)) {
 
-			String attributeDefinitionName =
-				extendedAttributeDefinition.getName();
-
 			if (ResourceBundleUtil.getString(
-					resourceBundle, attributeDefinitionName) == null) {
+					resourceBundle, extendedAttributeDefinition.getName()) ==
+						null) {
 
 				sb.append("\n\t\tAttributeDefinition {name: ");
-				sb.append(attributeDefinitionName);
+				sb.append(extendedAttributeDefinition.getID());
 				sb.append("}");
 			}
 		}
