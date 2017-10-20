@@ -73,7 +73,6 @@ public class ConfigurationLocalizationTest {
 
 			Collections.addAll(
 				pids, extendedMetaTypeInformation.getFactoryPids());
-
 			Collections.addAll(pids, extendedMetaTypeInformation.getPids());
 
 			if (pids.isEmpty()) {
