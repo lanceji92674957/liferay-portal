@@ -66,8 +66,6 @@ public class ConfigurationLocalizationTest {
 		StringBundler errorMessageSB = new StringBundler();
 
 		for (Bundle bundle : bundleContext.getBundles()) {
-			String currentBundleSymbolicName = bundle.getSymbolicName();
-
 			ExtendedMetaTypeInformation extendedMetaTypeInformation =
 				_extendedMetaTypeService.getMetaTypeInformation(bundle);
 
@@ -87,7 +85,7 @@ public class ConfigurationLocalizationTest {
 			ResourceBundleLoader resourceBundleLoader =
 				ResourceBundleLoaderUtil.
 					getResourceBundleLoaderByBundleSymbolicName(
-						currentBundleSymbolicName);
+						bundle.getSymbolicName());
 
 			if (resourceBundleLoader == null) {
 				bundleErrorSB.append("\n\tResource Bundle Error:");
