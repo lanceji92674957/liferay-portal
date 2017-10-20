@@ -73,15 +73,14 @@ public class ConfigurationLocalizationTest {
 				continue;
 			}
 
-			sb.append("\nBundle {id: ");
+			sb.append("\nMissing localization in bundle {id: ");
 			sb.append(bundle.getBundleId());
 			sb.append(", name: ");
 			sb.append(bundle.getSymbolicName());
 			sb.append(", version: ");
 			sb.append(bundle.getVersion());
-			sb.append(", errors: ");
+			sb.append("}");
 			sb.append(bundleError);
-			sb.append("\n}\n");
 		}
 
 		if (sb.length() > 0) {
@@ -110,8 +109,15 @@ public class ConfigurationLocalizationTest {
 					bundle.getSymbolicName());
 
 		if (resourceBundleLoader == null) {
-			sb.append("\n\tResource Bundle Error:");
-			sb.append("\n\t\tNo resource bundle");
+			sb.append(
+				"\n\tMissing default language file for configuration pids [");
+
+			for (String pid : pids) {
+				sb.append(pid);
+				sb.append(",");
+			}
+
+			sb.setStringAt("]", sb.index() - 1);
 
 			return sb.toString();
 		}
@@ -123,8 +129,8 @@ public class ConfigurationLocalizationTest {
 				resourceBundle,
 				resourceBundleLoader.loadResourceBundle(Locale.KOREA))) {
 
-			sb.append("\n\tResource Bundle Error:");
-			sb.append("\n\t\tMissing generated resource files");
+			sb.append("\n\tMissing generated language files, ");
+			sb.append("need to regenerate language files for this bundle.");
 		}
 
 		for (String pid : pids) {
@@ -134,9 +140,8 @@ public class ConfigurationLocalizationTest {
 			if (!metaInfoErrorMessage.isEmpty()) {
 				sb.append("\n\tConfiguration {pid:");
 				sb.append(pid);
-				sb.append(", missingLocalization:");
+				sb.append("}");
 				sb.append(metaInfoErrorMessage);
-				sb.append("\n\t}");
 			}
 		}
 
@@ -157,10 +162,12 @@ public class ConfigurationLocalizationTest {
 				resourceBundle, extendedObjectClassDefinition.getName()) ==
 					null) {
 
-			sb.append("\n\t\tObjectClassDefinition {name: ");
+			sb.append(
+				"\n\t\tMissing localization for configuration: ");
 			sb.append(extendedObjectClassDefinition.getID());
-			sb.append("}");
 		}
+
+		List<String> attributeNames = new ArrayList<>();
 
 		for (ExtendedAttributeDefinition extendedAttributeDefinition :
 				extendedObjectClassDefinition.getAttributeDefinitions(
@@ -170,10 +177,19 @@ public class ConfigurationLocalizationTest {
 					resourceBundle, extendedAttributeDefinition.getName()) ==
 						null) {
 
-				sb.append("\n\t\tAttributeDefinition {name: ");
-				sb.append(extendedAttributeDefinition.getID());
-				sb.append("}");
+				attributeNames.add(extendedAttributeDefinition.getID());
 			}
+		}
+
+		if (!attributeNames.isEmpty()) {
+			sb.append("\n\t\tMissing localization for attributes [");
+
+			for (String attributeName : attributeNames) {
+				sb.append(attributeName);
+				sb.append(",");
+			}
+
+			sb.setStringAt("]", sb.index() - 1);
 		}
 
 		return sb.toString();
