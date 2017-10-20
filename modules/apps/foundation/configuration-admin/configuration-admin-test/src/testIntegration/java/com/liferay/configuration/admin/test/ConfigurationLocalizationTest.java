@@ -92,6 +92,7 @@ public class ConfigurationLocalizationTest {
 			if (resourceBundleLoader == null) {
 				bundleErrorSB.append("\n\tResource Bundle Error:");
 				bundleErrorSB.append("\n\t\tNo resource bundle");
+
 				_printBundleError(bundle, errorMessageSB, bundleErrorSB);
 
 				continue;
@@ -105,7 +106,6 @@ public class ConfigurationLocalizationTest {
 
 			if (Objects.equals(resourceBundle, koResourceBundle)) {
 				bundleErrorSB.append("\n\tResource Bundle Error:");
-
 				bundleErrorSB.append("\n\t\tMissing generated resource files");
 			}
 
