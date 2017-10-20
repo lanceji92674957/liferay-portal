@@ -98,10 +98,10 @@ public class ConfigurationLocalizationTest {
 			ResourceBundle resourceBundle =
 				resourceBundleLoader.loadResourceBundle(Locale.getDefault());
 
-			ResourceBundle koResourceBundle =
-				resourceBundleLoader.loadResourceBundle(Locale.KOREA);
+			if (Objects.equals(
+					resourceBundle,
+					resourceBundleLoader.loadResourceBundle(Locale.KOREA))) {
 
-			if (Objects.equals(resourceBundle, koResourceBundle)) {
 				bundleErrorSB.append("\n\tResource Bundle Error:");
 				bundleErrorSB.append("\n\t\tMissing generated resource files");
 			}
@@ -137,29 +137,25 @@ public class ConfigurationLocalizationTest {
 			extendedMetaTypeInformation.getObjectClassDefinition(
 				pid, Locale.getDefault().getLanguage());
 
-		String objectClassDefinitionName = ResourceBundleUtil.getString(
-			resourceBundle, extendedObjectClassDefinition.getName());
+		if (ResourceBundleUtil.getString(
+				resourceBundle, extendedObjectClassDefinition.getName()) ==
+					null) {
 
-		if (objectClassDefinitionName == null) {
 			sb.append("\n\t\tObjectClassDefinition {name: ");
 			sb.append(extendedObjectClassDefinition.getName());
 			sb.append("}");
 		}
 
-		ExtendedAttributeDefinition[] extendedAttributeDefinitions =
-			extendedObjectClassDefinition.getAttributeDefinitions(
-				ObjectClassDefinition.ALL);
-
 		for (ExtendedAttributeDefinition extendedAttributeDefinition :
-				extendedAttributeDefinitions) {
+				extendedObjectClassDefinition.getAttributeDefinitions(
+					ObjectClassDefinition.ALL)) {
 
 			String attributeDefinitionName =
 				extendedAttributeDefinition.getName();
 
-			String attributeDefinitionString = ResourceBundleUtil.getString(
-				resourceBundle, attributeDefinitionName);
+			if (ResourceBundleUtil.getString(
+					resourceBundle, attributeDefinitionName) == null) {
 
-			if (attributeDefinitionString == null) {
 				sb.append("\n\t\tAttributeDefinition {name: ");
 				sb.append(attributeDefinitionName);
 				sb.append("}");
