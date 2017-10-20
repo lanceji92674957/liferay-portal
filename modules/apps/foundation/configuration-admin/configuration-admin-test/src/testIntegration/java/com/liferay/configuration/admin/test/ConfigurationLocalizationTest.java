@@ -63,7 +63,7 @@ public class ConfigurationLocalizationTest {
 
 		BundleContext bundleContext = currentBundle.getBundleContext();
 
-		StringBundler errorMessageBundeler = new StringBundler();
+		StringBundler errorMessageSB = new StringBundler();
 
 		for (Bundle bundle : bundleContext.getBundles()) {
 			String currentBundleSymbolicName = bundle.getSymbolicName();
@@ -82,7 +82,7 @@ public class ConfigurationLocalizationTest {
 				continue;
 			}
 
-			StringBundler bundleErrorBundeler = new StringBundler();
+			StringBundler bundleErrorSB = new StringBundler();
 
 			ResourceBundleLoader resourceBundleLoader =
 				ResourceBundleLoaderUtil.
@@ -90,10 +90,9 @@ public class ConfigurationLocalizationTest {
 						currentBundleSymbolicName);
 
 			if (resourceBundleLoader == null) {
-				bundleErrorBundeler.append("\n\tResource Bundle Error:");
-				bundleErrorBundeler.append("\n\t\tNo resource bundle");
-				_printBundleError(
-					bundle, errorMessageBundeler, bundleErrorBundeler);
+				bundleErrorSB.append("\n\tResource Bundle Error:");
+				bundleErrorSB.append("\n\t\tNo resource bundle");
+				_printBundleError(bundle, errorMessageSB, bundleErrorSB);
 
 				continue;
 			}
@@ -105,10 +104,9 @@ public class ConfigurationLocalizationTest {
 				resourceBundleLoader.loadResourceBundle(Locale.KOREA);
 
 			if (Objects.equals(resourceBundle, koResourceBundle)) {
-				bundleErrorBundeler.append("\n\tResource Bundle Error:");
+				bundleErrorSB.append("\n\tResource Bundle Error:");
 
-				bundleErrorBundeler.append(
-					"\n\t\tMissing generated resource files");
+				bundleErrorSB.append("\n\t\tMissing generated resource files");
 			}
 
 			for (String pid : pids) {
@@ -116,20 +114,19 @@ public class ConfigurationLocalizationTest {
 					pid, extendedMetaTypeInformation, resourceBundle);
 
 				if (!metaInfoErrorMessage.isEmpty()) {
-					bundleErrorBundeler.append("\n\tConfiguration {pid:");
-					bundleErrorBundeler.append(pid);
-					bundleErrorBundeler.append(", missingLocalization:");
-					bundleErrorBundeler.append(metaInfoErrorMessage);
-					bundleErrorBundeler.append("\n\t}");
+					bundleErrorSB.append("\n\tConfiguration {pid:");
+					bundleErrorSB.append(pid);
+					bundleErrorSB.append(", missingLocalization:");
+					bundleErrorSB.append(metaInfoErrorMessage);
+					bundleErrorSB.append("\n\t}");
 				}
 			}
 
-			_printBundleError(
-				bundle, errorMessageBundeler, bundleErrorBundeler);
+			_printBundleError(bundle, errorMessageSB, bundleErrorSB);
 		}
 
-		if (errorMessageBundeler.length() > 0) {
-			Assert.fail(errorMessageBundeler.toString());
+		if (errorMessageSB.length() > 0) {
+			Assert.fail(errorMessageSB.toString());
 		}
 	}
 
@@ -137,7 +134,7 @@ public class ConfigurationLocalizationTest {
 		String pid, ExtendedMetaTypeInformation extendedMetaTypeInformation,
 		ResourceBundle resourceBundle) {
 
-		StringBundler metaInfoErrorBundeler = new StringBundler();
+		StringBundler sb = new StringBundler();
 
 		ExtendedObjectClassDefinition extendedObjectClassDefinition =
 			extendedMetaTypeInformation.getObjectClassDefinition(
@@ -147,10 +144,9 @@ public class ConfigurationLocalizationTest {
 			resourceBundle, extendedObjectClassDefinition.getName());
 
 		if (objectClassDefinitionName == null) {
-			metaInfoErrorBundeler.append("\n\t\tObjectClassDefinition {name: ");
-			metaInfoErrorBundeler.append(
-				extendedObjectClassDefinition.getName());
-			metaInfoErrorBundeler.append("}");
+			sb.append("\n\t\tObjectClassDefinition {name: ");
+			sb.append(extendedObjectClassDefinition.getName());
+			sb.append("}");
 		}
 
 		ExtendedAttributeDefinition[] extendedAttributeDefinitions =
@@ -167,29 +163,28 @@ public class ConfigurationLocalizationTest {
 				resourceBundle, attributeDefinitionName);
 
 			if (attributeDefinitionString == null) {
-				metaInfoErrorBundeler.append(
-					"\n\t\tAttributeDefinition {name: ");
-				metaInfoErrorBundeler.append(attributeDefinitionName);
-				metaInfoErrorBundeler.append("}");
+				sb.append("\n\t\tAttributeDefinition {name: ");
+				sb.append(attributeDefinitionName);
+				sb.append("}");
 			}
 		}
 
-		return metaInfoErrorBundeler.toString();
+		return sb.toString();
 	}
 
 	private void _printBundleError(
-		Bundle bundle, StringBundler errorMessageBundeler,
-		StringBundler bundleErrorBundeler) {
+		Bundle bundle, StringBundler errorMessageSB,
+		StringBundler bundleErrorSB) {
 
-		errorMessageBundeler.append("\nBundle {id: ");
-		errorMessageBundeler.append(bundle.getBundleId());
-		errorMessageBundeler.append(", name: ");
-		errorMessageBundeler.append(bundle.getSymbolicName());
-		errorMessageBundeler.append(", version: ");
-		errorMessageBundeler.append(bundle.getVersion());
-		errorMessageBundeler.append(", errors: ");
-		errorMessageBundeler.append(bundleErrorBundeler);
-		errorMessageBundeler.append("\n}\n");
+		errorMessageSB.append("\nBundle {id: ");
+		errorMessageSB.append(bundle.getBundleId());
+		errorMessageSB.append(", name: ");
+		errorMessageSB.append(bundle.getSymbolicName());
+		errorMessageSB.append(", version: ");
+		errorMessageSB.append(bundle.getVersion());
+		errorMessageSB.append(", errors: ");
+		errorMessageSB.append(bundleErrorSB);
+		errorMessageSB.append("\n}\n");
 	}
 
 	@Inject
