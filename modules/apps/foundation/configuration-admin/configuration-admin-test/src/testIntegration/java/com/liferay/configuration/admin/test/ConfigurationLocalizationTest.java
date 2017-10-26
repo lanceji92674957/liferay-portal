@@ -57,7 +57,7 @@ public class ConfigurationLocalizationTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testBundleLocalizationTest() {
+	public void testBundleLocalization() {
 		Bundle currentBundle = FrameworkUtil.getBundle(
 			ConfigurationLocalizationTest.class);
 
