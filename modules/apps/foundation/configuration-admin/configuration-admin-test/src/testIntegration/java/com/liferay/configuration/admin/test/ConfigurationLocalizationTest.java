@@ -71,7 +71,7 @@ public class ConfigurationLocalizationTest {
 				continue;
 			}
 
-			sb.append("\nMissing localization in bundle {id: ");
+			sb.append("\nBundle {id: ");
 			sb.append(bundle.getBundleId());
 			sb.append(", name: ");
 			sb.append(bundle.getSymbolicName());
@@ -106,14 +106,14 @@ public class ConfigurationLocalizationTest {
 
 		if (resourceBundleLoader == null) {
 			sb.append(
-				"\n\tMissing default language file for configuration pids [");
+				"\n\tMissing default language file for configuration pids: ");
 
 			for (String pid : pids) {
 				sb.append(pid);
 				sb.append(",");
 			}
 
-			sb.setStringAt("]", sb.index() - 1);
+			sb.setIndex(sb.index() - 1);
 
 			return sb.toString();
 		}
@@ -165,7 +165,7 @@ public class ConfigurationLocalizationTest {
 				resourceBundle, extendedObjectClassDefinition.getName()) ==
 					null) {
 
-			sb.append("\n\t\tMissing localization for configuration: ");
+			sb.append("\n\t\tMissing localization for configuration pid: ");
 			sb.append(extendedObjectClassDefinition.getID());
 		}
 
@@ -183,15 +183,15 @@ public class ConfigurationLocalizationTest {
 			}
 		}
 
-		if (!attributeNames.isEmpty()) {
-			sb.append("\n\t\tMissing localization for attributes [");
+		if (attributeNames.isEmpty()) {
+			sb.append("\n\t\tMissing localization for attributes: ");
 
 			for (String attributeName : attributeNames) {
 				sb.append(attributeName);
 				sb.append(",");
 			}
 
-			sb.setStringAt("]", sb.index() - 1);
+			sb.setIndex(sb.index() - 1);
 		}
 
 		return sb.toString();
