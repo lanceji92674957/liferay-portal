@@ -138,12 +138,14 @@ public class ConfigurationLocalizationTest {
 			String metaInfoErrorMessage = _collectMetaInfoError(
 				pid, extendedMetaTypeInformation, resourceBundle);
 
-			if (!metaInfoErrorMessage.isEmpty()) {
-				sb.append("\n\tConfiguration {pid:");
-				sb.append(pid);
-				sb.append("}");
-				sb.append(metaInfoErrorMessage);
+			if (metaInfoErrorMessage.isEmpty()) {
+				continue;
 			}
+
+			sb.append("\n\tConfiguration {pid:");
+			sb.append(pid);
+			sb.append("}");
+			sb.append(metaInfoErrorMessage);
 		}
 
 		return sb.toString();
