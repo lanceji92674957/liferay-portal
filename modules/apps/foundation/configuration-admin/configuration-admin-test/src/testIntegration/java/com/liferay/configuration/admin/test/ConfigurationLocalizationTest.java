@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
@@ -119,16 +118,21 @@ public class ConfigurationLocalizationTest {
 			return sb.toString();
 		}
 
+		for (Locale locale : Locale.getAvailableLocales()) {
+			if (locale.equals(Locale.getDefault())) {
+				continue;
+			}
+
+			if (resourceBundleLoader.loadResourceBundle(locale) == null) {
+				sb.append("\n\tMissing generated language files, ");
+				sb.append("need to regenerate language files for this bundle.");
+			}
+
+			break;
+		}
+
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
 			Locale.getDefault());
-
-		if (Objects.equals(
-				resourceBundle,
-				resourceBundleLoader.loadResourceBundle(Locale.KOREA))) {
-
-			sb.append("\n\tMissing generated language files, ");
-			sb.append("need to regenerate language files for this bundle.");
-		}
 
 		for (String pid : pids) {
 			String metaInfoErrorMessage = _collectMetaInfoError(
