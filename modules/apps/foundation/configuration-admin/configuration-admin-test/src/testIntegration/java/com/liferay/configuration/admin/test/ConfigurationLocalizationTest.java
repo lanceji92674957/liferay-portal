@@ -44,7 +44,6 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.service.metatype.ObjectClassDefinition;
 
 /**
  * @author Lance Ji
@@ -168,7 +167,7 @@ public class ConfigurationLocalizationTest {
 
 		for (ExtendedAttributeDefinition extendedAttributeDefinition :
 				extendedObjectClassDefinition.getAttributeDefinitions(
-					ObjectClassDefinition.ALL)) {
+					ExtendedObjectClassDefinition.ALL)) {
 
 			if (ResourceBundleUtil.getString(
 					resourceBundle, extendedAttributeDefinition.getName()) ==
