@@ -529,18 +529,14 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		final Group group = _groupLocalService.getGroup(groupId);
 		String userIdStrategy = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
-		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
-		PortletDataContext portletDataContext =
-			_portletDataContextFactory.createImportPortletDataContext(
-				group.getCompanyId(), groupId, parameterMap,
-				getUserIdStrategy(userId, userIdStrategy), zipReader);
+		try (ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file)) {
+			PortletDataContext portletDataContext =
+				_portletDataContextFactory.createImportPortletDataContext(
+					group.getCompanyId(), groupId, parameterMap,
+					getUserIdStrategy(userId, userIdStrategy), zipReader);
 
-		try {
 			return getManifestSummary(portletDataContext);
-		}
-		finally {
-			zipReader.close();
 		}
 	}
 
@@ -1109,18 +1105,14 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		Group group = _groupLocalService.getGroup(groupId);
 		String userIdStrategy = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
-		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
-		PortletDataContext portletDataContext =
-			_portletDataContextFactory.createImportPortletDataContext(
-				group.getCompanyId(), groupId, parameterMap,
-				getUserIdStrategy(userId, userIdStrategy), zipReader);
+		try (ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file)) {
+			PortletDataContext portletDataContext =
+				_portletDataContextFactory.createImportPortletDataContext(
+					group.getCompanyId(), groupId, parameterMap,
+					getUserIdStrategy(userId, userIdStrategy), zipReader);
 
-		try {
 			return validateMissingReferences(portletDataContext);
-		}
-		finally {
-			zipReader.close();
 		}
 	}
 

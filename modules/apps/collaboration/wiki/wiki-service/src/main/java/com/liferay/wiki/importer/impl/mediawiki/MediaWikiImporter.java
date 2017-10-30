@@ -346,38 +346,37 @@ public class MediaWikiImporter implements WikiImporter {
 
 		int count = 0;
 
-		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
-			imagesInputStream);
-
-		List<String> entries = zipReader.getEntries();
-
-		if (entries == null) {
-			throw new ImportFilesException();
-		}
-
-		int total = entries.size();
-
-		if (total > 0) {
-			try {
-				_wikiPageLocalService.getPage(
-					node.getNodeId(), SHARED_IMAGES_TITLE);
-			}
-			catch (NoSuchPageException nspe) {
-				ServiceContext serviceContext = new ServiceContext();
-
-				serviceContext.setAddGroupPermissions(true);
-				serviceContext.setAddGuestPermissions(true);
-
-				_wikiPageLocalService.addPage(
-					userId, node.getNodeId(), SHARED_IMAGES_TITLE,
-					SHARED_IMAGES_CONTENT, null, true, serviceContext);
-			}
-		}
-
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			new ArrayList<>();
 
-		try {
+		try (ZipReader zipReader =
+				ZipReaderFactoryUtil.getZipReader(imagesInputStream)) {
+
+			List<String> entries = zipReader.getEntries();
+
+			if (entries == null) {
+				throw new ImportFilesException();
+			}
+
+			int total = entries.size();
+
+			if (total > 0) {
+				try {
+					_wikiPageLocalService.getPage(
+						node.getNodeId(), SHARED_IMAGES_TITLE);
+				}
+				catch (NoSuchPageException nspe) {
+					ServiceContext serviceContext = new ServiceContext();
+
+					serviceContext.setAddGroupPermissions(true);
+					serviceContext.setAddGuestPermissions(true);
+
+					_wikiPageLocalService.addPage(
+						userId, node.getNodeId(), SHARED_IMAGES_TITLE,
+						SHARED_IMAGES_CONTENT, null, true, serviceContext);
+				}
+			}
+
 			int percentage = 50;
 
 			for (int i = 0; i < entries.size(); i++) {
@@ -442,8 +441,6 @@ public class MediaWikiImporter implements WikiImporter {
 				}
 			}
 		}
-
-		zipReader.close();
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
