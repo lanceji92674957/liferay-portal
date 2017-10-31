@@ -61,268 +61,251 @@ public class ZipReaderImplTest {
 
 	@Test
 	public void testConstructor() throws Exception {
-		ZipReader zipReader = new ZipReaderImpl(
-			DependenciesTestUtil.getDependencyAsInputStream(
-				getClass(), _ZIP_FILE_PATH));
+		try (ZipReader zipReader = new ZipReaderImpl(
+				DependenciesTestUtil.getDependencyAsInputStream(
+					getClass(), _ZIP_FILE_PATH))) {
 
-		Assert.assertNotNull(zipReader);
+			Assert.assertNotNull(zipReader);
+		}
 
-		zipReader.close();
+		try (ZipReader zipReader = new ZipReaderImpl(
+				DependenciesTestUtil.getDependencyAsFile(
+					getClass(), _ZIP_FILE_PATH))) {
 
-		zipReader = new ZipReaderImpl(
-			DependenciesTestUtil.getDependencyAsFile(
-				getClass(), _ZIP_FILE_PATH));
-
-		Assert.assertNotNull(zipReader);
-
-		zipReader.close();
+			Assert.assertNotNull(zipReader);
+		}
 	}
 
 	@Test
 	public void testGetEntries() throws Exception {
-		ZipReader zipReader = new ZipReaderImpl(
-			DependenciesTestUtil.getDependencyAsInputStream(
-				getClass(), _ZIP_FILE_PATH));
+		try (ZipReader zipReader = new ZipReaderImpl(
+				DependenciesTestUtil.getDependencyAsInputStream(
+					getClass(), _ZIP_FILE_PATH))) {
 
-		List<String> entries = zipReader.getEntries();
+			List<String> entries = zipReader.getEntries();
 
-		Assert.assertEquals(entries.toString(), 5, entries.size());
-		Assert.assertEquals(_FILE_PATH_0, entries.get(0));
-		Assert.assertEquals(_FILE_PATH_1, entries.get(1));
-		Assert.assertEquals(_FILE_PATH_2, entries.get(2));
-		Assert.assertEquals(_FILE_PATH_3, entries.get(3));
-		Assert.assertEquals(_FILE_PATH_4, entries.get(4));
-
-		zipReader.close();
+			Assert.assertEquals(entries.toString(), 5, entries.size());
+			Assert.assertEquals(_FILE_PATH_0, entries.get(0));
+			Assert.assertEquals(_FILE_PATH_1, entries.get(1));
+			Assert.assertEquals(_FILE_PATH_2, entries.get(2));
+			Assert.assertEquals(_FILE_PATH_3, entries.get(3));
+			Assert.assertEquals(_FILE_PATH_4, entries.get(4));
+		}
 	}
 
 	@Test
 	public void testGetEntryAsByteArray() throws Exception {
-		ZipReader zipReader = new ZipReaderImpl(
-			DependenciesTestUtil.getDependencyAsInputStream(
-				getClass(), _ZIP_FILE_PATH));
+		try (ZipReader zipReader = new ZipReaderImpl(
+				DependenciesTestUtil.getDependencyAsInputStream(
+					getClass(), _ZIP_FILE_PATH))) {
 
-		byte[] bytes = zipReader.getEntryAsByteArray(_FILE_PATH_0);
+			byte[] bytes = zipReader.getEntryAsByteArray(_FILE_PATH_0);
 
-		Assert.assertArrayEquals(_expectedContent0.getBytes(_UTF_8), bytes);
+			Assert.assertArrayEquals(_expectedContent0.getBytes(_UTF_8), bytes);
 
-		bytes = zipReader.getEntryAsByteArray(_FILE_PATH_1);
+			bytes = zipReader.getEntryAsByteArray(_FILE_PATH_1);
 
-		Assert.assertArrayEquals(_expectedContent1.getBytes(_UTF_8), bytes);
+			Assert.assertArrayEquals(_expectedContent1.getBytes(_UTF_8), bytes);
 
-		bytes = zipReader.getEntryAsByteArray(_FILE_PATH_2);
+			bytes = zipReader.getEntryAsByteArray(_FILE_PATH_2);
 
-		Assert.assertArrayEquals(_expectedContent2.getBytes(_UTF_8), bytes);
+			Assert.assertArrayEquals(_expectedContent2.getBytes(_UTF_8), bytes);
 
-		bytes = zipReader.getEntryAsByteArray(_FILE_PATH_3);
+			bytes = zipReader.getEntryAsByteArray(_FILE_PATH_3);
 
-		Assert.assertArrayEquals(_expectedContent3.getBytes(_UTF_8), bytes);
-
-		zipReader.close();
+			Assert.assertArrayEquals(_expectedContent3.getBytes(_UTF_8), bytes);
+		}
 	}
 
 	@Test
 	public void testGetEntryAsByteArrayThatDoesNotExist() throws Exception {
-		ZipReader zipReader = new ZipReaderImpl(
-			DependenciesTestUtil.getDependencyAsInputStream(
-				getClass(), _ZIP_FILE_PATH));
+		try (ZipReader zipReader = new ZipReaderImpl(
+				DependenciesTestUtil.getDependencyAsInputStream(
+					getClass(), _ZIP_FILE_PATH))) {
 
-		Assert.assertNull(zipReader.getEntryAsByteArray("foo.txt"));
-
-		zipReader.close();
+			Assert.assertNull(zipReader.getEntryAsByteArray("foo.txt"));
+		}
 	}
 
 	@Test
 	public void testGetEntryAsByteArrayThatIsADirectory() throws Exception {
-		ZipReader zipReader = new ZipReaderImpl(
-			DependenciesTestUtil.getDependencyAsInputStream(
-				getClass(), _ZIP_FILE_PATH));
+		try (ZipReader zipReader = new ZipReaderImpl(
+				DependenciesTestUtil.getDependencyAsInputStream(
+					getClass(), _ZIP_FILE_PATH))) {
 
-		Assert.assertNull(zipReader.getEntryAsByteArray("1"));
-		Assert.assertNull(zipReader.getEntryAsByteArray("/1"));
-
-		zipReader.close();
+			Assert.assertNull(zipReader.getEntryAsByteArray("1"));
+			Assert.assertNull(zipReader.getEntryAsByteArray("/1"));
+		}
 	}
 
 	@Test
 	public void testGetEntryAsByteArrayWithEmptyName() throws Exception {
-		ZipReader zipReader = new ZipReaderImpl(
-			DependenciesTestUtil.getDependencyAsInputStream(
-				getClass(), _ZIP_FILE_PATH));
+		try (ZipReader zipReader = new ZipReaderImpl(
+				DependenciesTestUtil.getDependencyAsInputStream(
+					getClass(), _ZIP_FILE_PATH))) {
 
-		Assert.assertNull(zipReader.getEntryAsByteArray(""));
-		Assert.assertNull(zipReader.getEntryAsByteArray(null));
-
-		zipReader.close();
+			Assert.assertNull(zipReader.getEntryAsByteArray(""));
+			Assert.assertNull(zipReader.getEntryAsByteArray(null));
+		}
 	}
 
 	@Test
 	public void testGetEntryAsInputStream() throws Exception {
-		ZipReader zipReader = new ZipReaderImpl(
-			DependenciesTestUtil.getDependencyAsInputStream(
-				getClass(), _ZIP_FILE_PATH));
+		try (ZipReader zipReader = new ZipReaderImpl(
+				DependenciesTestUtil.getDependencyAsInputStream(
+					getClass(), _ZIP_FILE_PATH))) {
 
-		InputStream is = zipReader.getEntryAsInputStream(_FILE_PATH_0);
+			InputStream is = zipReader.getEntryAsInputStream(_FILE_PATH_0);
 
-		Assert.assertTrue(is instanceof FileInputStream);
+			Assert.assertTrue(is instanceof FileInputStream);
 
-		is = zipReader.getEntryAsInputStream(_FILE_PATH_1);
+			is = zipReader.getEntryAsInputStream(_FILE_PATH_1);
 
-		Assert.assertTrue(is instanceof FileInputStream);
+			Assert.assertTrue(is instanceof FileInputStream);
 
-		is = zipReader.getEntryAsInputStream(_FILE_PATH_2);
+			is = zipReader.getEntryAsInputStream(_FILE_PATH_2);
 
-		Assert.assertTrue(is instanceof FileInputStream);
+			Assert.assertTrue(is instanceof FileInputStream);
 
-		is = zipReader.getEntryAsInputStream(_FILE_PATH_3);
+			is = zipReader.getEntryAsInputStream(_FILE_PATH_3);
 
-		Assert.assertTrue(is instanceof FileInputStream);
-
-		zipReader.close();
+			Assert.assertTrue(is instanceof FileInputStream);
+		}
 	}
 
 	@Test
 	public void testGetEntryAsInputStreamThatDoesNotExist() throws Exception {
-		ZipReader zipReader = new ZipReaderImpl(
-			DependenciesTestUtil.getDependencyAsInputStream(
-				getClass(), _ZIP_FILE_PATH));
+		try (ZipReader zipReader = new ZipReaderImpl(
+				DependenciesTestUtil.getDependencyAsInputStream(
+					getClass(), _ZIP_FILE_PATH))) {
 
-		Assert.assertNull(zipReader.getEntryAsInputStream("foo.txt"));
-
-		zipReader.close();
+			Assert.assertNull(zipReader.getEntryAsInputStream("foo.txt"));
+		}
 	}
 
 	@Test
 	public void testGetEntryAsInputStreamThatIsADirectory() throws Exception {
-		ZipReader zipReader = new ZipReaderImpl(
-			DependenciesTestUtil.getDependencyAsInputStream(
-				getClass(), _ZIP_FILE_PATH));
+		try (ZipReader zipReader = new ZipReaderImpl(
+				DependenciesTestUtil.getDependencyAsInputStream(
+					getClass(), _ZIP_FILE_PATH))) {
 
-		Assert.assertNull(zipReader.getEntryAsInputStream("1"));
-		Assert.assertNull(zipReader.getEntryAsInputStream("/1"));
-
-		zipReader.close();
+			Assert.assertNull(zipReader.getEntryAsInputStream("1"));
+			Assert.assertNull(zipReader.getEntryAsInputStream("/1"));
+		}
 	}
 
 	@Test
 	public void testGetEntryAsInputStreamWithEmptyName() throws Exception {
-		ZipReader zipReader = new ZipReaderImpl(
-			DependenciesTestUtil.getDependencyAsInputStream(
-				getClass(), _ZIP_FILE_PATH));
+		try (ZipReader zipReader = new ZipReaderImpl(
+				DependenciesTestUtil.getDependencyAsInputStream(
+					getClass(), _ZIP_FILE_PATH))) {
 
-		Assert.assertNull(zipReader.getEntryAsInputStream(""));
-		Assert.assertNull(zipReader.getEntryAsInputStream(null));
-
-		zipReader.close();
+			Assert.assertNull(zipReader.getEntryAsInputStream(""));
+			Assert.assertNull(zipReader.getEntryAsInputStream(null));
+		}
 	}
 
 	@Test
 	public void testGetEntryAsString() throws Exception {
-		ZipReader zipReader = new ZipReaderImpl(
-			DependenciesTestUtil.getDependencyAsFile(
-				getClass(), _ZIP_FILE_PATH));
+		try (ZipReader zipReader = new ZipReaderImpl(
+				DependenciesTestUtil.getDependencyAsInputStream(
+					getClass(), _ZIP_FILE_PATH))) {
 
-		String content = zipReader.getEntryAsString(_FILE_PATH_0);
+			String content = zipReader.getEntryAsString(_FILE_PATH_0);
 
-		Assert.assertEquals(_expectedContent0, content);
+			Assert.assertEquals(_expectedContent0, content);
 
-		content = zipReader.getEntryAsString("/" + _FILE_PATH_0);
+			content = zipReader.getEntryAsString("/" + _FILE_PATH_0);
 
-		Assert.assertEquals(_expectedContent0, content);
+			Assert.assertEquals(_expectedContent0, content);
 
-		content = zipReader.getEntryAsString(_FILE_PATH_1);
+			content = zipReader.getEntryAsString(_FILE_PATH_1);
 
-		Assert.assertEquals(_expectedContent1, content);
+			Assert.assertEquals(_expectedContent1, content);
 
-		content = zipReader.getEntryAsString(_FILE_PATH_2);
+			content = zipReader.getEntryAsString(_FILE_PATH_2);
 
-		Assert.assertEquals(_expectedContent2, content);
+			Assert.assertEquals(_expectedContent2, content);
 
-		content = zipReader.getEntryAsString(_FILE_PATH_3);
+			content = zipReader.getEntryAsString(_FILE_PATH_3);
 
-		Assert.assertEquals(_expectedContent3, content);
-
-		zipReader.close();
+			Assert.assertEquals(_expectedContent3, content);
+		}
 	}
 
 	@Test
 	public void testGetEntryAsStringThatDoesNotExist() throws Exception {
-		ZipReader zipReader = new ZipReaderImpl(
-			DependenciesTestUtil.getDependencyAsInputStream(
-				getClass(), _ZIP_FILE_PATH));
+		try (ZipReader zipReader = new ZipReaderImpl(
+				DependenciesTestUtil.getDependencyAsInputStream(
+					getClass(), _ZIP_FILE_PATH))) {
 
-		Assert.assertNull(zipReader.getEntryAsString("foo.txt"));
-
-		zipReader.close();
+			Assert.assertNull(zipReader.getEntryAsString("foo.txt"));
+		}
 	}
 
 	@Test
 	public void testGetEntryAsStringThatIsADirectory() throws Exception {
-		ZipReader zipReader = new ZipReaderImpl(
-			DependenciesTestUtil.getDependencyAsInputStream(
-				getClass(), _ZIP_FILE_PATH));
+		try (ZipReader zipReader = new ZipReaderImpl(
+				DependenciesTestUtil.getDependencyAsInputStream(
+					getClass(), _ZIP_FILE_PATH))) {
 
-		Assert.assertNull(zipReader.getEntryAsString("1"));
-		Assert.assertNull(zipReader.getEntryAsString("/1"));
-
-		zipReader.close();
+			Assert.assertNull(zipReader.getEntryAsString("1"));
+			Assert.assertNull(zipReader.getEntryAsString("/1"));
+		}
 	}
 
 	@Test
 	public void testGetEntryAsStringWithEmptyName() throws Exception {
-		ZipReader zipReader = new ZipReaderImpl(
-			DependenciesTestUtil.getDependencyAsInputStream(
-				getClass(), _ZIP_FILE_PATH));
+		try (ZipReader zipReader = new ZipReaderImpl(
+				DependenciesTestUtil.getDependencyAsInputStream(
+					getClass(), _ZIP_FILE_PATH))) {
 
-		Assert.assertNull(zipReader.getEntryAsString(""));
-		Assert.assertNull(zipReader.getEntryAsString(null));
-
-		zipReader.close();
+			Assert.assertNull(zipReader.getEntryAsString(""));
+			Assert.assertNull(zipReader.getEntryAsString(null));
+		}
 	}
 
 	@Test
 	public void testGetFolderEntries() throws Exception {
-		ZipReader zipReader = new ZipReaderImpl(
-			DependenciesTestUtil.getDependencyAsInputStream(
-				getClass(), _ZIP_FILE_PATH));
+		try (ZipReader zipReader = new ZipReaderImpl(
+				DependenciesTestUtil.getDependencyAsInputStream(
+					getClass(), _ZIP_FILE_PATH))) {
 
-		List<String> entries = zipReader.getFolderEntries("");
+			List<String> entries = zipReader.getFolderEntries("");
 
-		Assert.assertNotNull(entries);
-		Assert.assertTrue(entries.isEmpty());
+			Assert.assertNotNull(entries);
+			Assert.assertTrue(entries.isEmpty());
 
-		entries = zipReader.getFolderEntries("/");
+			entries = zipReader.getFolderEntries("/");
 
-		Assert.assertEquals(entries.toString(), 1, entries.size());
-		Assert.assertEquals(_FILE_PATH_0, entries.get(0));
+			Assert.assertEquals(entries.toString(), 1, entries.size());
+			Assert.assertEquals(_FILE_PATH_0, entries.get(0));
 
-		entries = zipReader.getFolderEntries("1");
+			entries = zipReader.getFolderEntries("1");
 
-		Assert.assertEquals(entries.toString(), 2, entries.size());
-		Assert.assertEquals(_FILE_PATH_1, entries.get(0));
-		Assert.assertEquals(_FILE_PATH_4, entries.get(1));
+			Assert.assertEquals(entries.toString(), 2, entries.size());
+			Assert.assertEquals(_FILE_PATH_1, entries.get(0));
+			Assert.assertEquals(_FILE_PATH_4, entries.get(1));
 
-		entries = zipReader.getFolderEntries("1/2");
+			entries = zipReader.getFolderEntries("1/2");
 
-		Assert.assertEquals(entries.toString(), 2, entries.size());
-		Assert.assertEquals(_FILE_PATH_2, entries.get(0));
-		Assert.assertEquals(_FILE_PATH_3, entries.get(1));
-
-		zipReader.close();
+			Assert.assertEquals(entries.toString(), 2, entries.size());
+			Assert.assertEquals(_FILE_PATH_2, entries.get(0));
+			Assert.assertEquals(_FILE_PATH_3, entries.get(1));
+		}
 	}
 
 	@Test
 	public void testGetFolderEntriesThatDoesNotExist() throws Exception {
-		ZipReader zipReader = new ZipReaderImpl(
-			DependenciesTestUtil.getDependencyAsInputStream(
-				getClass(), _ZIP_FILE_PATH));
+		try (ZipReader zipReader = new ZipReaderImpl(
+				DependenciesTestUtil.getDependencyAsInputStream(
+					getClass(), _ZIP_FILE_PATH))) {
 
-		List<String> entries = zipReader.getFolderEntries("foo");
+			List<String> entries = zipReader.getFolderEntries("foo");
 
-		Assert.assertNotNull(entries);
-		Assert.assertTrue(entries.isEmpty());
-
-		zipReader.close();
+			Assert.assertNotNull(entries);
+			Assert.assertTrue(entries.isEmpty());
+		}
 	}
 
 	private static final String _FILE_PATH_0 = "0.txt";
