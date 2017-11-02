@@ -26,7 +26,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Locale;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -73,15 +72,10 @@ public class ModuleLocalizationFileTest {
 					continue;
 				}
 
-				ResourceBundle defaultLocaleResourceBundle =
-					resourceBundleLoader.loadResourceBundle(
-						LocaleUtil.getDefault());
-
-				ResourceBundle localeResourceBundle =
-					resourceBundleLoader.loadResourceBundle(locale);
-
 				if (Objects.equals(
-						defaultLocaleResourceBundle, localeResourceBundle)) {
+						resourceBundleLoader.loadResourceBundle(
+							LocaleUtil.getDefault()),
+						resourceBundleLoader.loadResourceBundle(locale))) {
 
 					sb.append(StringPool.NEW_LINE);
 					sb.append(
