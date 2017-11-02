@@ -80,8 +80,7 @@ public class ModuleLocalizationFileTest {
 				ResourceBundle localeResourceBundle =
 					resourceBundleLoader.loadResourceBundle(locale);
 
-				if ((localeResourceBundle == null) ||
-					Objects.equals(
+				if (Objects.equals(
 						defaultLocaleResourceBundle, localeResourceBundle)) {
 
 					sb.append(StringPool.NEW_LINE);
