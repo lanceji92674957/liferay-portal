@@ -51,6 +51,7 @@ import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
+import java.io.File;
 import java.io.InputStream;
 
 import java.util.HashMap;
@@ -212,34 +213,36 @@ public class ExportImportHelperUtilTest {
 
 		zipWriter.addEntry("/manifest.xml", xml);
 
-		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
-			zipWriter.getFile());
+		File zipWriterFile = zipWriter.getFile();
 
-		PortletDataContext portletDataContextImport =
-			PortletDataContextFactoryUtil.createImportPortletDataContext(
-				_liveGroup.getCompanyId(), _liveGroup.getGroupId(),
-				new HashMap<String, String[]>(), new TestUserIdStrategy(),
-				zipReader);
+		try (ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
+				zipWriterFile)) {
 
-		MissingReferences missingReferences =
-			ExportImportHelperUtil.validateMissingReferences(
-				portletDataContextImport);
+			PortletDataContext portletDataContextImport =
+				PortletDataContextFactoryUtil.createImportPortletDataContext(
+					_liveGroup.getCompanyId(), _liveGroup.getGroupId(),
+					new HashMap<String, String[]>(), new TestUserIdStrategy(),
+					zipReader);
 
-		Map<String, MissingReference> dependencyMissingReferences =
-			missingReferences.getDependencyMissingReferences();
+			MissingReferences missingReferences =
+				ExportImportHelperUtil.validateMissingReferences(
+					portletDataContextImport);
 
-		Map<String, MissingReference> weakMissingReferences =
-			missingReferences.getWeakMissingReferences();
+			Map<String, MissingReference> dependencyMissingReferences =
+				missingReferences.getDependencyMissingReferences();
 
-		Assert.assertEquals(
-			dependencyMissingReferences.toString(), 2,
-			dependencyMissingReferences.size());
-		Assert.assertEquals(
-			weakMissingReferences.toString(), 1, weakMissingReferences.size());
+			Map<String, MissingReference> weakMissingReferences =
+				missingReferences.getWeakMissingReferences();
 
-		FileUtil.delete(zipWriter.getFile());
+			Assert.assertEquals(
+				dependencyMissingReferences.toString(), 2,
+				dependencyMissingReferences.size());
+			Assert.assertEquals(
+				weakMissingReferences.toString(), 1,
+				weakMissingReferences.size());
 
-		zipReader.close();
+			FileUtil.delete(zipWriter.getFile());
+		}
 	}
 
 	protected String getContent(String fileName) throws Exception {

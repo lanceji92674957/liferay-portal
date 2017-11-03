@@ -132,9 +132,7 @@ public class LayoutImportController implements ImportController {
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws Exception {
 
-		ZipReader zipReader = null;
-
-		try {
+		try (ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file)) {
 
 			// LAR validation
 
@@ -151,8 +149,6 @@ public class LayoutImportController implements ImportController {
 
 			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 				targetGroupId, privateLayout);
-
-			zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
 			validateFile(
 				layoutSet.getCompanyId(), targetGroupId, parameterMap,
@@ -183,10 +179,6 @@ public class LayoutImportController implements ImportController {
 		}
 		finally {
 			ExportImportThreadLocal.setLayoutDataDeletionImportInProcess(false);
-
-			if (zipReader != null) {
-				zipReader.close();
-			}
 		}
 	}
 
@@ -247,9 +239,7 @@ public class LayoutImportController implements ImportController {
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws Exception {
 
-		ZipReader zipReader = null;
-
-		try {
+		try (ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file)) {
 			ExportImportThreadLocal.setLayoutValidationInProcess(true);
 
 			Map<String, Serializable> settingsMap =
@@ -263,8 +253,6 @@ public class LayoutImportController implements ImportController {
 
 			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 				targetGroupId, privateLayout);
-
-			zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
 			validateFile(
 				layoutSet.getCompanyId(), targetGroupId, parameterMap,
@@ -290,10 +278,6 @@ public class LayoutImportController implements ImportController {
 		}
 		finally {
 			ExportImportThreadLocal.setLayoutValidationInProcess(false);
-
-			if (zipReader != null) {
-				zipReader.close();
-			}
 		}
 	}
 

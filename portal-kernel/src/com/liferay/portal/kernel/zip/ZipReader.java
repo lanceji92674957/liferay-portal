@@ -23,7 +23,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
-public interface ZipReader {
+public interface ZipReader extends AutoCloseable {
 
 	public void close();
 

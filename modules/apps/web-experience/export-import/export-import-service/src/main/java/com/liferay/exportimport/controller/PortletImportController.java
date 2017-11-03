@@ -153,9 +153,7 @@ public class PortletImportController implements ImportController {
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws Exception {
 
-		ZipReader zipReader = null;
-
-		try {
+		try (ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file)) {
 
 			// LAR validation
 
@@ -171,8 +169,6 @@ public class PortletImportController implements ImportController {
 			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
 
 			Layout layout = _layoutLocalService.getLayout(targetPlid);
-
-			zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
 			validateFile(
 				layout.getCompanyId(), targetGroupId, portletId, zipReader);
@@ -203,10 +199,6 @@ public class PortletImportController implements ImportController {
 		finally {
 			ExportImportThreadLocal.setPortletDataDeletionImportInProcess(
 				false);
-
-			if (zipReader != null) {
-				zipReader.close();
-			}
 		}
 	}
 
@@ -632,9 +624,7 @@ public class PortletImportController implements ImportController {
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws Exception {
 
-		ZipReader zipReader = null;
-
-		try {
+		try (ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file)) {
 			ExportImportThreadLocal.setPortletValidationInProcess(true);
 
 			Map<String, Serializable> settingsMap =
@@ -645,8 +635,6 @@ public class PortletImportController implements ImportController {
 			long targetPlid = MapUtil.getLong(settingsMap, "targetPlid");
 
 			Layout layout = _layoutLocalService.getLayout(targetPlid);
-
-			zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
 			validateFile(
 				layout.getCompanyId(), targetGroupId, portletId, zipReader);
@@ -669,10 +657,6 @@ public class PortletImportController implements ImportController {
 		}
 		finally {
 			ExportImportThreadLocal.setPortletValidationInProcess(false);
-
-			if (zipReader != null) {
-				zipReader.close();
-			}
 		}
 	}
 

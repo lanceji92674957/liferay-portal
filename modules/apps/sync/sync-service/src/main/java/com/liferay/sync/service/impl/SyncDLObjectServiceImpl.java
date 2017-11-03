@@ -976,12 +976,8 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 		Map<String, Object> responseMap = new HashMap<>();
 
-		ZipReader zipReader = null;
-
-		try {
+		try (ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(zipFile)) {
 			SyncUtil.checkSyncEnabled(0);
-
-			zipReader = ZipReaderFactoryUtil.getZipReader(zipFile);
 
 			String manifest = zipReader.getEntryAsString("/manifest.json");
 
@@ -1029,11 +1025,6 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 		}
 		catch (PortalException pe) {
 			throw new PortalException(SyncUtil.buildExceptionMessage(pe), pe);
-		}
-		finally {
-			if (zipReader != null) {
-				zipReader.close();
-			}
 		}
 
 		return responseMap;

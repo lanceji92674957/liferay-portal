@@ -285,13 +285,12 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 			stagedModel, fileName);
 
 		try (InputStream inputStream =
-				portletDataContext.getZipEntryAsInputStream(modelPath)) {
-
-			ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
-				inputStream);
+				portletDataContext.getZipEntryAsInputStream(modelPath);
+			ZipReader inputStreamzipReader = ZipReaderFactoryUtil.getZipReader(
+				inputStream)) {
 
 			Document document = UnsecureSAXReaderUtil.read(
-				zipReader.getEntryAsString("manifest.xml"));
+				inputStreamzipReader.getEntryAsString("manifest.xml"));
 
 			Element rootElement = document.getRootElement();
 
@@ -309,7 +308,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 					String path = element.attributeValue("path");
 
 					Layout layout = (Layout)portletDataContext.fromXML(
-						zipReader.getEntryAsString(path));
+						inputStreamzipReader.getEntryAsString(path));
 
 					importedLayouts.add(layout);
 				}
@@ -319,9 +318,6 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 				importedLayouts.toString(), 1, importedLayouts.size());
 
 			return importedLayouts.get(0);
-		}
-		finally {
-			zipReader.close();
 		}
 	}
 
