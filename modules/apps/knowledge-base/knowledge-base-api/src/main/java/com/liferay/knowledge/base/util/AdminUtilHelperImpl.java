@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.knowledge.base.service.util;
+package com.liferay.knowledge.base.util;
 
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -43,15 +43,16 @@ import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.OutputDocument;
 import net.htmlparser.jericho.Source;
 
-/**
- * @author Peter Shin
- * @author Brian Wing Shun Chan
- * @deprecated As of 1.4.0, with no direct replacement
- */
-@Deprecated
-public class AdminUtil {
+import org.osgi.service.component.annotations.Component;
 
-	public static String[] escapeSections(String[] sections) {
+/**
+ * @author Lance Ji
+ */
+@Component(immediate = true)
+public class AdminUtilHelperImpl implements AdminUtilHelper {
+
+	@Override
+	public String[] escapeSections(String[] sections) {
 		if (ArrayUtil.isEmpty(sections)) {
 			return new String[0];
 		}
@@ -66,7 +67,8 @@ public class AdminUtil {
 		return sections;
 	}
 
-	public static DiffVersionsInfo getDiffVersionsInfo(
+	@Override
+	public DiffVersionsInfo getDiffVersionsInfo(
 		long groupId, long kbArticleResourcePrimKey, int sourceVersion,
 		int targetVersion) {
 
@@ -106,7 +108,8 @@ public class AdminUtil {
 		return new DiffVersionsInfo(diffVersions, nextVersion, previousVersion);
 	}
 
-	public static String getKBArticleDiff(
+	@Override
+	public String getKBArticleDiff(
 			long resourcePrimKey, int sourceVersion, int targetVersion,
 			String param)
 		throws Exception {
@@ -200,7 +203,8 @@ public class AdminUtil {
 		return outputDocument.toString();
 	}
 
-	public static String[] unescapeSections(String sections) {
+	@Override
+	public String[] unescapeSections(String sections) {
 		String[] sectionsArray = StringUtil.split(sections);
 
 		for (int i = 0; i < sectionsArray.length; i++) {
