@@ -12,42 +12,36 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.exportimport.portlet.preferences.processor;
+package com.liferay.user.groups.admin.internal.exportimport.portlet.preferences.processor;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.portlet.preferences.processor.Capability;
-import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateExportCapability;
+import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateCapabilityRegister;
+import org.osgi.service.component.annotations.Component;
 
 import javax.portlet.PortletPreferences;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Mate Thurzo
  */
-@Component(
-	immediate = true,
-	service =
-		{Capability.class, BlogsPortletDisplayTemplateExportCapability.class}
-)
-public class BlogsPortletDisplayTemplateExportCapability
-	extends PortletDisplayTemplateExportCapability {
+@Component(immediate = true)
+public class UserGroupsAdminPortletDisplayTemplateExportCapabilityRegister
+	implements PortletDisplayTemplateCapabilityRegister {
 
 	@Override
-	protected String getDisplayStyle(
+	public String getDisplayStyle(
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences) {
 
-		return BlogsExportImportPortletPreferencesProcessorUtil.getDisplayStyle(
-			portletPreferences);
+		return UserGroupsAdminExportImportPortletPreferencesProcessorUtil.
+			getDisplayStyle(portletPreferences);
 	}
 
 	@Override
-	protected long getDisplayStyleGroupId(
+	public long getDisplayStyleGroupId(
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences) {
 
-		return BlogsExportImportPortletPreferencesProcessorUtil.
+		return UserGroupsAdminExportImportPortletPreferencesProcessorUtil.
 			getDisplayStyleGroupId(portletPreferences);
 	}
 
