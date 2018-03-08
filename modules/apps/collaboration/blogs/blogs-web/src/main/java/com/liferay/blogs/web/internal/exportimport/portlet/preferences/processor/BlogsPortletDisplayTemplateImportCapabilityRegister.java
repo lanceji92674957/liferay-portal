@@ -15,16 +15,22 @@
 package com.liferay.blogs.web.internal.exportimport.portlet.preferences.processor;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
 import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateCapabilityRegister;
-import org.osgi.service.component.annotations.Component;
 
 import javax.portlet.PortletPreferences;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Mate Thurzo
  */
 @Component(
 	immediate = true,
+	property = {
+		"name=BlogsIMportCapabilityRegister",
+		"type=" + PortletDisplayTemplateConstants.DATA_IMPORT_HANDLE
+	},
 	service = BlogsPortletDisplayTemplateImportCapabilityRegister.class
 )
 public class BlogsPortletDisplayTemplateImportCapabilityRegister

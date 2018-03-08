@@ -15,16 +15,22 @@
 package com.liferay.user.groups.admin.internal.exportimport.portlet.preferences.processor;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
 import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateCapabilityRegister;
-import org.osgi.service.component.annotations.Component;
 
 import javax.portlet.PortletPreferences;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Mate Thurzo
  */
 @Component(
 	immediate = true,
+	property = {
+		"name=UserGroupsAdminExportCapabilityRegister",
+		"type=" + PortletDisplayTemplateConstants.DATA_EXPORT_HANDLE
+	},
 	service = UserGroupsAdminPortletDisplayTemplateExportCapabilityRegister.class
 )
 public class UserGroupsAdminPortletDisplayTemplateExportCapabilityRegister

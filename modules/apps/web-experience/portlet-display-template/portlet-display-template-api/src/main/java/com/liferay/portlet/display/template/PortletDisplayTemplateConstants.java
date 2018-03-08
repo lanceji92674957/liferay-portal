@@ -24,6 +24,8 @@ public class PortletDisplayTemplateConstants {
 
 	public static final String CURRENT_URL = "currentURL";
 
+	public static final String DATA_EXPORT_HANDLE = "export";
+
 	public static final String DATA_HANDLE_TYPE = "type";
 
 	public static final String DATA_IMPORT_HANDLE = "import";
