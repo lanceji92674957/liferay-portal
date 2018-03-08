@@ -47,6 +47,17 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class PortletDisplayTemplateImportCapability implements Capability {
 
+	public PortletDisplayTemplateImportCapability() {
+	}
+
+	public PortletDisplayTemplateImportCapability(
+		PortletDisplayTemplateCapabilityRegister
+			portletDisplayTemplateCapabilityRegister) {
+
+		_portletDisplayTemplateCapabilityRegister =
+			portletDisplayTemplateCapabilityRegister;
+	}
+
 	@Override
 	public PortletPreferences process(
 			PortletDataContext portletDataContext,
@@ -103,6 +114,12 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 		PortletPreferences portletPreferences) {
 
 		try {
+			if (_portletDisplayTemplateCapabilityRegister != null) {
+				return _portletDisplayTemplateCapabilityRegister.
+					getDisplayStyleGroupId(
+						portletDataContext, portletId, portletPreferences);
+			}
+
 			Portlet portlet = _portletLocalService.getPortletById(
 				portletDataContext.getCompanyId(), portletId);
 
@@ -175,6 +192,8 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 	@Reference
 	protected Portal portal;
 
+	private PortletDisplayTemplateCapabilityRegister
+		_portletDisplayTemplateCapabilityRegister;
 	private PortletLocalService _portletLocalService;
 
 }
