@@ -30,4 +30,5 @@ public interface PortletDisplayTemplateCapabilityRegister {
 	public long getDisplayStyleGroupId(
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences);
+
 }
