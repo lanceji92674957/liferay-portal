@@ -15,6 +15,7 @@
 package com.liferay.asset.publisher.web.internal.exportimport.portlet.preferences.processor;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
 import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateCapabilityRegister;
 
 import javax.portlet.PortletPreferences;
@@ -28,7 +29,13 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Mate Thurzo
  */
-@Component(immediate = true)
+@Component(
+	immediate = true,
+	property = {
+		"name=AssetExportCapabilityRegister",
+		"type=" + PortletDisplayTemplateConstants.DATA_EXPORT_HANDLE
+	}
+)
 public class AssetPublisherPortletDisplayTemplateExportCapabilityRegister
 	implements PortletDisplayTemplateCapabilityRegister {
 
