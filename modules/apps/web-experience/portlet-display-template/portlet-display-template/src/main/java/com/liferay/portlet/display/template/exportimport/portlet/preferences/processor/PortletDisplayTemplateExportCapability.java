@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
-import com.liferay.portlet.display.template.PortletDisplayTemplateUtil;
+import com.liferay.portlet.display.template.internal.PortletDisplayTemplateUtil;
 
 import javax.portlet.PortletPreferences;
 

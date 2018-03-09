@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.display.template;
+package com.liferay.portlet.display.template.internal;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
 import java.util.List;
 import java.util.Map;
