@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.display.template.exportimport.portlet.preferences.processor;
+package com.liferay.portlet.display.template.internal.exportimport.portlet.preferences.processor;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -26,10 +26,11 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
-import com.liferay.portlet.display.template.PortletDisplayTemplateUtil;
+import com.liferay.portlet.display.template.internal.PortletDisplayTemplateUtil;
 
 import javax.portlet.PortletPreferences;
 
+import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateCapabilityRegister;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

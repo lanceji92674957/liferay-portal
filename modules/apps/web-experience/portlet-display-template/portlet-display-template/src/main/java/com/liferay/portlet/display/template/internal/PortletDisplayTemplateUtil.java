@@ -12,22 +12,21 @@
  * details.
  */
 
-package com.liferay.portlet.display.template;
+package com.liferay.portlet.display.template.internal;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
-
-import java.util.List;
-import java.util.Map;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eduardo Garcia

@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.display.template.exportimport.portlet.preferences.processor;
+package com.liferay.portlet.display.template.internal.exportimport.portlet.preferences.processor;
 
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
-
-import java.util.Dictionary;
-
+import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateCapabilityRegister;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
@@ -31,6 +29,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
+
+import java.util.Dictionary;
 
 /**
  * @author Lance Ji
