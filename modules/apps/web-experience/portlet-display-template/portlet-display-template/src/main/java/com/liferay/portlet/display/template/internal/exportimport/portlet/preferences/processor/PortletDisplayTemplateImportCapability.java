@@ -39,11 +39,14 @@ import java.util.Map;
 /**
  * @author Mate Thurzo
  */
-@Component(
-	immediate = true,
-	service = {Capability.class, PortletDisplayTemplateImportCapability.class}
-)
 public class PortletDisplayTemplateImportCapability implements Capability {
+
+	public PortletDisplayTemplateImportCapability(
+		Portal portal,
+		PortletLocalService portletLocalService) {
+		this.portal = portal;
+		_portletLocalService = portletLocalService;
+	}
 
 	@Override
 	public PortletPreferences process(
@@ -55,6 +58,7 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 			return importDisplayStyle(
 				portletDataContext, portletDataContext.getPortletId(),
 				portletPreferences);
+
 		}
 		catch (Exception e) {
 			return portletPreferences;
@@ -162,15 +166,6 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 
 		return processedPreferences;
 	}
-
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
-	@Reference
 	protected Portal portal;
 
 	private PortletLocalService _portletLocalService;

@@ -30,17 +30,17 @@ import com.liferay.portlet.display.template.internal.PortletDisplayTemplateUtil;
 
 import javax.portlet.PortletPreferences;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Mate Thurzo
  */
-@Component(
-	immediate = true,
-	service = {Capability.class, PortletDisplayTemplateExportCapability.class}
-)
 public class PortletDisplayTemplateExportCapability implements Capability {
+
+	public PortletDisplayTemplateExportCapability(
+		Portal portal,
+		PortletLocalService portletLocalService) {
+		this.portal = portal;
+		_portletLocalService = portletLocalService;
+	}
 
 	@Override
 	public PortletPreferences process(
@@ -147,14 +147,6 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 		return 0;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
-	@Reference
 	protected Portal portal;
 
 	private PortletLocalService _portletLocalService;
