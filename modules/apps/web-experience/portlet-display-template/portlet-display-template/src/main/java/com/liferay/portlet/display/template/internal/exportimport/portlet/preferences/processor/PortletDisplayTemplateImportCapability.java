@@ -29,12 +29,12 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.CustomizedImportCapabilityRegister;
 import com.liferay.portlet.display.template.internal.PortletDisplayTemplateUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
-import java.util.Map;
 
 /**
  * @author Mate Thurzo
@@ -42,10 +42,18 @@ import java.util.Map;
 public class PortletDisplayTemplateImportCapability implements Capability {
 
 	public PortletDisplayTemplateImportCapability(
-		Portal portal,
-		PortletLocalService portletLocalService) {
+		CustomizedImportCapabilityRegister importCapabilityRegister,
+		Portal portal, PortletLocalService portletLocalService) {
+
 		this.portal = portal;
+		_importCapabilityRegister = importCapabilityRegister;
 		_portletLocalService = portletLocalService;
+	}
+
+	public PortletDisplayTemplateImportCapability(
+		Portal portal, PortletLocalService portletLocalService) {
+
+		this(null, portal, portletLocalService);
 	}
 
 	@Override
@@ -58,7 +66,6 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 			return importDisplayStyle(
 				portletDataContext, portletDataContext.getPortletId(),
 				portletPreferences);
-
 		}
 		catch (Exception e) {
 			return portletPreferences;
@@ -87,6 +94,11 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 		PortletPreferences portletPreferences) {
 
 		try {
+			if (_importCapabilityRegister != null) {
+				return _importCapabilityRegister.getDisplayStyle(
+					portletDataContext, portletId, portletPreferences);
+			}
+
 			Portlet portlet = _portletLocalService.getPortletById(
 				portletDataContext.getCompanyId(), portletId);
 
@@ -105,6 +117,11 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 		PortletPreferences portletPreferences) {
 
 		try {
+			if (_importCapabilityRegister != null) {
+				return _importCapabilityRegister.getDisplayStyleGroupId(
+					portletDataContext, portletId, portletPreferences);
+			}
+
 			Portlet portlet = _portletLocalService.getPortletById(
 				portletDataContext.getCompanyId(), portletId);
 
@@ -166,8 +183,10 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 
 		return processedPreferences;
 	}
+
 	protected Portal portal;
 
+	private CustomizedImportCapabilityRegister _importCapabilityRegister;
 	private PortletLocalService _portletLocalService;
 
 }

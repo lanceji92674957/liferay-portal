@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.CustomizedExportCapabilityRegister;
 import com.liferay.portlet.display.template.internal.PortletDisplayTemplateUtil;
 
 import javax.portlet.PortletPreferences;
@@ -36,10 +37,18 @@ import javax.portlet.PortletPreferences;
 public class PortletDisplayTemplateExportCapability implements Capability {
 
 	public PortletDisplayTemplateExportCapability(
-		Portal portal,
-		PortletLocalService portletLocalService) {
+		CustomizedExportCapabilityRegister exportCapabilityRegister,
+		Portal portal, PortletLocalService portletLocalService) {
+
 		this.portal = portal;
+		_exportCapabilityRegister = exportCapabilityRegister;
 		_portletLocalService = portletLocalService;
+	}
+
+	public PortletDisplayTemplateExportCapability(
+		Portal portal, PortletLocalService portletLocalService) {
+
+		this(null, portal, portletLocalService);
 	}
 
 	@Override
@@ -115,6 +124,11 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 		PortletPreferences portletPreferences) {
 
 		try {
+			if (_exportCapabilityRegister != null) {
+				return _exportCapabilityRegister.getDisplayStyle(
+					portletDataContext, portletId, portletPreferences);
+			}
+
 			Portlet portlet = _portletLocalService.getPortletById(
 				portletDataContext.getCompanyId(), portletId);
 
@@ -133,6 +147,11 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 		PortletPreferences portletPreferences) {
 
 		try {
+			if (_exportCapabilityRegister != null) {
+				return _exportCapabilityRegister.getDisplayStyleGroupId(
+					portletDataContext, portletId, portletPreferences);
+			}
+
 			Portlet portlet = _portletLocalService.getPortletById(
 				portletDataContext.getCompanyId(), portletId);
 
@@ -149,6 +168,7 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 
 	protected Portal portal;
 
+	private CustomizedExportCapabilityRegister _exportCapabilityRegister;
 	private PortletLocalService _portletLocalService;
 
 }

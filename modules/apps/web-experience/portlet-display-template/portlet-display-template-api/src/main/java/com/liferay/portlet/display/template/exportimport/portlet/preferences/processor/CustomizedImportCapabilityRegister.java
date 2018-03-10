@@ -12,38 +12,23 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.exportimport.portlet.preferences.processor;
+package com.liferay.portlet.display.template.exportimport.portlet.preferences.processor;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.CustomizedExportCapabilityRegister;
 
 import javax.portlet.PortletPreferences;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
- * @author Mate Thurzo
+ * @author Lance Ji
  */
-@Component(immediate = true, property = "name=BlogsExportCapabilityRegister")
-public class BlogsPortletDisplayTemplateExportCapability
-	implements CustomizedExportCapabilityRegister {
+public interface CustomizedImportCapabilityRegister {
 
-	@Override
 	public String getDisplayStyle(
 		PortletDataContext portletDataContext, String portletId,
-		PortletPreferences portletPreferences) {
+		PortletPreferences portletPreferences);
 
-		return BlogsExportImportPortletPreferencesProcessorUtil.getDisplayStyle(
-			portletPreferences);
-	}
-
-	@Override
 	public long getDisplayStyleGroupId(
 		PortletDataContext portletDataContext, String portletId,
-		PortletPreferences portletPreferences) {
-
-		return BlogsExportImportPortletPreferencesProcessorUtil.
-			getDisplayStyleGroupId(portletPreferences);
-	}
+		PortletPreferences portletPreferences);
 
 }
