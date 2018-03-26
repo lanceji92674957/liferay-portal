@@ -312,6 +312,10 @@ public class I18nFilter extends BasePortalFilter {
 
 		String defaultLanguageId = getDefaultLanguageId(request);
 
+		if(!LanguageUtil.isAvailableLocale(requestedLanguageId)) {
+			requestedLanguageId = defaultLanguageId;
+		}
+
 		if (Validator.isNull(requestedLanguageId)) {
 			requestedLanguageId = defaultLanguageId;
 		}
