@@ -161,23 +161,13 @@
 		<!-- Module checks -->
 
 		<check name="JavaModuleComponentCheck">
-			<property name="allowedClassNames" value="com.liferay.adaptive.media.content.transformer.ContentTransformerHandler" />
 			<property name="allowedClassNames" value="com.liferay.adaptive.media.document.library.internal.repository.registry.BaseOverridingRepositoryDefiner" />
 			<property name="allowedClassNames" value="com.liferay.adaptive.media.image.optimizer.AMImageOptimizerUtil" />
-			<property name="allowedClassNames" value="com.liferay.application.list.PanelAppRegistry" />
-			<property name="allowedClassNames" value="com.liferay.application.list.PanelCategoryRegistry" />
-			<property name="allowedClassNames" value="com.liferay.application.list.adapter.PortletPanelAppAdapterRegistry" />
 			<property name="allowedClassNames" value="com.liferay.application.list.deploy.hot.LegacyPortletPanelAppHotDeployListener" />
-			<property name="allowedClassNames" value="com.liferay.asset.display.contributor.AssetDisplayContributorTracker" />
-			<property name="allowedClassNames" value="com.liferay.blogs.configuration.definition.BlogsGroupServiceConfigurationBeanDeclaration" />
-			<property name="allowedClassNames" value="com.liferay.blogs.configuration.definition.BlogsGroupServiceConfigurationPidMapping" />
 			<property name="allowedClassNames" value="com.liferay.blogs.demo.data.creator.internal.BaseBlogsEntryDemoDataCreator" />
 			<property name="allowedClassNames" value="com.liferay.blogs.verify.BlogsServiceVerifyProcess" />
 			<property name="allowedClassNames" value="com.liferay.blogs.verify.VerifyBlogsTrackbacks" />
-			<property name="allowedClassNames" value="com.liferay.bookmarks.configuration.definition.BookmarksGroupServiceConfigurationBeanDeclaration" />
-			<property name="allowedClassNames" value="com.liferay.bookmarks.configuration.definition.BookmarksGroupServiceConfigurationPidMapping" />
 			<property name="allowedClassNames" value="com.liferay.captcha.configuration.CaptchaConfigurationModelListener" />
-			<property name="allowedClassNames" value="com.liferay.captcha.configuration.definition.CaptchaConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.captcha.recaptcha.ReCaptchaImpl" />
 			<property name="allowedClassNames" value="com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl" />
 			<property name="allowedClassNames" value="com.liferay.captcha.util.CaptchaUtil" />
