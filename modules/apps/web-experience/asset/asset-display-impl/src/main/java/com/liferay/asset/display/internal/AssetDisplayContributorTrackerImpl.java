@@ -30,11 +30,13 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  * @author Lance Ji
  */
 @Component(immediate = true, service = AssetDisplayContributorTracker.class)
-public class AssetDisplayContributorTrackerImpl implements
-	AssetDisplayContributorTracker {
+public class AssetDisplayContributorTrackerImpl
+	implements AssetDisplayContributorTracker {
+
 	@Override
 	public AssetDisplayContributor getAssetDisplayContributor(
 		String className) {
+
 		return null;
 	}
 
@@ -63,4 +65,5 @@ public class AssetDisplayContributorTrackerImpl implements
 
 	private final Map<String, AssetDisplayContributor>
 		_assetDisplayContributor = new ConcurrentHashMap<>();
+
 }
