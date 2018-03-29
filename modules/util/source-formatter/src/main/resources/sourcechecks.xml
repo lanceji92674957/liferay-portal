@@ -176,7 +176,6 @@
 			<property name="allowedClassNames" value="com.liferay.blogs.verify.VerifyBlogsTrackbacks" />
 			<property name="allowedClassNames" value="com.liferay.bookmarks.configuration.definition.BookmarksGroupServiceConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.bookmarks.configuration.definition.BookmarksGroupServiceConfigurationPidMapping" />
-			<property name="allowedClassNames" value="com.liferay.captcha.configuration.CaptchaConfigurationModelListener" />
 			<property name="allowedClassNames" value="com.liferay.captcha.configuration.definition.CaptchaConfigurationBeanDeclaration" />
 			<property name="allowedClassNames" value="com.liferay.captcha.recaptcha.ReCaptchaImpl" />
 			<property name="allowedClassNames" value="com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl" />
