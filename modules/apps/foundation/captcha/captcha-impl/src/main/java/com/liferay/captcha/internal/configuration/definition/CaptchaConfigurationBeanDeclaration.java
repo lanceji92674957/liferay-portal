@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.bookmarks.configuration.definition;
+package com.liferay.captcha.internal.configuration.definition;
 
-import com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration;
+import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Iván Zaera
+ * @author Pei-Jung Lan
  */
 @Component
-public class BookmarksGroupServiceConfigurationBeanDeclaration
+public class CaptchaConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return BookmarksGroupServiceConfiguration.class;
+		return CaptchaConfiguration.class;
 	}
 
 }
