@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.flags.configuration;
+package com.liferay.flags.web.internal.configuration;
 
+import com.liferay.flags.configuration.FlagsGroupServiceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
