@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.captcha.configuration.definition;
+package com.liferay.document.library.internal.definition;
 
-import com.liferay.captcha.configuration.CaptchaConfiguration;
+import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Pei-Jung Lan
+ * @author Drew Brokke
  */
 @Component
-public class CaptchaConfigurationBeanDeclaration
+public class DLConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return CaptchaConfiguration.class;
+		return DLConfiguration.class;
 	}
 
 }
