@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.journal.configuration.definition;
+package com.liferay.journal.web.configuration.definition;
 
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.journal.constants.JournalConstants;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -23,12 +24,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Juergen Kappler
  */
 @Component
-public class JournalGroupServiceConfigurationBeanDeclaration
-	implements ConfigurationBeanDeclaration {
+public class JournalGroupServiceConfigurationPidMapping
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
 		return JournalGroupServiceConfiguration.class;
+	}
+
+	@Override
+	public String getConfigurationPid() {
+		return JournalConstants.SERVICE_NAME;
 	}
 
 }

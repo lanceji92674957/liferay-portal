@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.journal.configuration.definition;
+package com.liferay.journal.web.configuration.definition;
 
-import com.liferay.journal.configuration.JournalFileUploadsConfiguration;
+import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Drew Brokke
+ * @author Juergen Kappler
  */
 @Component
-public class JournalFileUploadsConfigurationBeanDeclaration
+public class JournalGroupServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return JournalFileUploadsConfiguration.class;
+		return JournalGroupServiceConfiguration.class;
 	}
 
 }
