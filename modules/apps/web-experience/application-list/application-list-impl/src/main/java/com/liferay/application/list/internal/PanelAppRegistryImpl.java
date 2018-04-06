@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Lance Ji
  */
-@Component(immediate = true, service = PanelAppRegistry.class)
+@Component(immediate = true)
 public class PanelAppRegistryImpl implements PanelAppRegistry {
 
 	@Override

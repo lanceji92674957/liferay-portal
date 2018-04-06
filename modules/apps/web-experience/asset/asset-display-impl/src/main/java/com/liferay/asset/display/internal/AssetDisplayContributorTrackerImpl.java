@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Lance Ji
  */
-@Component(immediate = true, service = AssetDisplayContributorTracker.class)
+@Component(immediate = true)
 public class AssetDisplayContributorTrackerImpl
 	implements AssetDisplayContributorTracker {
 

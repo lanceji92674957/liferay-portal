@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Lance Ji
  */
-@Component(immediate = true, service = PanelCategoryRegistry.class)
+@Component(immediate = true)
 public class PanelCategoryRegistryImpl implements PanelCategoryRegistry {
 
 	@Override
