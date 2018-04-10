@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.application.list.adapter;
+package com.liferay.application.list.internal.adapter;
 
 import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.adapter.PortletPanelAppAdapterServiceTrackerCustomizer;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -35,7 +36,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = Object.class)
+@Component(immediate = true, service = {})
 public class PortletPanelAppAdapterRegistry {
 
 	@Activate
