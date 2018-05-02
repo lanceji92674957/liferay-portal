@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.captcha.util;
+package com.liferay.captcha.internal.util;
 
 import com.liferay.captcha.configuration.CaptchaConfiguration;
+import com.liferay.captcha.util.CaptchaHelper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
