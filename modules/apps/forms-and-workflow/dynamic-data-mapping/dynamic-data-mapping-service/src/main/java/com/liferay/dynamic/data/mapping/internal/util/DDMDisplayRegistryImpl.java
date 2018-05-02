@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.util;
+package com.liferay.dynamic.data.mapping.internal.util;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.util.DDMDisplay;
+import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
