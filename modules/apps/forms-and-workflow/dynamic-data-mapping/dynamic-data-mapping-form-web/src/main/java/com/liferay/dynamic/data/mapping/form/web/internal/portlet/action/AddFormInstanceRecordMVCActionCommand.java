@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
-import com.liferay.captcha.util.CaptchaUtil;
+import com.liferay.captcha.util.CaptchaHelper;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormWebKeys;
@@ -30,6 +30,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -223,7 +224,9 @@ public class AddFormInstanceRecordMVCActionCommand
 
 		if (formInstanceSettings.requireCaptcha()) {
 			try {
-				CaptchaUtil.check(actionRequest);
+				Captcha captcha = _captchaHelper.getCaptcha();
+
+				captcha.check(actionRequest);
 			}
 			catch (CaptchaTextException cte) {
 				SessionErrors.add(
@@ -237,6 +240,9 @@ public class AddFormInstanceRecordMVCActionCommand
 	@Reference
 	private AddFormInstanceRecordMVCCommandHelper
 		_addFormInstanceMVCCommandHelper;
+
+	@Reference
+	private CaptchaHelper _captchaHelper;
 
 	private DDMFormEmailNotificationSender _ddmFormEmailNotificationSender;
 	private DDMFormInstanceRecordService _ddmFormInstanceRecordService;
