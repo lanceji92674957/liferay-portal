@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.captcha.recaptcha;
+package com.liferay.captcha.internal.recaptcha;
 
 import com.liferay.captcha.configuration.CaptchaConfiguration;
-import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
+import com.liferay.captcha.internal.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
