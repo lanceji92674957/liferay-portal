@@ -14,7 +14,7 @@
 
 package com.liferay.application.list.deploy.hot.test;
 
-import com.liferay.application.list.deploy.hot.LegacyPortletPanelAppHotDeployListener;
+import com.liferay.application.list.test.internal.deploy.hot.LegacyPortletPanelAppHotDeployListener;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.deploy.hot.DependencyManagementThreadLocal;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
