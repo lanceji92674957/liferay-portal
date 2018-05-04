@@ -12,8 +12,12 @@
  * details.
  */
 
-package com.liferay.application.list;
+package com.liferay.application.list.internal;
 
+import com.liferay.application.list.GroupProvider;
+import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.PanelAppRegistry;
+import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.util.PanelCategoryServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
