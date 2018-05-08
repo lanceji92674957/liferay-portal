@@ -27,9 +27,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sync.constants.SyncConstants;
 import com.liferay.sync.constants.SyncPortletKeys;
 import com.liferay.sync.exception.OAuthPortletUndeployedException;
-import com.liferay.sync.oauth.helper.SyncOAuthHelperUtil;
 import com.liferay.sync.service.configuration.SyncServiceConfigurationKeys;
 import com.liferay.sync.util.SyncHelper;
+import com.liferay.sync.web.internal.oauth.helper.SyncOAuthHelperUtil;
 
 import java.io.IOException;
 
