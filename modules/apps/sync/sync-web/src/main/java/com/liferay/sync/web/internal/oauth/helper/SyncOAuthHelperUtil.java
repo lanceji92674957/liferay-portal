@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.sync.oauth.helper;
+package com.liferay.sync.web.internal.oauth.helper;
 
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.sync.oauth.helper.SyncOAuthHelper;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
