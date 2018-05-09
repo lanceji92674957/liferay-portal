@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.xstream.configurator;
+package com.liferay.exportimport.internal.util;
 
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
+import com.liferay.xstream.configurator.XStreamConfigurator;
 
 import java.util.Collections;
 import java.util.HashSet;
