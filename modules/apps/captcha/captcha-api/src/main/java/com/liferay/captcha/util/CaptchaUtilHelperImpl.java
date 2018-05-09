@@ -17,26 +17,12 @@ package com.liferay.captcha.util;
 import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
-import com.liferay.portal.kernel.captcha.CaptchaException;
 
-import java.io.IOException;
-
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.Map;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.osgi.framework.BundleContext;
-import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -50,69 +36,14 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.captcha.configuration.CaptchaConfiguration",
-	immediate = true, service = CaptchaUtil.class
+	immediate = true, service = CaptchaUtilHelper.class
 )
-public class CaptchaUtil {
+public class CaptchaUtilHelperImpl implements CaptchaUtilHelper {
 
-	public static void check(HttpServletRequest request)
-		throws CaptchaException {
-
-		getCaptcha().check(request);
-	}
-
-	public static void check(PortletRequest portletRequest)
-		throws CaptchaException {
-
-		getCaptcha().check(portletRequest);
-	}
-
-	public static Captcha getCaptcha() {
+	public Captcha getCaptcha() {
 		String captchaClassName = _captchaConfiguration.captchaEngine();
 
 		return _serviceTrackerMap.getService(captchaClassName);
-	}
-
-	public static String getTaglibPath() {
-		return getCaptcha().getTaglibPath();
-	}
-
-	public static boolean isEnabled(HttpServletRequest request) {
-		return getCaptcha().isEnabled(request);
-	}
-
-	public static boolean isEnabled(PortletRequest portletRequest) {
-		return getCaptcha().isEnabled(portletRequest);
-	}
-
-	public static void serveImage(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
-
-		getCaptcha().serveImage(request, response);
-	}
-
-	public static void serveImage(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws IOException {
-
-		getCaptcha().serveImage(resourceRequest, resourceResponse);
-	}
-
-	public static void setCaptcha(Captcha captcha) throws Exception {
-		Configuration configuration = _configurationAdmin.getConfiguration(
-			CaptchaConfiguration.class.getName(), StringPool.QUESTION);
-
-		Dictionary<String, Object> properties = configuration.getProperties();
-
-		if (properties == null) {
-			properties = new Hashtable<>();
-		}
-
-		Class<?> clazz = captcha.getClass();
-
-		properties.put("captchaEngine", clazz.getName());
-
-		configuration.update(properties);
 	}
 
 	@Activate
@@ -141,8 +72,8 @@ public class CaptchaUtil {
 		_configurationAdmin = configurationAdmin;
 	}
 
-	private static volatile CaptchaConfiguration _captchaConfiguration;
-	private static ConfigurationAdmin _configurationAdmin;
-	private static ServiceTrackerMap<String, Captcha> _serviceTrackerMap;
+	private volatile CaptchaConfiguration _captchaConfiguration;
+	private ConfigurationAdmin _configurationAdmin;
+	private ServiceTrackerMap<String, Captcha> _serviceTrackerMap;
 
 }
