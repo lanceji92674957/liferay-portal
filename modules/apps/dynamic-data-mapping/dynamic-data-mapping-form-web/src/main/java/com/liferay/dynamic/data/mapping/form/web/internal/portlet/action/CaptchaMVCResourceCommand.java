@@ -14,8 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
-import com.liferay.captcha.util.CaptchaUtil;
+import com.liferay.captcha.util.CaptchaUtilHelper;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
+import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 
@@ -23,6 +24,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -42,7 +44,12 @@ public class CaptchaMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		CaptchaUtil.serveImage(resourceRequest, resourceResponse);
+		Captcha captcha = _captchaUtilHelper.getCaptcha();
+
+		captcha.serveImage(resourceRequest, resourceResponse);
 	}
+
+	@Reference
+	private CaptchaUtilHelper _captchaUtilHelper;
 
 }

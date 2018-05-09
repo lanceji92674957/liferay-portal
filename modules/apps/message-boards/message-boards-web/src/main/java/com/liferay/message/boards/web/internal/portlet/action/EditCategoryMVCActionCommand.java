@@ -15,7 +15,7 @@
 package com.liferay.message.boards.web.internal.portlet.action;
 
 import com.liferay.captcha.configuration.CaptchaConfiguration;
-import com.liferay.captcha.util.CaptchaUtil;
+import com.liferay.captcha.util.CaptchaUtilHelper;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.exception.CategoryNameException;
 import com.liferay.message.boards.exception.MailingListEmailAddressException;
@@ -27,6 +27,7 @@ import com.liferay.message.boards.exception.MailingListOutUserNameException;
 import com.liferay.message.boards.exception.NoSuchCategoryException;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryService;
+import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.model.TrashedModel;
@@ -262,7 +263,9 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 		if (categoryId <= 0) {
 			if (captchaConfiguration.messageBoardsEditMessageCaptchaEnabled()) {
-				CaptchaUtil.check(actionRequest);
+				Captcha captcha = _captchaUtilHelper.getCaptcha();
+
+				captcha.check(actionRequest);
 			}
 
 			// Add category
@@ -287,6 +290,9 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 				mergeWithParentCategory, serviceContext);
 		}
 	}
+
+	@Reference
+	private CaptchaUtilHelper _captchaUtilHelper;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

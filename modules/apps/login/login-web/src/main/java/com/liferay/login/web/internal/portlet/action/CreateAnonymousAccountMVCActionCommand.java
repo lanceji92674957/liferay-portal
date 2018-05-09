@@ -15,9 +15,10 @@
 package com.liferay.login.web.internal.portlet.action;
 
 import com.liferay.captcha.configuration.CaptchaConfiguration;
-import com.liferay.captcha.util.CaptchaUtil;
+import com.liferay.captcha.util.CaptchaUtilHelper;
 import com.liferay.login.web.internal.constants.LoginPortletKeys;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
@@ -121,7 +122,9 @@ public class CreateAnonymousAccountMVCActionCommand
 		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
 
 		if (captchaConfiguration.createAccountCaptchaEnabled()) {
-			CaptchaUtil.check(actionRequest);
+			Captcha captcha = _captchaUtilHelper.getCaptcha();
+
+			captcha.check(actionRequest);
 		}
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
@@ -334,6 +337,9 @@ public class CreateAnonymousAccountMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CreateAnonymousAccountMVCActionCommand.class);
+
+	@Reference
+	private CaptchaUtilHelper _captchaUtilHelper;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
