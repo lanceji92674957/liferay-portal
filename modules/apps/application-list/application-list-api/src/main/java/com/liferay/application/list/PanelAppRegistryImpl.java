@@ -55,8 +55,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(immediate = true, service = PanelAppRegistry.class)
-public class PanelAppRegistryImpl {
+public class PanelAppRegistryImpl implements PanelAppRegistry {
 
+	@Override
 	public PanelApp getFirstPanelApp(
 		String parentPanelCategoryKey, PermissionChecker permissionChecker,
 		Group group) {
@@ -77,10 +78,12 @@ public class PanelAppRegistryImpl {
 		return null;
 	}
 
+	@Override
 	public List<PanelApp> getPanelApps(PanelCategory parentPanelCategory) {
 		return getPanelApps(parentPanelCategory.getKey());
 	}
 
+	@Override
 	public List<PanelApp> getPanelApps(
 		PanelCategory parentPanelCategory,
 		final PermissionChecker permissionChecker, final Group group) {
@@ -89,6 +92,7 @@ public class PanelAppRegistryImpl {
 			parentPanelCategory.getKey(), permissionChecker, group);
 	}
 
+	@Override
 	public List<PanelApp> getPanelApps(String parentPanelCategoryKey) {
 		List<PanelApp> panelApps = _serviceTrackerMap.getService(
 			parentPanelCategoryKey);
@@ -100,6 +104,7 @@ public class PanelAppRegistryImpl {
 		return panelApps;
 	}
 
+	@Override
 	public List<PanelApp> getPanelApps(
 		String parentPanelCategoryKey,
 		final PermissionChecker permissionChecker, final Group group) {
@@ -129,6 +134,7 @@ public class PanelAppRegistryImpl {
 			});
 	}
 
+	@Override
 	public int getPanelAppsNotificationsCount(
 		String parentPanelCategoryKey, PermissionChecker permissionChecker,
 		Group group, User user) {
@@ -183,7 +189,7 @@ public class PanelAppRegistryImpl {
 	protected PortletLocalService portletLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PanelAppRegistry.class);
+		PanelAppRegistryImpl.class);
 
 	@Reference
 	private PortletPreferencesFactory _portletPreferencesFactory;

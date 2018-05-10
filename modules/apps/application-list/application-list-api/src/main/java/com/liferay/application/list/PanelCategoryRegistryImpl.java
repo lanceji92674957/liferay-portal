@@ -47,14 +47,16 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Adolfo Pérez
  */
 @Component(immediate = true, service = PanelCategoryRegistry.class)
-public class PanelCategoryRegistryImpl {
+public class PanelCategoryRegistryImpl implements PanelCategoryRegistry {
 
+	@Override
 	public List<PanelCategory> getChildPanelCategories(
 		PanelCategory panelCategory) {
 
 		return getChildPanelCategories(panelCategory.getKey());
 	}
 
+	@Override
 	public List<PanelCategory> getChildPanelCategories(
 		PanelCategory panelCategory, final PermissionChecker permissionChecker,
 		final Group group) {
@@ -63,6 +65,7 @@ public class PanelCategoryRegistryImpl {
 			panelCategory.getKey(), permissionChecker, group);
 	}
 
+	@Override
 	public List<PanelCategory> getChildPanelCategories(
 		String panelCategoryKey) {
 
@@ -76,6 +79,7 @@ public class PanelCategoryRegistryImpl {
 		return childPanelCategories;
 	}
 
+	@Override
 	public List<PanelCategory> getChildPanelCategories(
 		String panelCategoryKey, final PermissionChecker permissionChecker,
 		final Group group) {
@@ -106,6 +110,7 @@ public class PanelCategoryRegistryImpl {
 			});
 	}
 
+	@Override
 	public int getChildPanelCategoriesNotificationsCount(
 		PanelCategoryHelper panelCategoryHelper, String panelCategoryKey,
 		PermissionChecker permissionChecker, Group group, User user) {
@@ -133,6 +138,7 @@ public class PanelCategoryRegistryImpl {
 		return count;
 	}
 
+	@Override
 	public PanelCategory getFirstChildPanelCategory(
 		String panelCategoryKey, PermissionChecker permissionChecker,
 		Group group) {
@@ -154,6 +160,7 @@ public class PanelCategoryRegistryImpl {
 		return null;
 	}
 
+	@Override
 	public PanelCategory getPanelCategory(String panelCategoryKey) {
 		PanelCategory panelCategory =
 			_panelCategoryServiceTrackerMap.getService(panelCategoryKey);
@@ -207,7 +214,7 @@ public class PanelCategoryRegistryImpl {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PanelCategoryRegistry.class);
+		PanelCategoryRegistryImpl.class);
 
 	private ServiceTrackerMap<String, List<PanelCategory>>
 		_childPanelCategoriesServiceTrackerMap;
