@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.application.list;
+package com.liferay.application.list.internal;
 
+import com.liferay.application.list.PanelCategory;
+import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.application.list.util.PanelCategoryServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
