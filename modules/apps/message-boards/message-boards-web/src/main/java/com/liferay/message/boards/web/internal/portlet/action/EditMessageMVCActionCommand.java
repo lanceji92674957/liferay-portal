@@ -17,7 +17,7 @@ package com.liferay.message.boards.web.internal.portlet.action;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.captcha.configuration.CaptchaConfiguration;
-import com.liferay.captcha.util.CaptchaUtil;
+import com.liferay.captcha.util.CaptchaUtilHelper;
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
@@ -44,6 +44,7 @@ import com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUplo
 import com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUploadHandlerProvider;
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryReference;
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryUtil;
+import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -430,7 +431,9 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				if (captchaConfiguration.
 						messageBoardsEditMessageCaptchaEnabled()) {
 
-					CaptchaUtil.check(actionRequest);
+					Captcha captcha = _captchaUtilHelper.getCaptcha();
+
+					captcha.check(actionRequest);
 				}
 
 				if (threadId <= 0) {
@@ -610,6 +613,9 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	@Reference
+	private CaptchaUtilHelper _captchaUtilHelper;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
