@@ -25,6 +25,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.exportimport.internal.util.ExportImportPermissionUtil;
+import com.liferay.exportimport.internal.util.XStreamConfiguratorRegistryUtil;
 import com.liferay.exportimport.internal.xstream.ConverterAdapter;
 import com.liferay.exportimport.internal.xstream.XStreamStagedModelTypeHierarchyPermission;
 import com.liferay.exportimport.internal.xstream.converter.TimestampConverter;
@@ -105,7 +106,6 @@ import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.xstream.configurator.XStreamConfigurator;
-import com.liferay.xstream.configurator.XStreamConfiguratorRegistryUtil;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.ClassLoaderReference;
