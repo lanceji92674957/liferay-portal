@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.application.list.deploy.hot;
+package com.liferay.application.list.test.internal.deploy.hot;
 
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.adapter.PortletPanelAppAdapter;

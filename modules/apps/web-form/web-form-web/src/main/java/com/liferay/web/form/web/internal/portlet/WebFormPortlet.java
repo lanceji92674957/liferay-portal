@@ -14,7 +14,7 @@
 
 package com.liferay.web.form.web.internal.portlet;
 
-import com.liferay.captcha.util.CaptchaUtil;
+import com.liferay.captcha.util.CaptchaUtilHelper;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.expando.kernel.model.ExpandoRow;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
@@ -24,6 +24,7 @@ import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -161,7 +162,9 @@ public class WebFormPortlet extends MVCPortlet {
 
 		if (requireCaptcha) {
 			try {
-				CaptchaUtil.check(actionRequest);
+				Captcha captcha = _captchaUtilHelper.getCaptcha();
+
+				captcha.check(actionRequest);
 			}
 			catch (CaptchaTextException cte) {
 
@@ -546,7 +549,9 @@ public class WebFormPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		CaptchaUtil.serveImage(resourceRequest, resourceResponse);
+		Captcha captcha = _captchaUtilHelper.getCaptcha();
+
+		captcha.serveImage(resourceRequest, resourceResponse);
 	}
 
 	@Reference(unbind = "-")
@@ -642,6 +647,9 @@ public class WebFormPortlet extends MVCPortlet {
 	private static ExpandoTableLocalService _expandoTableLocalService;
 	private static ExpandoValueLocalService _expandoValueLocalService;
 	private static MailService _mailService;
+
+	@Reference
+	private CaptchaUtilHelper _captchaUtilHelper;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
