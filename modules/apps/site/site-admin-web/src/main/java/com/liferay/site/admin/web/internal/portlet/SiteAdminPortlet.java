@@ -871,7 +871,16 @@ public class SiteAdminPortlet extends MVCPortlet {
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
 
-		typeSettingsProperties.putAll(formTypeSettingsProperties);
+		for (String key : formTypeSettingsProperties.keySet()) {
+			String value = formTypeSettingsProperties.getProperty(key);
+
+			if (Validator.isNull(value)) {
+				typeSettingsProperties.remove(key);
+			}
+			else {
+				typeSettingsProperties.put(key, value);
+			}
+		}
 
 		// Virtual hosts
 
