@@ -49,7 +49,7 @@ public class JDBCConnectionLeakDetectionTestCallback
 			ConnectionPoolMetrics connectionPoolMetrics = _registry.getService(
 				serviceReference);
 
-			int activeNumber = _connectionPoolActiveNumbers.remove(
+			int activeNumber = _connectionPoolActiveNumbers.get(
 				connectionPoolMetrics.getConnectionPoolName());
 
 			Assert.assertEquals(
