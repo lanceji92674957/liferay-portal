@@ -177,6 +177,8 @@ public class CalendarSearcherTest {
 		addCalendar(
 			RandomTestUtil.randomString(), "Another description example");
 
+		Assert.assertNotNull("abc","def");
+
 		assertSearch("Another The Example", 1);
 	}
 
