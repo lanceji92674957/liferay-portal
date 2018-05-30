@@ -185,6 +185,9 @@ public class SCRReferenceDynamicGreedyTest {
 		finally {
 			serviceRegistration.unregister();
 
+			Assert.assertNotNull(
+				"BindingCalls changed to null in finally block", bindingCalls);
+
 			bindingCalls.add("step3");
 
 			if (serviceRegistration2 != null) {
