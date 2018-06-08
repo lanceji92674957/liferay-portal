@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.staging.model.listener.StagingModelListener;
 
 import org.osgi.service.component.annotations.Component;
@@ -34,7 +35,9 @@ public class DLFileEntryTypeStagingModelListener
 	public void onAfterCreate(DLFileEntryType dlFileEntryType)
 		throws ModelListenerException {
 
-		if (!dlFileEntryType.isExportable()) {
+		if (!(dlFileEntryType instanceof StagedGroupedModel) ||
+			!dlFileEntryType.isExportable()) {
+
 			return;
 		}
 
@@ -45,7 +48,9 @@ public class DLFileEntryTypeStagingModelListener
 	public void onAfterRemove(DLFileEntryType dlFileEntryType)
 		throws ModelListenerException {
 
-		if (!dlFileEntryType.isExportable()) {
+		if (!(dlFileEntryType instanceof StagedGroupedModel) ||
+			!dlFileEntryType.isExportable()) {
+
 			return;
 		}
 
