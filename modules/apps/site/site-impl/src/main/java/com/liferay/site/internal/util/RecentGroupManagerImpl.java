@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.util;
+package com.liferay.site.internal.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.site.util.GroupURLProvider;
+import com.liferay.site.util.RecentGroupManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
