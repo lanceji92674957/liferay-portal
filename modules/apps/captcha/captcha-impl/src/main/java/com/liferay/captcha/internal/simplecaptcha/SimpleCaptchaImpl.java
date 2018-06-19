@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.captcha.simplecaptcha;
+package com.liferay.captcha.internal.simplecaptcha;
 
 import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
