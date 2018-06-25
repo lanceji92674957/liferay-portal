@@ -43,6 +43,18 @@ public class ClassLoaderPool {
 
 		if ((contextName != null) && !contextName.equals("null")) {
 			classLoader = _classLoaders.get(contextName);
+
+			if (classLoader == null) {
+				List<VersionedClassLoader> classLoadersInOrder =
+					_fallbackClassLoaders.get(_getSymbolicName(contextName));
+
+				if (classLoadersInOrder != null) {
+					VersionedClassLoader latestVersionClassLoader =
+						classLoadersInOrder.get(0);
+
+					classLoader = latestVersionClassLoader.getClassLoader();
+				}
+			}
 		}
 
 		if (classLoader == null) {
