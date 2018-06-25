@@ -98,6 +98,67 @@ public class ClassLoaderPool {
 		}
 	}
 
+	private static int _compareVersions(String version1, String version2) {
+		int[] splitVersion1 = _split(version1, "\\.", 0);
+		int[] splitVersion2 = _split(version2, "\\.", 0);
+
+		int i = 0;
+
+		while ((i < splitVersion1.length) && (i < splitVersion2.length) &&
+			   (splitVersion1[i] == splitVersion2[i])) {
+
+			i++;
+		}
+
+		if ((i < splitVersion1.length) && (i < splitVersion2.length)) {
+			int diff = splitVersion2[i] - splitVersion1[i];
+
+			return Integer.signum(diff);
+		}
+
+		return Integer.signum(splitVersion2.length - splitVersion1.length);
+	}
+
+	private static String _getSymbolicName(String contextName) {
+		int pos = contextName.indexOf("_");
+
+		if (pos < 0) {
+			return contextName;
+		}
+
+		return contextName.substring(0, pos);
+	}
+
+	private static String _getVersion(String contextName) {
+		int pos = contextName.indexOf("_");
+
+		if (pos < 0) {
+			return "";
+		}
+
+		return contextName.substring(pos + 1);
+	}
+
+	private static int[] _split(String s, String delimiter, int x) {
+		String[] array = s.split(delimiter);
+
+		int[] newArray = new int[array.length];
+
+		for (int i = 0; i < array.length; i++) {
+			int value = x;
+
+			try {
+				value = Integer.parseInt(array[i]);
+			}
+			catch (Exception e) {
+			}
+
+			newArray[i] = value;
+		}
+
+		return newArray;
+	}
+
 	private static final Map<String, ClassLoader> _classLoaders =
 		new ConcurrentHashMap<>();
 	private static final Map<ClassLoader, String> _contextNames =
