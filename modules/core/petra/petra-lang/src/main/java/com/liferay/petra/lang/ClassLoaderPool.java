@@ -14,6 +14,9 @@
 
 package com.liferay.petra.lang;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -80,6 +83,8 @@ public class ClassLoaderPool {
 	public static void register(String contextName, ClassLoader classLoader) {
 		_classLoaders.put(contextName, classLoader);
 		_contextNames.put(classLoader, contextName);
+
+		_registerFallback(contextName, classLoader);
 	}
 
 	public static void unregister(ClassLoader classLoader) {
@@ -139,6 +144,37 @@ public class ClassLoaderPool {
 		return contextName.substring(pos + 1);
 	}
 
+	private static void _registerFallback(
+		String contextName, ClassLoader classLoader) {
+
+		String version = _getVersion(contextName);
+
+		if (version.isEmpty()) {
+			return;
+		}
+
+		String symbolicName = _getSymbolicName(contextName);
+
+		List<VersionedClassLoader> versionedClassLoaders =
+			_fallbackClassLoaders.get(symbolicName);
+
+		if (versionedClassLoaders == null) {
+			versionedClassLoaders = Collections.synchronizedList(
+				new ArrayList<VersionedClassLoader>());
+		}
+
+		versionedClassLoaders.add(
+			new VersionedClassLoader(version, classLoader));
+
+		if (versionedClassLoaders.size() > 1) {
+			Collections.sort(
+				versionedClassLoaders,
+				(o1, o2) -> _compareVersions(o1.getVersion(), o2.getVersion()));
+		}
+
+		_fallbackClassLoaders.put(symbolicName, versionedClassLoaders);
+	}
+
 	private static int[] _split(String s, String delimiter, int x) {
 		String[] array = s.split(delimiter);
 
@@ -163,6 +199,8 @@ public class ClassLoaderPool {
 		new ConcurrentHashMap<>();
 	private static final Map<ClassLoader, String> _contextNames =
 		new ConcurrentHashMap<>();
+	private static final Map<String, List<VersionedClassLoader>>
+		_fallbackClassLoaders = new ConcurrentHashMap<>();
 
 	static {
 		register("GlobalClassLoader", ClassLoaderPool.class.getClassLoader());
