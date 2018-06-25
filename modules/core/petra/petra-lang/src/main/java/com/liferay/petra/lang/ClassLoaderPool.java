@@ -14,6 +14,7 @@
 
 package com.liferay.petra.lang;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -98,10 +99,73 @@ public class ClassLoaderPool {
 		}
 	}
 
+	private static int _compareVersions(String version1, String version2) {
+		int[] splitVersion1 = _split(version1);
+		int[] splitVersion2 = _split(version2);
+
+		int i = 0;
+
+		while ((i < splitVersion1.length) && (i < splitVersion2.length) &&
+			   (splitVersion1[i] == splitVersion2[i])) {
+
+			i++;
+		}
+
+		if ((i < splitVersion1.length) && (i < splitVersion2.length)) {
+			int diff = splitVersion2[i] - splitVersion1[i];
+
+			return Integer.signum(diff);
+		}
+
+		return Integer.signum(splitVersion2.length - splitVersion1.length);
+	}
+
+	private static String _getSymbolicName(String contextName) {
+		int pos = contextName.indexOf("_");
+
+		if (pos < 0) {
+			return contextName;
+		}
+
+		return contextName.substring(0, pos);
+	}
+
+	private static String _getVersion(String contextName) {
+		int pos = contextName.indexOf("_");
+
+		if (pos < 0) {
+			return null;
+		}
+
+		return contextName.substring(pos + 1);
+	}
+
+	private static int[] _split(String s) {
+		String[] array = s.split("\\.");
+
+		int[] newArray = new int[array.length];
+
+		for (int i = 0; i < array.length; i++) {
+			int value = 0;
+
+			try {
+				value = Integer.parseInt(array[i]);
+			}
+			catch (Exception e) {
+			}
+
+			newArray[i] = value;
+		}
+
+		return newArray;
+	}
+
 	private static final Map<String, ClassLoader> _classLoaders =
 		new ConcurrentHashMap<>();
 	private static final Map<ClassLoader, String> _contextNames =
 		new ConcurrentHashMap<>();
+	private static final Map<String, List<VersionedClassLoader>>
+		_fallbackClassLoaders = new ConcurrentHashMap<>();
 
 	static {
 		register("GlobalClassLoader", ClassLoaderPool.class.getClassLoader());
