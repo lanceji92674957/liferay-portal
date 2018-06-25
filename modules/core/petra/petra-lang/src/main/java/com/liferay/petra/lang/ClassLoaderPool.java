@@ -92,6 +92,7 @@ public class ClassLoaderPool {
 
 		if (contextName != null) {
 			_classLoaders.remove(contextName);
+			_unregisterFallback(contextName);
 		}
 	}
 
@@ -100,6 +101,7 @@ public class ClassLoaderPool {
 
 		if (classLoader != null) {
 			_contextNames.remove(classLoader);
+			_unregisterFallback(contextName);
 		}
 	}
 
@@ -193,6 +195,22 @@ public class ClassLoaderPool {
 		}
 
 		return newArray;
+	}
+
+	private static void _unregisterFallback(String contextName) {
+		String symbolicName = _getSymbolicName(contextName);
+		String version = _getVersion(contextName);
+
+		List<VersionedClassLoader> classLoadersInOrder =
+			_fallbackClassLoaders.get(symbolicName);
+
+		for (VersionedClassLoader versionedClassLoader : classLoadersInOrder) {
+			if (version.equals(versionedClassLoader.getVersion())) {
+				classLoadersInOrder.remove(versionedClassLoader);
+
+				break;
+			}
+		}
 	}
 
 	private static final Map<String, ClassLoader> _classLoaders =
