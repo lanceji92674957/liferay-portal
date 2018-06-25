@@ -107,4 +107,24 @@ public class ClassLoaderPool {
 		register("GlobalClassLoader", ClassLoaderPool.class.getClassLoader());
 	}
 
+	private static class VersionedClassLoader {
+
+		public ClassLoader getClassLoader() {
+			return _classLoader;
+		}
+
+		public String getVersion() {
+			return _version;
+		}
+
+		private VersionedClassLoader(String version, ClassLoader classLoader) {
+			_version = version;
+			_classLoader = classLoader;
+		}
+
+		private final ClassLoader _classLoader;
+		private final String _version;
+
+	}
+
 }
