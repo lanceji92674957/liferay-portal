@@ -17,8 +17,11 @@ package com.liferay.portal.cluster.multiple.internal;
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.StringPool;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Lance Ji
@@ -30,6 +33,8 @@ public class ClusterClassLoaderPool {
 
 		_classLoaders.put(contextName, classLoader);
 		_contextNames.put(classLoader, contextName);
+
+		_registerFallback(bundleInfo, classLoader);
 	}
 
 	public static void unregister(ClassLoader classLoader) {
@@ -40,6 +45,30 @@ public class ClusterClassLoaderPool {
 		}
 	}
 
+	private static void _registerFallback(
+		String[] bundleInfo, ClassLoader classLoader) {
+
+		if (bundleInfo[1] == null) {
+			return;
+		}
+
+		List<VersionedClassLoader> versionedClassLoaders =
+			_fallbackClassLoaders.get(bundleInfo[0]);
+
+		if (versionedClassLoaders == null) {
+			versionedClassLoaders = new CopyOnWriteArrayList<>();
+		}
+
+		versionedClassLoaders.add(
+			new VersionedClassLoader(classLoader, bundleInfo[1]));
+
+		if (versionedClassLoaders.size() > 1) {
+			Collections.sort(versionedClassLoaders);
+		}
+
+		_fallbackClassLoaders.put(bundleInfo[0], versionedClassLoaders);
+	}
+
 	private static String _toContextName(String[] bundleInfo) {
 		return bundleInfo[0].concat(StringPool.UNDERLINE).concat(bundleInfo[1]);
 	}
@@ -48,6 +77,8 @@ public class ClusterClassLoaderPool {
 		new ConcurrentHashMap<>();
 	private static final Map<ClassLoader, String> _contextNames =
 		new ConcurrentHashMap<>();
+	private static final Map<String, List<VersionedClassLoader>>
+		_fallbackClassLoaders = new ConcurrentHashMap<>();
 
 	static {
 		register(
