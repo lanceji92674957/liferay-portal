@@ -14,9 +14,12 @@
 
 package com.liferay.portal.cluster.multiple.internal;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -59,6 +62,75 @@ public class ClusterClassLoaderPool {
 		register(
 			new String[] {_PORTAL_SERVLETCONTEXTNAME, null},
 			ClusterClassLoaderPool.class.getClassLoader());
+	}
+
+	private static class VersionedClassLoader
+		implements Comparable<VersionedClassLoader> {
+
+		@Override
+		public int compareTo(VersionedClassLoader versionedClassLoader) {
+			int[] comparedVersion = versionedClassLoader.getSplitVersion();
+			int i = 0;
+
+			while ((i < _splitVersion.length) && (i < comparedVersion.length) &&
+				   (_splitVersion[i] == comparedVersion[i])) {
+
+				i++;
+			}
+
+			if ((i < _splitVersion.length) && (i < comparedVersion.length)) {
+				int diff = comparedVersion[i] - _splitVersion[i];
+
+				return Integer.signum(diff);
+			}
+
+			return Integer.signum(
+				comparedVersion.length - _splitVersion.length);
+		}
+
+		public ClassLoader getClassLoader() {
+			return _classLoader;
+		}
+
+		public int[] getSplitVersion() {
+			return _splitVersion;
+		}
+
+		public String getVersion() {
+			return _version;
+		}
+
+		private VersionedClassLoader(ClassLoader classLoader, String version) {
+			_classLoader = classLoader;
+			_version = version;
+
+			_splitVersion = _split(version);
+		}
+
+		private int[] _split(String s) {
+			List<String> array = StringUtil.split(s, CharPool.PERIOD);
+
+			int[] newArray = new int[array.size()];
+
+			for (int i = 0; i < array.size(); i++) {
+				int value = 0;
+
+				try {
+					value = Integer.parseInt(array.get(i));
+				}
+				catch (Exception e) {
+				}
+
+				newArray[i] = value;
+			}
+
+			return newArray;
+		}
+
+		private final ClassLoader _classLoader;
+		private final int[] _splitVersion;
+		private final String _version;
+
 	}
 
 }
