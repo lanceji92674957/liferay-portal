@@ -14,9 +14,11 @@
 
 package com.liferay.petra.lang;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Maps servlet context names to/from the servlet context's class loader.
@@ -81,6 +83,8 @@ public class ClassLoaderPool {
 	public static void register(String contextName, ClassLoader classLoader) {
 		_classLoaders.put(contextName, classLoader);
 		_contextNames.put(classLoader, contextName);
+
+		_registerFallback(contextName, classLoader);
 	}
 
 	public static void unregister(ClassLoader classLoader) {
@@ -140,6 +144,34 @@ public class ClassLoaderPool {
 		return contextName.substring(pos + 1);
 	}
 
+	private static void _registerFallback(
+		String contextName, ClassLoader classLoader) {
+
+		String version = _getVersion(contextName);
+
+		if (version == null) {
+			return;
+		}
+
+		String symbolicName = _getSymbolicName(contextName);
+
+		List<VersionedClassLoader> versionedClassLoaders =
+			_fallbackClassLoaders.get(symbolicName);
+
+		if (versionedClassLoaders == null) {
+			versionedClassLoaders = new CopyOnWriteArrayList<>();
+		}
+
+		versionedClassLoaders.add(
+			new VersionedClassLoader(version, classLoader));
+
+		if (versionedClassLoaders.size() > 1) {
+			Collections.sort(versionedClassLoaders);
+		}
+
+		_fallbackClassLoaders.put(symbolicName, versionedClassLoaders);
+	}
+
 	private static int[] _split(String s) {
 		String[] array = s.split("\\.");
 
@@ -171,7 +203,14 @@ public class ClassLoaderPool {
 		register("GlobalClassLoader", ClassLoaderPool.class.getClassLoader());
 	}
 
-	private static class VersionedClassLoader {
+	private static class VersionedClassLoader
+		implements Comparable<VersionedClassLoader> {
+
+		@Override
+		public int compareTo(VersionedClassLoader versionedClassLoader) {
+			return _compareVersions(
+				getVersion(), versionedClassLoader.getVersion());
+		}
 
 		public ClassLoader getClassLoader() {
 			return _classLoader;
