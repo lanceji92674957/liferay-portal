@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.Version;
+
 /**
  * @author Lance Ji
  */
@@ -61,6 +63,35 @@ public class ClusterClassLoaderPool {
 		register(
 			new String[] {_PORTAL_SERVLETCONTEXTNAME, null},
 			ClassLoaderUtil.getPortalClassLoader());
+	}
+
+	private static class VersionedClassLoader
+		implements Comparable<VersionedClassLoader> {
+
+		@Override
+		public int compareTo(VersionedClassLoader versionedClassLoader) {
+			Version comparedVersion = versionedClassLoader.getVersion();
+
+			return comparedVersion.compareTo(getVersion());
+		}
+
+		public ClassLoader getClassLoader() {
+			return _classLoader;
+		}
+
+		public Version getVersion() {
+			return _version;
+		}
+
+		private VersionedClassLoader(ClassLoader classLoader, String version) {
+			_classLoader = classLoader;
+
+			_version = new Version(version);
+		}
+
+		private final ClassLoader _classLoader;
+		private final Version _version;
+
 	}
 
 }
