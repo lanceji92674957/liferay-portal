@@ -58,4 +58,73 @@ public class ClusterClassLoaderPool {
 			ClassLoaderPool.class.getClassLoader());
 	}
 
+	private static class VersionedClassLoader
+		implements Comparable<VersionedClassLoader> {
+
+		@Override
+		public int compareTo(VersionedClassLoader versionedClassLoader) {
+			int[] comparedVersion = versionedClassLoader.getSplitVersion();
+			int i = 0;
+
+			while ((i < _splitVersion.length) && (i < comparedVersion.length) &&
+				   (_splitVersion[i] == comparedVersion[i])) {
+
+				i++;
+			}
+
+			if ((i < _splitVersion.length) && (i < comparedVersion.length)) {
+				int diff = comparedVersion[i] - _splitVersion[i];
+
+				return Integer.signum(diff);
+			}
+
+			return Integer.signum(
+				comparedVersion.length - _splitVersion.length);
+		}
+
+		public ClassLoader getClassLoader() {
+			return _classLoader;
+		}
+
+		public int[] getSplitVersion() {
+			return _splitVersion;
+		}
+
+		public String getVersion() {
+			return _version;
+		}
+
+		private VersionedClassLoader(ClassLoader classLoader, String version) {
+			_classLoader = classLoader;
+			_version = version;
+
+			_splitVersion = _split(version);
+		}
+
+		private int[] _split(String s) {
+			String[] array = s.split("\\.");
+
+			int[] newArray = new int[array.length];
+
+			for (int i = 0; i < array.length; i++) {
+				int value = 0;
+
+				try {
+					value = Integer.parseInt(array[i]);
+				}
+				catch (Exception e) {
+				}
+
+				newArray[i] = value;
+			}
+
+			return newArray;
+		}
+
+		private final ClassLoader _classLoader;
+		private final int[] _splitVersion;
+		private final String _version;
+
+	}
+
 }
