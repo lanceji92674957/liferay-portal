@@ -28,6 +28,48 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class ClusterClassLoaderPool {
 
+	public static ClassLoader getClassLoader(String contextName) {
+		ClassLoader classLoader = null;
+
+		if ((contextName != null) && !contextName.equals("null")) {
+			classLoader = _classLoaders.get(contextName);
+
+			if (classLoader == null) {
+				List<VersionedClassLoader> classLoadersInOrder =
+					_fallbackClassLoaders.get(_getSymbolicName(contextName));
+
+				if (classLoadersInOrder != null) {
+					VersionedClassLoader latestVersionClassLoader =
+						classLoadersInOrder.get(0);
+
+					classLoader = latestVersionClassLoader.getClassLoader();
+				}
+			}
+		}
+
+		if (classLoader == null) {
+			Thread currentThread = Thread.currentThread();
+
+			classLoader = currentThread.getContextClassLoader();
+		}
+
+		return classLoader;
+	}
+
+	public static String getContextName(ClassLoader classLoader) {
+		if (classLoader == null) {
+			return "null";
+		}
+
+		String contextName = _contextNames.get(classLoader);
+
+		if (contextName == null) {
+			contextName = "null";
+		}
+
+		return contextName;
+	}
+
 	public static void register(String[] bundleInfo, ClassLoader classLoader) {
 		String contextName = _toContextName(bundleInfo);
 
@@ -43,6 +85,16 @@ public class ClusterClassLoaderPool {
 		if (contextName != null) {
 			_classLoaders.remove(contextName);
 		}
+	}
+
+	private static String _getSymbolicName(String contextName) {
+		int pos = contextName.indexOf("_");
+
+		if (pos < 0) {
+			return contextName;
+		}
+
+		return contextName.substring(0, pos);
 	}
 
 	private static void _registerFallback(
