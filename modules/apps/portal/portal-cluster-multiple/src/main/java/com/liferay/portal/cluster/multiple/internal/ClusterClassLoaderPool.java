@@ -49,7 +49,25 @@ public class ClusterClassLoaderPool {
 
 		if (contextName != null) {
 			_classLoaders.remove(contextName);
+			_unregisterFallback(contextName);
 		}
+	}
+
+	private static String[] _parseContextName(String contextName) {
+		String[] bundleInfo = new String[2];
+
+		int pos = contextName.indexOf(StringPool.UNDERLINE);
+
+		if (pos < 0) {
+			bundleInfo[0] = contextName;
+			bundleInfo[1] = null;
+		}
+		else {
+			bundleInfo[0] = contextName.substring(0, pos);
+			bundleInfo[1] = contextName.substring(pos + 1);
+		}
+
+		return bundleInfo;
 	}
 
 	private static void _registerFallback(
@@ -74,6 +92,21 @@ public class ClusterClassLoaderPool {
 		}
 
 		_fallbackClassLoaders.put(bundleInfo[0], versionedClassLoaders);
+	}
+
+	private static void _unregisterFallback(String contextName) {
+		String[] bundleInfo = _parseContextName(contextName);
+
+		List<VersionedClassLoader> classLoadersInOrder =
+			_fallbackClassLoaders.get(bundleInfo[0]);
+
+		for (VersionedClassLoader versionedClassLoader : classLoadersInOrder) {
+			if (bundleInfo[1].equals(versionedClassLoader.getVersion())) {
+				classLoadersInOrder.remove(versionedClassLoader);
+
+				break;
+			}
+		}
 	}
 
 	private static final String _PORTAL_SERVLETCONTEXTNAME = StringPool.BLANK;
