@@ -316,6 +316,29 @@ public class Serializer {
 		buffer = null;
 	}
 
+	public class BufferOutputStream extends OutputStream {
+
+		@Override
+		public void write(byte[] bytes) {
+			write(bytes, 0, bytes.length);
+		}
+
+		@Override
+		public void write(byte[] bytes, int offset, int length) {
+			byte[] buffer = getBuffer(length);
+
+			System.arraycopy(bytes, offset, buffer, index, length);
+
+			index += length;
+		}
+
+		@Override
+		public void write(int b) {
+			getBuffer(1)[index++] = (byte)b;
+		}
+
+	}
+
 	/**
 	 * Returns the required buffer length. This method is final so JIT can
 	 * perform an inline expansion.
@@ -501,29 +524,6 @@ public class Serializer {
 
 		protected int count;
 		protected BufferNode headBufferNode;
-
-	}
-
-	protected class BufferOutputStream extends OutputStream {
-
-		@Override
-		public void write(byte[] bytes) {
-			write(bytes, 0, bytes.length);
-		}
-
-		@Override
-		public void write(byte[] bytes, int offset, int length) {
-			byte[] buffer = getBuffer(length);
-
-			System.arraycopy(bytes, offset, buffer, index, length);
-
-			index += length;
-		}
-
-		@Override
-		public void write(int b) {
-			getBuffer(1)[index++] = (byte)b;
-		}
 
 	}
 
