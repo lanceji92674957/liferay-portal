@@ -123,7 +123,7 @@ public class ClusterSerializer extends Serializer {
 		return ClusterClassLoaderPool.getContextName(classLoader);
 	}
 
-	private class BufferOutputStream extends OutputStream {
+	protected class BufferOutputStream extends OutputStream {
 
 		@Override
 		public void write(byte[] bytes) {
@@ -146,7 +146,7 @@ public class ClusterSerializer extends Serializer {
 
 	}
 
-	private class CLusterAnnotatedObjectOutputStream
+	protected class CLusterAnnotatedObjectOutputStream
 		extends ObjectOutputStream {
 
 		public CLusterAnnotatedObjectOutputStream(OutputStream outputStream)
