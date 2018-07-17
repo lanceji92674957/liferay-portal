@@ -16,6 +16,9 @@ package com.liferay.portal.custom.sql.extender.internal;
 
 import com.liferay.osgi.felix.util.AbstractExtender;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+
+import java.net.URL;
 
 import org.apache.felix.utils.extender.Extension;
 import org.apache.felix.utils.log.Logger;
@@ -25,6 +28,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lance Ji
@@ -52,6 +56,15 @@ public class CustomSQLExtender extends AbstractExtender {
 
 	@Override
 	protected Extension doCreateExtension(Bundle bundle) throws Exception {
+		String symbolicName = bundle.getSymbolicName();
+
+		if (symbolicName.startsWith("com.liferay") &&
+			(_validateSQLSource(bundle, _CUSTOM_SQL_SOURCE) ||
+			 _validateSQLSource(bundle, _META_INF0_CUSTOM_SQL_SOURCE))) {
+
+			return new CustomSQLExtension(bundle, _customSQL, _logger);
+		}
+
 		return null;
 	}
 
@@ -65,6 +78,26 @@ public class CustomSQLExtender extends AbstractExtender {
 		_logger.log(
 			Logger.LOG_WARNING, StringBundler.concat("[", bundle, "] ", s));
 	}
+
+	private boolean _validateSQLSource(Bundle bundle, String source)
+		throws Exception {
+
+		URL url = bundle.getResource(source);
+
+		if (url == null) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private static final String _CUSTOM_SQL_SOURCE = "custom-sql/default.xml";
+
+	private static final String _META_INF0_CUSTOM_SQL_SOURCE =
+		"META-INF/custom-sql/default.xml";
+
+	@Reference
+	private CustomSQL _customSQL;
 
 	private Logger _logger;
 
