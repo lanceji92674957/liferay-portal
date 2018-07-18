@@ -30,8 +30,20 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
+
 import org.apache.felix.utils.extender.Extension;
 import org.apache.felix.utils.log.Logger;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -39,15 +51,6 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
 
 /**
  * @author Lance Ji
@@ -77,7 +80,7 @@ public class CustomSQLExtension implements Extension {
 
 	@Override
 	public void start() throws Exception {
-		BundleContext bundleContext = _bundle.getBundleContext();
+		final BundleContext bundleContext = _bundle.getBundleContext();
 
 		String filterString = StringBundler.concat(
 			"(objectClass=", CustomSQLLoader.class.getName(), ")");
