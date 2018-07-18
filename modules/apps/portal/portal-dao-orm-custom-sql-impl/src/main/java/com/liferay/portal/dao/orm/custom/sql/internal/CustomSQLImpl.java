@@ -17,11 +17,10 @@ package com.liferay.portal.dao.orm.custom.sql.internal;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -35,19 +34,12 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -255,13 +247,7 @@ public class CustomSQLImpl implements CustomSQL {
 
 	@Override
 	public String get(Class<?> clazz, String id) {
-		Map<String, String> sqls = _sqlPool.get(FrameworkUtil.getBundle(clazz));
-
-		if (sqls == null) {
-			sqls = _loadCustomSQL(clazz);
-		}
-
-		return sqls.get(id);
+		return _customSQLPool.get(FrameworkUtil.getBundle(clazz), id);
 	}
 
 	@Override
@@ -804,37 +790,6 @@ public class CustomSQLImpl implements CustomSQL {
 		}
 	}
 
-	protected String transform(String sql) {
-		sql = _portal.transformCustomSQL(sql);
-
-		StringBundler sb = new StringBundler();
-
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(sql))) {
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				line = line.trim();
-
-				if (line.startsWith(StringPool.CLOSE_PARENTHESIS)) {
-					sb.setIndex(sb.index() - 1);
-				}
-
-				sb.append(line);
-
-				if (!line.endsWith(StringPool.OPEN_PARENTHESIS)) {
-					sb.append(StringPool.SPACE);
-				}
-			}
-		}
-		catch (IOException ioe) {
-			return sql;
-		}
-
-		return sb.toString();
-	}
-
 	private String _escapeWildCards(String keywords) {
 		if (!isVendorMySQL() && !isVendorOracle()) {
 			return keywords;
@@ -863,59 +818,6 @@ public class CustomSQLImpl implements CustomSQL {
 		return sb.toString();
 	}
 
-	private Map<String, String> _loadCustomSQL(Class<?> clazz) {
-		Map<String, String> sqls = new HashMap<>();
-
-		try {
-			ClassLoader classLoader = clazz.getClassLoader();
-
-			_read(classLoader, "custom-sql/default.xml", sqls);
-			_read(classLoader, "META-INF/custom-sql/default.xml", sqls);
-
-			_sqlPool.put(FrameworkUtil.getBundle(clazz), sqls);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return sqls;
-	}
-
-	private void _read(
-			ClassLoader classLoader, String source, Map<String, String> sqls)
-		throws Exception {
-
-		try (InputStream is = classLoader.getResourceAsStream(source)) {
-			if (is == null) {
-				return;
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Loading " + source);
-			}
-
-			Document document = UnsecureSAXReaderUtil.read(is);
-
-			Element rootElement = document.getRootElement();
-
-			for (Element sqlElement : rootElement.elements("sql")) {
-				String file = sqlElement.attributeValue("file");
-
-				if (Validator.isNotNull(file)) {
-					_read(classLoader, file, sqls);
-				}
-				else {
-					String id = sqlElement.attributeValue("id");
-					String content = transform(sqlElement.getText());
-
-					content = replaceIsNull(content);
-
-					sqls.put(id, content);
-				}
-			}
-		}
-	}
-
 	private static final boolean _CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED));
@@ -941,6 +843,9 @@ public class CustomSQLImpl implements CustomSQL {
 	private static final String _STATUS_KEYWORD = "[$STATUS$]";
 
 	private static final Log _log = LogFactoryUtil.getLog(CustomSQLImpl.class);
+
+	@Reference
+	private CustomSQLPool _customSQLPool;
 
 	private String _functionIsNotNull;
 	private String _functionIsNull;
