@@ -519,11 +519,6 @@ public class CustomSQLImpl implements CustomSQL {
 	}
 
 	@Override
-	public Map<String, String> removeSQL(Bundle bundle) {
-		return _sqlPool.remove(bundle);
-	}
-
-	@Override
 	public String replaceAndOperator(String sql, boolean andOperator) {
 		String andOrConnector = "OR";
 		String andOrNullCheck = "AND ? IS NOT NULL";

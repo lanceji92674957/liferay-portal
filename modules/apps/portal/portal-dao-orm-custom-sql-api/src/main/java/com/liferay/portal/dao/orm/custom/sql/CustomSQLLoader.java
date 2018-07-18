@@ -19,23 +19,18 @@ import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Bruno Farache
- * @author Raymond Augé
- * @see    com.liferay.util.dao.orm.CustomSQL
+ * @author Lance Ji
  */
-public interface CustomSQL {
+public interface CustomSQLLoader {
 
 	public String appendCriteria(String sql, String criteria);
 
-	public String get(Class<?> clazz, String id);
+	public String get(String id);
+
+	public String get(String id, QueryDefinition<?> queryDefinition);
 
 	public String get(
-		Class<?> clazz, String id, QueryDefinition<?> queryDefinition);
-
-	public String get(
-		Class<?> clazz, String id, QueryDefinition<?> queryDefinition,
-		String tableName);
+		String id, QueryDefinition<?> queryDefinition, String tableName);
 
 	public String[] keywords(String keywords);
 
