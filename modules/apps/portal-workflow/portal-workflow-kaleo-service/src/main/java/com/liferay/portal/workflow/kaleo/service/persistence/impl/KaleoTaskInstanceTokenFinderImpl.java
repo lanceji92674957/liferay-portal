@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLLoader;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -182,10 +182,10 @@ public class KaleoTaskInstanceTokenFinderImpl
 		String sql = null;
 
 		if (count) {
-			sql = _customSQL.get(getClass(), COUNT_BY_C_KTAI);
+			sql = _customSQL.get(COUNT_BY_C_KTAI);
 		}
 		else {
-			sql = _customSQL.get(getClass(), FIND_BY_C_KTAI);
+			sql = _customSQL.get(FIND_BY_C_KTAI);
 		}
 
 		sql = _customSQL.appendCriteria(
@@ -940,7 +940,10 @@ public class KaleoTaskInstanceTokenFinderImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"KaleoTaskInstanceToken.";
 
-	@ServiceReference(type = CustomSQL.class)
-	private CustomSQL _customSQL;
+	@ServiceReference(
+		filterString = "(bundle.symbolic.name=com.liferay.portal.workflow.kaleo.service)",
+		type = CustomSQLLoader.class
+	)
+	private CustomSQLLoader _customSQL;
 
 }

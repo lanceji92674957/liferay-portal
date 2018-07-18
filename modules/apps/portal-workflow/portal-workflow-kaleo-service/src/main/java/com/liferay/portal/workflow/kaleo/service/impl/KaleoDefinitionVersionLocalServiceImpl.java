@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.kaleo.service.impl;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLLoader;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Junction;
@@ -382,7 +382,10 @@ public class KaleoDefinitionVersionLocalServiceImpl
 		return kaleoDefinitionVersionIds;
 	}
 
-	@ServiceReference(type = CustomSQL.class)
-	private CustomSQL _customSQL;
+	@ServiceReference(
+		filterString = "(bundle.symbolic.name=com.liferay.portal.workflow.kaleo.service)",
+		type = CustomSQLLoader.class
+	)
+	private CustomSQLLoader _customSQL;
 
 }
