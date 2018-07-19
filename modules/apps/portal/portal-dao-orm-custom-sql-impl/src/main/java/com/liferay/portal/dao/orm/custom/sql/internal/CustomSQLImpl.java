@@ -41,14 +41,8 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleEvent;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.SynchronousBundleListener;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -194,24 +188,6 @@ public class CustomSQLImpl implements CustomSQL {
 		finally {
 			DataAccess.cleanUp(con);
 		}
-
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		bundleContext.addBundleListener(
-			new SynchronousBundleListener() {
-
-				@Override
-				public void bundleChanged(BundleEvent bundleEvent) {
-					if ((bundleEvent.getType() == BundleEvent.UNINSTALLED) ||
-						(bundleEvent.getType() == BundleEvent.UPDATED)) {
-
-						_sqlPool.remove(bundleEvent.getBundle());
-					}
-				}
-
-			});
 	}
 
 	@Override
@@ -856,8 +832,6 @@ public class CustomSQLImpl implements CustomSQL {
 	@Reference
 	private Portal _portal;
 
-	private final Map<Bundle, Map<String, String>> _sqlPool =
-		new ConcurrentHashMap<>();
 	private boolean _vendorDB2;
 	private boolean _vendorHSQL;
 	private boolean _vendorInformix;
