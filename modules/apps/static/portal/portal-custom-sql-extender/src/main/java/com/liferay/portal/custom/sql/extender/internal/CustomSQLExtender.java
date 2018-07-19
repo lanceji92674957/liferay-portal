@@ -25,6 +25,7 @@ import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -35,6 +36,17 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class CustomSQLExtender extends AbstractExtender {
+
+	@Override
+	public void bundleChanged(BundleEvent bundleEvent) {
+		if ((bundleEvent.getType() == BundleEvent.UNINSTALLED) ||
+			(bundleEvent.getType() == BundleEvent.UPDATED)) {
+
+			_customSQLPool.removeBundleSQL(bundleEvent.getBundle());
+		}
+
+		super.bundleChanged(bundleEvent);
+	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) throws Exception {
