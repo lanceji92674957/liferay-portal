@@ -232,7 +232,7 @@ public class CustomSQLImpl implements CustomSQL {
 				Bundle bundle, BundleEvent bundleEvent,
 				ClassLoader classLoader) {
 
-				_sqlPool.remove(bundleEvent.getBundle());
+				_sqlPool.remove(classLoader);
 			}
 
 		};
@@ -895,7 +895,7 @@ public class CustomSQLImpl implements CustomSQL {
 			_read(classLoader, "custom-sql/default.xml", sqls);
 			_read(classLoader, "META-INF/custom-sql/default.xml", sqls);
 
-			_sqlPool.put(FrameworkUtil.getBundle(clazz), sqls);
+			_sqlPool.put(classLoader, sqls);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -975,7 +975,7 @@ public class CustomSQLImpl implements CustomSQL {
 	@Reference
 	private Portal _portal;
 
-	private final Map<Bundle, Map<String, String>> _sqlPool =
+	private final Map<ClassLoader, Map<String, String>> _sqlPool =
 		new ConcurrentHashMap<>();
 	private boolean _vendorDB2;
 	private boolean _vendorHSQL;
