@@ -205,11 +205,13 @@ public class CustomSQLImpl implements CustomSQL {
 			DataAccess.cleanUp(con);
 		}
 
-		_bundleTracker = new BundleTracker<Bundle>(
+		_bundleTracker = new BundleTracker<ClassLoader>(
 			bundleContext, Bundle.ACTIVE, null) {
 
 			@Override
-			public Bundle addingBundle(Bundle bundle, BundleEvent bundleEvent) {
+			public ClassLoader addingBundle(
+				Bundle bundle, BundleEvent bundleEvent) {
+
 				BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
 				ClassLoader classLoader = bundleWiring.getClassLoader();
@@ -222,14 +224,15 @@ public class CustomSQLImpl implements CustomSQL {
 					return null;
 				}
 
-				return bundle;
+				return classLoader;
 			}
 
 			@Override
 			public void removedBundle(
-				Bundle bundle, BundleEvent bundleEvent, Bundle trackedBundle) {
+				Bundle bundle, BundleEvent bundleEvent,
+				ClassLoader classLoader) {
 
-				_sqlPool.remove(trackedBundle);
+				_sqlPool.remove(classLoader);
 			}
 
 		};
@@ -892,7 +895,7 @@ public class CustomSQLImpl implements CustomSQL {
 			_read(classLoader, "custom-sql/default.xml", sqls);
 			_read(classLoader, "META-INF/custom-sql/default.xml", sqls);
 
-			_sqlPool.put(FrameworkUtil.getBundle(clazz), sqls);
+			_sqlPool.put(classLoader, sqls);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -962,7 +965,7 @@ public class CustomSQLImpl implements CustomSQL {
 
 	private static final Log _log = LogFactoryUtil.getLog(CustomSQLImpl.class);
 
-	private BundleTracker<Bundle> _bundleTracker;
+	private BundleTracker<ClassLoader> _bundleTracker;
 	private String _functionIsNotNull;
 	private String _functionIsNull;
 
@@ -972,7 +975,7 @@ public class CustomSQLImpl implements CustomSQL {
 	@Reference
 	private Portal _portal;
 
-	private final Map<Bundle, Map<String, String>> _sqlPool =
+	private final Map<ClassLoader, Map<String, String>> _sqlPool =
 		new ConcurrentHashMap<>();
 	private boolean _vendorDB2;
 	private boolean _vendorHSQL;
