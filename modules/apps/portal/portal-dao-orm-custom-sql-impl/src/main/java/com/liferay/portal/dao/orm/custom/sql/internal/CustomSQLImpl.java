@@ -222,6 +222,11 @@ public class CustomSQLImpl implements CustomSQL {
 					return null;
 				}
 
+				CustomSQLContainer customSQLContainer = new CustomSQLContainer(
+					classLoader);
+
+				_sqlPool.put(bundle, customSQLContainer);
+
 				return classLoader;
 			}
 
@@ -275,13 +280,14 @@ public class CustomSQLImpl implements CustomSQL {
 
 	@Override
 	public String get(Class<?> clazz, String id) {
-		Map<String, String> sqls = _sqlPool.get(FrameworkUtil.getBundle(clazz));
+		CustomSQLContainer sqlContainer = _sqlPool.get(
+			FrameworkUtil.getBundle(clazz));
 
-		if (sqls == null) {
-			sqls = _loadCustomSQL(clazz);
+		if (sqlContainer != null) {
+			return sqlContainer.get(id);
 		}
 
-		return sqls.get(id);
+		return null;
 	}
 
 	@Override
@@ -883,16 +889,12 @@ public class CustomSQLImpl implements CustomSQL {
 		return sb.toString();
 	}
 
-	private Map<String, String> _loadCustomSQL(Class<?> clazz) {
+	private Map<String, String> _loadCustomSQL(ClassLoader classLoader) {
 		Map<String, String> sqls = new HashMap<>();
 
 		try {
-			ClassLoader classLoader = clazz.getClassLoader();
-
 			_read(classLoader, "custom-sql/default.xml", sqls);
 			_read(classLoader, "META-INF/custom-sql/default.xml", sqls);
-
-			_sqlPool.put(FrameworkUtil.getBundle(clazz), sqls);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -972,7 +974,7 @@ public class CustomSQLImpl implements CustomSQL {
 	@Reference
 	private Portal _portal;
 
-	private final Map<Bundle, Map<String, String>> _sqlPool =
+	private final Map<Bundle, CustomSQLContainer> _sqlPool =
 		new ConcurrentHashMap<>();
 	private boolean _vendorDB2;
 	private boolean _vendorHSQL;
@@ -981,5 +983,26 @@ public class CustomSQLImpl implements CustomSQL {
 	private boolean _vendorOracle;
 	private boolean _vendorPostgreSQL;
 	private boolean _vendorSybase;
+
+	private class CustomSQLContainer {
+
+		private CustomSQLContainer(ClassLoader classLoader) {
+			_classLoader = classLoader;
+
+			_bundleSQLs = null;
+		}
+
+		public String get(String id) {
+			if (_bundleSQLs == null) {
+				_bundleSQLs = _loadCustomSQL(_classLoader);
+			}
+
+			return _bundleSQLs.get(id);
+		}
+
+		private Map<String, String> _bundleSQLs;
+		private final ClassLoader _classLoader;
+
+	}
 
 }
