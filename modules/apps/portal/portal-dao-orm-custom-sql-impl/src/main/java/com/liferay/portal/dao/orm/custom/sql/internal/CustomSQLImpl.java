@@ -889,55 +889,6 @@ public class CustomSQLImpl implements CustomSQL {
 		return sb.toString();
 	}
 
-	private Map<String, String> _loadCustomSQL(ClassLoader classLoader) {
-		Map<String, String> sqls = new HashMap<>();
-
-		try {
-			_read(classLoader, "custom-sql/default.xml", sqls);
-			_read(classLoader, "META-INF/custom-sql/default.xml", sqls);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return sqls;
-	}
-
-	private void _read(
-			ClassLoader classLoader, String source, Map<String, String> sqls)
-		throws Exception {
-
-		try (InputStream is = classLoader.getResourceAsStream(source)) {
-			if (is == null) {
-				return;
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Loading " + source);
-			}
-
-			Document document = UnsecureSAXReaderUtil.read(is);
-
-			Element rootElement = document.getRootElement();
-
-			for (Element sqlElement : rootElement.elements("sql")) {
-				String file = sqlElement.attributeValue("file");
-
-				if (Validator.isNotNull(file)) {
-					_read(classLoader, file, sqls);
-				}
-				else {
-					String id = sqlElement.attributeValue("id");
-					String content = transform(sqlElement.getText());
-
-					content = replaceIsNull(content);
-
-					sqls.put(id, content);
-				}
-			}
-		}
-	}
-
 	private static final boolean _CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED));
@@ -986,18 +937,68 @@ public class CustomSQLImpl implements CustomSQL {
 
 	private class CustomSQLContainer {
 
-		private CustomSQLContainer(ClassLoader classLoader) {
-			_classLoader = classLoader;
-
-			_bundleSQLs = null;
-		}
-
 		public String get(String id) {
 			if (_bundleSQLs == null) {
 				_bundleSQLs = _loadCustomSQL(_classLoader);
 			}
 
 			return _bundleSQLs.get(id);
+		}
+
+		private CustomSQLContainer(ClassLoader classLoader) {
+			_classLoader = classLoader;
+
+			_bundleSQLs = null;
+		}
+
+		private Map<String, String> _loadCustomSQL(ClassLoader classLoader) {
+			Map<String, String> sqls = new HashMap<>();
+
+			try {
+				_read(classLoader, "custom-sql/default.xml", sqls);
+				_read(classLoader, "META-INF/custom-sql/default.xml", sqls);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+
+			return sqls;
+		}
+
+		private void _read(
+				ClassLoader classLoader, String source,
+				Map<String, String> sqls)
+			throws Exception {
+
+			try (InputStream is = classLoader.getResourceAsStream(source)) {
+				if (is == null) {
+					return;
+				}
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Loading " + source);
+				}
+
+				Document document = UnsecureSAXReaderUtil.read(is);
+
+				Element rootElement = document.getRootElement();
+
+				for (Element sqlElement : rootElement.elements("sql")) {
+					String file = sqlElement.attributeValue("file");
+
+					if (Validator.isNotNull(file)) {
+						_read(classLoader, file, sqls);
+					}
+					else {
+						String id = sqlElement.attributeValue("id");
+						String content = transform(sqlElement.getText());
+
+						content = replaceIsNull(content);
+
+						sqls.put(id, content);
+					}
+				}
+			}
 		}
 
 		private Map<String, String> _bundleSQLs;
