@@ -891,41 +891,6 @@ public class CustomSQLImpl implements CustomSQL {
 		return sb.toString();
 	}
 
-	private void _read(
-			ClassLoader classLoader, String source, Map<String, String> sqls)
-		throws Exception {
-
-		try (InputStream is = classLoader.getResourceAsStream(source)) {
-			if (is == null) {
-				return;
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Loading " + source);
-			}
-
-			Document document = UnsecureSAXReaderUtil.read(is);
-
-			Element rootElement = document.getRootElement();
-
-			for (Element sqlElement : rootElement.elements("sql")) {
-				String file = sqlElement.attributeValue("file");
-
-				if (Validator.isNotNull(file)) {
-					_read(classLoader, file, sqls);
-				}
-				else {
-					String id = sqlElement.attributeValue("id");
-					String content = transform(sqlElement.getText());
-
-					content = replaceIsNull(content);
-
-					sqls.put(id, content);
-				}
-			}
-		}
-	}
-
 	private static final boolean _CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED));
@@ -994,6 +959,42 @@ public class CustomSQLImpl implements CustomSQL {
 
 		private CustomSQLContainer(ClassLoader classLoader) {
 			_classLoader = classLoader;
+		}
+
+		private void _read(
+				ClassLoader classLoader, String source,
+				Map<String, String> sqls)
+			throws Exception {
+
+			try (InputStream is = classLoader.getResourceAsStream(source)) {
+				if (is == null) {
+					return;
+				}
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Loading " + source);
+				}
+
+				Document document = UnsecureSAXReaderUtil.read(is);
+
+				Element rootElement = document.getRootElement();
+
+				for (Element sqlElement : rootElement.elements("sql")) {
+					String file = sqlElement.attributeValue("file");
+
+					if (Validator.isNotNull(file)) {
+						_read(classLoader, file, sqls);
+					}
+					else {
+						String id = sqlElement.attributeValue("id");
+						String content = transform(sqlElement.getText());
+
+						content = replaceIsNull(content);
+
+						sqls.put(id, content);
+					}
+				}
+			}
 		}
 
 		private final ClassLoader _classLoader;
