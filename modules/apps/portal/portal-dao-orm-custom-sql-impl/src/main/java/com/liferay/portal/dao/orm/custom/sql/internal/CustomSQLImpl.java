@@ -215,16 +215,24 @@ public class CustomSQLImpl implements CustomSQL {
 
 				ClassLoader classLoader = bundleWiring.getClassLoader();
 
-				if ((classLoader.getResource("custom-sql/default.xml") ==
-						null) &&
-					(classLoader.getResource(
-						"META-INF/custom-sql/default.xml") == null)) {
+				List<String> sources = new ArrayList<>();
 
+				if (classLoader.getResource("custom-sql/default.xml") != null) {
+					sources.add("custom-sql/default.xml");
+				}
+
+				if (classLoader.getResource(
+						"META-INF/custom-sql/default.xml") != null) {
+
+					sources.add("META-INF/custom-sql/default.xml");
+				}
+
+				if (sources.isEmpty()) {
 					return null;
 				}
 
 				CustomSQLContainer customSQLContainer = new CustomSQLContainer(
-					classLoader);
+					classLoader, sources);
 
 				_containerPool.put(classLoader, customSQLContainer);
 
@@ -913,10 +921,9 @@ public class CustomSQLImpl implements CustomSQL {
 				_sqlPool = new HashMap<>();
 
 				try {
-					_read(_classLoader, "custom-sql/default.xml", _sqlPool);
-					_read(
-						_classLoader, "META-INF/custom-sql/default.xml",
-						_sqlPool);
+					for (String source : _sources) {
+						_read(_classLoader, source, _sqlPool);
+					}
 				}
 				catch (Exception e) {
 					_log.error(e, e);
@@ -926,8 +933,11 @@ public class CustomSQLImpl implements CustomSQL {
 			return _sqlPool.get(id);
 		}
 
-		private CustomSQLContainer(ClassLoader classLoader) {
+		private CustomSQLContainer(
+			ClassLoader classLoader, List<String> sources) {
+
 			_classLoader = classLoader;
+			_sources = sources;
 		}
 
 		private void _read(
@@ -998,6 +1008,7 @@ public class CustomSQLImpl implements CustomSQL {
 		}
 
 		private final ClassLoader _classLoader;
+		private final List<String> _sources;
 		private Map<String, String> _sqlPool;
 
 	}
