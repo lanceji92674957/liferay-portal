@@ -214,10 +214,10 @@ public class CustomSQLImpl implements CustomSQL {
 
 				ClassLoader classLoader = bundleWiring.getClassLoader();
 
-				if ((classLoader.getResource("custom-sql/default.xml") ==
+				if ((classLoader.getResource(_CUSTOM_SQL_SOURCE) ==
 						null) &&
-					(classLoader.getResource(
-						"META-INF/custom-sql/default.xml") == null)) {
+					(classLoader.getResource(_META_INFO_CUSTOM_SQL_SOURCE) ==
+						null)) {
 
 					return null;
 				}
@@ -893,7 +893,12 @@ public class CustomSQLImpl implements CustomSQL {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED));
 
+	private static final String _CUSTOM_SQL_SOURCE = "custom-sql/default.xml";
+
 	private static final String _GROUP_BY_CLAUSE = " GROUP BY ";
+
+	private static final String _META_INFO_CUSTOM_SQL_SOURCE =
+		"META-INF/custom-sql/default.xml";
 
 	private static final String _ORDER_BY_CLAUSE = " ORDER BY ";
 
@@ -955,8 +960,8 @@ public class CustomSQLImpl implements CustomSQL {
 			Map<String, String> sqls = new HashMap<>();
 
 			try {
-				_read(classLoader, "custom-sql/default.xml", sqls);
-				_read(classLoader, "META-INF/custom-sql/default.xml", sqls);
+				_read(classLoader, _CUSTOM_SQL_SOURCE, sqls);
+				_read(classLoader, _META_INFO_CUSTOM_SQL_SOURCE, sqls);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
