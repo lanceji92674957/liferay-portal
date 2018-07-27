@@ -47,6 +47,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -57,6 +58,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -921,6 +923,8 @@ public class CustomSQLImpl implements CustomSQL {
 
 				try {
 					if (_sqlPool == null) {
+						_sqlPool = new HashMap<>();
+
 						_read(_classLoader, "custom-sql/default.xml", _sqlPool);
 						_read(
 							_classLoader, "META-INF/custom-sql/default.xml",
@@ -928,6 +932,7 @@ public class CustomSQLImpl implements CustomSQL {
 					}
 				}
 				catch (Exception e) {
+					_sqlLoadingError = true;
 					_log.error(e, e);
 				}
 				finally {
@@ -937,6 +942,16 @@ public class CustomSQLImpl implements CustomSQL {
 			}
 
 			try {
+				if (_sqlLoadingError) {
+					Bundle bundle = FrameworkUtil.getBundle(
+						_classLoader.getClass());
+
+					_log.error(
+						"Exception occurred when loading sql for bundle:" +
+							bundle.getSymbolicName() +
+								", please check default.xml files");
+				}
+
 				return _sqlPool.get(id);
 			}
 			finally {
@@ -946,6 +961,8 @@ public class CustomSQLImpl implements CustomSQL {
 
 		private CustomSQLContainer(ClassLoader classLoader) {
 			_classLoader = classLoader;
+
+			_sqlLoadingError = false;
 
 			ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
@@ -1022,6 +1039,7 @@ public class CustomSQLImpl implements CustomSQL {
 
 		private final ClassLoader _classLoader;
 		private final Lock _readLock;
+		private boolean _sqlLoadingError;
 		private Map<String, String> _sqlPool;
 		private final Lock _writeLock;
 
