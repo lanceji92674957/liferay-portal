@@ -51,6 +51,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -990,20 +993,45 @@ public class CustomSQLImpl implements CustomSQL {
 
 	private class CustomSQLContainer {
 
-		public synchronized String get(String id) {
+		public String get(String id) {
+			_readLock.lock();
+
 			if (_sqlPool == null) {
-				_sqlPool = _loadCustomSQL(_classLoader);
+				_readLock.unlock();
+				_writeLock.lock();
+
+				try {
+					if (_sqlPool == null) {
+						_sqlPool = _loadCustomSQL(_classLoader);
+					}
+				}
+				finally {
+					_readLock.lock();
+					_writeLock.unlock();
+				}
 			}
 
-			return _sqlPool.get(id);
+			try {
+				return _sqlPool.get(id);
+			}
+			finally {
+				_readLock.unlock();
+			}
 		}
 
 		private CustomSQLContainer(ClassLoader classLoader) {
 			_classLoader = classLoader;
+
+			ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+
+			_readLock = readWriteLock.readLock();
+			_writeLock = readWriteLock.writeLock();
 		}
 
 		private final ClassLoader _classLoader;
+		private final Lock _readLock;
 		private Map<String, String> _sqlPool;
+		private final Lock _writeLock;
 
 	}
 
