@@ -47,7 +47,6 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -896,20 +895,6 @@ public class CustomSQLImpl implements CustomSQL {
 		return sb.toString();
 	}
 
-	private Map<String, String> _loadCustomSQL(ClassLoader classLoader) {
-		Map<String, String> sqls = new HashMap<>();
-
-		try {
-			_read(classLoader, "custom-sql/default.xml", sqls);
-			_read(classLoader, "META-INF/custom-sql/default.xml", sqls);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return sqls;
-	}
-
 	private void _read(
 			ClassLoader classLoader, String source, Map<String, String> sqls)
 		throws Exception {
@@ -1002,8 +987,14 @@ public class CustomSQLImpl implements CustomSQL {
 
 				try {
 					if (_sqlPool == null) {
-						_sqlPool = _loadCustomSQL(_classLoader);
+						_read(_classLoader, "custom-sql/default.xml", _sqlPool);
+						_read(
+							_classLoader, "META-INF/custom-sql/default.xml",
+							_sqlPool);
 					}
+				}
+				catch (Exception e) {
+					_log.error(e, e);
 				}
 				finally {
 					_readLock.lock();
