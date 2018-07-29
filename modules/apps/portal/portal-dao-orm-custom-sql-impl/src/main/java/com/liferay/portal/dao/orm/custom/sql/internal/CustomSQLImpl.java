@@ -917,45 +917,46 @@ public class CustomSQLImpl implements CustomSQL {
 		public String get(String id) {
 			_readLock.lock();
 
-			if (_sqlPool == null) {
-				_readLock.unlock();
-				_writeLock.lock();
-
-				try {
-					if (_sqlPool == null) {
-						_sqlPool = new HashMap<>();
-
-						_read(_classLoader, "custom-sql/default.xml", _sqlPool);
-						_read(
-							_classLoader, "META-INF/custom-sql/default.xml",
-							_sqlPool);
-					}
-				}
-				catch (Exception e) {
-					_sqlLoadingError = true;
-					_log.error(e, e);
-				}
-				finally {
-					_readLock.lock();
-					_writeLock.unlock();
-				}
-			}
-
 			try {
-				if (_sqlLoadingError) {
-					Bundle bundle = FrameworkUtil.getBundle(
-						_classLoader.getClass());
+				if (_sqlPool != null) {
+					if (_sqlLoadingError) {
+						Bundle bundle = FrameworkUtil.getBundle(
+							_classLoader.getClass());
 
-					_log.error(
-						"Exception occurred when loading sql for bundle:" +
-							bundle.getSymbolicName() +
-								", please check default.xml files");
+						_log.error(
+							"Exception occurred when loading sql for bundle:" +
+								bundle.getSymbolicName() +
+									", please check default.xml files");
+					}
+
+					return _sqlPool.get(id);
 				}
-
-				return _sqlPool.get(id);
 			}
 			finally {
 				_readLock.unlock();
+			}
+
+			_writeLock.lock();
+
+			try {
+				if (_sqlPool == null) {
+					_sqlPool = new HashMap<>();
+
+					_read(_classLoader, "custom-sql/default.xml", _sqlPool);
+					_read(
+						_classLoader, "META-INF/custom-sql/default.xml",
+						_sqlPool);
+				}
+			}
+			catch (Exception e) {
+				_sqlLoadingError = true;
+				_log.error(e, e);
+			}
+			finally {
+				String sql = _sqlPool.get(id);
+				_writeLock.unlock();
+
+				return sql;
 			}
 		}
 
