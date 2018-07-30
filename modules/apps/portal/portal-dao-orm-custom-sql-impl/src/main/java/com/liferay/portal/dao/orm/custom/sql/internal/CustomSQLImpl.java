@@ -838,37 +838,6 @@ public class CustomSQLImpl implements CustomSQL {
 		}
 	}
 
-	protected String transform(String sql) {
-		sql = _portal.transformCustomSQL(sql);
-
-		StringBundler sb = new StringBundler();
-
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(sql))) {
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				line = line.trim();
-
-				if (line.startsWith(StringPool.CLOSE_PARENTHESIS)) {
-					sb.setIndex(sb.index() - 1);
-				}
-
-				sb.append(line);
-
-				if (!line.endsWith(StringPool.OPEN_PARENTHESIS)) {
-					sb.append(StringPool.SPACE);
-				}
-			}
-		}
-		catch (IOException ioe) {
-			return sql;
-		}
-
-		return sb.toString();
-	}
-
 	private String _escapeWildCards(String keywords) {
 		if (!isVendorMySQL() && !isVendorOracle()) {
 			return keywords;
@@ -895,41 +864,6 @@ public class CustomSQLImpl implements CustomSQL {
 		}
 
 		return sb.toString();
-	}
-
-	private void _read(
-			ClassLoader classLoader, String source, Map<String, String> sqls)
-		throws Exception {
-
-		try (InputStream is = classLoader.getResourceAsStream(source)) {
-			if (is == null) {
-				return;
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Loading " + source);
-			}
-
-			Document document = UnsecureSAXReaderUtil.read(is);
-
-			Element rootElement = document.getRootElement();
-
-			for (Element sqlElement : rootElement.elements("sql")) {
-				String file = sqlElement.attributeValue("file");
-
-				if (Validator.isNotNull(file)) {
-					_read(classLoader, file, sqls);
-				}
-				else {
-					String id = sqlElement.attributeValue("id");
-					String content = transform(sqlElement.getText());
-
-					content = replaceIsNull(content);
-
-					sqls.put(id, content);
-				}
-			}
-		}
 	}
 
 	private static final boolean _CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED =
@@ -1043,6 +977,73 @@ public class CustomSQLImpl implements CustomSQL {
 
 			_readLock = readWriteLock.readLock();
 			_writeLock = readWriteLock.writeLock();
+		}
+
+		private void _read(
+				ClassLoader classLoader, String source,
+				Map<String, String> sqls)
+			throws Exception {
+
+			try (InputStream is = classLoader.getResourceAsStream(source)) {
+				if (is == null) {
+					return;
+				}
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Loading " + source);
+				}
+
+				Document document = UnsecureSAXReaderUtil.read(is);
+
+				Element rootElement = document.getRootElement();
+
+				for (Element sqlElement : rootElement.elements("sql")) {
+					String file = sqlElement.attributeValue("file");
+
+					if (Validator.isNotNull(file)) {
+						_read(classLoader, file, sqls);
+					}
+					else {
+						String id = sqlElement.attributeValue("id");
+						String content = _transform(sqlElement.getText());
+
+						content = replaceIsNull(content);
+
+						sqls.put(id, content);
+					}
+				}
+			}
+		}
+
+		private String _transform(String sql) {
+			sql = _portal.transformCustomSQL(sql);
+
+			StringBundler sb = new StringBundler();
+
+			try (UnsyncBufferedReader unsyncBufferedReader =
+					new UnsyncBufferedReader(new UnsyncStringReader(sql))) {
+
+				String line = null;
+
+				while ((line = unsyncBufferedReader.readLine()) != null) {
+					line = line.trim();
+
+					if (line.startsWith(StringPool.CLOSE_PARENTHESIS)) {
+						sb.setIndex(sb.index() - 1);
+					}
+
+					sb.append(line);
+
+					if (!line.endsWith(StringPool.OPEN_PARENTHESIS)) {
+						sb.append(StringPool.SPACE);
+					}
+				}
+			}
+			catch (IOException ioe) {
+				return sql;
+			}
+
+			return sb.toString();
 		}
 
 		private final ClassLoader _classLoader;
