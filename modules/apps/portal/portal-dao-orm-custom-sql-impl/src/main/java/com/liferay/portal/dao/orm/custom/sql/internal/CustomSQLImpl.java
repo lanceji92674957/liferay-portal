@@ -58,6 +58,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -984,6 +985,16 @@ public class CustomSQLImpl implements CustomSQL {
 
 			try {
 				if (_sqlPool != null) {
+					if (_sqlLoadError && _log.isWarnEnabled()) {
+						Bundle bundle = FrameworkUtil.getBundle(
+							_classLoader.getClass());
+
+						_log.warn(
+							bundle.getSymbolicName() +
+								" sql loaded with exception" +
+									", please check default.xml files");
+					}
+
 					return _sqlPool.get(id);
 				}
 			}
@@ -1004,7 +1015,15 @@ public class CustomSQLImpl implements CustomSQL {
 							_sqlPool);
 					}
 					catch (Exception e) {
-						_log.error(e, e);
+						_sqlLoadError = true;
+						Bundle bundle = FrameworkUtil.getBundle(
+							_classLoader.getClass());
+
+						_log.error(
+							bundle.getSymbolicName() +
+								" sql loaded with exception" +
+									", please check default.xml files",
+							e);
 					}
 				}
 
@@ -1018,6 +1037,8 @@ public class CustomSQLImpl implements CustomSQL {
 		private CustomSQLContainer(ClassLoader classLoader) {
 			_classLoader = classLoader;
 
+			_sqlLoadError = false;
+
 			ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
 			_readLock = readWriteLock.readLock();
@@ -1026,6 +1047,7 @@ public class CustomSQLImpl implements CustomSQL {
 
 		private final ClassLoader _classLoader;
 		private final Lock _readLock;
+		private boolean _sqlLoadError;
 		private Map<String, String> _sqlPool;
 		private final Lock _writeLock;
 
