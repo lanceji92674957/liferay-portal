@@ -19,10 +19,39 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.util.Map;
+import java.util.Properties;
+import java.util.TreeMap;
+
 /**
  * @author Lance Ji
  */
 public class PropertiesEncoderDecoder {
+
+	public static String toString(Properties properties, boolean safe) {
+		StringBundler sb = new StringBundler(4 * properties.size());
+
+		Map<String, String> treeMap = new TreeMap(properties);
+
+		for (Map.Entry<String, String> entry : treeMap.entrySet()) {
+			String value = entry.getValue();
+
+			if (value == null) {
+				continue;
+			}
+
+			if (safe) {
+				value = _encode(value);
+			}
+
+			sb.append(entry.getKey());
+			sb.append(StringPool.EQUAL);
+			sb.append(value);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		return sb.toString();
+	}
 
 	private static String _decode(String value) {
 		return StringUtil.replace(
