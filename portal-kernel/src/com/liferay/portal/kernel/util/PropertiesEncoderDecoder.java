@@ -36,10 +36,6 @@ public class PropertiesEncoderDecoder {
 		for (Map.Entry<String, String> entry : treeMap.entrySet()) {
 			String value = entry.getValue();
 
-			if (value == null) {
-				continue;
-			}
-
 			if (safe) {
 				value = _encode(value);
 			}
