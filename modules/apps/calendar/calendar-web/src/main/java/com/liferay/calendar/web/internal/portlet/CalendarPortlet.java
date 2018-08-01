@@ -936,17 +936,13 @@ public class CalendarPortlet extends MVCPortlet {
 				actionRequest, "fromAddress");
 			String fromName = ParamUtil.getString(actionRequest, "fromName");
 
-			if (fromAddress != null) {
-				properties.put(
-					CalendarNotificationTemplateConstants.PROPERTY_FROM_ADDRESS,
-					fromAddress);
-			}
+			properties.put(
+				CalendarNotificationTemplateConstants.PROPERTY_FROM_ADDRESS,
+				fromAddress);
 
-			if (fromName != null) {
-				properties.put(
-					CalendarNotificationTemplateConstants.PROPERTY_FROM_NAME,
-					fromName);
-			}
+			properties.put(
+				CalendarNotificationTemplateConstants.PROPERTY_FROM_NAME,
+				fromName);
 		}
 
 		return PropertiesEncoderDecoder.toString(properties, true);
