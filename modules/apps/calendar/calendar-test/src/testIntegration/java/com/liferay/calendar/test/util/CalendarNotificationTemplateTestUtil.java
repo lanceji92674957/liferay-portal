@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.GeneralProperties;
 
 /**
  * @author Adam Brandizzi
@@ -37,8 +37,8 @@ public class CalendarNotificationTemplateTestUtil {
 			String fromAddress, String fromName, String subject, String body)
 		throws PortalException {
 
-		UnicodeProperties notificationTypeSettingsProperties =
-			new UnicodeProperties(true);
+		GeneralProperties notificationTypeSettingsProperties =
+			new GeneralProperties(true);
 
 		notificationTypeSettingsProperties.put(
 			CalendarNotificationTemplateConstants.PROPERTY_FROM_ADDRESS,
