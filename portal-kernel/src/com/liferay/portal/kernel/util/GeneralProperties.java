@@ -43,10 +43,6 @@ public class GeneralProperties extends Properties {
 		for (Map.Entry<String, String> entry : treeMap.entrySet()) {
 			String value = entry.getValue();
 
-			if (Validator.isNull(value)) {
-				continue;
-			}
-
 			if (_safe) {
 				value = _encode(value);
 			}
