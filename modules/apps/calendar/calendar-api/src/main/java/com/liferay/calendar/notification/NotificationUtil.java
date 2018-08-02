@@ -20,7 +20,7 @@ import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.GeneralProperties;
 
 /**
  * @author Eduardo Lundgren
@@ -56,11 +56,11 @@ public class NotificationUtil {
 			return defaultValue;
 		}
 
-		UnicodeProperties notificationTypeSettingsProperties =
+		GeneralProperties notificationTypeSettingsProperties =
 			calendarNotificationTemplate.
 				getNotificationTypeSettingsProperties();
 
-		return notificationTypeSettingsProperties.get(propertyName);
+		return notificationTypeSettingsProperties.getProperty(propertyName);
 	}
 
 }
