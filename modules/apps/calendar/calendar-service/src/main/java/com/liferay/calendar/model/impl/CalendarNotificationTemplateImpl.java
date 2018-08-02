@@ -16,7 +16,7 @@ package com.liferay.calendar.model.impl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.GeneralProperties;
 
 import java.io.IOException;
 
@@ -37,9 +37,9 @@ public class CalendarNotificationTemplateImpl
 	}
 
 	@Override
-	public UnicodeProperties getNotificationTypeSettingsProperties() {
+	public GeneralProperties getNotificationTypeSettingsProperties() {
 		if (_notificationTypeSettingsProperties == null) {
-			_notificationTypeSettingsProperties = new UnicodeProperties(true);
+			_notificationTypeSettingsProperties = new GeneralProperties(true);
 
 			try {
 				_notificationTypeSettingsProperties.load(
@@ -62,7 +62,7 @@ public class CalendarNotificationTemplateImpl
 
 	@Override
 	public void setTypeSettingsProperties(
-		UnicodeProperties notificationTypeSettingsProperties) {
+		GeneralProperties notificationTypeSettingsProperties) {
 
 		_notificationTypeSettingsProperties =
 			notificationTypeSettingsProperties;
@@ -74,6 +74,6 @@ public class CalendarNotificationTemplateImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarNotificationTemplateImpl.class);
 
-	private UnicodeProperties _notificationTypeSettingsProperties;
+	private GeneralProperties _notificationTypeSettingsProperties;
 
 }
