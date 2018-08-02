@@ -102,11 +102,11 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropertiesEncoderDecoder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.UserFirstNameComparator;
@@ -128,6 +128,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TimeZone;
@@ -928,23 +929,23 @@ public class CalendarPortlet extends MVCPortlet {
 	protected String getNotificationTypeSettings(
 		ActionRequest actionRequest, NotificationType notificationType) {
 
-		UnicodeProperties notificationTypeSettingsProperties =
-			new UnicodeProperties(true);
+		Properties properties = new Properties();
 
 		if (notificationType == NotificationType.EMAIL) {
 			String fromAddress = ParamUtil.getString(
 				actionRequest, "fromAddress");
 			String fromName = ParamUtil.getString(actionRequest, "fromName");
 
-			notificationTypeSettingsProperties.put(
+			properties.put(
 				CalendarNotificationTemplateConstants.PROPERTY_FROM_ADDRESS,
 				fromAddress);
-			notificationTypeSettingsProperties.put(
+
+			properties.put(
 				CalendarNotificationTemplateConstants.PROPERTY_FROM_NAME,
 				fromName);
 		}
 
-		return notificationTypeSettingsProperties.toString();
+		return PropertiesEncoderDecoder.toString(properties, true);
 	}
 
 	protected long getOffset(
