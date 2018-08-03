@@ -41,7 +41,7 @@ public class PropertiesEncoderUtil {
 
 			String value = entry.getValue();
 
-			if (Validator.isNull(value)) {
+			if (value == null) {
 				continue;
 			}
 
