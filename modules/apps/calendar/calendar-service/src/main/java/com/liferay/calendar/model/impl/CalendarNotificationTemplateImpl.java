@@ -14,13 +14,14 @@
 
 package com.liferay.calendar.model.impl;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropertiesEncoderUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.IOException;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -40,12 +41,16 @@ public class CalendarNotificationTemplateImpl
 	}
 
 	@Override
-	public UnicodeProperties getNotificationTypeSettingsProperties() {
+	public Map<String, String> getNotificationTypeSettingsProperties() {
 		if (_notificationTypeSettingsProperties == null) {
-			_notificationTypeSettingsProperties = new UnicodeProperties(true);
+			_notificationTypeSettingsProperties = new HashMap<>();
+
+			_notificationTypeSettingsProperties.put(
+				PropertiesEncoderUtil.SAFE_ENCODER_HOLDER, StringPool.TRUE);
 
 			try {
-				_notificationTypeSettingsProperties.load(
+				PropertiesEncoderUtil.load(
+					_notificationTypeSettingsProperties,
 					super.getNotificationTypeSettings());
 			}
 			catch (IOException ioe) {

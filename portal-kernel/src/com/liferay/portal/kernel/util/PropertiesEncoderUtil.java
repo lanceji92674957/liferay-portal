@@ -64,7 +64,9 @@ public class PropertiesEncoderUtil {
 		return sb.toString();
 	}
 
-	public void load(String props) throws IOException {
+	public static void load(Map<String, String> properties, String props)
+		throws IOException {
+
 		if (Validator.isNull(props)) {
 			return;
 		}
@@ -75,31 +77,8 @@ public class PropertiesEncoderUtil {
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				put(line);
+				_put(properties, line);
 			}
-		}
-	}
-
-	public void put(String line) {
-		line = line.trim();
-
-		if (_isComment(line)) {
-			return;
-		}
-
-		int pos = line.indexOf(CharPool.EQUAL);
-
-		if (pos == -1) {
-			_log.error("Invalid property on line " + line);
-		}
-		else {
-			String value = StringUtil.trim(line.substring(pos + 1));
-
-			if (_safe) {
-				value = _decode(value);
-			}
-
-			setProperty(StringUtil.trim(line.substring(0, pos)), value);
 		}
 	}
 
@@ -117,12 +96,35 @@ public class PropertiesEncoderUtil {
 			new String[] {_SAFE_NEWLINE_CHARACTER, _SAFE_NEWLINE_CHARACTER});
 	}
 
-	private boolean _isComment(String line) {
+	private static boolean _isComment(String line) {
 		if (line.isEmpty() || (line.charAt(0) == CharPool.POUND)) {
 			return true;
 		}
 
 		return false;
+	}
+
+	private static void _put(Map<String, String> properties, String line) {
+		line = line.trim();
+
+		if (_isComment(line)) {
+			return;
+		}
+
+		int pos = line.indexOf(CharPool.EQUAL);
+
+		if (pos == -1) {
+			_log.error("Invalid property on line " + line);
+		}
+		else {
+			String value = StringUtil.trim(line.substring(pos + 1));
+
+			if (GetterUtil.getBoolean(properties.get(SAFE_ENCODER_HOLDER))) {
+				value = _decode(value);
+			}
+
+			properties.put(StringUtil.trim(line.substring(0, pos)), value);
+		}
 	}
 
 	private static final String _SAFE_NEWLINE_CHARACTER =
