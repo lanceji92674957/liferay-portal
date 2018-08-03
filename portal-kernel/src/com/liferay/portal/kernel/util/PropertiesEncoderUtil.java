@@ -16,6 +16,12 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.io.IOException;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -58,6 +64,50 @@ public class PropertiesEncoderUtil {
 		return sb.toString();
 	}
 
+	public void load(String props) throws IOException {
+		if (Validator.isNull(props)) {
+			return;
+		}
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(props))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				put(line);
+			}
+		}
+	}
+
+	public void put(String line) {
+		line = line.trim();
+
+		if (_isComment(line)) {
+			return;
+		}
+
+		int pos = line.indexOf(CharPool.EQUAL);
+
+		if (pos == -1) {
+			_log.error("Invalid property on line " + line);
+		}
+		else {
+			String value = StringUtil.trim(line.substring(pos + 1));
+
+			if (_safe) {
+				value = _decode(value);
+			}
+
+			setProperty(StringUtil.trim(line.substring(0, pos)), value);
+		}
+	}
+
+	private static String _decode(String value) {
+		return StringUtil.replace(
+			value, _SAFE_NEWLINE_CHARACTER, StringPool.NEW_LINE);
+	}
+
 	private static String _encode(String value) {
 		String encodedValue = StringUtil.replace(
 			value, StringPool.RETURN_NEW_LINE, _SAFE_NEWLINE_CHARACTER);
@@ -67,7 +117,18 @@ public class PropertiesEncoderUtil {
 			new String[] {_SAFE_NEWLINE_CHARACTER, _SAFE_NEWLINE_CHARACTER});
 	}
 
+	private boolean _isComment(String line) {
+		if (line.isEmpty() || (line.charAt(0) == CharPool.POUND)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final String _SAFE_NEWLINE_CHARACTER =
 		"_SAFE_NEWLINE_CHARACTER_";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PropertiesEncoderUtil.class);
 
 }
