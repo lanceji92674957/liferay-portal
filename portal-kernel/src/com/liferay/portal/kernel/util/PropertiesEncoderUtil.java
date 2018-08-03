@@ -17,6 +17,9 @@ package com.liferay.portal.kernel.util;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 /**
  * @author Lance Ji
  */
@@ -36,6 +39,61 @@ public class PropertiesEncoderUtil {
 			new String[] {_SAFE_NEWLINE_CHARACTER, _SAFE_NEWLINE_CHARACTER});
 	}
 
+	public static String getPropertiesString(Map<String, String> properties, boolean safe) {
+		StringBundler sb = new StringBundler(4 * properties.size());
+
+		Map<String, String> treeMap = new TreeMap<>(this);
+
+		for (Map.Entry<String, String> entry : treeMap.entrySet()) {
+			String value = entry.getValue();
+
+			if (Validator.isNull(value)) {
+				continue;
+			}
+
+			if (safe) {
+				value = _encode(value);
+			}
+
+			sb.append(entry.getKey());
+			sb.append(StringPool.EQUAL);
+			sb.append(value);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		return sb.toString();
+	}
+
+	public void put(String line) {
+		line = line.trim();
+
+		if (_isComment(line)) {
+			return;
+		}
+
+		int pos = line.indexOf(CharPool.EQUAL);
+
+		if (pos == -1) {
+			_log.error("Invalid property on line " + line);
+		}
+		else {
+			String value = StringUtil.trim(line.substring(pos + 1));
+
+			if (_safe) {
+				value = _decode(value);
+			}
+
+			setProperty(StringUtil.trim(line.substring(0, pos)), value);
+		}
+	}
+	
+	private boolean _isComment(String line) {
+		if (line.isEmpty() || (line.charAt(0) == CharPool.POUND)) {
+			return true;
+		}
+
+		return false;
+	}
 	private static final String _SAFE_NEWLINE_CHARACTER =
 		"_SAFE_NEWLINE_CHARACTER_";
 
