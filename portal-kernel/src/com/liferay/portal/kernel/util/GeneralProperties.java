@@ -23,14 +23,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.IOException;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import java.util.TreeMap;
 
 /**
  * @author Lance Ji
  */
-public class GeneralProperties extends Properties {
+public class GeneralProperties extends HashMap<String, String> {
 
 	public GeneralProperties() {
 		_safe = false;
@@ -72,15 +72,15 @@ public class GeneralProperties extends Properties {
 			String value = StringUtil.trim(line.substring(pos + 1));
 
 			if (_safe) {
-				value = _decode(value);
+				value = PropertiesEncoderDecoder.decode(value);
 			}
 
-			setProperty(StringUtil.trim(line.substring(0, pos)), value);
+			put(StringUtil.trim(line.substring(0, pos)), value);
 		}
 	}
 
 	@Override
-	public synchronized String toString() {
+	public String toString() {
 		StringBundler sb = new StringBundler(4 * size());
 
 		Map<String, String> treeMap = new TreeMap(this);
@@ -88,8 +88,12 @@ public class GeneralProperties extends Properties {
 		for (Map.Entry<String, String> entry : treeMap.entrySet()) {
 			String value = entry.getValue();
 
+			if (value == null) {
+				continue;
+			}
+
 			if (_safe) {
-				value = _encode(value);
+				value = PropertiesEncoderDecoder.encode(value);
 			}
 
 			sb.append(entry.getKey());
@@ -101,20 +105,6 @@ public class GeneralProperties extends Properties {
 		return sb.toString();
 	}
 
-	private static String _decode(String value) {
-		return StringUtil.replace(
-			value, _SAFE_NEWLINE_CHARACTER, StringPool.NEW_LINE);
-	}
-
-	private static String _encode(String value) {
-		String encodedValue = StringUtil.replace(
-			value, StringPool.RETURN_NEW_LINE, _SAFE_NEWLINE_CHARACTER);
-
-		return StringUtil.replace(
-			encodedValue, new char[] {CharPool.NEW_LINE, CharPool.RETURN},
-			new String[] {_SAFE_NEWLINE_CHARACTER, _SAFE_NEWLINE_CHARACTER});
-	}
-
 	private boolean _isComment(String line) {
 		if (line.isEmpty() || (line.charAt(0) == CharPool.POUND)) {
 			return true;
@@ -122,9 +112,6 @@ public class GeneralProperties extends Properties {
 
 		return false;
 	}
-
-	private static final String _SAFE_NEWLINE_CHARACTER =
-		"_SAFE_NEWLINE_CHARACTER_";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GeneralProperties.class);
