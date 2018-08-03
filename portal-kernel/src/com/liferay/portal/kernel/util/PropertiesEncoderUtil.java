@@ -25,23 +25,31 @@ import java.util.TreeMap;
  */
 public class PropertiesEncoderUtil {
 
-	public String toString() {
-		StringBundler sb = new StringBundler(4 * size());
+	public static final String SAFE_ENCODER_HOLDER = "_SAFE_ENCODER_UTIL";
 
-		Map<String, String> treeMap = new TreeMap<>(this);
+	public static String getPropertiesString(Map<String, String> properties) {
+		StringBundler sb = new StringBundler(4 * properties.size());
+
+		Map<String, String> treeMap = new TreeMap<>(properties);
 
 		for (Map.Entry<String, String> entry : treeMap.entrySet()) {
+			String key = entry.getKey();
+
+			if (SAFE_ENCODER_HOLDER.equals(key)) {
+				continue;
+			}
+
 			String value = entry.getValue();
 
 			if (Validator.isNull(value)) {
 				continue;
 			}
 
-			if (_safe) {
+			if (GetterUtil.getBoolean(properties.get(SAFE_ENCODER_HOLDER))) {
 				value = _encode(value);
 			}
 
-			sb.append(entry.getKey());
+			sb.append(key);
 			sb.append(StringPool.EQUAL);
 			sb.append(value);
 			sb.append(StringPool.NEW_LINE);
