@@ -104,7 +104,10 @@ public class LayoutTypeSettingsUtil {
 					entry.setValue(sb.toString());
 				}
 
-				updatePS.setString(1, unicodeProperties.toString());
+				updatePS.setString(
+					1,
+					PropertiesEncoderUtil.getPropertiesString(
+						unicodeProperties));
 
 				updatePS.setLong(2, plid);
 
