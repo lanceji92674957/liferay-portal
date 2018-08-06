@@ -33,7 +33,7 @@ public class PropertiesEncoderUtil {
 
 	public static final String SAFE_ENCODER_HOLDER = "_SAFE_ENCODER_UTIL";
 
-	public void fastLoad(String props) {
+	public static void fastLoad(Map<String, String> properties, String props) {
 		if (Validator.isNull(props)) {
 			return;
 		}
@@ -42,14 +42,14 @@ public class PropertiesEncoderUtil {
 		int y = 0;
 
 		while (x != -1) {
-			put(props.substring(y, x));
+			_put(properties, props.substring(y, x));
 
 			y = x;
 
 			x = props.indexOf(CharPool.NEW_LINE, y + 1);
 		}
 
-		put(props.substring(y));
+		_put(properties, props.substring(y));
 	}
 
 	public static String getPropertiesString(Map<String, String> properties) {
