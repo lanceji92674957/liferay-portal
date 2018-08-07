@@ -31,7 +31,7 @@ import java.util.TreeMap;
  */
 public class UnicodePropertiesUtil {
 
-	public void fastLoad(String props) {
+	public static void fastLoad(Map<String, String> properties, String props) {
 		if (Validator.isNull(props)) {
 			return;
 		}
@@ -40,17 +40,19 @@ public class UnicodePropertiesUtil {
 		int y = 0;
 
 		while (x != -1) {
-			put(props.substring(y, x));
+			_put(properties, props.substring(y, x));
 
 			y = x;
 
 			x = props.indexOf(CharPool.NEW_LINE, y + 1);
 		}
 
-		put(props.substring(y));
+		_put(properties, props.substring(y));
 	}
 
-	public void load(String props) throws IOException {
+	public static void load(Map<String, String> properties, String props)
+		throws IOException {
+
 		if (Validator.isNull(props)) {
 			return;
 		}
@@ -61,34 +63,15 @@ public class UnicodePropertiesUtil {
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				put(line);
+				_put(properties, line);
 			}
 		}
 	}
 
-	public void put(String line) {
-		line = line.trim();
+	public static String toString(Map<String, String> properties) {
+		StringBundler sb = new StringBundler(4 * properties.size());
 
-		if (_isComment(line)) {
-			return;
-		}
-
-		int pos = line.indexOf(CharPool.EQUAL);
-
-		if (pos == -1) {
-			_log.error("Invalid property on line " + line);
-		}
-		else {
-			String value = StringUtil.trim(line.substring(pos + 1));
-
-			setProperty(StringUtil.trim(line.substring(0, pos)), value);
-		}
-	}
-
-	public String toString() {
-		StringBundler sb = new StringBundler(4 * size());
-
-		Map<String, String> treeMap = new TreeMap<>(this);
+		Map<String, String> treeMap = new TreeMap<>(properties);
 
 		for (Map.Entry<String, String> entry : treeMap.entrySet()) {
 			String value = entry.getValue();
@@ -106,12 +89,31 @@ public class UnicodePropertiesUtil {
 		return sb.toString();
 	}
 
-	private boolean _isComment(String line) {
+	private static boolean _isComment(String line) {
 		if (line.isEmpty() || (line.charAt(0) == CharPool.POUND)) {
 			return true;
 		}
 
 		return false;
+	}
+
+	private static void _put(Map<String, String> properties, String line) {
+		line = line.trim();
+
+		if (_isComment(line)) {
+			return;
+		}
+
+		int pos = line.indexOf(CharPool.EQUAL);
+
+		if (pos == -1) {
+			_log.error("Invalid property on line " + line);
+		}
+		else {
+			String value = StringUtil.trim(line.substring(pos + 1));
+
+			properties.put(StringUtil.trim(line.substring(0, pos)), value);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
