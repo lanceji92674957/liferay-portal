@@ -16,12 +16,12 @@ package com.liferay.portal.background.task.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
+import com.liferay.portal.upgrade.KernelPackageUpgrader;
 
 /**
  * @author Tina Tian
  */
-public class UpgradeKernelPackage
-	extends com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage {
+public class UpgradeKernelPackage extends KernelPackageUpgrader {
 
 	@Override
 	protected void doUpgrade() throws UpgradeException {

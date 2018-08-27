@@ -14,11 +14,12 @@
 
 package com.liferay.dynamic.data.lists.internal.upgrade.v1_0_0;
 
+import com.liferay.portal.upgrade.KernelPackageUpgrader;
+
 /**
  * @author Marcellus Tavares
  */
-public class UpgradeKernelPackage
-	extends com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage {
+public class UpgradeKernelPackage extends KernelPackageUpgrader {
 
 	@Override
 	protected String[][] getClassNames() {

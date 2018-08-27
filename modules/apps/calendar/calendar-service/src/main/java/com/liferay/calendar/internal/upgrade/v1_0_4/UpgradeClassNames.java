@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
+import com.liferay.portal.upgrade.KernelPackageUpgrader;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,7 +27,7 @@ import java.sql.SQLException;
 /**
  * @author Cristina González
  */
-public class UpgradeClassNames extends UpgradeKernelPackage {
+public class UpgradeClassNames extends KernelPackageUpgrader {
 
 	@Override
 	public void doUpgrade() throws UpgradeException {

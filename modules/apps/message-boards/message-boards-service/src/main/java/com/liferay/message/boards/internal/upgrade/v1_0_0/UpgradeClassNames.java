@@ -14,13 +14,13 @@
 
 package com.liferay.message.boards.internal.upgrade.v1_0_0;
 
-import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
+import com.liferay.portal.upgrade.KernelPackageUpgrader;
 
 /**
  * @author Sergio González
  * @author Adolfo Pérez
  */
-public class UpgradeClassNames extends UpgradeKernelPackage {
+public class UpgradeClassNames extends KernelPackageUpgrader {
 
 	@Override
 	protected String[][] getClassNames() {

@@ -14,12 +14,12 @@
 
 package com.liferay.asset.category.property.internal.upgrade.v1_0_0;
 
-import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
+import com.liferay.portal.upgrade.KernelPackageUpgrader;
 
 /**
  * @author Eudaldo Alonso
  */
-public class UpgradeClassNames extends UpgradeKernelPackage {
+public class UpgradeClassNames extends KernelPackageUpgrader {
 
 	@Override
 	protected String[][] getClassNames() {

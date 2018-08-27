@@ -18,7 +18,7 @@ import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgrade
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelClassNames;
 import com.liferay.rss.constants.RSSPortletKeys;
 import com.liferay.rss.web.internal.configuration.RSSPortletInstanceConfiguration;
 import com.liferay.rss.web.internal.configuration.RSSWebCacheConfiguration;
@@ -49,7 +49,7 @@ public class RSSWebUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.0", "3.0.0",
-			new UpgradeKernelPackage() {
+			new UpgradeKernelClassNames() {
 
 				@Override
 				protected String[][] getClassNames() {
