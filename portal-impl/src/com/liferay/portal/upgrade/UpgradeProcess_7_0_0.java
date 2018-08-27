@@ -28,6 +28,7 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeEmailAddress;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeEmailNotificationPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeExpando;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeGroup;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelClassNames;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeLastPublishDate;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeLayout;
@@ -75,7 +76,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		upgrade(new UpgradeSchema());
 
-		upgrade(new UpgradeKernelPackage());
+		upgrade(new UpgradeKernelClassNames());
 
 		upgrade(new UpgradeSharding());
 
