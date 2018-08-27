@@ -32,7 +32,9 @@ import java.sql.SQLException;
 
 /**
  * @author Preston Crary
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 public class UpgradeKernelPackage extends UpgradeProcess {
 
 	@Override
