@@ -79,7 +79,7 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 	}
 
 	@Test
-	public void testDeprecatedUpgradeLongTextTable1() throws Throwable {
+	public void testDeprecatedUpgradeLongTextTable() throws Throwable {
 		try {
 			upgradeLongTextTable(
 				"UserNotificationEvent", "payload", getClassNames(),
@@ -94,10 +94,7 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 						", WildcardMode)",
 				uoe.getMessage());
 		}
-	}
 
-	@Test
-	public void testDeprecatedUpgradeLongTextTable2() throws Throwable {
 		try {
 			upgradeLongTextTable(
 				"payload", "selectSQL", "updateSQL", getClassNames()[0]);
