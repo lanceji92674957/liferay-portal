@@ -252,7 +252,7 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 
 	@Override
 	protected String[][] getResourceNames() {
-		return _RESOURCENAMES;
+		return _TEST_RESOURCE_NAMES;
 	}
 
 	protected long increment(Class<?> clazz) throws Exception {
@@ -424,12 +424,12 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 	private static final String _OLD_RESOURCE_NAME =
 		"com.liferay.portlet.resourcepath.Test";
 
-	private static final String[][] _RESOURCENAMES = {
-		{_OLD_RESOURCE_NAME, _NEW_RESOURCE_NAME}
-	};
-
 	private static final String[][] _TEST_CLASS_NAMES = {
 		{_OLD_CLASS_NAME, _NEW_CLASS_NAME}
+	};
+
+	private static final String[][] _TEST_RESOURCE_NAMES = {
+		{_OLD_RESOURCE_NAME, _NEW_RESOURCE_NAME}
 	};
 
 	private static final String _UUID = "theUuid";
