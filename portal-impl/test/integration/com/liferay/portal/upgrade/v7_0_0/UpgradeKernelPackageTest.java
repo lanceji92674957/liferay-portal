@@ -66,6 +66,7 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 			upgradeLongTextTable(
 				"UserNotificationEvent", "payload", getClassNames(),
 				WildcardMode.SURROUND);
+
 			Assert.fail("Should throw UnsupportedOperationException");
 		}
 		catch (UnsupportedOperationException uoe) {
@@ -79,6 +80,7 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 		try {
 			upgradeLongTextTable(
 				"payload", "selectSQL", "updateSQL", getClassNames()[0]);
+
 			Assert.fail("Should throw UnsupportedOperationException");
 		}
 		catch (UnsupportedOperationException uoe) {
@@ -134,9 +136,11 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 				"Counter",
 				StringBundler.concat("'PREFIX_", _NEW_RESOURCE_NAME, "'"),
 				"10");
+
 			upgradeTable(
 				"Counter", "name", getResourceNames(), WildcardMode.SURROUND,
 				true);
+
 			_assertWildcardModeDataExist(
 				"Counter", "name", _NEW_RESOURCE_NAME, WildcardMode.SURROUND,
 				false);
@@ -154,6 +158,7 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 			upgradeTable(
 				"ResourcePermission", "name", getClassNames(),
 				WildcardMode.SURROUND, true);
+
 			Assert.fail("Should throw NullPointerException");
 		}
 		catch (NullPointerException npe) {
@@ -167,9 +172,11 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 	public void testUpgradeLongTextTable() throws Exception {
 		try {
 			_insertUserNotificationEventValues("PREFIX_" + _OLD_CLASS_NAME);
+
 			upgradeLongTextTable(
 				"UserNotificationEvent", "payload", "userNotificationEventId",
 				getClassNames(), WildcardMode.SURROUND);
+
 			_assertLongtextDataExist(
 				"UserNotificationEvent", "payload", "PREFIX_" + _NEW_CLASS_NAME,
 				true);
@@ -202,6 +209,7 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 			upgradeLongTextTable(
 				"payload", "userNotificationEventId", selectSB.toString(),
 				updateSB.toString(), getClassNames()[0]);
+
 			_assertLongtextDataExist(
 				"UserNotificationEvent", "payload",
 				_NEW_CLASS_NAME + "_POSTFIX", true);
@@ -218,8 +226,10 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 			_insertTableValues(
 				"ClassName_", "0", String.valueOf(increment(ClassName.class)),
 				StringBundler.concat("'PREFIX_", _OLD_CLASS_NAME, "'"));
+
 			upgradeTable(
 				"ClassName_", "value", getClassNames(), WildcardMode.SURROUND);
+
 			_assertDataExist(
 				"ClassName_", "value", "PREFIX_" + _NEW_CLASS_NAME, true);
 		}
@@ -232,8 +242,10 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 	@Test
 	public void testUpgradeTableWithoutMatchData() throws Exception {
 		_assertDataExist("ListType", "type_", _OLD_RESOURCE_NAME, false);
+
 		upgradeTable(
 			"ListType", "type_", getResourceNames(), WildcardMode.SURROUND);
+
 		_assertDataExist("ListType", "type_", _OLD_RESOURCE_NAME, false);
 		_assertDataExist("ListType", "type_", _NEW_RESOURCE_NAME, false);
 	}
