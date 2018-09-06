@@ -66,33 +66,16 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 	public void testColumnExists() throws Exception {
 		DBInspector dbInspector = new DBInspector(connection);
 
-		Assert.assertTrue(dbInspector.hasTable("ClassName_"));
-		Assert.assertTrue(dbInspector.hasColumn("ClassName_", "value"));
-
-		Assert.assertTrue(dbInspector.hasTable("Counter"));
-		Assert.assertTrue(dbInspector.hasColumn("Counter", "name"));
-
-		Assert.assertTrue(dbInspector.hasTable("Lock_"));
-		Assert.assertTrue(dbInspector.hasColumn("Lock_", "className"));
-
-		Assert.assertTrue(dbInspector.hasTable("ResourceAction"));
-		Assert.assertTrue(dbInspector.hasColumn("ResourceAction", "name"));
-
-		Assert.assertTrue(dbInspector.hasTable("ResourceBlock"));
-		Assert.assertTrue(dbInspector.hasColumn("ResourceBlock", "name"));
-
-		Assert.assertTrue(dbInspector.hasTable("ResourcePermission"));
-		Assert.assertTrue(dbInspector.hasColumn("ResourcePermission", "name"));
-
-		Assert.assertTrue(dbInspector.hasTable("ListType"));
-		Assert.assertTrue(dbInspector.hasColumn("ListType", "type_"));
-
-		Assert.assertTrue(dbInspector.hasTable("UserNotificationEvent"));
-		Assert.assertTrue(
-			dbInspector.hasColumn("UserNotificationEvent", "payload"));
-		Assert.assertTrue(
-			dbInspector.hasColumn(
-				"UserNotificationEvent", "userNotificationEventId"));
+		_assertTableAndColumn(dbInspector, "ClassName_", "value");
+		_assertTableAndColumn(dbInspector, "Counter", "name");
+		_assertTableAndColumn(dbInspector, "Lock_", "className");
+		_assertTableAndColumn(dbInspector, "ResourceAction", "name");
+		_assertTableAndColumn(dbInspector, "ResourceBlock", "name");
+		_assertTableAndColumn(dbInspector, "ResourcePermission", "name");
+		_assertTableAndColumn(dbInspector, "ListType", "type_");
+		_assertTableAndColumn(
+			dbInspector, "UserNotificationEvent", "payload",
+			"userNotificationEventId");
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
@@ -282,6 +265,23 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 		throws Exception {
 
 		_checkDataExistence(tableName, columnName, value, null, true, expected);
+	}
+
+	private void _assertTableAndColumn(
+			DBInspector dbInspector, String tableName, String... columnNames)
+		throws Exception {
+
+		Assert.assertTrue(
+			StringBundler.concat("Table \"", tableName, "\" does not exist"),
+			dbInspector.hasTable(tableName));
+
+		for (String columnName : columnNames) {
+			Assert.assertTrue(
+				StringBundler.concat(
+					"Table \"", tableName, "\" does not have column \"",
+					columnName, "\""),
+				dbInspector.hasColumn(tableName, columnName));
+		}
 	}
 
 	private void _assertWildcardModeDataExist(
