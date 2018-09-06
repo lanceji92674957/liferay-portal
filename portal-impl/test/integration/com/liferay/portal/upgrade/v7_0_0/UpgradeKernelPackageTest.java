@@ -127,9 +127,9 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 				"Counter", "name", _TEST_RESOURCE_NAMES, WildcardMode.SURROUND,
 				true);
 
-			_assertWildcardModeDataExist(
+			_checkDataExistence(
 				"Counter", "name", _NEW_RESOURCE_NAME, WildcardMode.SURROUND,
-				false);
+				false, false);
 		}
 		finally {
 			_clearData("Counter", "name", _NEW_RESOURCE_NAME);
@@ -266,15 +266,6 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 					columnName, "\""),
 				dbInspector.hasColumn(tableName, columnName));
 		}
-	}
-
-	private void _assertWildcardModeDataExist(
-			String tableName, String columnName, String value,
-			WildcardMode mode, boolean expected)
-		throws Exception {
-
-		_checkDataExistence(
-			tableName, columnName, value, mode, false, expected);
 	}
 
 	private void _checkDataExistence(
