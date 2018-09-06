@@ -57,7 +57,9 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 
 	@After
 	public void tearDown() throws Exception {
-		connection.close();
+		if (connection == null) {
+			connection.close();
+		}
 	}
 
 	@Test
