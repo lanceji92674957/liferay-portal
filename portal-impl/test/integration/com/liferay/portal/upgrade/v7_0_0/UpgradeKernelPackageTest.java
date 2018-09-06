@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -64,7 +63,7 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 	public void testDeprecatedUpgradeLongTextTable() throws Exception {
 		try {
 			upgradeLongTextTable(
-				"UserNotificationEvent", "payload", getClassNames(),
+				"UserNotificationEvent", "payload", _TEST_CLASS_NAMES,
 				WildcardMode.SURROUND);
 
 			Assert.fail("Should throw UnsupportedOperationException");
@@ -79,7 +78,7 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 
 		try {
 			upgradeLongTextTable(
-				"payload", "selectSQL", "updateSQL", getClassNames()[0]);
+				"payload", "selectSQL", "updateSQL", _TEST_CLASS_NAMES[0]);
 
 			Assert.fail("Should throw UnsupportedOperationException");
 		}
@@ -117,19 +116,6 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 	}
 
 	@Test
-	public void testGetFieldValue() {
-		String[][] classNames = ReflectionTestUtil.getFieldValue(
-			UpgradeKernelPackage.class, "_CLASS_NAMES");
-
-		Assert.assertArrayEquals(super.getClassNames(), classNames);
-
-		String[][] resourceNames = ReflectionTestUtil.getFieldValue(
-			UpgradeKernelPackage.class, "_RESOURCE_NAMES");
-
-		Assert.assertArrayEquals(super.getResourceNames(), resourceNames);
-	}
-
-	@Test
 	public void testPreventDuplicates() throws Exception {
 		try {
 			_insertTableValues(
@@ -138,7 +124,7 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 				"10");
 
 			upgradeTable(
-				"Counter", "name", getResourceNames(), WildcardMode.SURROUND,
+				"Counter", "name", _TEST_RESOURCE_NAMES, WildcardMode.SURROUND,
 				true);
 
 			_assertWildcardModeDataExist(
@@ -170,7 +156,7 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 
 			upgradeLongTextTable(
 				"UserNotificationEvent", "payload", "userNotificationEventId",
-				getClassNames(), WildcardMode.SURROUND);
+				_TEST_CLASS_NAMES, WildcardMode.SURROUND);
 
 			_assertLongtextDataExist(
 				"UserNotificationEvent", "payload", "PREFIX_" + _NEW_CLASS_NAME,
@@ -203,7 +189,7 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 
 			upgradeLongTextTable(
 				"payload", "userNotificationEventId", selectSB.toString(),
-				updateSB.toString(), getClassNames()[0]);
+				updateSB.toString(), _TEST_CLASS_NAMES[0]);
 
 			_assertLongtextDataExist(
 				"UserNotificationEvent", "payload",
@@ -223,7 +209,8 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 				StringBundler.concat("'PREFIX_", _OLD_CLASS_NAME, "'"));
 
 			upgradeTable(
-				"ClassName_", "value", getClassNames(), WildcardMode.SURROUND);
+				"ClassName_", "value", _TEST_CLASS_NAMES,
+				WildcardMode.SURROUND);
 
 			_assertDataExist(
 				"ClassName_", "value", "PREFIX_" + _NEW_CLASS_NAME, true);
@@ -239,20 +226,10 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 		_assertDataExist("ListType", "type_", _OLD_RESOURCE_NAME, false);
 
 		upgradeTable(
-			"ListType", "type_", getResourceNames(), WildcardMode.SURROUND);
+			"ListType", "type_", _TEST_RESOURCE_NAMES, WildcardMode.SURROUND);
 
 		_assertDataExist("ListType", "type_", _OLD_RESOURCE_NAME, false);
 		_assertDataExist("ListType", "type_", _NEW_RESOURCE_NAME, false);
-	}
-
-	@Override
-	protected String[][] getClassNames() {
-		return _TEST_CLASS_NAMES;
-	}
-
-	@Override
-	protected String[][] getResourceNames() {
-		return _TEST_RESOURCE_NAMES;
 	}
 
 	protected long increment(Class<?> clazz) throws Exception {
