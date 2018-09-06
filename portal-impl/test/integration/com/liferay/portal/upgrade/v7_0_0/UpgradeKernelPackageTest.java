@@ -78,17 +78,39 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 			"userNotificationEventId");
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testDeprecatedUpgradeLongTextTable1() throws Throwable {
-		upgradeLongTextTable(
-			"UserNotificationEvent", "payload", getClassNames(),
-			WildcardMode.SURROUND);
+		try {
+			upgradeLongTextTable(
+				"UserNotificationEvent", "payload", getClassNames(),
+				WildcardMode.SURROUND);
+
+			Assert.fail("Should throw UnsupportedOperationException");
+		}
+		catch (UnsupportedOperationException uoe) {
+			Assert.assertEquals(
+				"This method is deprecated and replaced by " +
+					"upgradeLongTextTable(String, String, String, String[][]" +
+						", WildcardMode)",
+				uoe.getMessage());
+		}
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testDeprecatedUpgradeLongTextTable2() throws Throwable {
-		upgradeLongTextTable(
-			"payload", "selectSQL", "updateSQL", getClassNames()[0]);
+		try {
+			upgradeLongTextTable(
+				"payload", "selectSQL", "updateSQL", getClassNames()[0]);
+
+			Assert.fail("Should throw UnsupportedOperationException");
+		}
+		catch (UnsupportedOperationException uoe) {
+			Assert.assertEquals(
+				"This method is deprecated and replaced by " +
+					"upgradeLongTextTable(String, String, String, String, " +
+						"String[])",
+				uoe.getMessage());
+		}
 	}
 
 	@Test
