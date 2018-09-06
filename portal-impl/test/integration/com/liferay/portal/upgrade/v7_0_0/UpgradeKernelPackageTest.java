@@ -152,19 +152,14 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 
 	@Test
 	public void testPreventDuplicatesWithNullClassNames() throws Exception {
-		_classNames = null;
-
 		try {
 			upgradeTable(
-				"ResourcePermission", "name", getClassNames(),
-				WildcardMode.SURROUND, true);
+				"ResourcePermission", "name", null, WildcardMode.SURROUND,
+				true);
 
 			Assert.fail("Should throw NullPointerException");
 		}
 		catch (NullPointerException npe) {
-		}
-		finally {
-			_classNames = new String[][] {{_OLD_CLASS_NAME, _NEW_CLASS_NAME}};
 		}
 	}
 
@@ -252,7 +247,7 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 
 	@Override
 	protected String[][] getClassNames() {
-		return _classNames;
+		return _TEST_CLASS_NAMES;
 	}
 
 	@Override
@@ -433,8 +428,10 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 		{_OLD_RESOURCE_NAME, _NEW_RESOURCE_NAME}
 	};
 
-	private static final String _UUID = "theUuid";
+	private static final String[][] _TEST_CLASS_NAMES = {
+		{_OLD_CLASS_NAME, _NEW_CLASS_NAME}
+	};
 
-	private String[][] _classNames = {{_OLD_CLASS_NAME, _NEW_CLASS_NAME}};
+	private static final String _UUID = "theUuid";
 
 }
