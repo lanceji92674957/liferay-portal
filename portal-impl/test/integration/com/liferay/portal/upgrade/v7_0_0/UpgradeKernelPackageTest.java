@@ -16,7 +16,9 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.model.ClassName;
@@ -26,12 +28,15 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -46,16 +51,41 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_db = DBManagerUtil.getDB();
+
+		_connection = DataAccess.getConnection();
+
+		_db.runSQL(
+			_connection,
+			"create table UpgradeKernelPackageTest (" +
+				"id LONG not null primary key, data VARCHAR(10) null, " +
+					"longData TEXT null)");
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		if (_connection == null) {
+			return;
+		}
+
+		try {
+			_db.runSQL(_connection, "drop table UpgradeKernelPackageTest");
+		}
+		finally {
+			_connection.close();
+		}
+	}
+
 	@Before
 	public void setUp() throws Exception {
-		connection = DataAccess.getConnection();
+		connection = _connection;
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		if (connection != null) {
-			connection.close();
-		}
+		connection = null;
 	}
 
 	@Test
@@ -352,5 +382,8 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 	};
 
 	private static final String _UUID = "theUuid";
+
+	private static Connection _connection;
+	private static DB _db;
 
 }
