@@ -21,11 +21,9 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -52,10 +50,7 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 	public static void setUpClass() throws Exception {
 		_db = DBManagerUtil.getDB();
 
-		_connection = DataAccess.getConnection();
-
 		_db.runSQL(
-			_connection,
 			"create table UpgradeKernelPackageTest (" +
 				"id LONG not null primary key, data VARCHAR(40) null, " +
 					"textData TEXT null)");
@@ -63,25 +58,18 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		if (_connection == null) {
-			return;
-		}
-
-		try {
-			_db.runSQL(_connection, "drop table UpgradeKernelPackageTest");
-		}
-		finally {
-			_connection.close();
-		}
+		_db.runSQL("drop table UpgradeKernelPackageTest");
 	}
 
 	@Before
 	public void setUp() throws Exception {
-		connection = _connection;
+		connection = DataAccess.getConnection();
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
+		DataAccess.cleanUp(connection);
+
 		connection = null;
 	}
 
@@ -144,65 +132,51 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 	@Test
 	public void testUpgradeLongTextTable() throws Exception {
 		try {
-			runSQL(
-				StringBundler.concat(
-					"insert into UpgradeKernelPackageTest values(",
-					String.valueOf(RandomTestUtil.nextLong()), ", '', '",
-					_PREFIX_OLD_CLASS_NAME, "')"));
-			runSQL(
-				StringBundler.concat(
-					"insert into UpgradeKernelPackageTest values(",
-					String.valueOf(RandomTestUtil.nextLong()), ", '', '",
-					_POSTFIX_OLD_CLASS_NAME, "')"));
+
+			// Test WildcardMode.LEADING
+
+			_insertData(1, "", _PREFIX_OLD_CLASS_NAME);
+			_insertData(2, "", _POSTFIX_OLD_CLASS_NAME);
+			_insertData(3, "", _PREFIX_POSTFIX_OLD_CLASS_NAME);
 
 			upgradeLongTextTable(
 				"UpgradeKernelPackageTest", "textData", "id", _TEST_CLASS_NAMES,
 				WildcardMode.LEADING);
 
-			_assertDataExist("textData", _PREFIX_NEW_CLASS_NAME, true);
-			_assertDataExist("textData", _POSTFIX_NEW_CLASS_NAME, false);
+			_assertData(1, "textData", _PREFIX_NEW_CLASS_NAME);
+			_assertData(2, "textData", _POSTFIX_OLD_CLASS_NAME);
+			_assertData(3, "textData", _PREFIX_POSTFIX_OLD_CLASS_NAME);
 
-			runSQL(
-				StringBundler.concat(
-					"insert into UpgradeKernelPackageTest values(",
-					String.valueOf(RandomTestUtil.nextLong()), ", '', '",
-					_PREFIX_OLD_RESOURCE_NAME, "')"));
-			runSQL(
-				StringBundler.concat(
-					"insert into UpgradeKernelPackageTest values(",
-					String.valueOf(RandomTestUtil.nextLong()), ", '', '",
-					_POSTFIX_OLD_RESOURCE_NAME, "')"));
+			// Test WildcardMode.TRAILING
+
+			_insertData(4, "", _PREFIX_OLD_CLASS_NAME);
+			_insertData(5, "", _POSTFIX_OLD_CLASS_NAME);
+			_insertData(6, "", _PREFIX_POSTFIX_OLD_CLASS_NAME);
 
 			upgradeLongTextTable(
-				"UpgradeKernelPackageTest", "textData", "id",
-				_TEST_RESOURCE_NAMES, WildcardMode.TRAILING);
+				"UpgradeKernelPackageTest", "textData", "id", _TEST_CLASS_NAMES,
+				WildcardMode.TRAILING);
 
-			_assertDataExist("textData", _PREFIX_NEW_RESOURCE_NAME, false);
-			_assertDataExist("textData", _POSTFIX_NEW_RESOURCE_NAME, true);
+			_assertData(4, "textData", _PREFIX_OLD_CLASS_NAME);
+			_assertData(5, "textData", _POSTFIX_NEW_CLASS_NAME);
+			_assertData(6, "textData", _PREFIX_POSTFIX_OLD_CLASS_NAME);
+
+			// Test WildcardMode.SURROUND
+
+			_insertData(7, "", _PREFIX_OLD_CLASS_NAME);
+			_insertData(8, "", _POSTFIX_OLD_CLASS_NAME);
+			_insertData(9, "", _PREFIX_POSTFIX_OLD_CLASS_NAME);
 
 			upgradeLongTextTable(
 				"UpgradeKernelPackageTest", "textData", "id", _TEST_CLASS_NAMES,
 				WildcardMode.SURROUND);
-			upgradeLongTextTable(
-				"UpgradeKernelPackageTest", "textData", "id",
-				_TEST_RESOURCE_NAMES, WildcardMode.SURROUND);
 
-			_assertDataExist("textData", _POSTFIX_NEW_CLASS_NAME, true);
-			_assertDataExist("textData", _PREFIX_NEW_RESOURCE_NAME, true);
+			_assertData(7, "textData", _PREFIX_NEW_CLASS_NAME);
+			_assertData(8, "textData", _POSTFIX_NEW_CLASS_NAME);
+			_assertData(9, "textData", _PREFIX_POSTFIX_NEW_CLASS_NAME);
 		}
 		finally {
-			runSQL(
-				"delete from UpgradeKernelPackageTest where textData like '%" +
-					_OLD_CLASS_NAME + "%'");
-			runSQL(
-				"delete from UpgradeKernelPackageTest where textData like '%" +
-					_NEW_CLASS_NAME + "%'");
-			runSQL(
-				"delete from UpgradeKernelPackageTest where textData like '%" +
-					_OLD_RESOURCE_NAME + "%'");
-			runSQL(
-				"delete from UpgradeKernelPackageTest where textData like '%" +
-					_NEW_RESOURCE_NAME + "%'");
+			runSQL("truncate table UpgradeKernelPackageTest");
 		}
 	}
 
@@ -211,120 +185,92 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 		throws Exception {
 
 		try {
-			StringBundler updateSB = new StringBundler(2);
-
-			updateSB.append("update UpgradeKernelPackageTest set textData = ");
-			updateSB.append("? where id = ?");
-
-			StringBundler selectSB = new StringBundler(4);
-
-			selectSB.append("select textData, id from ");
-			selectSB.append("UpgradeKernelPackageTest where textData like '%");
-			selectSB.append(_OLD_CLASS_NAME);
-			selectSB.append("%'");
-
-			runSQL(
-				StringBundler.concat(
-					"insert into UpgradeKernelPackageTest values(",
-					String.valueOf(RandomTestUtil.nextLong()), ", '', '",
-					_PREFIX_OLD_CLASS_NAME, "')"));
-			runSQL(
-				StringBundler.concat(
-					"insert into UpgradeKernelPackageTest values(",
-					String.valueOf(RandomTestUtil.nextLong()), ", '', '",
-					_POSTFIX_OLD_CLASS_NAME, "')"));
+			_insertData(1, "", _PREFIX_OLD_CLASS_NAME);
+			_insertData(2, "", _POSTFIX_OLD_CLASS_NAME);
+			_insertData(3, "", _PREFIX_POSTFIX_OLD_CLASS_NAME);
+			_insertData(4, "", "NOT_OLD_CLASS_NAME");
 
 			upgradeLongTextTable(
-				"textData", "id", selectSB.toString(), updateSB.toString(),
+				"textData", "id",
+				"select textData, id from UpgradeKernelPackageTest where " +
+					"textData like '%" + _OLD_CLASS_NAME + "%'",
+				"update UpgradeKernelPackageTest set textData = ? where id = ?",
 				_TEST_CLASS_NAMES[0]);
 
-			_assertDataExist("textData", _PREFIX_NEW_CLASS_NAME, true);
-			_assertDataExist("textData", _POSTFIX_NEW_CLASS_NAME, true);
+			_assertData(1, "textData", _PREFIX_NEW_CLASS_NAME);
+			_assertData(2, "textData", _POSTFIX_NEW_CLASS_NAME);
+			_assertData(3, "textData", _PREFIX_POSTFIX_NEW_CLASS_NAME);
+			_assertData(4, "textData", "NOT_OLD_CLASS_NAME");
 		}
 		finally {
-			runSQL(
-				"delete from UpgradeKernelPackageTest where textData like '%" +
-					_OLD_CLASS_NAME + "%'");
-			runSQL(
-				"delete from UpgradeKernelPackageTest where textData like '%" +
-					_NEW_CLASS_NAME + "%'");
+			runSQL("truncate table UpgradeKernelPackageTest");
 		}
 	}
 
 	@Test
 	public void testUpgradeTable() throws Exception {
 		try {
-			runSQL(
-				StringBundler.concat(
-					"insert into UpgradeKernelPackageTest values(",
-					String.valueOf(RandomTestUtil.nextLong()), ", '",
-					_PREFIX_OLD_CLASS_NAME, "', '')"));
-			runSQL(
-				StringBundler.concat(
-					"insert into UpgradeKernelPackageTest values(",
-					String.valueOf(RandomTestUtil.nextLong()), ", '",
-					_POSTFIX_OLD_CLASS_NAME, "', '')"));
+
+			// Test WildcardMode.LEADING
+
+			_insertData(1, _PREFIX_OLD_CLASS_NAME, "");
+			_insertData(2, _POSTFIX_OLD_CLASS_NAME, "");
+			_insertData(3, _PREFIX_POSTFIX_OLD_CLASS_NAME, "");
 
 			upgradeTable(
 				"UpgradeKernelPackageTest", "data", _TEST_CLASS_NAMES,
 				WildcardMode.LEADING);
 
-			_assertDataExist("data", _PREFIX_NEW_CLASS_NAME, true);
-			_assertDataExist("data", _POSTFIX_NEW_CLASS_NAME, false);
+			_assertData(1, "data", _PREFIX_NEW_CLASS_NAME);
+			_assertData(2, "data", _POSTFIX_OLD_CLASS_NAME);
+			_assertData(3, "data", _PREFIX_POSTFIX_OLD_CLASS_NAME);
 
-			runSQL(
-				StringBundler.concat(
-					"insert into UpgradeKernelPackageTest values(",
-					String.valueOf(RandomTestUtil.nextLong()), ", '",
-					_PREFIX_OLD_RESOURCE_NAME, "', '')"));
-			runSQL(
-				StringBundler.concat(
-					"insert into UpgradeKernelPackageTest values(",
-					String.valueOf(RandomTestUtil.nextLong()), ", '",
-					_POSTFIX_OLD_RESOURCE_NAME, "', '')"));
+			// Test WildcardMode.TRAILING
+
+			_insertData(4, _PREFIX_OLD_CLASS_NAME, "");
+			_insertData(5, _POSTFIX_OLD_CLASS_NAME, "");
+			_insertData(6, _PREFIX_POSTFIX_OLD_CLASS_NAME, "");
 
 			upgradeTable(
-				"UpgradeKernelPackageTest", "data", _TEST_RESOURCE_NAMES,
+				"UpgradeKernelPackageTest", "data", _TEST_CLASS_NAMES,
 				WildcardMode.TRAILING);
 
-			_assertDataExist("data", _PREFIX_NEW_RESOURCE_NAME, false);
-			_assertDataExist("data", _POSTFIX_NEW_RESOURCE_NAME, true);
+			_assertData(4, "data", _PREFIX_OLD_CLASS_NAME);
+			_assertData(5, "data", _POSTFIX_NEW_CLASS_NAME);
+			_assertData(6, "data", _PREFIX_POSTFIX_OLD_CLASS_NAME);
+
+			// Test WildcardMode.SURROUND
+
+			_insertData(7, _PREFIX_OLD_CLASS_NAME, "");
+			_insertData(8, _POSTFIX_OLD_CLASS_NAME, "");
+			_insertData(9, _PREFIX_POSTFIX_OLD_CLASS_NAME, "");
 
 			upgradeTable(
 				"UpgradeKernelPackageTest", "data", _TEST_CLASS_NAMES,
 				WildcardMode.SURROUND);
-			upgradeTable(
-				"UpgradeKernelPackageTest", "data", _TEST_RESOURCE_NAMES,
-				WildcardMode.SURROUND);
 
-			_assertDataExist("data", _POSTFIX_NEW_CLASS_NAME, true);
-			_assertDataExist("data", _PREFIX_NEW_RESOURCE_NAME, true);
+			_assertData(7, "data", _PREFIX_NEW_CLASS_NAME);
+			_assertData(8, "data", _POSTFIX_NEW_CLASS_NAME);
+			_assertData(9, "data", _PREFIX_POSTFIX_NEW_CLASS_NAME);
 
 			// Test preventDuplicate
 
-			runSQL(
-				StringBundler.concat(
-					"insert into UpgradeKernelPackageTest values(",
-					String.valueOf(RandomTestUtil.nextLong()), ", 'PREFIX_",
-					_OLD_CLASS_NAME, "_POSTFIX', '')"));
+			_insertData(10, _PREFIX_POSTFIX_OLD_CLASS_NAME, "");
+			_insertData(11, _PREFIX_POSTFIX_NEW_CLASS_NAME, "");
 
 			upgradeTable(
 				"UpgradeKernelPackageTest", "data", _TEST_CLASS_NAMES,
 				WildcardMode.SURROUND, true);
 
-			_assertDataExist("data", _PREFIX_NEW_CLASS_NAME, false);
-			_assertDataExist("data", _POSTFIX_NEW_CLASS_NAME, false);
-			_assertDataExist(
-				"data",
-				StringBundler.concat("PREFIX_", _NEW_CLASS_NAME, "_POSTFIX"),
-				true);
+			_assertData(10, "data", _PREFIX_POSTFIX_NEW_CLASS_NAME);
+			_assertData(11, "data", null);
 
 			// Test Exception
 
 			try {
 				upgradeTable(
-					"ResourcePermission", "name", null, WildcardMode.SURROUND,
-					true);
+					"UpgradeKernelPackageTest", "data", null,
+					WildcardMode.SURROUND, true);
 
 				Assert.fail("Should throw NullPointerException");
 			}
@@ -332,50 +278,36 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 			}
 		}
 		finally {
-			runSQL(
-				"delete from UpgradeKernelPackageTest where data like '%" +
-					_OLD_CLASS_NAME + "%'");
-			runSQL(
-				"delete from UpgradeKernelPackageTest where data like '%" +
-					_NEW_CLASS_NAME + "%'");
-			runSQL(
-				"delete from UpgradeKernelPackageTest where data like '%" +
-					_OLD_RESOURCE_NAME + "%'");
-			runSQL(
-				"delete from UpgradeKernelPackageTest where data like '%" +
-					_NEW_RESOURCE_NAME + "%'");
+			runSQL("truncate table UpgradeKernelPackageTest");
 		}
 	}
 
-	private void _assertDataExist(
-			String columnName, String value, boolean expected)
+	private void _assertData(long id, String columnName, String expectedValue)
 		throws Exception {
 
-		StringBundler selectSB = new StringBundler(7);
+		StringBundler sb = new StringBundler(4);
 
-		selectSB.append("select ");
-		selectSB.append(columnName);
-		selectSB.append(
-			" from UpgradeKernelPackageTest  where CAST_CLOB_TEXT(");
-		selectSB.append(columnName);
-		selectSB.append(") = '");
-		selectSB.append(value);
-		selectSB.append("'");
+		sb.append("select ");
+		sb.append(columnName);
+		sb.append(" from UpgradeKernelPackageTest where id =");
+		sb.append(id);
 
-		try (PreparedStatement ps = connection.prepareStatement(
-				SQLTransformer.transform(selectSB.toString()));
-			ResultSet rs = ps.executeQuery()) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				SQLTransformer.transform(sb.toString()));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			String errorMessage = " does contain value ";
+			if (expectedValue != null) {
+				Assert.assertTrue(
+					"Entry with id " + id + " should exsit", resultSet.next());
 
-			if (expected) {
-				errorMessage = " does not contain value ";
+				Assert.assertEquals(
+					expectedValue, resultSet.getString(columnName));
 			}
-
-			Assert.assertEquals(
-				StringBundler.concat(
-					"Column ", columnName, errorMessage, value),
-				expected, rs.next());
+			else {
+				Assert.assertFalse(
+					"Entry with id " + id + "should not exsit",
+					resultSet.next());
+			}
 		}
 	}
 
@@ -396,47 +328,48 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 		}
 	}
 
+	private void _insertData(long id, String data, String textData)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("insert into UpgradeKernelPackageTest values(");
+		sb.append(id);
+		sb.append(", '");
+		sb.append(data);
+		sb.append("', '");
+		sb.append(textData);
+		sb.append("')");
+
+		runSQL(sb.toString());
+	}
+
 	private static final String _NEW_CLASS_NAME = "UPDATED_CLASS_NAME";
 
-	private static final String _NEW_RESOURCE_NAME = "UPDATED_RESOURCE_NAME";
-
 	private static final String _OLD_CLASS_NAME = "ORIGINAL_CLASS_NAME";
-
-	private static final String _OLD_RESOURCE_NAME = "ORIGINAL_RESOURCE_NAME";
 
 	private static final String _POSTFIX_NEW_CLASS_NAME =
 		_NEW_CLASS_NAME + "_POSTFIX";
 
-	private static final String _POSTFIX_NEW_RESOURCE_NAME =
-		_NEW_RESOURCE_NAME + "_POSTFIX";
-
 	private static final String _POSTFIX_OLD_CLASS_NAME =
 		_OLD_CLASS_NAME + "_POSTFIX";
-
-	private static final String _POSTFIX_OLD_RESOURCE_NAME =
-		_OLD_RESOURCE_NAME + "_POSTFIX";
 
 	private static final String _PREFIX_NEW_CLASS_NAME =
 		"PREFIX_" + _NEW_CLASS_NAME;
 
-	private static final String _PREFIX_NEW_RESOURCE_NAME =
-		"PREFIX_" + _NEW_RESOURCE_NAME;
-
 	private static final String _PREFIX_OLD_CLASS_NAME =
 		"PREFIX_" + _OLD_CLASS_NAME;
 
-	private static final String _PREFIX_OLD_RESOURCE_NAME =
-		"PREFIX_" + _OLD_RESOURCE_NAME;
+	private static final String _PREFIX_POSTFIX_NEW_CLASS_NAME =
+		"PREFIX_" + _NEW_CLASS_NAME + "_POSTFIX";
+
+	private static final String _PREFIX_POSTFIX_OLD_CLASS_NAME =
+		"PREFIX_" + _OLD_CLASS_NAME + "_POSTFIX";
 
 	private static final String[][] _TEST_CLASS_NAMES = {
 		{_OLD_CLASS_NAME, _NEW_CLASS_NAME}
 	};
 
-	private static final String[][] _TEST_RESOURCE_NAMES = {
-		{_OLD_RESOURCE_NAME, _NEW_RESOURCE_NAME}
-	};
-
-	private static Connection _connection;
 	private static DB _db;
 
 }
