@@ -305,7 +305,6 @@ public class SearchResultContentDisplayBuilderTest {
 	@Mock
 	private PortletURL _editPortletURL;
 
-	@Mock
 	private PermissionChecker _permissionChecker;
 
 	@Mock
