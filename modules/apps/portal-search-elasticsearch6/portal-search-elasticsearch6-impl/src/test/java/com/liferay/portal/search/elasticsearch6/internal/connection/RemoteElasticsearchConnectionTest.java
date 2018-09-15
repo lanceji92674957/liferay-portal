@@ -32,7 +32,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 /**
@@ -138,9 +137,7 @@ public class RemoteElasticsearchConnectionTest {
 		Assert.assertEquals(port, inetSocketAddress.getPort());
 	}
 
-	@Mock
 	private Props _props;
-
 	private RemoteElasticsearchConnection _remoteElasticsearchConnection;
 
 }
