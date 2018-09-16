@@ -19,8 +19,11 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Lance Ji
@@ -144,6 +147,9 @@ public class MockHelperUtil {
 					put(Boolean.class, false);
 					put(boolean.class, false);
 					put(String.class, "");
+					put(List.class, Collections.emptyList());
+					put(Set.class, Collections.emptySet());
+					put(Map.class, Collections.emptyMap());
 				}
 			};
 
