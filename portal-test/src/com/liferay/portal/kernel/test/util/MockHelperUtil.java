@@ -137,13 +137,13 @@ public class MockHelperUtil {
 		private static final Map<Class<?>, Object> _defaultValue =
 			new HashMap<Class<?>, Object>() {
 				{
-					_defaultValue.put(int.class, 0);
-					_defaultValue.put(Integer.class, 0);
-					_defaultValue.put(long.class, 0L);
-					_defaultValue.put(Long.class, 0L);
-					_defaultValue.put(Boolean.class, false);
-					_defaultValue.put(boolean.class, false);
-					_defaultValue.put(String.class, "");
+					put(int.class, 0);
+					put(Integer.class, 0);
+					put(long.class, 0L);
+					put(Long.class, 0L);
+					put(Boolean.class, false);
+					put(boolean.class, false);
+					put(String.class, "");
 				}
 			};
 
