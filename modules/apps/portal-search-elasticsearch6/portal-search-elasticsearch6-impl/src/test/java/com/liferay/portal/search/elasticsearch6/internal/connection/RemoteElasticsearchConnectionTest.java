@@ -32,8 +32,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.MockitoAnnotations;
-
 /**
  * @author André de Oliveira
  */
@@ -41,8 +39,6 @@ public class RemoteElasticsearchConnectionTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		_remoteElasticsearchConnection = new RemoteElasticsearchConnection();
 
 		_remoteElasticsearchConnection.props = _props;
