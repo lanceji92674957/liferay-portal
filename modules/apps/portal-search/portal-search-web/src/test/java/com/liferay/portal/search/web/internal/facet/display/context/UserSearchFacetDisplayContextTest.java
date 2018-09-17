@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
+import com.liferay.portal.kernel.test.util.MockHelperUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.web.internal.facet.display.builder.UserSearchFacetDisplayBuilder;
 
@@ -28,24 +29,15 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-
 /**
  * @author Lino Alves
  */
 public class UserSearchFacetDisplayContextTest {
 
 	@Before
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
-		Mockito.doReturn(
-			_facetCollector
-		).when(
-			_facet
-		).getFacetCollector();
+	public void setUp() throws Exception {
+		MockHelperUtil.setMethodAlwaysReturnExpected(
+			_facet, "getFacetCollector", _facetCollector);
 	}
 
 	@Test
@@ -195,48 +187,36 @@ public class UserSearchFacetDisplayContextTest {
 		return userSearchFacetDisplayBuilder.build();
 	}
 
-	protected TermCollector createTermCollector(String userName, int count) {
-		TermCollector termCollector = Mockito.mock(TermCollector.class);
+	protected TermCollector createTermCollector(String userName, int count)
+		throws Exception {
 
-		Mockito.doReturn(
-			count
-		).when(
-			termCollector
-		).getFrequency();
+		TermCollector termCollector =
+			MockHelperUtil.setMethodAlwaysReturnExpected(
+				TermCollector.class, "getFrequency", count);
 
-		Mockito.doReturn(
-			userName
-		).when(
-			termCollector
-		).getTerm();
+		MockHelperUtil.setMethodAlwaysReturnExpected(
+			termCollector, "getTerm", userName);
 
 		return termCollector;
 	}
 
 	protected User createUser(String userName) throws Exception {
-		User user = Mockito.mock(User.class);
-
-		Mockito.doReturn(
-			userName
-		).when(
-			user
-		).getFullName();
+		User user = MockHelperUtil.setMethodAlwaysReturnExpected(
+			User.class, "getFullName", userName);
 
 		return user;
 	}
 
-	protected void setUpOneTermCollector(String userName, int count) {
-		Mockito.doReturn(
-			Collections.singletonList(createTermCollector(userName, count))
-		).when(
-			_facetCollector
-		).getTermCollectors();
+	protected void setUpOneTermCollector(String userName, int count)
+		throws Exception {
+
+		MockHelperUtil.setMethodAlwaysReturnExpected(
+			_facetCollector, "getTermCollectors",
+			Collections.singletonList(createTermCollector(userName, count)));
 	}
 
-	@Mock
-	private Facet _facet;
-
-	@Mock
-	private FacetCollector _facetCollector;
+	private final Facet _facet = MockHelperUtil.initMock(Facet.class);
+	private final FacetCollector _facetCollector = MockHelperUtil.initMock(
+		FacetCollector.class);
 
 }

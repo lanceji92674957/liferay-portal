@@ -22,13 +22,12 @@ import com.liferay.apio.architect.impl.response.control.Fields;
 import com.liferay.apio.architect.impl.url.ApplicationURL;
 import com.liferay.apio.architect.impl.url.ServerURL;
 import com.liferay.apio.architect.language.AcceptLanguage;
+import com.liferay.portal.kernel.test.util.MockHelperUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 
 /**
  * @author Alejandro Hernández
@@ -37,12 +36,12 @@ public class RequestInfoTest {
 
 	@Before
 	public void setUp() {
-		_httpServletRequest = Mockito.mock(HttpServletRequest.class);
-		_serverURL = Mockito.mock(ServerURL.class);
-		_applicationURL = Mockito.mock(ApplicationURL.class);
-		_embedded = Mockito.mock(Embedded.class);
-		_fields = Mockito.mock(Fields.class);
-		_acceptLanguage = Mockito.mock(AcceptLanguage.class);
+		_httpServletRequest = MockHelperUtil.initMock(HttpServletRequest.class);
+		_serverURL = MockHelperUtil.initMock(ServerURL.class);
+		_applicationURL = MockHelperUtil.initMock(ApplicationURL.class);
+		_embedded = MockHelperUtil.initMock(Embedded.class);
+		_fields = MockHelperUtil.initMock(Fields.class);
+		_acceptLanguage = MockHelperUtil.initMock(AcceptLanguage.class);
 	}
 
 	@Test
