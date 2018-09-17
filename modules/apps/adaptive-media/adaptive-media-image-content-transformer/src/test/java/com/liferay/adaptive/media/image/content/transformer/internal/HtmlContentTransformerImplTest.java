@@ -21,11 +21,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.test.util.MockHelperUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-
-import java.lang.reflect.Method;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -42,7 +40,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class HtmlContentTransformerImplTest {
 
 	@Before
-	public void setUp() throws PortalException {
+	public void setUp() throws Exception, PortalException {
 		_htmlContentTransformer.setAMImageHTMLTagFactory(
 			(String originalImgTag, FileEntry fileEntry) -> {
 				if (originalImgTag.startsWith(
@@ -55,18 +53,9 @@ public class HtmlContentTransformerImplTest {
 			});
 
 		_htmlContentTransformer.setDLAppLocalService(
-			(DLAppLocalService)ProxyUtil.newProxyInstance(
-				DLAppLocalService.class.getClassLoader(),
-				new Class<?>[] {DLAppLocalService.class},
-				(Object proxy, Method method, Object[] args) -> {
-					String methodName = method.getName();
-
-					if (methodName.equals("getFileEntry")) {
-						return ProxyFactory.newDummyInstance(FileEntry.class);
-					}
-
-					return method.invoke(proxy, args);
-				}));
+			MockHelperUtil.setMethodAlwaysReturnExpected(
+				DLAppLocalService.class, "getFileEntry",
+				ProxyFactory.newDummyInstance(FileEntry.class), long.class));
 	}
 
 	@Test
