@@ -65,16 +65,6 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 
 		languageUtil.setLanguage(new LanguageImpl());
 
-		_requestBackedPortletURLFactory = mock(
-			RequestBackedPortletURLFactory.class);
-
-		when(
-			_requestBackedPortletURLFactory.createActionURL(
-				WikiPortletKeys.WIKI)
-		).thenReturn(
-			mock(LiferayPortletURL.class)
-		);
-
 		_inputEditorTaglibAttributes.put(
 			"liferay-ui:input-editor:name", "testEditor");
 
@@ -164,6 +154,16 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 			itemSelectorPortletURL
 		);
 
+		_requestBackedPortletURLFactory = mock(
+			RequestBackedPortletURLFactory.class);
+
+		when(
+			_requestBackedPortletURLFactory.createActionURL(
+				WikiPortletKeys.WIKI)
+		).thenReturn(
+			mock(LiferayPortletURL.class)
+		);
+
 		JSONObject jsonObject = getJSONObjectWithDefaultItemSelectorURL();
 
 		WikiAttachmentImageHTMLEditorConfigContributor
@@ -208,50 +208,21 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 			wikiAttachmentImageHTMLEditorConfigContributor =
 				new WikiAttachmentImageHTMLEditorConfigContributor();
 
-		wikiAttachmentImageHTMLEditorConfigContributor.setItemSelector(
-			_itemSelector);
-
 		wikiAttachmentImageHTMLEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());
-
-		expectedJSONObject.put("removePlugins", "plugin1");
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
-	}
 
-	@Test
-	public void testItemSelectorURLWhenNotAllowBrowseAndValidWikiPage()
-		throws Exception {
-
-		setAllowBrowseDocuments(false);
 		setWikiPageResourcePrimKey(1);
-
-		JSONObject originalJSONObject =
-			getJSONObjectWithDefaultItemSelectorURL();
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
-
-		WikiAttachmentImageHTMLEditorConfigContributor
-			wikiAttachmentImageHTMLEditorConfigContributor =
-				new WikiAttachmentImageHTMLEditorConfigContributor();
-
-		wikiAttachmentImageHTMLEditorConfigContributor.setItemSelector(
-			_itemSelector);
 
 		wikiAttachmentImageHTMLEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
-
-		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
-
-		expectedJSONObject.put("removePlugins", "plugin1");
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
