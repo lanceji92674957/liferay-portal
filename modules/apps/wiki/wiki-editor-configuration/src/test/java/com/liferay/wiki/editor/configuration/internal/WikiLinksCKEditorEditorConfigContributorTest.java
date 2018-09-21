@@ -19,10 +19,9 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,13 +58,6 @@ public class WikiLinksCKEditorEditorConfigContributorTest extends PowerMockito {
 
 		_requestBackedPortletURLFactory = mock(
 			RequestBackedPortletURLFactory.class);
-
-		when(
-			_requestBackedPortletURLFactory.createActionURL(
-				WikiPortletKeys.WIKI)
-		).thenReturn(
-			mock(LiferayPortletURL.class)
-		);
 
 		_inputEditorTaglibAttributes.put(
 			"liferay-ui:input-editor:name", "testEditor");
@@ -109,6 +101,10 @@ public class WikiLinksCKEditorEditorConfigContributorTest extends PowerMockito {
 		Whitebox.setInternalState(
 			_wikiLinksCKEditorEditorConfigContributor, "itemSelector",
 			_itemSelector);
+
+		_themeDisplay = new ThemeDisplay();
+
+		ReflectionTestUtil.setFieldValue(_themeDisplay, "_locale", null);
 	}
 
 	@Test
@@ -219,10 +215,7 @@ public class WikiLinksCKEditorEditorConfigContributorTest extends PowerMockito {
 	private ItemSelector _itemSelector;
 
 	private RequestBackedPortletURLFactory _requestBackedPortletURLFactory;
-
-	@Mock
 	private ThemeDisplay _themeDisplay;
-
 	private WikiLinksCKEditorConfigContributor
 		_wikiLinksCKEditorEditorConfigContributor;
 

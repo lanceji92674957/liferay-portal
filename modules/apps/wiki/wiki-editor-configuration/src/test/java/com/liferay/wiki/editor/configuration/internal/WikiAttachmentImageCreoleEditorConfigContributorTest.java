@@ -22,12 +22,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.service.WikiPageLocalService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -77,6 +77,10 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 
 		_inputEditorTaglibAttributes.put(
 			"liferay-ui:input-editor:name", "testEditor");
+
+		_themeDisplay = new ThemeDisplay();
+
+		ReflectionTestUtil.setFieldValue(_themeDisplay, "_locale", null);
 	}
 
 	@Test
@@ -292,11 +296,6 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 	private ItemSelector _itemSelector;
 
 	private RequestBackedPortletURLFactory _requestBackedPortletURLFactory;
-
-	@Mock
 	private ThemeDisplay _themeDisplay;
-
-	@Mock
-	private WikiPageLocalService _wikiPageLocalService;
 
 }
