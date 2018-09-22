@@ -23,7 +23,7 @@ import org.junit.Test;
 /**
  * @author Roberto Díaz
  */
-public class WikiLinksCKEditorEditorConfigContributorTest
+public class WikiLinksCKEditorConfigContributorTest
 	extends BaseWikiLinksCKEditorConfigContributorTestCase {
 
 	@Test
