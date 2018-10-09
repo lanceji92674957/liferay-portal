@@ -17,10 +17,14 @@ package com.liferay.portal.service.permission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
+import com.liferay.portal.kernel.test.ProxyTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
@@ -32,92 +36,64 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Jorge Ferrer
  */
-@PrepareForTest({ResourceActionsUtil.class, RoleLocalServiceUtil.class})
-@RunWith(PowerMockRunner.class)
-public class ModelPermissionsFactoryTest extends PowerMockito {
+public class ModelPermissionsFactoryTest {
 
 	@Before
 	public void setUp() throws Exception {
-		mockStatic(RoleLocalServiceUtil.class);
+		ReflectionTestUtil.setFieldValue(
+			RoleLocalServiceUtil.class, "_service",
+			ProxyTestUtil.getProxy(
+				RoleLocalService.class,
+				ProxyTestUtil.getProxyMethod(
+					"getRole",
+					(Object[] args) -> {
+						if (args.length == 2) {
+							if (RoleConstants.GUEST.equals(args[1])) {
+								return ProxyTestUtil.getProxy(
+									Role.class,
+									ProxyTestUtil.getProxyMethod(
+										"getName",
+										(Object[] arguments) ->
+											RoleConstants.GUEST));
+							}
+							else if (RoleConstants.ORGANIZATION_USER.equals(
+										args[1])) {
 
-		Role guestRole = Mockito.mock(Role.class);
+								return ProxyTestUtil.getProxy(
+									Role.class,
+									ProxyTestUtil.getProxyMethod(
+										"getName",
+										(Object[] arguments) ->
+											RoleConstants.ORGANIZATION_USER));
+							}
+							else if (RoleConstants.POWER_USER.equals(args[1])) {
+								return ProxyTestUtil.getProxy(
+									Role.class,
+									ProxyTestUtil.getProxyMethod(
+										"getName",
+										(Object[] arguments) ->
+											RoleConstants.POWER_USER));
+							}
+							else if (RoleConstants.SITE_MEMBER.equals(
+										args[1])) {
 
-		Mockito.when(
-			guestRole.getName()
-		).thenReturn(
-			RoleConstants.GUEST
-		);
+								return ProxyTestUtil.getProxy(
+									Role.class,
+									ProxyTestUtil.getProxyMethod(
+										"getName",
+										(Object[] arguments) ->
+											RoleConstants.SITE_MEMBER));
+							}
+						}
 
-		when(
-			RoleLocalServiceUtil.getRole(
-				Mockito.anyLong(), Mockito.eq(RoleConstants.GUEST))
-		).thenReturn(
-			guestRole
-		);
-
-		Role organizationUserRole = Mockito.mock(Role.class);
-
-		Mockito.when(
-			organizationUserRole.getName()
-		).thenReturn(
-			RoleConstants.ORGANIZATION_USER
-		);
-
-		when(
-			RoleLocalServiceUtil.getRole(
-				Mockito.anyLong(), Mockito.eq(RoleConstants.ORGANIZATION_USER))
-		).thenReturn(
-			organizationUserRole
-		);
-
-		Role powerUserRole = Mockito.mock(Role.class);
-
-		Mockito.when(
-			powerUserRole.getName()
-		).thenReturn(
-			RoleConstants.POWER_USER
-		);
-
-		when(
-			RoleLocalServiceUtil.getRole(
-				Mockito.anyLong(), Mockito.eq(RoleConstants.POWER_USER))
-		).thenReturn(
-			powerUserRole
-		);
-
-		Role siteMemberRole = Mockito.mock(Role.class);
-
-		Mockito.when(
-			siteMemberRole.getName()
-		).thenReturn(
-			RoleConstants.SITE_MEMBER
-		);
-
-		when(
-			RoleLocalServiceUtil.getDefaultGroupRole(Mockito.anyLong())
-		).thenReturn(
-			siteMemberRole
-		);
-
-		when(
-			RoleLocalServiceUtil.getRole(
-				Mockito.anyLong(), Mockito.eq(RoleConstants.SITE_MEMBER))
-		).thenReturn(
-			siteMemberRole
-		);
+						return null;
+					})));
 	}
 
 	@Test
@@ -231,19 +207,16 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 
 		String className = RandomTestUtil.randomString();
 
-		mockStatic(ResourceActionsUtil.class);
-
-		when(
-			ResourceActionsUtil.getModelResourceGroupDefaultActions(className)
-		).thenReturn(
-			Arrays.asList(ActionKeys.VIEW)
-		);
-
-		when(
-			ResourceActionsUtil.getModelResourceGuestDefaultActions(className)
-		).thenReturn(
-			Arrays.asList(ActionKeys.VIEW)
-		);
+		ReflectionTestUtil.setFieldValue(
+			ResourceActionsUtil.class, "_resourceActions",
+			ProxyTestUtil.getProxy(
+				ResourceActions.class,
+				ProxyTestUtil.getProxyMethod(
+					"getModelResourceGroupDefaultActions",
+					(Object[] args) -> Arrays.asList(ActionKeys.VIEW)),
+				ProxyTestUtil.getProxyMethod(
+					"getModelResourceGuestDefaultActions",
+					(Object[] args) -> Arrays.asList(ActionKeys.VIEW))));
 
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
 			mockHttpServletRequest, className);
