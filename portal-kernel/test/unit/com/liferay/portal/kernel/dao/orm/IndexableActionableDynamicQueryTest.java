@@ -17,18 +17,16 @@ package com.liferay.portal.kernel.dao.orm;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
+import com.liferay.portal.kernel.test.ProxyTestUtil;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 import java.util.Arrays;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author André de Oliveira
@@ -37,11 +35,23 @@ public class IndexableActionableDynamicQueryTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
+		document1 = ProxyTestUtil.getProxy(Document.class);
 
-		RegistryUtil.setRegistry(createRegistry());
+		document2 = ProxyTestUtil.getProxy(Document.class);
+
+		document3 = ProxyTestUtil.getProxy(Document.class);
+
+		Registry registry = new BasicRegistryImpl();
+
+		registry.registerService(
+			PortalExecutorManager.class,
+			ProxyTestUtil.getDummyProxy(PortalExecutorManager.class));
+
+		RegistryUtil.setRegistry(registry);
 
 		indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+
+		indexWriterHelper = ProxyTestUtil.getProxy(IndexWriterHelper.class);
 
 		indexableActionableDynamicQuery.setIndexWriterHelper(indexWriterHelper);
 	}
@@ -68,42 +78,24 @@ public class IndexableActionableDynamicQueryTest {
 		verifyDocumentsUpdated(document1, document2, document3);
 	}
 
-	protected Registry createRegistry() {
-		Registry registry = new BasicRegistryImpl();
-
-		registry.registerService(
-			PortalExecutorManager.class,
-			Mockito.mock(PortalExecutorManager.class));
-
-		return registry;
-	}
-
-	protected void verifyDocumentsUpdated(Document... documents)
-		throws Exception {
-
-		Mockito.verify(
-			indexWriterHelper
-		).updateDocuments(
-			null, 0, Arrays.asList(documents), false
-		);
+	protected void verifyDocumentsUpdated(Document... documents) {
+		Assert.assertTrue(
+			ProxyTestUtil.containsAction(
+				indexWriterHelper,
+				ProxyTestUtil.getProxyAction(
+					"updateDocuments",
+					new Object[] {null, 0L, Arrays.asList(documents), false})));
 	}
 
 	protected void verifyNoDocumentsUpdated() {
-		Mockito.verifyZeroInteractions(indexWriterHelper);
+		ProxyTestUtil.assertAction(
+			indexWriterHelper, ProxyTestUtil.noINTERACTION);
 	}
 
-	@Mock
 	protected Document document1;
-
-	@Mock
 	protected Document document2;
-
-	@Mock
 	protected Document document3;
-
 	protected IndexableActionableDynamicQuery indexableActionableDynamicQuery;
-
-	@Mock
 	protected IndexWriterHelper indexWriterHelper;
 
 }
