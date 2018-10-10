@@ -93,13 +93,13 @@ public class ProxyTestUtil {
 
 	public static <T> T getDummyProxy(Class<T> clazz) {
 		return (T)ProxyUtil.newProxyInstance(
-			clazz.getClassLoader(), new Class<?>[] {clazz},
+			_getClassLoader(clazz), new Class<?>[] {clazz},
 			(proxy, method, args) -> method.getDefaultValue());
 	}
 
 	public static <T> T getProxy(Class<T> clazz) {
 		return (T)ProxyUtil.newProxyInstance(
-			clazz.getClassLoader(), new Class<?>[] {clazz},
+			_getClassLoader(clazz), new Class<?>[] {clazz},
 			new ProxyTestInvocationHandler());
 	}
 
@@ -112,7 +112,7 @@ public class ProxyTestUtil {
 		}
 
 		return (T)ProxyUtil.newProxyInstance(
-			clazz.getClassLoader(), new Class<?>[] {clazz},
+			_getClassLoader(clazz), new Class<?>[] {clazz},
 			proxyTestInvocationHandler);
 	}
 
@@ -201,6 +201,16 @@ public class ProxyTestUtil {
 		private final Function<Object[], Object> _function;
 		private final String _methodName;
 
+	}
+
+	private static ClassLoader _getClassLoader(Class<?> clazz) {
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		if (classLoader == null) {
+			classLoader = ProxyTestUtil.class.getClassLoader();
+		}
+
+		return classLoader;
 	}
 
 	private static ProxyTestInvocationHandler _getInvocationHandler(
