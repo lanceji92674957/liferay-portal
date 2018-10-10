@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.test;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.lang.reflect.InvocationHandler;
@@ -248,6 +249,30 @@ public class ProxyTestUtil {
 
 			if (expectedFunction != null) {
 				return expectedFunction.apply(args);
+			}
+
+			Class<?> returnType = method.getReturnType();
+
+			if (returnType.equals(boolean.class)) {
+				return GetterUtil.DEFAULT_BOOLEAN;
+			}
+			else if (returnType.equals(byte.class)) {
+				return GetterUtil.DEFAULT_BYTE;
+			}
+			else if (returnType.equals(double.class)) {
+				return GetterUtil.DEFAULT_DOUBLE;
+			}
+			else if (returnType.equals(float.class)) {
+				return GetterUtil.DEFAULT_FLOAT;
+			}
+			else if (returnType.equals(int.class)) {
+				return GetterUtil.DEFAULT_INTEGER;
+			}
+			else if (returnType.equals(long.class)) {
+				return GetterUtil.DEFAULT_LONG;
+			}
+			else if (returnType.equals(short.class)) {
+				return GetterUtil.DEFAULT_SHORT;
 			}
 
 			return method.getDefaultValue();
