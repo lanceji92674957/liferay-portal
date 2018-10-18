@@ -1,0 +1,64 @@
+diff --git a/org/eclipse/osgi/storage/bundlefile/ZipBundleFile.java b/org/eclipse/osgi/storage/bundlefile/ZipBundleFile.java
+index 915f5a4..9b42391 100644
+--- a/org/eclipse/osgi/storage/bundlefile/ZipBundleFile.java
++++ b/org/eclipse/osgi/storage/bundlefile/ZipBundleFile.java
+@@ -319,7 +319,7 @@ public class ZipBundleFile extends BundleFile {
+ 				path = path.substring(1);
+ 			// Append a '/', if not already there, to path if not an empty string.
+ 			if (path.length() > 0 && path.charAt(path.length() - 1) != '/')
+-				path = new StringBuilder(path).append("/").toString(); //$NON-NLS-1$
++				path = path.concat("/"); //$NON-NLS-1$
+ 
+ 			LinkedHashSet<String> result = new LinkedHashSet<>();
+ 			// Get all zip file entries and add the ones of interest.
+@@ -333,8 +333,27 @@ public class ZipBundleFile extends BundleFile {
+ 					// If we get here, we know that the entry is either (1) equal to
+ 					// path, (2) a file under path, or (3) a subdirectory of path.
+ 					if (path.length() < entryPath.length()) {
+-						// If we get here, we know that entry is not equal to path.
+-						getEntryPaths(path, entryPath.substring(path.length()), recurse, result);
++						int index = entryPath.indexOf('/', path.length());
++
++						if (recurse) {
++							while (index > 0) {
++								index++;
++
++								result.add(entryPath.substring(0, index));
++
++								index = entryPath.indexOf('/', index);
++							}
++
++							result.add(entryPath);
++						}
++						else {
++							if (index < 0) {
++								result.add(entryPath);
++							}
++							else {
++								result.add(entryPath.substring(0, index + 1));
++							}
++						}
+ 					}
+ 				}
+ 			}
+@@ -344,20 +363,6 @@ public class ZipBundleFile extends BundleFile {
+ 		}
+ 	}
+ 
+-	private void getEntryPaths(String path, String entry, boolean recurse, LinkedHashSet<String> entries) {
+-		if (entry.length() == 0)
+-			return;
+-		int slash = entry.indexOf('/');
+-		if (slash == -1)
+-			entries.add(path + entry);
+-		else {
+-			path = path + entry.substring(0, slash + 1);
+-			entries.add(path);
+-			if (recurse)
+-				getEntryPaths(path, entry.substring(slash + 1), true, entries);
+-		}
+-	}
+-
+ 	public void close() throws IOException {
+ 		openLock.lock();
+ 		try {

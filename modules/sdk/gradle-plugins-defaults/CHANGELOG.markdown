@@ -4809,6 +4809,54 @@ version 1.3.5.
 - [LPS-86408]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.164.
 
+## 5.5.85 - 2018-10-16
+
+### Changed
+- [LPS-85849]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.165.
+
+## 5.5.86 - 2018-10-16
+
+### Changed
+- [LPS-85556]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.166.
+
+## 5.5.87 - 2018-10-16
+
+### Changed
+- [LPS-85678]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.167.
+- [LPS-85678]: Update the [Liferay Gradle Plugins Baseline] dependency to
+version 1.3.6.
+
+## 5.5.88 - 2018-10-16
+
+### Changed
+- [LPS-85678]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.168.
+- [LPS-85678]: Update the [Liferay Gradle Plugins Baseline] dependency to
+version 1.3.7.
+
+## 5.5.89 - 2018-10-17
+
+### Changed
+- [LPS-86447]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.169.
+
+## 5.5.90 - 2018-10-17
+
+### Changed
+- [LPS-86018]: Update the [Liferay Gradle Plugins] dependency to version 3.13.0.
+
+## 5.5.91 - 2018-10-17
+
+### Added
+- [LPS-86477]: Allow the `test` and `testIntegration` task `ignoreFailures`
+property to be overridden for OSGi projects. This can be done via command line
+argument:
+	- `./gradlew test -Dtest.ignore.failures=false`
+	- `./gradlew testIntegration -DtestIntegration.ignore.failures=false`
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5289,14 +5337,18 @@ version 1.3.5.
 [LPS-85677]: https://issues.liferay.com/browse/LPS-85677
 [LPS-85678]: https://issues.liferay.com/browse/LPS-85678
 [LPS-85771]: https://issues.liferay.com/browse/LPS-85771
+[LPS-85849]: https://issues.liferay.com/browse/LPS-85849
 [LPS-85905]: https://issues.liferay.com/browse/LPS-85905
 [LPS-85954]: https://issues.liferay.com/browse/LPS-85954
 [LPS-85959]: https://issues.liferay.com/browse/LPS-85959
 [LPS-85987]: https://issues.liferay.com/browse/LPS-85987
+[LPS-86018]: https://issues.liferay.com/browse/LPS-86018
 [LPS-86308]: https://issues.liferay.com/browse/LPS-86308
 [LPS-86362]: https://issues.liferay.com/browse/LPS-86362
 [LPS-86371]: https://issues.liferay.com/browse/LPS-86371
 [LPS-86408]: https://issues.liferay.com/browse/LPS-86408
+[LPS-86447]: https://issues.liferay.com/browse/LPS-86447
+[LPS-86477]: https://issues.liferay.com/browse/LPS-86477
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981
