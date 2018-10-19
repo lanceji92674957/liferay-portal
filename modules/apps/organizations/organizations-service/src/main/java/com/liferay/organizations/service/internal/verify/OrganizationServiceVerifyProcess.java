@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @author Daniel Kocsis
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "verify.process.name=com.liferay.organizations.service",
 	service = VerifyProcess.class

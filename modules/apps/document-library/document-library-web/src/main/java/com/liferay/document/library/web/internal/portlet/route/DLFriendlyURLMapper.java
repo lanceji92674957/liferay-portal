@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Sergio González
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/document-library-routes.xml",
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY

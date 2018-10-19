@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  * @author Alejandro Tardín
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "adaptive.media.handler.pattern=image",
 	service = AMRequestHandler.class
 )

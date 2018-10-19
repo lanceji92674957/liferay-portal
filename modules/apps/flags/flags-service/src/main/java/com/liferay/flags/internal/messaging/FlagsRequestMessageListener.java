@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @author Peter Fellwock
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "destination.name=" + DestinationNames.FLAGS,
 	service = MessageListener.class
 )

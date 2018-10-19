@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ryan Park
  * @author Raymond Augé
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "destination.name=" + DestinationNames.HOT_DEPLOY,
 	service = MessageListener.class

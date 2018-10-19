@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "auth.verifier.OAuth2RestAuthVerifier.urls.includes=#N/A#",
 	service = AuthVerifier.class

@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Roberto Díaz
  */
-@Component(service = PageAttachmentWikiUploadResponseHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = PageAttachmentWikiUploadResponseHandler.class)
 public class PageAttachmentWikiUploadResponseHandler
 	implements UploadResponseHandler {
 

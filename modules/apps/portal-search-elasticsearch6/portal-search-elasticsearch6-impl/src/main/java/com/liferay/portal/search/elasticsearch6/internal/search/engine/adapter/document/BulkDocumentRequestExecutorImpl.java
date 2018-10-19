@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(service = BulkDocumentRequestExecutor.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = BulkDocumentRequestExecutor.class)
 public class BulkDocumentRequestExecutorImpl
 	implements BulkDocumentRequestExecutor {
 

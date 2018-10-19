@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Adolfo Pérez
  */
-@Component(service = MentionsMatcherRegistry.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = MentionsMatcherRegistry.class)
 public class MentionsMatcherRegistry {
 
 	public MentionsMatcher getMentionsMatcher(String className) {

@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Fabio Pezzutto
  * @author Eduardo Lundgren
  */
-@Component(immediate = true, service = CheckBookingsMessageListener.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = CheckBookingsMessageListener.class)
 public class CheckBookingsMessageListener extends BaseMessageListener {
 
 	@Activate

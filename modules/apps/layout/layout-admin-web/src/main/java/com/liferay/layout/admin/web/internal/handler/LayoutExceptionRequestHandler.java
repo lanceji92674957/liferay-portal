@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = LayoutExceptionRequestHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = LayoutExceptionRequestHandler.class)
 public class LayoutExceptionRequestHandler {
 
 	public void handlePortalException(

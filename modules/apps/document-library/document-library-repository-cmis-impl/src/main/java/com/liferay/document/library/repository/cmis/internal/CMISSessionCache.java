@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = CMISSessionCache.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = CMISSessionCache.class)
 public class CMISSessionCache {
 
 	public Session get(String key) {

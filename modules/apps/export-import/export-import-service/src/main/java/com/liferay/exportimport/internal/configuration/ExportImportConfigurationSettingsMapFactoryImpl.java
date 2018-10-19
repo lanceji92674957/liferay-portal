@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Akos Thurzo
  * @since  7.0
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	service = ExportImportConfigurationSettingsMapFactory.class
 )

@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Akos Thurzo
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "model.class.name=com.liferay.document.library.kernel.model.DLFolder",
 	service = StagedModelRepository.class

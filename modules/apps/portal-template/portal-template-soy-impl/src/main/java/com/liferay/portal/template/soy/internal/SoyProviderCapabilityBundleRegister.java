@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Rafael Praxedes
  */
-@Component(service = SoyProviderCapabilityBundleRegister.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = SoyProviderCapabilityBundleRegister.class)
 public class SoyProviderCapabilityBundleRegister {
 
 	public static Bundle getTemplateBundle(String templateId) {

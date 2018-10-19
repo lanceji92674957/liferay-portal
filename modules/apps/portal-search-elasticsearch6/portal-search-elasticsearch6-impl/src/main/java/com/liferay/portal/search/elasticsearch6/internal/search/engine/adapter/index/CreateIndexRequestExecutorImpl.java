@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(service = CreateIndexRequestExecutor.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = CreateIndexRequestExecutor.class)
 public class CreateIndexRequestExecutorImpl
 	implements CreateIndexRequestExecutor {
 

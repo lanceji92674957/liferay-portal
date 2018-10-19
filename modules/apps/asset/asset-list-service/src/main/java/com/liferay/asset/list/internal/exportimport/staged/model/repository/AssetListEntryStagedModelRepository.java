@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "model.class.name=com.liferay.asset.list.model.AssetListEntry",
 	service = StagedModelRepository.class

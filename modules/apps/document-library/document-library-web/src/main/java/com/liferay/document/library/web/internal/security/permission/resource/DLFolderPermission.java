@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true, service = {})
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = {})
 public class DLFolderPermission {
 
 	public static void check(

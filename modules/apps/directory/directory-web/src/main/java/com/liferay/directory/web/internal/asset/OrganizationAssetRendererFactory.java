@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Ricardo Couso
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + PortletKeys.DIRECTORY,

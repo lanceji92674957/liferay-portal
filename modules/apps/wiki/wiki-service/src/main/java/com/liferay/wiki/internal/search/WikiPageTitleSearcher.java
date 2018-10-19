@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Roberto Díaz
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "model.class.name=com.liferay.wiki.model.WikiPage",
 	service = BaseSearcher.class

@@ -85,7 +85,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ryan Park
  * @author Joan Kim
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=marketplace-app-manager-portlet",

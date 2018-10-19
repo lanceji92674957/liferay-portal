@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eric Min
  * @author Jorge Ferrer
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + SiteAdminPortletKeys.SITE_SETTINGS,
 	service = ControlPanelEntry.class

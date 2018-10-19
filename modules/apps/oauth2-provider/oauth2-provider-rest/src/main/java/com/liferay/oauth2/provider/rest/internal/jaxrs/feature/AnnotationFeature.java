@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"osgi.jaxrs.application.select=(oauth2.scopechecker.type=annotations)",
 		"osgi.jaxrs.extension=true",

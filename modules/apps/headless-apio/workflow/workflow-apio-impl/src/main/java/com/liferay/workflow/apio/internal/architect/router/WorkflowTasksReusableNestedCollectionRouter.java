@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Victor Galán
  * @review
  */
-@Component(immediate = true, service = ReusableNestedCollectionRouter.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ReusableNestedCollectionRouter.class)
 public class WorkflowTasksReusableNestedCollectionRouter
 	implements ReusableNestedCollectionRouter
 		<WorkflowTask, Long, WorkflowTaskIdentifier,

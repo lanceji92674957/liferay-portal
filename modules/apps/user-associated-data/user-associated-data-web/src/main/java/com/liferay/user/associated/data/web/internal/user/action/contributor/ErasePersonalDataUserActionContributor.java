@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true, service = UserActionContributor.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = UserActionContributor.class)
 public class ErasePersonalDataUserActionContributor
 	extends BaseUADUserActionContributor {
 

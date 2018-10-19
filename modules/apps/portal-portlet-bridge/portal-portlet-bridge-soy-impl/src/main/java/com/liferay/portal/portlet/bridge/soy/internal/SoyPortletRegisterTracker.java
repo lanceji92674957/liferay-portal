@@ -36,7 +36,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Shuyang Zhou
  */
-@Component(immediate = true, service = {})
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = {})
 public class SoyPortletRegisterTracker {
 
 	@Activate

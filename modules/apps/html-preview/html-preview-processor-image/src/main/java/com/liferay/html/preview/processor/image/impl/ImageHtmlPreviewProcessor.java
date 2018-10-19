@@ -36,7 +36,7 @@ import org.xhtmlrenderer.util.FSImageWriter;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = HtmlPreviewProcessor.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = HtmlPreviewProcessor.class)
 public class ImageHtmlPreviewProcessor implements HtmlPreviewProcessor {
 
 	@Override

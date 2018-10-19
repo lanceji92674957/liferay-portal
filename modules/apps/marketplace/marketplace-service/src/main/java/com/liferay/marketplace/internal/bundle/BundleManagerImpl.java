@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Joan Kim
  * @author Ryan Park
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, service = {BundleManager.class, BundleManagerImpl.class}
 )
 public class BundleManagerImpl implements BundleManager {

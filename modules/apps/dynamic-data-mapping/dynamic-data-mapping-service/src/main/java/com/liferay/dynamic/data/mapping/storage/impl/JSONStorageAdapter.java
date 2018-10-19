@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pablo Carvalho
  */
-@Component(service = StorageAdapter.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = StorageAdapter.class)
 public class JSONStorageAdapter extends BaseStorageAdapter {
 
 	@Override

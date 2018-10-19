@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author André de Oliveira
  * @author Miguel Angelo Caldas Gallindo
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "search.engine.impl=Solr",
 	service = {LuceneQueryConverter.class, QueryTranslator.class}
 )

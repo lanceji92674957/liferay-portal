@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marcellus Tavares
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "model=com.liferay.analytics.model.AnalyticsEventsMessage",
 	service = JSONObjectMapper.class

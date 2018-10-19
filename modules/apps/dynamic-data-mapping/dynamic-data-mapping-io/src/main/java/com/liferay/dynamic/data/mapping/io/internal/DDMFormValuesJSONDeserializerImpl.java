@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  * @deprecated As of Judson (7.1.x), replaced by {@link com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONDeserializer}
  */
-@Component(immediate = true, service = DDMFormValuesJSONDeserializer.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DDMFormValuesJSONDeserializer.class)
 @Deprecated
 public class DDMFormValuesJSONDeserializerImpl
 	implements DDMFormValuesJSONDeserializer {

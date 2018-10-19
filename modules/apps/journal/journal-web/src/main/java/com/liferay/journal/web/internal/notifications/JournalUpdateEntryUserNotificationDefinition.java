@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eduardo Garcia
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + JournalPortletKeys.JOURNAL,
 	service = UserNotificationDefinition.class

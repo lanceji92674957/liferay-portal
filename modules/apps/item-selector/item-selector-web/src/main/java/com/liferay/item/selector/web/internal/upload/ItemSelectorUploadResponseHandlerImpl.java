@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = ItemSelectorUploadResponseHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ItemSelectorUploadResponseHandler.class)
 public class ItemSelectorUploadResponseHandlerImpl
 	implements ItemSelectorUploadResponseHandler {
 

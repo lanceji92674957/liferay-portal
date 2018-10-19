@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Lino Alves
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-type-facet",

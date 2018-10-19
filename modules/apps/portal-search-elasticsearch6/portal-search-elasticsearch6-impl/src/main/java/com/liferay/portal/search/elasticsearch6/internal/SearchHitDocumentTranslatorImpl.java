@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = SearchHitDocumentTranslator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = SearchHitDocumentTranslator.class)
 public class SearchHitDocumentTranslatorImpl
 	implements SearchHitDocumentTranslator {
 

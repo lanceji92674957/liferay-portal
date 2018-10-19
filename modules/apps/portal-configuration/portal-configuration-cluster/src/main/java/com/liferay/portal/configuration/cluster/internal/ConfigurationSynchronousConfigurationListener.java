@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Raymond Augé
  */
-@Component(immediate = true, service = SynchronousConfigurationListener.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = SynchronousConfigurationListener.class)
 public class ConfigurationSynchronousConfigurationListener
 	implements SynchronousConfigurationListener {
 

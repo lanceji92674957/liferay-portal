@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Tomas Polesovsky
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"before-filter=Auto Login Filter", "dispatcher=FORWARD",

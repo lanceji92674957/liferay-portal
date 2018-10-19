@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tina Tian
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	enabled = false, immediate = true,
 	service = SingleSchedulerEngineConfigurator.class
 )

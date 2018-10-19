@@ -75,7 +75,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Chema Balsas
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "site.initializer.key=" + FjordSiteInitializer.KEY,
 	service = SiteInitializer.class

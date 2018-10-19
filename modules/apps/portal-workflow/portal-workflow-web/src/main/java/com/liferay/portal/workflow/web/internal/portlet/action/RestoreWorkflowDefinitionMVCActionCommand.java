@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Leonardo Barros
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,

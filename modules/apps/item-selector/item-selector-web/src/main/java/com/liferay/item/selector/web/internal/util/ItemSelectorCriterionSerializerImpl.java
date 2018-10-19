@@ -57,7 +57,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Iván Zaera
  * @author Roberto Díaz
  */
-@Component(immediate = true, service = ItemSelectorCriterionSerializer.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ItemSelectorCriterionSerializer.class)
 public class ItemSelectorCriterionSerializerImpl
 	implements ItemSelectorCriterionSerializer {
 

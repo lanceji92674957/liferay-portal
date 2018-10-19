@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Raymond Augé
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "destination.name=" + ConfigurationClusterDestinationNames.CONFIGURATION,
 	service = MessageListener.class

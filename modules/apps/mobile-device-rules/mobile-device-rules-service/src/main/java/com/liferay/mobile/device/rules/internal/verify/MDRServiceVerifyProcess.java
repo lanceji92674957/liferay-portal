@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tomas Polesovsky
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "verify.process.name=com.liferay.mobile.device.rules.service",
 	service = VerifyProcess.class

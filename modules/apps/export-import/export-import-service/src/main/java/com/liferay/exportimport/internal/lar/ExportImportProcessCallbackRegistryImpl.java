@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Daniel Kocsis
  */
-@Component(immediate = true)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true)
 
 @ProviderType
 public class ExportImportProcessCallbackRegistryImpl

@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Javier Gamarra
  */
-@Component(service = ReusableNestedCollectionRouter.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ReusableNestedCollectionRouter.class)
 public class PersonReusableNestedCollectionRouter
 	implements ReusableNestedCollectionRouter
 		<Person, Long, PersonIdentifier, ModelNameModelIdIdentifier> {

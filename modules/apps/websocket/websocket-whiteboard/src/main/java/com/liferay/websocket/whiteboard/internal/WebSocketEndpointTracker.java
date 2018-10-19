@@ -46,7 +46,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Cristina González
  * @author Manuel de la Peña
  */
-@Component(immediate = true, service = {})
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = {})
 public class WebSocketEndpointTracker {
 
 	@Activate

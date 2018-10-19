@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Bruno Basto
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	service = {SoyTemplateContextHelper.class, TemplateContextHelper.class}
 )

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Hernández
  */
-@Component(service = FormMessageMapperManager.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = FormMessageMapperManager.class)
 public class FormMessageMapperManagerImpl
 	extends MessageMapperBaseManager<FormMessageMapper>
 	implements FormMessageMapperManager {

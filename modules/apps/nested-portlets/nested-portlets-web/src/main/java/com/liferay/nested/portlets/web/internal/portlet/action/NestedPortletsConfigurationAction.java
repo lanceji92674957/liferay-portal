@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  * @author Peter Fellwock
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + NestedPortletsPortletKeys.NESTED_PORTLETS,
 	service = ConfigurationAction.class

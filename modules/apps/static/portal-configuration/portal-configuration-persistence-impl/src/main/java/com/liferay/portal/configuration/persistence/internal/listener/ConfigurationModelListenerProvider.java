@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true, service = {})
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = {})
 public class ConfigurationModelListenerProvider {
 
 	public static ConfigurationModelListener getConfigurationModelListener(

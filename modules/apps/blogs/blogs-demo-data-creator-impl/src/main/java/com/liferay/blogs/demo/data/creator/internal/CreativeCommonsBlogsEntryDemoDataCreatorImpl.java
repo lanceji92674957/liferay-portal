@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Sergio González
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "source=creative-commons",
 	service = BlogsEntryDemoDataCreator.class
 )

@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dylan Rebelak
  */
-@Component(service = SearchResponseTranslator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = SearchResponseTranslator.class)
 public class DefaultSearchResponseTranslator
 	implements SearchResponseTranslator {
 

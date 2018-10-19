@@ -37,7 +37,7 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {"osgi.command.function=check", "osgi.command.scope=http"},
 	service = HttpServiceRuntimeOSGiCommands.class

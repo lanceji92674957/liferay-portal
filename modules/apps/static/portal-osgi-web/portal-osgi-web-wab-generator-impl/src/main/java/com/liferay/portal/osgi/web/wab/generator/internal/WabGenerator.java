@@ -71,7 +71,7 @@ import org.osgi.util.tracker.BundleTracker;
  * @author Miguel Pastor
  * @author Raymond Augé
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	service = com.liferay.portal.osgi.web.wab.generator.WabGenerator.class
 )

@@ -87,7 +87,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Raymond Augé
  */
-@Component(service = JournalRSSUtil.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = JournalRSSUtil.class)
 public class JournalRSSUtil {
 
 	public List<JournalArticle> getArticles(JournalFeed feed) {

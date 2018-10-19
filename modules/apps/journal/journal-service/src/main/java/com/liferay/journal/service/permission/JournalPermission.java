@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author     Jorge Ferrer
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "resource.name=" + JournalConstants.RESOURCE_NAME,
 	service = ResourcePermissionChecker.class

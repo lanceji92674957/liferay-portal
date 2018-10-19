@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author     Zsolt Berentey
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "model.class.name=com.liferay.journal.model.JournalFolder",
 	service = BaseModelPermissionChecker.class
 )

@@ -96,7 +96,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Chema Balsas
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "site.initializer.key=" + WesterosBankSiteInitializer.KEY,
 	service = SiteInitializer.class

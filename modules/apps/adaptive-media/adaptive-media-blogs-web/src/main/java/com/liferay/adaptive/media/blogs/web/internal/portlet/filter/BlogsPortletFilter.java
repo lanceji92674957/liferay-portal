@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "javax.portlet.name=" + BlogsPortletKeys.BLOGS,
 	service = PortletFilter.class
 )

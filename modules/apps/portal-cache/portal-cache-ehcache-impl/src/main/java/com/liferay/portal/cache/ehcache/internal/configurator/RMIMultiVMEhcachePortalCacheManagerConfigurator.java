@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Tina Tian
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	enabled = false, immediate = true,
 	service = MultiVMEhcachePortalCacheManagerConfigurator.class
 )

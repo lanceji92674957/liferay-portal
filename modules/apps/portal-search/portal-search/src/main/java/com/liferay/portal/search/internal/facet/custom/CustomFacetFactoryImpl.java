@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Wade Cao
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, service = {CustomFacetFactory.class, FacetFactory.class}
 )
 public class CustomFacetFactoryImpl implements CustomFacetFactory {

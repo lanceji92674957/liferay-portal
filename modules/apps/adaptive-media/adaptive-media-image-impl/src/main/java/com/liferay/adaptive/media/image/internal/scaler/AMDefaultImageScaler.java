@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Adolfo Pérez
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "mime.type=*", service = AMImageScaler.class
 )
 public class AMDefaultImageScaler implements AMImageScaler {

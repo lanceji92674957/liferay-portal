@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Neil Griffin
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = Constants.SERVICE_RANKING + ":Integer=" + Integer.MIN_VALUE,
 	service = PortletDependencyFactory.class
 )

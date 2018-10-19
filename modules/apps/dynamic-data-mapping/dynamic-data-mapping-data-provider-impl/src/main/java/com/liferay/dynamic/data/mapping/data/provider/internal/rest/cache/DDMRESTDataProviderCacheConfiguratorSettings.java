@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "portal.cache.manager.name=" + PortalCacheManagerNames.MULTI_VM,
 	service = PortalCacheConfiguratorSettings.class
 )

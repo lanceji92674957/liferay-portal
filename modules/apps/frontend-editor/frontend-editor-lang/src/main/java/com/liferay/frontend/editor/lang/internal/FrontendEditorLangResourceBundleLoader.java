@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "bundle.symbolic.name=com.liferay.frontend.editor.lang",
 	service = ResourceBundleLoader.class

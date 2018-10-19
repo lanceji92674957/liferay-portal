@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pei-Jung Lan
  */
-@Component(immediate = true, service = UADApplicationExportController.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = UADApplicationExportController.class)
 public class UADApplicationExportController {
 
 	public File export(String applicationKey, long userId) throws Exception {

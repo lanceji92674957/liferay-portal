@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pavel Savinov
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"osgi.http.whiteboard.servlet.name=com.liferay.portal.servlet.friendly.url.PublicFriendlyURLServlet",

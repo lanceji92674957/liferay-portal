@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Eduardo Perez
  */
-@Component(immediate = true, service = MediaObjectHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = MediaObjectHelper.class)
 public class MediaObjectHelper {
 
 	/**

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Greenwald
  * @author Prathima Shreenath
  */
-@Component(service = DeviceRecognitionProvider.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = DeviceRecognitionProvider.class)
 public class FiftyOneDegreesDeviceRecognitionProvider
 	implements DeviceRecognitionProvider {
 

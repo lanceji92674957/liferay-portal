@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = Indexer.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = Indexer.class)
 public class AssetTagIndexer extends BaseIndexer<AssetTag> {
 
 	public static final String CLASS_NAME = AssetTag.class.getName();

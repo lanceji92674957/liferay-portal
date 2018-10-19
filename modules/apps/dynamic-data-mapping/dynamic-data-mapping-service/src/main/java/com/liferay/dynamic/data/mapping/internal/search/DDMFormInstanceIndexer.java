@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = Indexer.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = Indexer.class)
 public class DDMFormInstanceIndexer extends BaseIndexer<DDMFormInstance> {
 
 	public static final String CLASS_NAME = DDMFormInstance.class.getName();

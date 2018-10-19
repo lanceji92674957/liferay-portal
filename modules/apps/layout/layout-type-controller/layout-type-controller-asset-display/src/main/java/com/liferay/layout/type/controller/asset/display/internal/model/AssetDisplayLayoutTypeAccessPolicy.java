@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jürgen Kappler
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "layout.type=" + AssetDisplayLayoutTypeControllerConstants.LAYOUT_TYPE_ASSET_DISPLAY,
 	service = LayoutTypeAccessPolicy.class

@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(immediate = true, service = ConfigurationDescriptionFactory.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ConfigurationDescriptionFactory.class)
 public class ConfigurationDescriptionFactoryImpl
 	implements ConfigurationDescriptionFactory {
 

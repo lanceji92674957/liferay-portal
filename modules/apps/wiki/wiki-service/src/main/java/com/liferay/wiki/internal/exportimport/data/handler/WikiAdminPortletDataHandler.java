@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mate Thurzo
  * @author Gergely Mathe
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
 	service = PortletDataHandler.class

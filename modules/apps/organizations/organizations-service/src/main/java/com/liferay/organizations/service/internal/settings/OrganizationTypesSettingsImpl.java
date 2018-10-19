@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = OrganizationTypesSettings.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = OrganizationTypesSettings.class)
 public class OrganizationTypesSettingsImpl
 	implements OrganizationTypesSettings {
 

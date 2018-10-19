@@ -41,7 +41,7 @@ import org.slf4j.Logger;
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
-@Component(service = ProviderManager.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ProviderManager.class)
 public class ProviderManagerImpl
 	extends ClassNameBaseManager<Provider> implements ProviderManager {
 

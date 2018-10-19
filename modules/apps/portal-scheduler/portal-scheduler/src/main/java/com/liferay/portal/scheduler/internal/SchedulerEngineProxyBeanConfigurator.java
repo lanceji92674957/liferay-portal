@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Tina Tian
  */
-@Component(immediate = true, service = {})
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = {})
 public class SchedulerEngineProxyBeanConfigurator {
 
 	@Activate

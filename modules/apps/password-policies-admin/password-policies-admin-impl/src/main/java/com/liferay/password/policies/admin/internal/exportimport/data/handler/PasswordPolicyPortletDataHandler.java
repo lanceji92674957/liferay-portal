@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Daniela Zapata Riesco
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "javax.portlet.name=" + PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
 	service = PortletDataHandler.class
 )

@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "portal.settings.authentication.tabs.name=ldap",
 	service = DynamicInclude.class

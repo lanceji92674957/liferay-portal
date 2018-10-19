@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Hernández
  */
-@Component(service = SingleModelMessageMapperManager.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = SingleModelMessageMapperManager.class)
 public class SingleModelMessageMapperManagerImpl
 	extends MessageMapperBaseManager<SingleModelMessageMapper>
 	implements SingleModelMessageMapperManager {

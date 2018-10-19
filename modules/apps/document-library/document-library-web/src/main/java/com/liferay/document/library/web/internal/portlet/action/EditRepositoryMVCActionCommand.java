@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,

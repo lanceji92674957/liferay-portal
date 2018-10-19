@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Miguel Pastor
  */
-@Component(service = WikiEngine.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = WikiEngine.class)
 public class CreoleWikiEngine extends BaseWikiEngine {
 
 	@Override

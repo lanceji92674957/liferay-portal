@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "destination.name=" + DestinationNames.SUBSCRIPTION_CLEAN_UP,
 	service = MessageListener.class

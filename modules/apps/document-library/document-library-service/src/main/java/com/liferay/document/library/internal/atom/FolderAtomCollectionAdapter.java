@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Igor Spasic
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "model.class.name=com.liferay.portal.kernel.repository.model.Folder",
 	service = AtomCollectionAdapter.class
 )

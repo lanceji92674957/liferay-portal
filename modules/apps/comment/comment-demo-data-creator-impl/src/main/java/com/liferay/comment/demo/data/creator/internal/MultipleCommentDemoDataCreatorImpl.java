@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Hernández
  */
-@Component(service = MultipleCommentDemoDataCreator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = MultipleCommentDemoDataCreator.class)
 public class MultipleCommentDemoDataCreatorImpl
 	implements MultipleCommentDemoDataCreator {
 

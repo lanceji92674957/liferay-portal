@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Deactivate;
  *
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = PanelCategoryRegistry.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = PanelCategoryRegistry.class)
 public class PanelCategoryRegistry {
 
 	public List<PanelCategory> getChildPanelCategories(

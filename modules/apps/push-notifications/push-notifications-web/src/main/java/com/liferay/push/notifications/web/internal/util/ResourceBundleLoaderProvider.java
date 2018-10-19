@@ -32,7 +32,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Andrea Di Giorgi
  */
-@Component(service = ResourceBundleLoaderProvider.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ResourceBundleLoaderProvider.class)
 public class ResourceBundleLoaderProvider {
 
 	public ResourceBundleLoader getResourceBundleLoader(String platform) {

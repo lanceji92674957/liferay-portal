@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tomas Polesovsky
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"oauth2.allow.token.introspection.endpoint=true",

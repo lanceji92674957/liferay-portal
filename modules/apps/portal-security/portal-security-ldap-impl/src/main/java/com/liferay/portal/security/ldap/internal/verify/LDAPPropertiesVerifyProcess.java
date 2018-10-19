@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "verify.process.name=com.liferay.portal.security.ldap",
 	service = VerifyProcess.class

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "portlet.preferences.translator.portlet.id=com_liferay_rss_web_portlet_RSSPortlet",
 	service = PortletPreferencesTranslator.class

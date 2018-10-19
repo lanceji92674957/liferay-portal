@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  * @author André de Oliveira
  */
-@Component(immediate = true, service = MatchQueryTranslator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = MatchQueryTranslator.class)
 public class MatchQueryTranslatorImpl implements MatchQueryTranslator {
 
 	@Override

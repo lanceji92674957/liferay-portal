@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"editor.name=alloyeditor", "editor.name=ckeditor",
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,

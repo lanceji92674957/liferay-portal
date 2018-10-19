@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = FormNavigatorEntryConfigurationRetriever.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = FormNavigatorEntryConfigurationRetriever.class)
 public class FormNavigatorEntryConfigurationRetriever {
 
 	public Optional<List<String>> getFormNavigatorEntryKeys(

@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Shinn Lok
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	service = {SyncWebUpgrade.class, UpgradeStepRegistrator.class}
 )

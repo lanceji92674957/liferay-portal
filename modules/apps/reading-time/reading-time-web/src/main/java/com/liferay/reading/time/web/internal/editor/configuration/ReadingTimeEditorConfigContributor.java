@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Tardín
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "editor.config.key=reading-time-editor-config-key",
 	service = EditorConfigContributor.class
 )

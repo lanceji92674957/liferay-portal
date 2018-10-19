@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Juergen Kappler
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "layout.type=" + NodeLayoutTypeControllerConstants.LAYOUT_TYPE_NODE,
 	service = LayoutTypeController.class

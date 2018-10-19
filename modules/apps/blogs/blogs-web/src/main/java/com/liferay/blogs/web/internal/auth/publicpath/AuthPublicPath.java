@@ -19,7 +19,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Sergio González
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"auth.public.path=/blogs/find_entry", "auth.public.path=/blogs/rss",

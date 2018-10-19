@@ -31,7 +31,7 @@ import org.owasp.html.PolicyFactory;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = Sanitizer.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = Sanitizer.class)
 public class CommentSanitizerImpl extends BaseSanitizer {
 
 	public CommentSanitizerImpl() {

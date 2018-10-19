@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Hernández
  */
-@Component(service = AMImageConfigurationDemoDataCreator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = AMImageConfigurationDemoDataCreator.class)
 public class AMImageConfigurationDemoDataCreatorImpl
 	implements AMImageConfigurationDemoDataCreator {
 

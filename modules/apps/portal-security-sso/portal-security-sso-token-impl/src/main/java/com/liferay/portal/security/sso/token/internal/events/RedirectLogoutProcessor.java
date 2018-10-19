@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "logout.processor.service = LogoutProcessor.class, type=" + LogoutProcessorType.REDIRECT
 )

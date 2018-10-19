@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Noah Sherrill
  */
-@Component(immediate = true, service = UADAnonymizer.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = UADAnonymizer.class)
 public class BookmarksEntryUADAnonymizer
 	extends BaseBookmarksEntryUADAnonymizer {
 }

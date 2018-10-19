@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Phililp Jones
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "portal.settings.authentication.tabs.name=ntlm",
 	service = DynamicInclude.class

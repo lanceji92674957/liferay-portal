@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dylan Rebelak
  */
-@Component(immediate = true, service = HealthClusterRequestExecutor.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = HealthClusterRequestExecutor.class)
 public class HealthClusterRequestExecutorImpl
 	implements HealthClusterRequestExecutor {
 

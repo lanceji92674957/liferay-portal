@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Inácio Nery
  */
-@Component(service = ConfigurationCategory.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ConfigurationCategory.class)
 public class AnalyticsConfigurationCategory implements ConfigurationCategory {
 
 	@Override

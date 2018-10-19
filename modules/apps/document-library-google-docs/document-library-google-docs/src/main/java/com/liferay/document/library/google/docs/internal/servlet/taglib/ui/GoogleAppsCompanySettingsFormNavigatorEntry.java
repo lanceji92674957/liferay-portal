@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera
  */
-@Component(service = FormNavigatorEntry.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = FormNavigatorEntry.class)
 public class GoogleAppsCompanySettingsFormNavigatorEntry
 	extends BaseJSPFormNavigatorEntry<Object>
 	implements FormNavigatorEntry<Object> {

@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(property = "path=/message_boards/rss", service = StrutsAction.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,property = "path=/message_boards/rss", service = StrutsAction.class)
 public class RSSAction extends BaseRSSStrutsAction {
 
 	@Override

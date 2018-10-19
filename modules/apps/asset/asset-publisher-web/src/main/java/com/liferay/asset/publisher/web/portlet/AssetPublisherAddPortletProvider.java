@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
 	service = {AddPortletProvider.class, ViewPortletProvider.class}

@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "service.ranking:Integer=-100",
 	service = DLDisplayContextFactory.class
 )

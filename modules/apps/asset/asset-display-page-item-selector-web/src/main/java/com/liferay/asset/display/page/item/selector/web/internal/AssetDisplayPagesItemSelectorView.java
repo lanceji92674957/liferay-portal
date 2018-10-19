@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = ItemSelectorView.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ItemSelectorView.class)
 public class AssetDisplayPagesItemSelectorView
 	implements ItemSelectorView<AssetDisplayPageSelectorCriterion> {
 

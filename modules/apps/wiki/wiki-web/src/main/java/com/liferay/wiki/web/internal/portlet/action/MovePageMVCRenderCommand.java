@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jorge Ferrer
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + WikiPortletKeys.WIKI,

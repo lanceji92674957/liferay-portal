@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"dynamic.data.mapping.form.builder.servlet=true",

@@ -70,7 +70,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Szabó
  * @author Tibor Lipusz
  */
-@Component(immediate = true, service = LayoutsTree.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = LayoutsTree.class)
 public class LayoutsTreeImpl implements LayoutsTree {
 
 	@Override

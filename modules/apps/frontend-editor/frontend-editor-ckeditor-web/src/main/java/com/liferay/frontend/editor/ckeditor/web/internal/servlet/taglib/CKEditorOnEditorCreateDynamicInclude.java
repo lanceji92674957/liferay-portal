@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Chema Balsas
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DynamicInclude.class)
 public class CKEditorOnEditorCreateDynamicInclude implements DynamicInclude {
 
 	@Override

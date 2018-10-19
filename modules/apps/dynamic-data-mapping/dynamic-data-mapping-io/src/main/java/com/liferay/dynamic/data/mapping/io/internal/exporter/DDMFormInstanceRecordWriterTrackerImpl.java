@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = DDMFormInstanceRecordWriterTracker.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DDMFormInstanceRecordWriterTracker.class)
 public class DDMFormInstanceRecordWriterTrackerImpl
 	implements DDMFormInstanceRecordWriterTracker {
 

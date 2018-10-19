@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Iván Zaera
  */
-@Component(service = IGDisplayContextProvider.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = IGDisplayContextProvider.class)
 public class IGDisplayContextProvider {
 
 	public IGViewFileVersionDisplayContext

@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pier Paolo Ramon
  */
-@Component(immediate = true, service = TrashHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = TrashHandler.class)
 public class CalendarBookingTrashHandler extends BaseTrashHandler {
 
 	@Override

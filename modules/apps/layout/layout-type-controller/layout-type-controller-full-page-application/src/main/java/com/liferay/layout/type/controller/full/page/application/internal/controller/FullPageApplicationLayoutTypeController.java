@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Juergen Kappler
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "layout.type=" + FullPageApplicationLayoutTypeControllerConstants.LAYOUT_TYPE_FULL_PAGE_APPLICATION,
 	service = LayoutTypeController.class

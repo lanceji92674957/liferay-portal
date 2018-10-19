@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Roberto Díaz
  */
-@Component(service = ItemSelectorView.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ItemSelectorView.class)
 public class KBAttachmentItemSelectorView
 	implements ItemSelectorView<KBAttachmentItemSelectorCriterion> {
 

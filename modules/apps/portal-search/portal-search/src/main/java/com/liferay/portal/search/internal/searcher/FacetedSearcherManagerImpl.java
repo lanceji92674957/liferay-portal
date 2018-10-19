@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = FacetedSearcherManager.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = FacetedSearcherManager.class)
 public class FacetedSearcherManagerImpl implements FacetedSearcherManager {
 
 	@Override

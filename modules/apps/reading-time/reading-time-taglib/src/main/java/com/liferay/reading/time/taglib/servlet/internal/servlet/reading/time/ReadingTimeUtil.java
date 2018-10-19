@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = {})
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = {})
 public class ReadingTimeUtil {
 
 	public static ReadingTimeMessageProvider getReadingTimeMessageProvider(

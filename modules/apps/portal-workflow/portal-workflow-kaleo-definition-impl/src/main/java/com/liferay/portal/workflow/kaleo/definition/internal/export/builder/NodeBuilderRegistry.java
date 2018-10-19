@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = NodeBuilderRegistry.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = NodeBuilderRegistry.class)
 public class NodeBuilderRegistry {
 
 	public NodeBuilder<Node> getNodeBuilder(String nodeTypeString) {

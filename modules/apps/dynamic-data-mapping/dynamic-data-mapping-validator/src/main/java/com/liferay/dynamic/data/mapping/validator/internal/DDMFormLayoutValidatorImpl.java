@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pablo Carvalho
  */
-@Component(immediate = true, service = DDMFormLayoutValidator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DDMFormLayoutValidator.class)
 public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 
 	@Override

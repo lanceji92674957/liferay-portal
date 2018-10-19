@@ -49,7 +49,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(immediate = true, service = {})
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = {})
 public class AxisExtender {
 
 	@Activate

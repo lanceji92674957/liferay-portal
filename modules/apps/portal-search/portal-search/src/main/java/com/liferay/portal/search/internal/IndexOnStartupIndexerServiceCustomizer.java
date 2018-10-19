@@ -48,7 +48,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = ServiceTrackerCustomizer.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ServiceTrackerCustomizer.class)
 public class IndexOnStartupIndexerServiceCustomizer
 	implements ServiceTrackerCustomizer<Indexer, Indexer> {
 

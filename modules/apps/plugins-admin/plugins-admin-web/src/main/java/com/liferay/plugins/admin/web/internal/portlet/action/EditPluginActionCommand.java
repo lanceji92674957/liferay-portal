@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  * @author Peter Fellwock
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"javax.portlet.name=" + PluginsAdminPortletKeys.PLUGINS_ADMIN,
 		"mvc.command.name=/plugins_admin/edit_plugin"

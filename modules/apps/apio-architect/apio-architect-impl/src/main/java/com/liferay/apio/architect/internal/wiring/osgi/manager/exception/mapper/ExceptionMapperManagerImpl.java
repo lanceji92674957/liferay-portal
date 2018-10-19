@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Hernández
  */
-@Component(service = ExceptionMapperManager.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ExceptionMapperManager.class)
 public class ExceptionMapperManagerImpl
 	extends ClassNameBaseManager<ExceptionMapper>
 	implements ExceptionMapperManager {

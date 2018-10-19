@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = AMImageConfigurationHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = AMImageConfigurationHelper.class)
 public class AMImageConfigurationHelperImpl
 	implements AMImageConfigurationHelper {
 

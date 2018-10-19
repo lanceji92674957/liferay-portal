@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Douglas Wong
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + MarketplaceAppManagerPortletKeys.MARKETPLACE_APP_MANAGER,
 	service = PortletConfigurationIcon.class

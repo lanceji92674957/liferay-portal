@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Alejandro Hernández
  */
-@Component(immediate = true, service = PersonModelService.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = PersonModelService.class)
 public class PersonModelService {
 
 	/**

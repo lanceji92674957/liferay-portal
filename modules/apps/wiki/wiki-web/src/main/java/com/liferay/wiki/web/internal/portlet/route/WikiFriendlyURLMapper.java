@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Shinn Lok
  * @author Levente Hudák
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/routes.xml",
 		"javax.portlet.name=" + WikiPortletKeys.WIKI

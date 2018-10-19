@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael Young
  * @author Dennis Ju
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "auth.verifier.SyncAuthVerifier.urls.includes=/api/jsonws/sync.syncdevice/*,/api/jsonws/sync.syncdlobject/*",
 	service = AuthVerifier.class

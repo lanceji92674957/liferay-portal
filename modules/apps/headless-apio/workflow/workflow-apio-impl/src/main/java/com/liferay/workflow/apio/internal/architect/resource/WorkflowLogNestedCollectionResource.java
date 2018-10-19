@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Sarai Díaz
  */
-@Component(service = NestedCollectionResource.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = NestedCollectionResource.class)
 public class WorkflowLogNestedCollectionResource
 	implements NestedCollectionResource
 		<WorkflowLog, Long, WorkflowLogIdentifier, Long,

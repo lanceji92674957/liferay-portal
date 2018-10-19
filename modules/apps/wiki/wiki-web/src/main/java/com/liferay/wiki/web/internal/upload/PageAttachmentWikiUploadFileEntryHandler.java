@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  * @author Alejandro Tardín
  */
-@Component(service = PageAttachmentWikiUploadFileEntryHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = PageAttachmentWikiUploadFileEntryHandler.class)
 public class PageAttachmentWikiUploadFileEntryHandler
 	implements UploadFileEntryHandler {
 

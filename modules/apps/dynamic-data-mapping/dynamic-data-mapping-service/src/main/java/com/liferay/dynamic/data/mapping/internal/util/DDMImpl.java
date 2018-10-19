@@ -117,7 +117,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DDM.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DDM.class)
 public class DDMImpl implements DDM {
 
 	public static final String FIELDS_DISPLAY_NAME = "_fieldsDisplay";

@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Daniel Sanz
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + LicenseManagerPortletKeys.LICENSE_MANAGER,
 	service = ControlPanelEntry.class

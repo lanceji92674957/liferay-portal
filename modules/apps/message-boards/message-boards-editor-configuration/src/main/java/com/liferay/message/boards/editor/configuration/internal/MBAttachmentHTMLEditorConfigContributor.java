@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Roberto Díaz
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"editor.name=alloyeditor", "editor.name=alloyeditor_bbcode",
 		"editor.name=ckeditor", "editor.name=ckeditor_bbcode",

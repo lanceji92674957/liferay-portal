@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Farache
  * @author Peter Fellwock
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	enabled = false, immediate = true, property = "key=logout.events.post",
 	service = LifecycleAction.class
 )

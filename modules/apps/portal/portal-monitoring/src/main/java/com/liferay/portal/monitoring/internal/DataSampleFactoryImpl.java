@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(enabled = false, immediate = true, service = DataSampleFactory.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,enabled = false, immediate = true, service = DataSampleFactory.class)
 public class DataSampleFactoryImpl implements DataSampleFactory {
 
 	@Override

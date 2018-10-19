@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Levente Hudák
  * @author Zsolt Berentey
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "model.class.name=com.liferay.bookmarks.model.BookmarksEntry",
 	service = TrashHandler.class
 )

@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pablo Carvalho
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = DDMFormEvaluator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DDMFormEvaluator.class)
 public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 
 	@Override

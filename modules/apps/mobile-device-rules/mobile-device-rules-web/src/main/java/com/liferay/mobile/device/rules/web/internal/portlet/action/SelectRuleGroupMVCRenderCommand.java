@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Mate Thurzo
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"javax.portlet.name=" + MDRPortletKeys.MOBILE_DEVICE_RULES,
 		"mvc.command.name=/mobile_device_rules/select_rule_group"

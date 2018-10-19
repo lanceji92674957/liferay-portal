@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Scott Lee
  * @author Peter Fellwock
  */
-@Component(immediate = true, service = ModelListener.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ModelListener.class)
 public class UserModelListener extends BaseModelListener<User> {
 
 	@Override

@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Fabio Pezzutto
  * @author Eduardo Lundgren
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + CalendarPortletKeys.CALENDAR,
 	service = AssetRendererFactory.class

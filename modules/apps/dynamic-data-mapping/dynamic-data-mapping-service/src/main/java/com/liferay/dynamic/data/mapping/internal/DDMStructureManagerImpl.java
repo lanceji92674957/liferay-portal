@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = DDMStructureManager.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DDMStructureManager.class)
 public class DDMStructureManagerImpl implements DDMStructureManager {
 
 	@Override

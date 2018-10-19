@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adam Brandizzi
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"javax.portlet.name=" + SuggestionsPortletKeys.SUGGESTIONS,
 		"mvc.command.name=redirectSearchBar"

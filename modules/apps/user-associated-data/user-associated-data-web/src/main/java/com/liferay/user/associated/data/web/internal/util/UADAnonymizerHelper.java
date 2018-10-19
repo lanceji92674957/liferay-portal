@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true, service = UADAnonymizerHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = UADAnonymizerHelper.class)
 public class UADAnonymizerHelper {
 
 	public User getAnonymousUser() throws Exception {

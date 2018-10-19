@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
-@Component(service = Provider.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = Provider.class)
 public class FieldsProvider implements Provider<Fields> {
 
 	public Fields createContext(HttpServletRequest httpServletRequest) {

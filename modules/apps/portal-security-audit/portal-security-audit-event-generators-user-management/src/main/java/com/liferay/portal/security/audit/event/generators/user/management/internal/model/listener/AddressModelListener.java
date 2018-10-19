@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = ModelListener.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ModelListener.class)
 public class AddressModelListener extends BaseModelListener<Address> {
 
 	public void onBeforeUpdate(Address newAddress)

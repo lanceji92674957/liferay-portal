@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  * @author Sergio González
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + CommentPortletKeys.COMMENT,
 	service = UserNotificationHandler.class

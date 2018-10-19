@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Sarai Díaz
  */
-@Component(immediate = true, service = ItemResource.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ItemResource.class)
 public class WorkflowTaskItemResource
 	implements ItemResource<WorkflowTask, Long, WorkflowTaskIdentifier> {
 

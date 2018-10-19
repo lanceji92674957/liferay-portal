@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adam Brandizzi
  */
-@Component(service = WorkflowPreprocessorHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = WorkflowPreprocessorHelper.class)
 public class WorkflowPreprocessorHelper {
 
 	public String getMVCPathAttributeName(String namespace) {

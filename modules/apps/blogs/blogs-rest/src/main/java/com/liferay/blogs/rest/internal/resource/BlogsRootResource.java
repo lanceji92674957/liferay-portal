@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Hernández
  */
-@Component(immediate = true, service = BlogsRootResource.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = BlogsRootResource.class)
 @Path("/")
 public class BlogsRootResource {
 

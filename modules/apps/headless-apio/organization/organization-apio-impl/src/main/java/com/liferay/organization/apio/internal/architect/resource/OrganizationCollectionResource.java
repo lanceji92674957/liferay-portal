@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Eduardo Perez
  */
-@Component(immediate = true, service = CollectionResource.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = CollectionResource.class)
 public class OrganizationCollectionResource
 	implements CollectionResource<Organization, Long, OrganizationIdentifier> {
 

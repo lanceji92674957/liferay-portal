@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Roberto Díaz
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "item.selector.view.key=" + BlogsItemSelectorViewConstants.ITEM_SELECTOR_VIEW_KEY,
 	service = ItemSelectorView.class
 )

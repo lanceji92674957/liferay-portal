@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Peter Shin
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = OpenSearch.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = OpenSearch.class)
 public class KBArticleOpenSearchImpl extends HitsOpenSearchImpl {
 
 	public static final String SEARCH_PATH = "/c/knowledge_base/open_search";

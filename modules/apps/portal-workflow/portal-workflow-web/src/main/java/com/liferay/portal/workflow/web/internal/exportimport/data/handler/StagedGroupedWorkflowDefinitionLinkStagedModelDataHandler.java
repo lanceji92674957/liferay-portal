@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Zoltan Csaszi
  */
-@Component(immediate = true, service = StagedModelDataHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = StagedModelDataHandler.class)
 public class StagedGroupedWorkflowDefinitionLinkStagedModelDataHandler
 	extends BaseStagedModelDataHandler<StagedGroupedWorkflowDefinitionLink> {
 

@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Sherly Liu
  */
-@Component(immediate = true, service = ModelListener.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ModelListener.class)
 public class UserGroupRoleModelListener
 	extends SyncBaseModelListener<UserGroupRole> {
 

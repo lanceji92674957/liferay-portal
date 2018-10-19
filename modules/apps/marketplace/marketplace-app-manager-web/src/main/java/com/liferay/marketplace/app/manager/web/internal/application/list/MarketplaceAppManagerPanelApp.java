@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ryan Park
  * @author Joan Kim
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"panel.app.order:Integer=100",

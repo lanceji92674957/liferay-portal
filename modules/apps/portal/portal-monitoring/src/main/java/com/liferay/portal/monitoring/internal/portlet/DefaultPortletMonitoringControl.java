@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  * @author Philip Jones
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	enabled = false, immediate = true, service = PortletMonitoringControl.class
 )
 public class DefaultPortletMonitoringControl

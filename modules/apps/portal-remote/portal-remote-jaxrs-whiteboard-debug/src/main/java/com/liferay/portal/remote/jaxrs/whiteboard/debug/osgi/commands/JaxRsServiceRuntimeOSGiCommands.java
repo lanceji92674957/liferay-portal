@@ -40,7 +40,7 @@ import org.osgi.service.jaxrs.runtime.dto.RuntimeDTO;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {"osgi.command.function=check", "osgi.command.scope=jaxrs"},
 	service = JaxRsServiceRuntimeOSGiCommands.class

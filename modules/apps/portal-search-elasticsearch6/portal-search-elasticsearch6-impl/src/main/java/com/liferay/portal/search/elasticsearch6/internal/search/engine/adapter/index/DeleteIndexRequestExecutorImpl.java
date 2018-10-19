@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(service = DeleteIndexRequestExecutor.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = DeleteIndexRequestExecutor.class)
 public class DeleteIndexRequestExecutorImpl
 	implements DeleteIndexRequestExecutor {
 

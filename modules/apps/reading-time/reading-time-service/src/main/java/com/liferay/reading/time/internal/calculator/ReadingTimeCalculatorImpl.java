@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = ReadingTimeCalculator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ReadingTimeCalculator.class)
 public class ReadingTimeCalculatorImpl implements ReadingTimeCalculator {
 
 	@Override

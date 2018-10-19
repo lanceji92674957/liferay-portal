@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = SearchFacet.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = SearchFacet.class)
 public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 
 	@Override

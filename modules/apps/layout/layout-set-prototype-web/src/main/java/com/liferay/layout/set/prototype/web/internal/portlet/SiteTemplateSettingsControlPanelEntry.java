@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eduardo Garcia
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS,
 	service = ControlPanelEntry.class

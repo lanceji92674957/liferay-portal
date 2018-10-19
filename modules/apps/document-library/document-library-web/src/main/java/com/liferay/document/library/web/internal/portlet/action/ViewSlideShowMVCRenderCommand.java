@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
 		"mvc.command.name=/image_gallery_display/view_slide_show"

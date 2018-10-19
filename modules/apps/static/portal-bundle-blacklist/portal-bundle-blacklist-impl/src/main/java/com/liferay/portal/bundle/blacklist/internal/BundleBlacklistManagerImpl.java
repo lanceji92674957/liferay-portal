@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true, service = BundleBlacklistManager.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = BundleBlacklistManager.class)
 public class BundleBlacklistManagerImpl implements BundleBlacklistManager {
 
 	@Override

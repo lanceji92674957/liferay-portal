@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 /**
  * @author Tomas Polesovsky
  */
-@Component(service = ApplicationDescriptorLocator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ApplicationDescriptorLocator.class)
 public class ApplicationDescriptorLocatorImpl
 	implements ApplicationDescriptorLocator {
 

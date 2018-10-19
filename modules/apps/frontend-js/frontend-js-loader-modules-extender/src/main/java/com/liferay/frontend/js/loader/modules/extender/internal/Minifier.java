@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Iván Zaera Avellón
  */
-@Component(service = Minifier.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = Minifier.class)
 public class Minifier {
 
 	public String minify(String resourceName, String content) {

@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Chema Balsas
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"editor.config.key=contentEditor", "editor.name=alloyeditor_creole",
 		"javax.portlet.name=" + WikiPortletKeys.WIKI,

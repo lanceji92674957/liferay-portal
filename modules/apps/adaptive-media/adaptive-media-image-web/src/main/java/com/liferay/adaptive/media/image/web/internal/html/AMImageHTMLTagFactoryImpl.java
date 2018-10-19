@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = AMImageHTMLTagFactory.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = AMImageHTMLTagFactory.class)
 public class AMImageHTMLTagFactoryImpl implements AMImageHTMLTagFactory {
 
 	@Override

@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  * @author Tibor Lipusz
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
 	service = ControlPanelEntry.class

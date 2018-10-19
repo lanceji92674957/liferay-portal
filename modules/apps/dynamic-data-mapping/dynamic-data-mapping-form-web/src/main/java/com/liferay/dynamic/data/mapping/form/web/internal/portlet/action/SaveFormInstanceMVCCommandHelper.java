@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = SaveFormInstanceMVCCommandHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = SaveFormInstanceMVCCommandHelper.class)
 public class SaveFormInstanceMVCCommandHelper {
 
 	public DDMFormInstance saveFormInstance(

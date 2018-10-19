@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Matthew Kong
  * @author Philip Jones
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"javax.portlet.name=" + PortletKeys.SERVER_ADMIN,
 		"mvc.command.name=/server_admin/view_chart"

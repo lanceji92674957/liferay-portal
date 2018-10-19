@@ -32,7 +32,7 @@ import org.osgi.util.tracker.BundleTracker;
 /**
  * @author Miguel Pastor
  */
-@Component(immediate = true, service = {})
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = {})
 public class LicenseDeployerActivator {
 
 	@Activate

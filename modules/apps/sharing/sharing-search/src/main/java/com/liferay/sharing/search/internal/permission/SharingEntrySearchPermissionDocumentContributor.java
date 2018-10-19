@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Sergio González
  */
-@Component(immediate = true, service = SearchPermissionFieldContributor.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = SearchPermissionFieldContributor.class)
 public class SharingEntrySearchPermissionDocumentContributor
 	implements SearchPermissionFieldContributor {
 

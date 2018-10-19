@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Chema Balsas
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "editor.name=alloyeditor",
 	service = EditorConfigContributor.class
 )

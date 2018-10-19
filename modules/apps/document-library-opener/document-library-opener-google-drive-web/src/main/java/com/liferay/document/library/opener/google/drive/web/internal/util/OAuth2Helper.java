@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = OAuth2Helper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = OAuth2Helper.class)
 public class OAuth2Helper {
 
 	public String getRedirectURI(HttpServletRequest request) {

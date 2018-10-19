@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = ModelSearchRegistrarHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ModelSearchRegistrarHelper.class)
 public class ModelSearchRegistrarHelperImpl
 	implements ModelSearchRegistrarHelper {
 

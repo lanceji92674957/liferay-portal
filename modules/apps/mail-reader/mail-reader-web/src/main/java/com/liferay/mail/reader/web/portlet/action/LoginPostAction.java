@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Scott Lee
  * @author Peter Fellwock
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	enabled = false, immediate = true, property = "key=login.events.post",
 	service = LifecycleAction.class
 )

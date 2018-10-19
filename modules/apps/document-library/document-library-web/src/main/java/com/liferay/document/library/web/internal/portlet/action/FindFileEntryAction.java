@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Juan Fernández
  * @author Ryan Park
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "path=/document_library/find_file_entry",
 	service = StrutsAction.class
 )

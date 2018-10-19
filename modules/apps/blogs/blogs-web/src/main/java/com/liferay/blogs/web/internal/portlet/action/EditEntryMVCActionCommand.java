@@ -97,7 +97,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Berentey
  * @author Levente Hudák
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,

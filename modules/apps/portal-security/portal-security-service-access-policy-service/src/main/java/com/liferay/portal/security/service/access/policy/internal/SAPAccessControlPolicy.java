@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mika Koivisto
  */
-@Component(service = AccessControlPolicy.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = AccessControlPolicy.class)
 public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 
 	@Override

@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = PrefixFilterTranslator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = PrefixFilterTranslator.class)
 public class PrefixFilterTranslatorImpl implements PrefixFilterTranslator {
 
 	@Override

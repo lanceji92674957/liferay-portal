@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Juan Fernández
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + SiteNavigationSiteMapPortletKeys.SITE_NAVIGATION_SITE_MAP,
 	service = TemplateHandler.class

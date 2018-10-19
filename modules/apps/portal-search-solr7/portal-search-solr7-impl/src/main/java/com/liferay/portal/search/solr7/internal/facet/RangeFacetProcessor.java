@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  * @author Tibor Lipusz
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "class.name=com.liferay.portal.kernel.search.facet.RangeFacet",
 	service = FacetProcessor.class

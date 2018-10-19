@@ -46,7 +46,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Marta Medio
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"default.registration.property=filter.init.auth.verifier.OAuth2RestAuthVerifier.urls.includes=*",

@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = StagingAssetEntryHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = StagingAssetEntryHelper.class)
 public class StagingAssetEntryHelperImpl implements StagingAssetEntryHelper {
 
 	@Override

@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DDMDataProviderInvoker.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DDMDataProviderInvoker.class)
 public class DDMDataProviderInvokerImpl implements DDMDataProviderInvoker {
 
 	public DDMDataProviderResponse invoke(

@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  * @author Philip Jones
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "form.navigator.category.order:Integer=20",
 	service = FormNavigatorCategory.class
 )

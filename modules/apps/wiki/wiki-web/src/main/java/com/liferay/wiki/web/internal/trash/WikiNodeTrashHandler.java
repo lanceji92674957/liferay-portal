@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  * @author Roberto Díaz
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "model.class.name=com.liferay.wiki.model.WikiNode",
 	service = TrashHandler.class
 )

@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Juan Fernández
  * @author Zsolt Berentey
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS,
 		"model.class.name=com.liferay.bookmarks.model.BookmarksEntry"

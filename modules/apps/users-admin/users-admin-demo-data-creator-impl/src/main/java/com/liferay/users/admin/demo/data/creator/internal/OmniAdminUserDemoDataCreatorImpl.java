@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(service = OmniAdminUserDemoDataCreator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = OmniAdminUserDemoDataCreator.class)
 public class OmniAdminUserDemoDataCreatorImpl
 	extends BaseUserDemoDataCreator implements OmniAdminUserDemoDataCreator {
 

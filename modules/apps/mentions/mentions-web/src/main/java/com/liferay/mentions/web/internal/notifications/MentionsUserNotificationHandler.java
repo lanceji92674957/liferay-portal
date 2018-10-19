@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera
  * @author Sergio González
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + MentionsPortletKeys.MENTIONS,
 	service = UserNotificationHandler.class

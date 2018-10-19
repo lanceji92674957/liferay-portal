@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "name=temp_file",
 	service = OutputStreamContainerFactory.class
 )

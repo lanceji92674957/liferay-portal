@@ -53,7 +53,7 @@ import org.osgi.service.metatype.AttributeDefinition;
  * @author Eduardo Garcia
  * @author Raymond Augé
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"javax.portlet.name=" +

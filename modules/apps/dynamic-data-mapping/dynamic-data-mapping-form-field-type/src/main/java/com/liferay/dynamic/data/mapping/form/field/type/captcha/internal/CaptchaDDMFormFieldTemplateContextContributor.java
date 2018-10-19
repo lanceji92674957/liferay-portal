@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bruno Basto
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "ddm.form.field.type.name=captcha",
 	service = {
 		CaptchaDDMFormFieldTemplateContextContributor.class,

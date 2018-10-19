@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = TrashHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = TrashHelper.class)
 public class TrashHelperImpl implements TrashHelper {
 
 	@Override

@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dylan Rebelak
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, service = UpdateByQueryDocumentRequestExecutor.class
 )
 public class UpdateByQueryDocumentRequestExecutorImpl

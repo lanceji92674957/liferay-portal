@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Ambrin Chaudhary
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "editor.config.key=commentEditor",
 	service = EditorConfigContributor.class
 )

@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pei-Jung Lan
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "screen.navigation.category.order:Integer=20",
 	service = ScreenNavigationCategory.class
 )

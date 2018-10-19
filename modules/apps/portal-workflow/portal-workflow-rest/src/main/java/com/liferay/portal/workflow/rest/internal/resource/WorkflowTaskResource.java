@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adam Brandizzi
  */
-@Component(immediate = true, service = WorkflowTaskResource.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = WorkflowTaskResource.class)
 @Path("/task")
 public class WorkflowTaskResource {
 

@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Leonardo Barros
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	factory = DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME,
 	service = DDMExpressionFunction.Function2.class
 )

@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Peter Fellwock
  */
-@Component(service = ConfigurationBeanDeclaration.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ConfigurationBeanDeclaration.class)
 public class MailGroupServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 

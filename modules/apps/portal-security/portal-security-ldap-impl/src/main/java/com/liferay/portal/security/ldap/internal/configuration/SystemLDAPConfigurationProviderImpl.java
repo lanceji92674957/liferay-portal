@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "factoryPid=com.liferay.portal.security.ldap.configuration.SystemLDAPConfiguration",
 	service = ConfigurationProvider.class

@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = ImageBlogsUploadFileEntryHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ImageBlogsUploadFileEntryHandler.class)
 public class ImageBlogsUploadFileEntryHandler
 	implements UploadFileEntryHandler {
 

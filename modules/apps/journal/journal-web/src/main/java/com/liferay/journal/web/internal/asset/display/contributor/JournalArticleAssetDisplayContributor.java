@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = AssetDisplayContributor.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = AssetDisplayContributor.class)
 public class JournalArticleAssetDisplayContributor
 	extends BaseAssetDisplayContributor<JournalArticle>
 	implements AssetDisplayContributor {

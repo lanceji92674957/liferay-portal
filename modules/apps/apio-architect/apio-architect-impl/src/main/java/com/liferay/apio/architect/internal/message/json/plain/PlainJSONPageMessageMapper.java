@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
-@Component(service = PageMessageMapper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = PageMessageMapper.class)
 public class PlainJSONPageMessageMapper<T> implements PageMessageMapper<T> {
 
 	@Override

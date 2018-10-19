@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Pavel Savinov
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "fragment.entry.processor.priority:Integer=2",
 	service = FragmentEntryProcessor.class
 )

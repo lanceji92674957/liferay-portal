@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shuyang Zhou
  * @author Tina Tian
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "store.type=com.liferay.portal.store.db.DBStore",
 	service = Store.class

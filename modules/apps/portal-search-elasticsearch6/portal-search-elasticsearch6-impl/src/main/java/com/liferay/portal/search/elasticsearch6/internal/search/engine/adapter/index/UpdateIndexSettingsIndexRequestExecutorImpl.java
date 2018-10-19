@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(service = UpdateIndexSettingsIndexRequestExecutor.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = UpdateIndexSettingsIndexRequestExecutor.class)
 public class UpdateIndexSettingsIndexRequestExecutorImpl
 	implements UpdateIndexSettingsIndexRequestExecutor {
 

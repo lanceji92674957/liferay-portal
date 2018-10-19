@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Iván Zaera
  */
-@Component(immediate = true, service = DLDisplayContextProvider.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DLDisplayContextProvider.class)
 public class DLDisplayContextProvider {
 
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(

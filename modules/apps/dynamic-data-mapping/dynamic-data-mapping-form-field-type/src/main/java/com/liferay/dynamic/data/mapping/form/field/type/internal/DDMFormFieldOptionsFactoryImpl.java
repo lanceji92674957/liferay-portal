@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DDMFormFieldOptionsFactory.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DDMFormFieldOptionsFactory.class)
 public class DDMFormFieldOptionsFactoryImpl
 	implements DDMFormFieldOptionsFactory {
 

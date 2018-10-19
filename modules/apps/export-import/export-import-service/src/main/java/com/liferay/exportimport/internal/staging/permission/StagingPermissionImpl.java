@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = StagingPermission.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = StagingPermission.class)
 public class StagingPermissionImpl implements StagingPermission {
 
 	@Override

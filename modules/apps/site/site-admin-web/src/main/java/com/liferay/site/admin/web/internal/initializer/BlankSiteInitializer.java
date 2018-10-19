@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marco Leo
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "site.initializer.key=" + BlankSiteInitializer.KEY,
 	service = SiteInitializer.class

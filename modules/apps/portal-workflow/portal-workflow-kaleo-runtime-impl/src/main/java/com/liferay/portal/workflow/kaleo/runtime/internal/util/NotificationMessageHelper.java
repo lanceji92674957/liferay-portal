@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = NotificationMessageHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = NotificationMessageHelper.class)
 public class NotificationMessageHelper {
 
 	public JSONObject createMessageJSONObject(

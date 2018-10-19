@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  * @author Alejandro Tardín
  */
-@Component(service = DLUploadFileEntryHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = DLUploadFileEntryHandler.class)
 public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 
 	@Override

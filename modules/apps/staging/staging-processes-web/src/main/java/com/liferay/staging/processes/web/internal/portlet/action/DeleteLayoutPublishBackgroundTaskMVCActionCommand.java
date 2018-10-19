@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Levente Hudák
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + StagingProcessesPortletKeys.STAGING_PROCESSES,

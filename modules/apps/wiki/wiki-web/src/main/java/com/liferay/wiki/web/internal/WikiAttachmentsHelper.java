@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Roberto Díaz
  */
-@Component(service = WikiAttachmentsHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = WikiAttachmentsHelper.class)
 public class WikiAttachmentsHelper {
 
 	public void addAttachments(ActionRequest actionRequest) throws Exception {

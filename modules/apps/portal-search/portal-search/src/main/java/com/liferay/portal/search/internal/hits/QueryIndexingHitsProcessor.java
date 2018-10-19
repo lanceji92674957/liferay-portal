@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  * @author Josef Sustacek
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "sort.order=2", service = HitsProcessor.class
 )
 public class QueryIndexingHitsProcessor implements HitsProcessor {

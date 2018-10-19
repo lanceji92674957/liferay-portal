@@ -66,7 +66,7 @@ import org.scribe.model.Verb;
  * @author Ryan Park
  * @author Joan Kim
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=marketplace-portlet",

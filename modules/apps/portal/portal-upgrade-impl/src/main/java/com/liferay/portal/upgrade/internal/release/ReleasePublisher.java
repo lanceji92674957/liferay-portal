@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Miguel Pastor
  * @author Carlos Sierra Andrés
  */
-@Component(immediate = true, service = ReleasePublisher.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ReleasePublisher.class)
 public final class ReleasePublisher {
 
 	public void publish(Release release) {

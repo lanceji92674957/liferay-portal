@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = ExportUtil.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ExportUtil.class)
 public class ExportUtil {
 
 	public File exportFragmentCollections(

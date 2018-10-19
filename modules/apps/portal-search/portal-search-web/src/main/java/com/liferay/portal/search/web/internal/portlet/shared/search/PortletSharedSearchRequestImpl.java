@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author André de Oliveira
  */
-@Component(service = PortletSharedSearchRequest.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = PortletSharedSearchRequest.class)
 public class PortletSharedSearchRequestImpl
 	implements PortletSharedSearchRequest {
 

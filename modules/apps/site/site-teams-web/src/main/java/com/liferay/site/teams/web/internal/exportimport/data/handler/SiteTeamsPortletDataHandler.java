@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Akos Thurzo
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "javax.portlet.name=" + SiteTeamsPortletKeys.SITE_TEAMS,
 	service = PortletDataHandler.class
 )

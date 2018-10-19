@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tomas Polesovsky
  * @author Stian Sigvartsen
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"javax.portlet.name=" + OAuth2ProviderPortletKeys.OAUTH2_CONNECTED_APPLICATIONS,
 		"mvc.command.name=/", "mvc.command.name=/connected_applications/view"

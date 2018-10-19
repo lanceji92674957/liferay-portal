@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = SortFieldBuilder.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = SortFieldBuilder.class)
 public class SortFieldBuilderImpl implements SortFieldBuilder {
 
 	@Override

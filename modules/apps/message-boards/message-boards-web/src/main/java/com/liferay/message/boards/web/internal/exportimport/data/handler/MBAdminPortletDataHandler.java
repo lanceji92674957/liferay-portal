@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Daniel Kocsis
  * @author Gergely Mathe
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
 	service = PortletDataHandler.class
 )

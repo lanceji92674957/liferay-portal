@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jorge Ferrer
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-users-admin",

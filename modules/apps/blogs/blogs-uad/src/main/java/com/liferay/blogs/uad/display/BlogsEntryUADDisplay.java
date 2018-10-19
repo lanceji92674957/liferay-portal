@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = UADDisplay.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = UADDisplay.class)
 public class BlogsEntryUADDisplay extends BaseBlogsEntryUADDisplay {
 
 	@Override

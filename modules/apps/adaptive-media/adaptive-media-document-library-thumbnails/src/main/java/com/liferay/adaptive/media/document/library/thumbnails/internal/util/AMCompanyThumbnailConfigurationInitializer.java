@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, service = AMCompanyThumbnailConfigurationInitializer.class
 )
 public class AMCompanyThumbnailConfigurationInitializer {

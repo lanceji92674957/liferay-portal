@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Raymond Augé
  */
-@Component(immediate = true, service = LayoutStaging.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = LayoutStaging.class)
 @ProviderType
 public class LayoutStagingImpl implements LayoutStaging {
 

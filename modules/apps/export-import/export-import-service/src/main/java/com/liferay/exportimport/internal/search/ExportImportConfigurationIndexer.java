@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mate Thurzo
  * @author Akos Thurzo
  */
-@Component(immediate = true, service = Indexer.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = Indexer.class)
 @ProviderType
 public class ExportImportConfigurationIndexer
 	extends BaseIndexer<ExportImportConfiguration> {

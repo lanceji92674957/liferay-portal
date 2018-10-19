@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Javier Gamarra
  * @author Paulo Cruz
  */
-@Component(immediate = true, service = UploadFileHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = UploadFileHelper.class)
 public class UploadFileHelper {
 
 	public void linkFiles(

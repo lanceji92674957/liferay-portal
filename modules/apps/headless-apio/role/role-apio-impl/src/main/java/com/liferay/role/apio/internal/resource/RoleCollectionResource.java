@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Javier
  */
-@Component(immediate = true, service = CollectionResource.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = CollectionResource.class)
 public class RoleCollectionResource
 	implements CollectionResource<Role, Long, RoleIdentifier> {
 

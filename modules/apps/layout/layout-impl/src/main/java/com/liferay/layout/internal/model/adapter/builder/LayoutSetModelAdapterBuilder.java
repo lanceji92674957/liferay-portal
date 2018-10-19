@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Daniel Kocsis
  */
-@Component(immediate = true, service = ModelAdapterBuilder.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ModelAdapterBuilder.class)
 public class LayoutSetModelAdapterBuilder
 	implements ModelAdapterBuilder<StagedLayoutSet, LayoutSet> {
 

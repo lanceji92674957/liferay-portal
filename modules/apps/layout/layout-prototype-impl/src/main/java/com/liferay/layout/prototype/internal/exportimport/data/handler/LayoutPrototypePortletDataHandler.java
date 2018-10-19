@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Daniela Zapata Riesco
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + LayoutPrototypePortletKeys.LAYOUT_PROTOTYPE,
 	service = PortletDataHandler.class

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Akos Thurzo
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	service = {
 		DummyReferenceStagedModelDataHandler.class, StagedModelDataHandler.class

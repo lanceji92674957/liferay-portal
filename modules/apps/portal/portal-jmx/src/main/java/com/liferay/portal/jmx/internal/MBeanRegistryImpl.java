@@ -46,7 +46,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = MBeanRegistry.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = MBeanRegistry.class)
 public class MBeanRegistryImpl implements MBeanRegistry {
 
 	@Override

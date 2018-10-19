@@ -25,7 +25,7 @@ import org.osgi.service.component.runtime.ServiceComponentRuntime;
 /**
  * @author Shuyang Zhou
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"osgi.command.function=softCircularDependency", "osgi.command.scope=ds"

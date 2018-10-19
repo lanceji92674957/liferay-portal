@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Sergio González
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	enabled = true, immediate = true, service = MarkdownConverterFactory.class
 )
 public class MarkdownConverterFactoryImpl implements MarkdownConverterFactory {

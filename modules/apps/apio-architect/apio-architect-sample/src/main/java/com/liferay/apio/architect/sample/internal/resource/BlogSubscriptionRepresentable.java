@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Hernández
  */
-@Component(service = Representable.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = Representable.class)
 public class BlogSubscriptionRepresentable
 	implements Representable
 		<BlogSubscription, Long,

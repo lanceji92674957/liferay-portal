@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Bruno Basto
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 		"mvc.command.name=/admin/edit_form_instance"

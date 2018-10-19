@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DDMFormValuesQueryFactory.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DDMFormValuesQueryFactory.class)
 public class DDMFormValuesQueryFactoryImpl
 	implements DDMFormValuesQueryFactory {
 

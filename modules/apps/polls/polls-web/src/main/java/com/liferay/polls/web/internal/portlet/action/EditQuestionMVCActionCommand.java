@@ -69,7 +69,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @author Peter Fellwock
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"javax.portlet.name=" + PollsPortletKeys.POLLS,
 		"javax.portlet.name=" + PollsPortletKeys.POLLS_DISPLAY,

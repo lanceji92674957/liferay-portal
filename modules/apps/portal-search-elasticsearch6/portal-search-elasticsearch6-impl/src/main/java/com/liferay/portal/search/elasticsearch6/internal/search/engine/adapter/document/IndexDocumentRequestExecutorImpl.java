@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dylan Rebelak
  */
-@Component(immediate = true, service = IndexDocumentRequestExecutor.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = IndexDocumentRequestExecutor.class)
 public class IndexDocumentRequestExecutorImpl
 	implements IndexDocumentRequestExecutor {
 

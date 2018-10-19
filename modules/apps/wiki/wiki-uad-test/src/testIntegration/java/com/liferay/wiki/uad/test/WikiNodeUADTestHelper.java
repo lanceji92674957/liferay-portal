@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = WikiNodeUADTestHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = WikiNodeUADTestHelper.class)
 public class WikiNodeUADTestHelper {
 
 	public WikiNode addWikiNode(long userId) throws Exception {

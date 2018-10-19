@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bruno Basto
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "ddm.form.field.type.name=date",
 	service =
 		{DateDDMFormFieldValueRenderer.class, DDMFormFieldValueRenderer.class}

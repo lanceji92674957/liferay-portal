@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Víctor Galán
  * @review
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	service = {ActionRouter.class, ContactPointActionRouter.class}
 )

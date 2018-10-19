@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Supritha Sundaram
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-portal-security-wedeploy-auth",
 		"com.liferay.portlet.display-category=category.hidden",

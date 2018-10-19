@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(enabled = false, immediate = true, service = {})
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,enabled = false, immediate = true, service = {})
 public class SchedulerLifecycleInitializer {
 
 	@Activate

@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Leonardo Barros
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	service = {
 		AddDefaultSharedFormLayoutPortalInstanceLifecycleListener.class,

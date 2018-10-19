@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Ryan Park
  */
-@Component(service = {})
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = {})
 public class AppDisplayFactoryUtil {
 
 	public static AppDisplay getAppDisplay(List<Bundle> bundles, long appId) {

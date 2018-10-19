@@ -115,7 +115,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adam Brandizzi
  */
-@Component(immediate = true, service = {})
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = {})
 public class CalEventImporter {
 
 	@Activate

@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Philip Jones
  * @author Tomas Polesovsky
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "form.navigator.entry.order:Integer=70",
 	service = FormNavigatorEntry.class
 )

@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = ModelListener.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ModelListener.class)
 public class UserModelListener extends BaseModelListener<User> {
 
 	public void onBeforeCreate(User user) throws ModelListenerException {

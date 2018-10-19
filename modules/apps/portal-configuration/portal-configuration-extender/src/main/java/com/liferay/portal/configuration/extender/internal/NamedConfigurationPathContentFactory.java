@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(immediate = true, service = NamedConfigurationContentFactory.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = NamedConfigurationContentFactory.class)
 public class NamedConfigurationPathContentFactory
 	implements NamedConfigurationContentFactory {
 

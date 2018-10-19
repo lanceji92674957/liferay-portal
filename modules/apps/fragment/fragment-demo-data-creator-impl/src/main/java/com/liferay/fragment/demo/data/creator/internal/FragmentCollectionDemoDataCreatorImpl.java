@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(service = FragmentCollectionDemoDataCreator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = FragmentCollectionDemoDataCreator.class)
 public class FragmentCollectionDemoDataCreatorImpl
 	implements FragmentCollectionDemoDataCreator {
 

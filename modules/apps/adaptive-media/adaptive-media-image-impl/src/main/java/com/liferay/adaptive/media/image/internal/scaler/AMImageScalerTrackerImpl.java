@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Sergio González
  */
-@Component(service = AMImageScalerTracker.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = AMImageScalerTracker.class)
 public class AMImageScalerTrackerImpl implements AMImageScalerTracker {
 
 	@Activate

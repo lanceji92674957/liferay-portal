@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = true, service = DDMPermissionSupportHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DDMPermissionSupportHelper.class)
 public class DDMPermissionSupportHelper {
 
 	public boolean contains(

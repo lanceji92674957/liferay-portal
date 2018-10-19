@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pavel Savinov
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"screen.navigation.category.order:Integer=30",
 		"screen.navigation.entry.order:Integer=30"

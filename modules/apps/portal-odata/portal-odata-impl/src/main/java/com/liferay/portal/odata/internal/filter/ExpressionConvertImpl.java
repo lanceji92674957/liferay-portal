@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Cristina González
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "result.class.name=com.liferay.portal.kernel.search.filter.Filter",
 	service = ExpressionConvert.class

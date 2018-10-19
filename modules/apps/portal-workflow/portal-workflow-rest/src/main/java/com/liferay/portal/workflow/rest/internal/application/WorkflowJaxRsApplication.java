@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adam Brandizzi
  */
 @ApplicationPath("/workflow")
-@Component(immediate = true, service = Application.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = Application.class)
 public class WorkflowJaxRsApplication extends Application {
 
 	@Override

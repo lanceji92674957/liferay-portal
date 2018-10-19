@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Roberto Díaz
  */
-@Component(service = DLPortletToolbarContributorHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = DLPortletToolbarContributorHelper.class)
 public class DLPortletToolbarContributorHelper {
 
 	public Folder getFolder(

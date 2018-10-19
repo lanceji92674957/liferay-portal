@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = GroupExceptionRequestHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = GroupExceptionRequestHandler.class)
 public class GroupExceptionRequestHandler {
 
 	public void handlePortalException(

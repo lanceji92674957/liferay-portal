@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = PortalSettingsFormContributor.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = PortalSettingsFormContributor.class)
 public class AssetAutoTaggerPortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 

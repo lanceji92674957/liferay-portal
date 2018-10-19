@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(service = ScopeDescriptorLocator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ScopeDescriptorLocator.class)
 public class ScopeDescriptorLocatorImpl implements ScopeDescriptorLocator {
 
 	@Override

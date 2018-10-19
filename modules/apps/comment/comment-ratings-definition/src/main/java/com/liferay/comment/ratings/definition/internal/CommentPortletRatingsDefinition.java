@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Roberto Díaz
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "model.class.name=com.liferay.message.boards.model.MBDiscussion",
 	service = PortletRatingsDefinition.class
 )

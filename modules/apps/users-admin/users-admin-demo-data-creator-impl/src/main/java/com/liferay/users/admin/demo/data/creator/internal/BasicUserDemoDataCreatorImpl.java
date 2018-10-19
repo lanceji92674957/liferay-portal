@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Sergio González
  */
-@Component(service = BasicUserDemoDataCreator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = BasicUserDemoDataCreator.class)
 public class BasicUserDemoDataCreatorImpl
 	extends BaseUserDemoDataCreator implements BasicUserDemoDataCreator {
 

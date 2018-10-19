@@ -19,7 +19,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Ambrín Chaudhary
  */
-@Component(service = TempImageMBUploadFileEntryHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = TempImageMBUploadFileEntryHandler.class)
 public class TempImageMBUploadFileEntryHandler
 	extends BaseMBUploadFileEntryHandler {
 

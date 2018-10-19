@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "javax.portlet.name=" + AssetTagsCompilerPortletKeys.ASSET_TAGS_COMPILER,
 	service = FriendlyURLMapper.class
 )

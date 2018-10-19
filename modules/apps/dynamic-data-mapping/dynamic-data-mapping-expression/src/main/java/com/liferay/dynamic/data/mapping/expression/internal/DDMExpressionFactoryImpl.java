@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DDMExpressionFactory.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DDMExpressionFactory.class)
 public class DDMExpressionFactoryImpl implements DDMExpressionFactory {
 
 	@Override

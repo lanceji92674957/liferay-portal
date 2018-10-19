@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Diaz
  * @author Zsolt Berentey
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "javax.portlet.name=" + JournalPortletKeys.JOURNAL,
 	service = SocialActivityInterpreter.class
 )

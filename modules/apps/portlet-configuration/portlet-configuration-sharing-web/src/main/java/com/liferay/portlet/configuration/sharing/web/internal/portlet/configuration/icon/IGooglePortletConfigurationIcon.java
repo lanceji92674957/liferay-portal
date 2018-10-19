@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = PortletConfigurationIcon.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = PortletConfigurationIcon.class)
 public class IGooglePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 

@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Daniel Kocsis
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ExportImportPortletKeys.EXPORT_IMPORT,

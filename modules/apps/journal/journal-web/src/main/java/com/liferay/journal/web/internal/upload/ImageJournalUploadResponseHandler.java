@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  * @author Alejandro Tardín
  */
-@Component(service = ImageJournalUploadResponseHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ImageJournalUploadResponseHandler.class)
 public class ImageJournalUploadResponseHandler
 	implements UploadResponseHandler {
 

@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = AMImageSerializer.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = AMImageSerializer.class)
 public class AMImageSerializerImpl implements AMImageSerializer {
 
 	@Override

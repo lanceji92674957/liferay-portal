@@ -100,7 +100,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Daniel Kocsis
  * @author Mate Thurzo
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	service = {
 		JournalArticleStagedModelDataHandler.class, StagedModelDataHandler.class

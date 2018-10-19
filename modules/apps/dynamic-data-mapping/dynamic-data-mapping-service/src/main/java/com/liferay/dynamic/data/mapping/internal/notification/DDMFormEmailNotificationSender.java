@@ -83,7 +83,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = true, service = DDMFormEmailNotificationSender.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DDMFormEmailNotificationSender.class)
 public class DDMFormEmailNotificationSender {
 
 	public void sendEmailNotification(

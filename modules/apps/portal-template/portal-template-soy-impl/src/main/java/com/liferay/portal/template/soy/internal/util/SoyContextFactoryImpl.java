@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Matthew Tambara
  */
-@Component(immediate = true, service = SoyContextFactory.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = SoyContextFactory.class)
 public class SoyContextFactoryImpl implements SoyContextFactory {
 
 	@Override

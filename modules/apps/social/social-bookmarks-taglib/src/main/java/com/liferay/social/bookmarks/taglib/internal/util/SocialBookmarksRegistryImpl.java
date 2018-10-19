@@ -43,7 +43,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = SocialBookmarksRegistry.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = SocialBookmarksRegistry.class)
 public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 
 	@Override

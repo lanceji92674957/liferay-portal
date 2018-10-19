@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mate Thurzo
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
 	service = PortletDataHandler.class

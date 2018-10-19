@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pavel Savinov
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"editor.config.key=descriptionMapAsXML",
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL

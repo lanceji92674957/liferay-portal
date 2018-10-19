@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "token.location=" + TokenLocation.REQUEST_HEADER,
 	service = TokenRetriever.class
 )

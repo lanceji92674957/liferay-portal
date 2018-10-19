@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Akos Thurzo
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ExportImportPortletKeys.EXPORT_IMPORT,

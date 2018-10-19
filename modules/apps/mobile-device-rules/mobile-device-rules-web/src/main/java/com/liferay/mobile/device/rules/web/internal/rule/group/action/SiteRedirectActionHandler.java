@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Edward Han
  */
-@Component(immediate = true, service = ActionHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ActionHandler.class)
 public class SiteRedirectActionHandler extends BaseRedirectActionHandler {
 
 	public static String getHandlerType() {

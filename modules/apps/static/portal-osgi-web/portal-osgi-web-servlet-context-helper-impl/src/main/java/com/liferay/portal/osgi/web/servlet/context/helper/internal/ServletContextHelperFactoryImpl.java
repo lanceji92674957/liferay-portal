@@ -40,7 +40,7 @@ import org.xml.sax.SAXNotSupportedException;
 /**
  * @author Raymond Augé
  */
-@Component(immediate = true, service = ServletContextHelperFactory.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ServletContextHelperFactory.class)
 public class ServletContextHelperFactoryImpl
 	implements ServletContextHelperFactory {
 

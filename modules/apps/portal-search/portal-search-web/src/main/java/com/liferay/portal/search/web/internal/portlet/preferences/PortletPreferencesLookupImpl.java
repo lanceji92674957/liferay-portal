@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author André de Oliveira
  */
-@Component(service = PortletPreferencesLookup.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = PortletPreferencesLookup.class)
 public class PortletPreferencesLookupImpl implements PortletPreferencesLookup {
 
 	@Override

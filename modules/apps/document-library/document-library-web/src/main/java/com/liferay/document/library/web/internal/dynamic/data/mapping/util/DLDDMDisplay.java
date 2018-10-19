@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  * @author Roberto Díaz
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY,
 	service = DDMDisplay.class
 )

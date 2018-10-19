@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo Garcia
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DynamicInclude.class)
 public class AnalyticsTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override

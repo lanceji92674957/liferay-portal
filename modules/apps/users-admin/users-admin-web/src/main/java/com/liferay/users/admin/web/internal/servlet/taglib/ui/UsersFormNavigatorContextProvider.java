@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Tardín
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = FormNavigatorContextConstants.FORM_NAVIGATOR_ID + "=" + FormNavigatorConstants.FORM_NAVIGATOR_ID_USERS,
 	service = FormNavigatorContextProvider.class
 )

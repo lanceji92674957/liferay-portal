@@ -68,7 +68,7 @@ import org.springframework.context.ApplicationContext;
  * @author Douglas Wong
  * @author Alexander Chow
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "verify.process.name=com.liferay.document.library.service",
 	service = VerifyProcess.class

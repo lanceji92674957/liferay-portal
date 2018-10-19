@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dennis Ju
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "destination.name=" + DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR,
 	service = MessageListener.class

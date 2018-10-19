@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Javier Gamarra
  */
-@Component(immediate = true, service = ItemResource.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ItemResource.class)
 public class AddressCollectionResource
 	implements ItemResource<Address, Long, AddressIdentifier> {
 

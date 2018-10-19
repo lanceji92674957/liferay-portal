@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  * @author Milen Dyankov
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "class.name=DEFAULT",
 	service = FacetProcessor.class
 )

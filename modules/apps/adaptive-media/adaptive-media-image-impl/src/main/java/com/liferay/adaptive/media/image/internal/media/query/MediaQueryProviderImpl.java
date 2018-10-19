@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = MediaQueryProvider.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = MediaQueryProvider.class)
 public class MediaQueryProviderImpl implements MediaQueryProvider {
 
 	@Override

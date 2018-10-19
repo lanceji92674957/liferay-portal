@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Adolfo Pérez
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "destination.name=" + AMDestinationNames.ADAPTIVE_MEDIA_PROCESSOR,
 	service = MessageListener.class

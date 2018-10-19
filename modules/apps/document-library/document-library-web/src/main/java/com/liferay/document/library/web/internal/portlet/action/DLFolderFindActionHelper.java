@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "model.class.name=com.liferay.portal.kernel.repository.model.Folder",
 	service = FindActionHelper.class

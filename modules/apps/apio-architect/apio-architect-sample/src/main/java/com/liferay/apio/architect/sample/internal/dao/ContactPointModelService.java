@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Victor Galán
  * @review
  */
-@Component(immediate = true, service = ContactPointModelService.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ContactPointModelService.class)
 public class ContactPointModelService {
 
 	/**

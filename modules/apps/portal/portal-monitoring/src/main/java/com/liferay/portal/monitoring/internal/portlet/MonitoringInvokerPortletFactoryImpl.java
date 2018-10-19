@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Philip Jones
  * @author Neil Griffin
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	enabled = false, immediate = true,
 	property = Constants.SERVICE_RANKING + ":Integer=100",
 	service = InvokerPortletFactory.class

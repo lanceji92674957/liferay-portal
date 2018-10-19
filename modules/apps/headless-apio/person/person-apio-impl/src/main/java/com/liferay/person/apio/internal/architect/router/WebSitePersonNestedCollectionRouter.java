@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Eduardo Perez
  */
-@Component(immediate = true, service = NestedCollectionRouter.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = NestedCollectionRouter.class)
 public class WebSitePersonNestedCollectionRouter
 	implements NestedCollectionRouter
 		<UserWrapper, Long, PersonIdentifier, Long, WebSiteIdentifier> {

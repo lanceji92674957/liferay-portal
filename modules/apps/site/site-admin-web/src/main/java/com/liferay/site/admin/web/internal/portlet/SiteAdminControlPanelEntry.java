@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  * @author Miguel Pastor
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + SiteAdminPortletKeys.SITE_ADMIN,
 	service = ControlPanelEntry.class

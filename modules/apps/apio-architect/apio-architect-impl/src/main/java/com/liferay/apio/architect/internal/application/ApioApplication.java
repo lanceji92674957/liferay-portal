@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carlos Sierra
  * @author Jorge Ferrer
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"liferay.apio.architect.application=true",
 		"osgi.jaxrs.application.base=/api", "osgi.jaxrs.name=apio-application"

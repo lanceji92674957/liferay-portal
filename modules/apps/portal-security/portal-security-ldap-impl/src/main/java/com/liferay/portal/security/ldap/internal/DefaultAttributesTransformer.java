@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = AttributesTransformer.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = AttributesTransformer.class)
 public class DefaultAttributesTransformer implements AttributesTransformer {
 
 	@Override

@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DynamicInclude.class)
 public class GoogleNavigationPreJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 

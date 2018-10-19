@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tina Tian
  */
-@Component(immediate = true, service = SearchDisplayContextFactory.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = SearchDisplayContextFactory.class)
 public class SearchDisplayContextFactoryImpl
 	implements SearchDisplayContextFactory {
 

@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Sergio González
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "background.task.executor.class.name=com.liferay.document.library.opener.google.drive.internal.background.task.UploadGoogleDriveDocumentBackgroundTaskExecutor",
 	service = BackgroundTaskExecutor.class

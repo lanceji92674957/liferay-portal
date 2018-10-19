@@ -50,7 +50,7 @@ import org.slf4j.Logger;
 /**
  * @author Alejandro Hernández
  */
-@Component(service = CollectionRouterManager.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = CollectionRouterManager.class)
 public class CollectionRouterManagerImpl
 	extends ClassNameBaseManager<CollectionRouter>
 	implements CollectionRouterManager {

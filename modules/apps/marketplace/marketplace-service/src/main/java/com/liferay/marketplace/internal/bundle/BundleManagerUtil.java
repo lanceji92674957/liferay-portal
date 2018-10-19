@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Ryan Park
  */
-@Component(service = {})
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = {})
 public class BundleManagerUtil {
 
 	public static Bundle getBundle(String symbolicName, String version) {

@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Ambrín Chaudhary
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"editor.name=alloyeditor", "editor.name=alloyeditor_bbcode",
 		"editor.name=ckeditor", "editor.name=ckeditor_bbcode",

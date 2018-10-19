@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  * @author David Mendez Gonzalez
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + RolesAdminPortletKeys.ROLES_ADMIN,
 	service = PortletDataHandler.class

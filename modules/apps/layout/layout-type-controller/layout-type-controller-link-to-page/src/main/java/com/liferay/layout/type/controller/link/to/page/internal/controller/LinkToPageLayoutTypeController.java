@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "layout.type=" + LayoutConstants.TYPE_LINK_TO_LAYOUT,
 	service = LayoutTypeController.class

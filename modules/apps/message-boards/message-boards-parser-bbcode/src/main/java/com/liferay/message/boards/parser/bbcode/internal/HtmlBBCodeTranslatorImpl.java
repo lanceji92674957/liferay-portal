@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Iliyan Peychev
  */
-@Component(service = BBCodeTranslator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = BBCodeTranslator.class)
 public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 
 	public HtmlBBCodeTranslatorImpl() {

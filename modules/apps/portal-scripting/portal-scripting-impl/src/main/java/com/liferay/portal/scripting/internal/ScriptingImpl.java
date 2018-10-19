@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-@Component(immediate = true, service = Scripting.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = Scripting.class)
 public class ScriptingImpl implements Scripting {
 
 	@Override

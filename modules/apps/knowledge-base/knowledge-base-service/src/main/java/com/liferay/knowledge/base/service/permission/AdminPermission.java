@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author     Brian Wing Shun Chan
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "resource.name=" + KBConstants.RESOURCE_NAME_ADMIN,
 	service = ResourcePermissionChecker.class
 )

@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Iván Zaera
  */
-@Component(service = AlwaysAllowDoAsUser.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = AlwaysAllowDoAsUser.class)
 public class EditPageAttachmentAlwaysAllowDoAsUser
 	implements AlwaysAllowDoAsUser {
 

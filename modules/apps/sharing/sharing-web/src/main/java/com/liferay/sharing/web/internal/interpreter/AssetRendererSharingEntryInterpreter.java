@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, service = AssetRendererSharingEntryInterpreter.class
 )
 public class AssetRendererSharingEntryInterpreter

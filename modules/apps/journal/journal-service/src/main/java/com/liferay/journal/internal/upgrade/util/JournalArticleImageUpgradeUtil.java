@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(service = JournalArticleImageUpgradeUtil.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = JournalArticleImageUpgradeUtil.class)
 public class JournalArticleImageUpgradeUtil {
 
 	public String getDocumentLibraryValue(String url) {

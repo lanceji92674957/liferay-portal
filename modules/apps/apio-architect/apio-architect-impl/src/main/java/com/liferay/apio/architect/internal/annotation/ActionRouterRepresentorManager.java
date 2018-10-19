@@ -49,7 +49,7 @@ import org.slf4j.Logger;
  * @author Víctor Galán
  * @review
  */
-@Component(service = ActionRouterRepresentorManager.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ActionRouterRepresentorManager.class)
 public class ActionRouterRepresentorManager {
 
 	@Activate

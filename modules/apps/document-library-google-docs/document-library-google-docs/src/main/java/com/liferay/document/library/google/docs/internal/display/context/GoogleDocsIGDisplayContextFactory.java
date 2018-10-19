@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera
  */
-@Component(immediate = true, service = IGDisplayContextFactory.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = IGDisplayContextFactory.class)
 public class GoogleDocsIGDisplayContextFactory
 	implements IGDisplayContextFactory {
 

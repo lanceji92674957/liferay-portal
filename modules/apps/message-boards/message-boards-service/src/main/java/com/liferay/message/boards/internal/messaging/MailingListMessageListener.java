@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Thiago Moreira
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "destination.name=" + DestinationNames.MESSAGE_BOARDS_MAILING_LIST,
 	service = MessageListener.class

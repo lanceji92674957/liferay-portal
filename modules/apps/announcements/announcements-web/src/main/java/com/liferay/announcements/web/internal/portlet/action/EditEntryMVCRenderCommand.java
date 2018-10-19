@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Adolfo Pérez
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"javax.portlet.name=" + AnnouncementsPortletKeys.ALERTS,
 		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS,

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mate Thurzo
  */
-@Component(service = ExportImportLifecycleListener.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ExportImportLifecycleListener.class)
 public class JournalCacheExportImportLifecycleListener
 	implements EventAwareExportImportLifecycleListener {
 

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pei-Jung Lan
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "form.navigator.entry.order:Integer=90",
 	service = FormNavigatorEntry.class
 )

@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Jonathan Potter
  * @author Brian Wing Shun Chan
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "server.manager.executor.path=/plugins",
 	service = Executor.class
 )

@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Julio Camarero
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "javax.portlet.name=" + BlogsPortletKeys.BLOGS_AGGREGATOR,
 	service = PortletDataHandler.class
 )

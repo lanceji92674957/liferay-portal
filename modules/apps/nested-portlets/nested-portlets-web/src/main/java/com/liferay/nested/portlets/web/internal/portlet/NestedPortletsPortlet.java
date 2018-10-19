@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Peter Fellwock
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-nested-portlets",

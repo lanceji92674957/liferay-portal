@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  * @author     Shuyang Zhou
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "scripting.language=" + BeanShellExecutor.LANGUAGE,
 	service = ScriptingExecutor.class

@@ -56,7 +56,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true, service = PanelAppMyAccountPermissions.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = PanelAppMyAccountPermissions.class)
 public class PanelAppMyAccountPermissions {
 
 	public void initPermissions(List<Company> companies, Portlet portlet) {

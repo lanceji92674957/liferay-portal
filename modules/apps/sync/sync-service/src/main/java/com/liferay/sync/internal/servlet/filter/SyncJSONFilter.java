@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Shinn Lok
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"after-filter=Upload Servlet Request Filter", "servlet-context-name=",

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Philip Jones
  */
-@Component(immediate = true, service = PortalSettingsFormContributor.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = PortalSettingsFormContributor.class)
 public class OpenSSOPortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 

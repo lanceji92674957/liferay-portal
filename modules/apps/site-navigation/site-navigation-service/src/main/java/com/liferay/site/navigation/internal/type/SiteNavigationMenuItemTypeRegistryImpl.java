@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = SiteNavigationMenuItemTypeRegistry.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = SiteNavigationMenuItemTypeRegistry.class)
 public class SiteNavigationMenuItemTypeRegistryImpl
 	implements SiteNavigationMenuItemTypeRegistry {
 

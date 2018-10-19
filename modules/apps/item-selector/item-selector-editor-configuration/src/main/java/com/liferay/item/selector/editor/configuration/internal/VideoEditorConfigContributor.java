@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Carlos Lancha
  */
-@Component(service = EditorConfigContributor.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = EditorConfigContributor.class)
 public class VideoEditorConfigContributor extends BaseEditorConfigContributor {
 
 	@Override

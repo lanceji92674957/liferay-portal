@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adam Brandizzi
  */
-@Component(immediate = true, service = UserContextProvider.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = UserContextProvider.class)
 @Provider
 public class UserContextProvider implements ContextProvider<User> {
 

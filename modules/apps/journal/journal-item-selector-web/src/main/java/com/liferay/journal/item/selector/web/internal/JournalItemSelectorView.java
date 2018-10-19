@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Eduardo Garcia
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "item.selector.view.order:Integer=100",
 	service = ItemSelectorView.class
 )

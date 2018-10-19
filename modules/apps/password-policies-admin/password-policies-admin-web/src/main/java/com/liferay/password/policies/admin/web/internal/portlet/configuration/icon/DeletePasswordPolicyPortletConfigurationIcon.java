@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pei-Jung Lan
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,

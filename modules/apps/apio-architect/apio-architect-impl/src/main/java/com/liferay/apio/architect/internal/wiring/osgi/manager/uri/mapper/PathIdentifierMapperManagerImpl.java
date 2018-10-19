@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Hernández
  */
-@Component(service = PathIdentifierMapperManager.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = PathIdentifierMapperManager.class)
 public class PathIdentifierMapperManagerImpl
 	extends ClassNameBaseManager<PathIdentifierMapper>
 	implements PathIdentifierMapperManager {

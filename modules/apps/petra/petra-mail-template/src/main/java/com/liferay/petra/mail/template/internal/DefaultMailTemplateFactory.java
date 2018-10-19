@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Adolfo Pérez
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = Constants.SERVICE_RANKING + ":Integer=" + Integer.MIN_VALUE,
 	service = MailTemplateFactory.class
 )

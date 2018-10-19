@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Shuyang Zhou
  */
-@Component(service = RSSExporter.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = RSSExporter.class)
 public class RSSExporterImpl implements RSSExporter {
 
 	@Override

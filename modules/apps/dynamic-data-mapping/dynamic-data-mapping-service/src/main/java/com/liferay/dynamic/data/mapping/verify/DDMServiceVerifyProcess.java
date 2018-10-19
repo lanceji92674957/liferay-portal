@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  * @author Rafael Praxedes
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "verify.process.name=com.liferay.dynamic.data.mapping.service",
 	service = VerifyProcess.class

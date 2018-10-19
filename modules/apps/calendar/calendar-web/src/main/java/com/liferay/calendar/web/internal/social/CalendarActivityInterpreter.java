@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Marcellus Tavares
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "javax.portlet.name=" + CalendarPortletKeys.CALENDAR,
 	service = SocialActivityInterpreter.class
 )

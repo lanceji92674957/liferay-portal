@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Julio Camarero
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "type=" + TemplateContextContributor.TYPE_THEME,
 	service = TemplateContextContributor.class

@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Ambrin Chaudhary
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "editor.name=ckeditor", service = EditorConfigContributor.class
 )
 public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {

@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Gergely Mathe
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "content.processor.type=DLReferences",
 	service = ExportImportContentProcessor.class
 )

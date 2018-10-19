@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Ryan Park
  * @author Zsolt Berentey
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"

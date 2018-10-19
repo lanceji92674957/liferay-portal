@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = MBMessageFormatUploadHandlerProvider.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = MBMessageFormatUploadHandlerProvider.class)
 public class MBMessageFormatUploadHandlerProvider {
 
 	@Activate

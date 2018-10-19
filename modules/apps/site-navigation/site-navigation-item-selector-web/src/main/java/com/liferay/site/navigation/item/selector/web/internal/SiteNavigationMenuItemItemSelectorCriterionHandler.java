@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Eudaldo Alonso
  */
-@Component(service = ItemSelectorCriterionHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ItemSelectorCriterionHandler.class)
 public class SiteNavigationMenuItemItemSelectorCriterionHandler
 	extends BaseItemSelectorCriterionHandler
 		<SiteNavigationMenuItemItemSelectorCriterion> {

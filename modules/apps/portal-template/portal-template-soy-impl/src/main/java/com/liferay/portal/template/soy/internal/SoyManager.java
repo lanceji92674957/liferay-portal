@@ -40,7 +40,7 @@ import org.osgi.util.tracker.BundleTracker;
 /**
  * @author Bruno Basto
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "language.type=" + TemplateConstants.LANG_TYPE_SOY,
 	service = {SoyManager.class, TemplateManager.class}

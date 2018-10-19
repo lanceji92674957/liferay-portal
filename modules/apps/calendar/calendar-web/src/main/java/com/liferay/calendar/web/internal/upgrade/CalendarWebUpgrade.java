@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  * @author Manuel de la Peña
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	service = {CalendarWebUpgrade.class, UpgradeStepRegistrator.class}
 )

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Eudaldo Alonso
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + AssetPublisherPortletKeys.RELATED_ASSETS,
 	service = PortletDataHandler.class

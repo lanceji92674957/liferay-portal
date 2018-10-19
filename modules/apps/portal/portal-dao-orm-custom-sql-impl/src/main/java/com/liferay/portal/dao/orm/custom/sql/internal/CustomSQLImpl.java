@@ -71,7 +71,7 @@ import org.osgi.util.tracker.BundleTracker;
  * @author Raymond Augé
  * @see    com.liferay.util.dao.orm.CustomSQL
  */
-@Component(service = CustomSQL.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = CustomSQL.class)
 public class CustomSQLImpl implements CustomSQL {
 
 	public static final String DB2_FUNCTION_IS_NOT_NULL =

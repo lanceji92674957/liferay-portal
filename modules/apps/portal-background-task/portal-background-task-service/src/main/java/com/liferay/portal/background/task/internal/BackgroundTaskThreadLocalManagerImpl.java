@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = BackgroundTaskThreadLocalManager.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = BackgroundTaskThreadLocalManager.class)
 public class BackgroundTaskThreadLocalManagerImpl
 	implements BackgroundTaskThreadLocalManager {
 

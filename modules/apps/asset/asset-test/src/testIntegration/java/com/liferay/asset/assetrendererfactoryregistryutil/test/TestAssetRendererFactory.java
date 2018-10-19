@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Peter Fellwock
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE,
 	service = AssetRendererFactory.class
 )

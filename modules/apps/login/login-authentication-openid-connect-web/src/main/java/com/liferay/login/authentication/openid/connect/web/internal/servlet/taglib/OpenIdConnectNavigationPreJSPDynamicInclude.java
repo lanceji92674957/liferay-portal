@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DynamicInclude.class)
 public class OpenIdConnectNavigationPreJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 

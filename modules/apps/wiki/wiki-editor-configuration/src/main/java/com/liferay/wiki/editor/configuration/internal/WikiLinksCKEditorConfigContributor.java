@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Roberto Díaz
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"editor.config.key=contentEditor", "editor.name=ckeditor",
 		"javax.portlet.name=" + WikiPortletKeys.WIKI,

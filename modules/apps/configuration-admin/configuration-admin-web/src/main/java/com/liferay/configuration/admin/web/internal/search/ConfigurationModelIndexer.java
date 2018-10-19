@@ -61,7 +61,7 @@ import org.osgi.service.metatype.ObjectClassDefinition;
 /**
  * @author Michael C. Han
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "index.on.startup=false",
 	service = {ConfigurationModelIndexer.class, Indexer.class}
 )

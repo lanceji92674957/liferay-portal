@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Gergely Mathe
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "javax.portlet.name=" + PageRatingsPortletKeys.PAGE_RATINGS,
 	service = PortletDataHandler.class
 )

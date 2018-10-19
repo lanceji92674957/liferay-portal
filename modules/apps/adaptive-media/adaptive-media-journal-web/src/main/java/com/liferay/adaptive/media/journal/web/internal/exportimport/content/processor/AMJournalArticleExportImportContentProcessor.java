@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"model.class.name=com.liferay.journal.model.JournalArticle",
 		"service.ranking:Integer=100"

@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  * @author David Arques
  * @review
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "entity.model.name=" + UserEntityModel.NAME,
 	service = EntityModel.class
 )

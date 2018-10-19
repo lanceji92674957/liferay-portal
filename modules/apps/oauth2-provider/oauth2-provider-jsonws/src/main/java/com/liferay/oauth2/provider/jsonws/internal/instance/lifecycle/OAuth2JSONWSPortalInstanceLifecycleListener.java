@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tomas Polesovsky
  */
-@Component(service = PortalInstanceLifecycleListener.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = PortalInstanceLifecycleListener.class)
 public class OAuth2JSONWSPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 

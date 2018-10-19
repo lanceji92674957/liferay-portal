@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jorge Díaz
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "content.processor.type=JournalFeedReferences",
 	service = ExportImportContentProcessor.class
 )

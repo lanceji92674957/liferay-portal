@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Sergio González
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "editor.name=alloyeditor_creole",
 	service = EditorConfigContributor.class
 )

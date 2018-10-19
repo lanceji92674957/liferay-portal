@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Javier Gamarra
  * @author Zoltán Takács
  */
-@Component(service = DocumentationMessageMapper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = DocumentationMessageMapper.class)
 public class JSONLDDocumentationMessageMapper
 	implements DocumentationMessageMapper {
 

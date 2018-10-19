@@ -20,7 +20,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Raymond Augé
  * @author Tibor Lipusz
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "class.name=com.liferay.portal.search.internal.facet.ModifiedFacetImpl",
 	service = FacetProcessor.class

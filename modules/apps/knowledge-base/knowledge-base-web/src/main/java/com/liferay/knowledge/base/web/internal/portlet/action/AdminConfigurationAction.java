@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Shin
  * @author Brian Wing Shun Chan
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 	service = ConfigurationAction.class

@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Javier Gamarra
  */
-@Component(immediate = true, service = PathIdentifierMapper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = PathIdentifierMapper.class)
 public class RatingIdentifierMapper
 	implements PathIdentifierMapper<RatingIdentifier> {
 

@@ -39,7 +39,7 @@ import org.python.util.InteractiveInterpreter;
  * @author     Alberto Montero
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "scripting.language=" + PythonExecutor.LANGUAGE,
 	service = ScriptingExecutor.class

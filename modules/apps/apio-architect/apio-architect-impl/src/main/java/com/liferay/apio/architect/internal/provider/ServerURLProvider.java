@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Javier Gamarra
  */
-@Component(service = Provider.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = Provider.class)
 public class ServerURLProvider implements Provider<ServerURL> {
 
 	@Override

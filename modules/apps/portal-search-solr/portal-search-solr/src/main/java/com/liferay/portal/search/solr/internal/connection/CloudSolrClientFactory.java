@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  * @author Tibor Lipusz
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "type=CLOUD", service = SolrClientFactory.class
 )
 public class CloudSolrClientFactory implements SolrClientFactory {

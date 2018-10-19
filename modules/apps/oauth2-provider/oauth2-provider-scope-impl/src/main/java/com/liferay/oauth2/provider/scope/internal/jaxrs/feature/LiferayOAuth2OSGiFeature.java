@@ -68,7 +68,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"auth.verifier.application.select=(!(osgi.jaxrs.name=*))",
 		"liferay.extension=OAuth2",

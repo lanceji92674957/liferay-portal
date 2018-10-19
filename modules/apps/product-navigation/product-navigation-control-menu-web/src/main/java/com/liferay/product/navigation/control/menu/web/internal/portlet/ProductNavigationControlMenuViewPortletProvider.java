@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
  *             leverage the <code>liferay-product-navigation:control-menu</code>
  *             tag.
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "model.class.name=" + PortalProductNavigationControlMenuApplicationType.ProductNavigationControlMenu.CLASS_NAME,
 	service = ViewPortletProvider.class

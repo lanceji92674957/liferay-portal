@@ -83,7 +83,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dennis Ju
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"osgi.http.whiteboard.context.path=/sync",

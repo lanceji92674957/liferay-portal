@@ -77,7 +77,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Julio Camarero
  * @author Philip Jones
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"javax.portlet.name=" + PortalSettingsPortletKeys.PORTAL_SETTINGS,
 		"mvc.command.name=/portal_settings/edit_company"

@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Daniel Kocsis
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN,
 	service = PortletDataHandler.class

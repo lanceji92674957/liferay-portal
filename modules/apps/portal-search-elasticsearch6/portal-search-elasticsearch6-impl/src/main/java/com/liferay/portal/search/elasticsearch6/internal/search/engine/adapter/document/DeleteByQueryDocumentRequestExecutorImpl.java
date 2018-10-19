@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dylan Rebelak
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, service = DeleteByQueryDocumentRequestExecutor.class
 )
 public class DeleteByQueryDocumentRequestExecutorImpl

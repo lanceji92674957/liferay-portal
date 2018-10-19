@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Ambrín Chaudhary
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"editor.config.key=descriptionEditor",
 		"editor.config.key=subtitleEditor", "editor.config.key=titleEditor",

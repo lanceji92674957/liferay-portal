@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = UpgradeStepRegistrator.class)
 public class BlogsWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

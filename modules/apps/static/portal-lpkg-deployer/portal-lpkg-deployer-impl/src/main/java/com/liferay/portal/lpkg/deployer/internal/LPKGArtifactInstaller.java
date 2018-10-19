@@ -54,7 +54,7 @@ import org.osgi.service.url.URLStreamHandlerService;
 /**
  * @author Shuyang Zhou
  */
-@Component(immediate = true, service = ArtifactInstaller.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ArtifactInstaller.class)
 public class LPKGArtifactInstaller implements ArtifactInstaller {
 
 	@Activate

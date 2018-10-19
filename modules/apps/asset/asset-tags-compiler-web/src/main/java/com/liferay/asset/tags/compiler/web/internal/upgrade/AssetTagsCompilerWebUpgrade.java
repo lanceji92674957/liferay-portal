@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = UpgradeStepRegistrator.class)
 public class AssetTagsCompilerWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

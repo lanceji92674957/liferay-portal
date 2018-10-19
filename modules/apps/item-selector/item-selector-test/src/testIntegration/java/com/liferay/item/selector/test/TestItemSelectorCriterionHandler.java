@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Roberto Díaz
  */
-@Component(service = TestItemSelectorCriterionHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = TestItemSelectorCriterionHandler.class)
 public class TestItemSelectorCriterionHandler
 	extends BaseItemSelectorCriterionHandler<TestItemSelectorCriterion> {
 

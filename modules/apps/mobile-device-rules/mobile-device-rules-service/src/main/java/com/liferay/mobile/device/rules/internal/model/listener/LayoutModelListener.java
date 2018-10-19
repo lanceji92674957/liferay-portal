@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo Garcia
  */
-@Component(service = ModelListener.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ModelListener.class)
 public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override

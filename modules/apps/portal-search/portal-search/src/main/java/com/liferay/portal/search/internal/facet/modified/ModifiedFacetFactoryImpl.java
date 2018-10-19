@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bryan Engler
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, service = {FacetFactory.class, ModifiedFacetFactory.class}
 )
 public class ModifiedFacetFactoryImpl implements ModifiedFacetFactory {

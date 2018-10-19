@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Amos Fong
  */
-@Component(immediate = true, service = ModelListener.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ModelListener.class)
 public class OrganizationModelListener extends BaseModelListener<Organization> {
 
 	@Override

@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author André de Oliveira
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, service = DynamicQueryBatchIndexingActionableFactory.class
 )
 public class DynamicQueryBatchIndexingActionableFactoryImpl

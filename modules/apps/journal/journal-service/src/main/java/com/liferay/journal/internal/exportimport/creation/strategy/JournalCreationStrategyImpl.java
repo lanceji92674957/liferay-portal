@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Joel Kozikowski
  */
-@Component(immediate = true, service = JournalCreationStrategy.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = JournalCreationStrategy.class)
 public class JournalCreationStrategyImpl implements JournalCreationStrategy {
 
 	@Override

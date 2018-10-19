@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Alejandro Hernández
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"osgi.jaxrs.application.select=(liferay.apio.architect.application=true)",
 		"osgi.jaxrs.extension=true"

@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = SharingUtil.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = SharingUtil.class)
 public class SharingUtil {
 
 	public SharingEntryPermissionDisplayAction

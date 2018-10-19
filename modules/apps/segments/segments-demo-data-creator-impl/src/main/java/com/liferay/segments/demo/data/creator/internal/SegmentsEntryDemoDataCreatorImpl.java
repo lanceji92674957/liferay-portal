@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo Garcia
  */
-@Component(service = SegmentsEntryDemoDataCreator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = SegmentsEntryDemoDataCreator.class)
 public class SegmentsEntryDemoDataCreatorImpl
 	implements SegmentsEntryDemoDataCreator {
 

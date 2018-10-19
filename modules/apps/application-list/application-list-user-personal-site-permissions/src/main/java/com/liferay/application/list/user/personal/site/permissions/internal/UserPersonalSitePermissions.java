@@ -48,7 +48,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Tomas Polesovsky
  */
-@Component(immediate = true, service = UserPersonalSitePermissions.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = UserPersonalSitePermissions.class)
 public class UserPersonalSitePermissions {
 
 	public void initPermissions(List<Company> companies, Portlet portlet) {

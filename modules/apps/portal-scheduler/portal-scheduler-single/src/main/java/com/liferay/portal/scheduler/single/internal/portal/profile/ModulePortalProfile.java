@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Shuyang Zhou
  */
-@Component(immediate = true, service = PortalProfile.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = PortalProfile.class)
 public class ModulePortalProfile extends BaseDSModulePortalProfile {
 
 	@Activate

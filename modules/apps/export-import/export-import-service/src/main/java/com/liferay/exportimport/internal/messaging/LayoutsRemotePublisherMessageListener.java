@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Farache
  * @author Daniel Kocsis
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"destination.name=" + DestinationNames.LAYOUTS_REMOTE_PUBLISHER,

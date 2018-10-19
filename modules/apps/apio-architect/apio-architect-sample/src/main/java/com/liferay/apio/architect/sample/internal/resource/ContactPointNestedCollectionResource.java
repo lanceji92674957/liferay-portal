@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Víctor Galán
  */
-@Component(service = NestedCollectionResource.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = NestedCollectionResource.class)
 public class ContactPointNestedCollectionResource
 	implements NestedCollectionResource
 		<ContactPoint, Long,

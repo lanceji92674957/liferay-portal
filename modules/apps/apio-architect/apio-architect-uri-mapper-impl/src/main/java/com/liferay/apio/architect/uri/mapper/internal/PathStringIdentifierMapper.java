@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Alejandro Hernández
  */
-@Component(service = PathIdentifierMapper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = PathIdentifierMapper.class)
 public class PathStringIdentifierMapper
 	implements PathIdentifierMapper<String> {
 

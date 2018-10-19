@@ -19,7 +19,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Cindy Li
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "server.manager.executor.path=/server/freemarker/debug-port",
 	service = Executor.class

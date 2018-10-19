@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = SharingNotificationUtil.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = SharingNotificationUtil.class)
 public class SharingNotificationUtil {
 
 	public String getNotificationMessage(

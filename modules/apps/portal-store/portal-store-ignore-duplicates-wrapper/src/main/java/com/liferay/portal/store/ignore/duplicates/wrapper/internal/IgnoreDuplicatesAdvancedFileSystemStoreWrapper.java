@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Roberto Díaz
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	enabled = false, immediate = true,
 	property = "store.type=com.liferay.portal.store.file.system.AdvancedFileSystemStore",
 	service = StoreWrapper.class

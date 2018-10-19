@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = PanelAppRegistry.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = PanelAppRegistry.class)
 public class PanelAppRegistry {
 
 	public PanelApp getFirstPanelApp(

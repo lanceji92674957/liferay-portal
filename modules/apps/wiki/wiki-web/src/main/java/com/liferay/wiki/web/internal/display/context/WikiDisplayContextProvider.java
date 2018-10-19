@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Iván Zaera
  * @author Sergio González
  */
-@Component(service = WikiDisplayContextProvider.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = WikiDisplayContextProvider.class)
 public class WikiDisplayContextProvider {
 
 	public WikiEditPageDisplayContext getWikiEditPageDisplayContext(

@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(service = KBArchiveFactory.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = KBArchiveFactory.class)
 public class KBArchiveFactory {
 
 	public KBArchive createKBArchive(long groupId, ZipReader zipReader)

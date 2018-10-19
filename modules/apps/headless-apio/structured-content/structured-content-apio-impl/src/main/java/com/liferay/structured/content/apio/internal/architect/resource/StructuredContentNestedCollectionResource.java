@@ -109,7 +109,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Javier Gamarra
  */
-@Component(immediate = true, service = NestedCollectionResource.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = NestedCollectionResource.class)
 public class StructuredContentNestedCollectionResource
 	implements NestedCollectionResource
 		<JournalArticleWrapper, Long, StructuredContentIdentifier, Long,

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Drew Brokke
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "model.class.name=com.liferay.portal.kernel.model.Role",
 	service = BrowsePortletProvider.class

@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = ImageStorage.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ImageStorage.class)
 public class ImageStorage {
 
 	public void delete(FileVersion fileVersion, String configurationUuid) {

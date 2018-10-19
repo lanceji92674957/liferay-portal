@@ -122,7 +122,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Douglas Wong
  * @author Mate Thurzo
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "model.class.name=com.liferay.portal.kernel.model.Portlet",
 	service = {ExportImportController.class, PortletExportController.class}

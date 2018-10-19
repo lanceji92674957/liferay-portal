@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Stian Sigvartsen
  */
-@Component(immediate = true, service = PortalSettingsFormContributor.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = PortalSettingsFormContributor.class)
 public class GooglePortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 

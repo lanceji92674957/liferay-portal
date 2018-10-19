@@ -58,7 +58,7 @@ import org.portletbridge.portlet.PortletBridgeServlet;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-web-proxy",

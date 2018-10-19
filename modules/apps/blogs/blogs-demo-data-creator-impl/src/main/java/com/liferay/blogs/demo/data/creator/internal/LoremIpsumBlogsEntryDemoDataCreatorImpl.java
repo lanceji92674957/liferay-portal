@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Hernández
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "source=lorem-ipsum", service = BlogsEntryDemoDataCreator.class
 )
 public class LoremIpsumBlogsEntryDemoDataCreatorImpl

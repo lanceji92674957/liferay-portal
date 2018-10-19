@@ -42,7 +42,7 @@ import org.slf4j.Logger;
 /**
  * @author Alejandro Hernández
  */
-@Component(service = ItemRouterManager.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ItemRouterManager.class)
 public class ItemRouterManagerImpl
 	extends ClassNameBaseManager<ItemRouter> implements ItemRouterManager {
 

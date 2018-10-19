@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "node.type=JOIN", service = NodeExporter.class
 )
 public class JoinNodeExporter extends BaseNodeExporter implements NodeExporter {

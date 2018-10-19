@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true, service = ModelResourcePermissionDefinition.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ModelResourcePermissionDefinition.class)
 public class BlogsEntryModelResourcePermissionDefinition
 	implements ModelResourcePermissionDefinition<BlogsEntry> {
 

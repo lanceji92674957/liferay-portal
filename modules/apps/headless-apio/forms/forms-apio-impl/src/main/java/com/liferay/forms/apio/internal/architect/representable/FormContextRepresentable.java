@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Paulo Cruz
  */
-@Component(immediate = true, service = Representable.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = Representable.class)
 public class FormContextRepresentable
 	implements Representable
 		<FormContextWrapper, String, FormContextIdentifier> {

@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Alejandro Tardín
  * @author Jürgen Kappler
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {"format=html", "html.tag.name=img"},
 	service = AttachmentElementHandler.class
 )

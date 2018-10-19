@@ -53,7 +53,7 @@ import org.w3c.dom.Element;
 /**
  * @author Javier Gamarra
  */
-@Component(service = JournalArticleContentHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = JournalArticleContentHelper.class)
 public class JournalArticleContentHelper {
 
 	public String createJournalArticleContent(

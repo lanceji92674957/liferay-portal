@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Raymond Augé
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {"javax.portlet.name=ALL", "service.ranking:Integer=-1"},
 	service = PortletDataHandler.class
 )

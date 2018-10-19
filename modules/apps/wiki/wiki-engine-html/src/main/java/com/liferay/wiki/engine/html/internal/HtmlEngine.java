@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  * @author Zsigmond Rab
  */
-@Component(service = WikiEngine.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = WikiEngine.class)
 public class HtmlEngine extends BaseWikiEngine {
 
 	@Override

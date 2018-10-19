@@ -45,7 +45,7 @@ import org.slf4j.Logger;
 /**
  * @author Alejandro Hernández
  */
-@Component(service = ReusableNestedCollectionRouterManager.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ReusableNestedCollectionRouterManager.class)
 public class ReusableNestedCollectionRouterManagerImpl
 	extends ClassNameBaseManager<ReusableNestedCollectionRouter>
 	implements ReusableNestedCollectionRouterManager {

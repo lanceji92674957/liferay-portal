@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Matthew Tambara
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	enabled = true, immediate = true,
 	property = {
 		"after-filter=Absolute Redirects Filter", "dispatcher=FORWARD",

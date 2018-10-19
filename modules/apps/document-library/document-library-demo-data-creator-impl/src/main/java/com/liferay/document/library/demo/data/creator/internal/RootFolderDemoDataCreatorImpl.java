@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Hernández
  */
-@Component(service = RootFolderDemoDataCreator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = RootFolderDemoDataCreator.class)
 public class RootFolderDemoDataCreatorImpl
 	extends BaseFolderDemoDataCreatorImpl implements RootFolderDemoDataCreator {
 

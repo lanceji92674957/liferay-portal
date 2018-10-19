@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Preston Crary
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "resource.name=" + PushNotificationsConstants.RESOURCE_NAME,
 	service = PortletResourcePermission.class

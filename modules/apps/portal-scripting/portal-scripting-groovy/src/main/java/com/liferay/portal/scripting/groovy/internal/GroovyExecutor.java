@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alberto Montero
  * @author Brian Wing Shun Chan
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "scripting.language=" + GroovyExecutor.LANGUAGE,
 	service = ScriptingExecutor.class

@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(service = IndicesOptionsTranslator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = IndicesOptionsTranslator.class)
 public class IndicesOptionsTranslatorImpl implements IndicesOptionsTranslator {
 
 	public IndicesOptions translate(

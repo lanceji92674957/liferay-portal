@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Drew Brokke
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "screen.navigation.entry.order:Integer=20",
 	service = ScreenNavigationEntry.class
 )

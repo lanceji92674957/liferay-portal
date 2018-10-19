@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera Avellón
  */
-@Component(service = AbsolutePortalURLBuilderFactory.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = AbsolutePortalURLBuilderFactory.class)
 public class AbsolutePortalURLBuilderFactoryImpl
 	implements AbsolutePortalURLBuilderFactory {
 

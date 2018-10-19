@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
  * @see    <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS">Cross-Origin Resource Sharing (CORS)</a>
  * @review
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"osgi.jaxrs.application.select=(liferay.apio.architect.application=true)",
 		"osgi.jaxrs.extension=true"

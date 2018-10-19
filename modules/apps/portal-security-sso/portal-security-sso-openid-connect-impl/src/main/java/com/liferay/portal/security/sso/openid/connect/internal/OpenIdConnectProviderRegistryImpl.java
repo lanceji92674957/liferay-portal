@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Thuong Dinh
  * @author Edward C. Han
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = Constants.SERVICE_PID + "=com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration",
 	service = {ManagedServiceFactory.class, OpenIdConnectProviderRegistry.class}

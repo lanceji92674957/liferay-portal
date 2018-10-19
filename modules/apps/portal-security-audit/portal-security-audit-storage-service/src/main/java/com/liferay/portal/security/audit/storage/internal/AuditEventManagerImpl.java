@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Greenwald
  */
-@Component(immediate = true, service = AuditEventManager.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = AuditEventManager.class)
 public class AuditEventManagerImpl implements AuditEventManager {
 
 	@Override

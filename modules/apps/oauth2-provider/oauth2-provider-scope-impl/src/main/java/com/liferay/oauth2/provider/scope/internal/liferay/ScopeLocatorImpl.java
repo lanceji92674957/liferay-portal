@@ -53,7 +53,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(immediate = true, service = ScopeLocator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ScopeLocator.class)
 public class ScopeLocatorImpl implements ScopeLocator {
 
 	@Override

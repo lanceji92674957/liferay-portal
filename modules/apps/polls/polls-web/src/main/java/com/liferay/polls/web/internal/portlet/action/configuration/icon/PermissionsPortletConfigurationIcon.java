@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Rafael Praxedes
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "javax.portlet.name=" + PollsPortletKeys.POLLS,
 	service = PortletConfigurationIcon.class
 )

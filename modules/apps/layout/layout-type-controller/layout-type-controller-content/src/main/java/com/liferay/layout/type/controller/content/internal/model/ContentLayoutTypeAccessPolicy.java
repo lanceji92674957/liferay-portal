@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jürgen Kappler
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "layout.type=" + ContentLayoutTypeControllerConstants.LAYOUT_TYPE_CONTENT,
 	service = LayoutTypeAccessPolicy.class

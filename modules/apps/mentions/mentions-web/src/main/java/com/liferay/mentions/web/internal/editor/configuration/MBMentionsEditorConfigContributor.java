@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Sergio González
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"editor.config.key=bodyEditor", "editor.config.key=replyMBEditor",
 		"editor.name=alloyeditor", "editor.name=alloyeditor_bbcode",

@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Leonardo Barros
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	factory = DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME, service = {}
 )
 public class SetValueFunction extends SetPropertyFunction<Object> {

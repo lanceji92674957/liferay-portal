@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Paulo Cruz
  */
-@Component(immediate = true, service = FetchLatestRecordHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = FetchLatestRecordHelper.class)
 public class FetchLatestRecordHelper {
 
 	public DDMFormInstanceRecord fetchLatestDraftRecord(

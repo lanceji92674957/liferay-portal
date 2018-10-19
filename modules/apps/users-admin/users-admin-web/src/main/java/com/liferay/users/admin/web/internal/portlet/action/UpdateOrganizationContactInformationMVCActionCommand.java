@@ -68,7 +68,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Samuel Trong Tran
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ORGANIZATIONS,

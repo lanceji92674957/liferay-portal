@@ -50,7 +50,7 @@ import org.osgi.service.http.runtime.HttpServiceRuntimeConstants;
 /**
  * @author Raymond Augé
  */
-@Component(immediate = true, service = {})
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = {})
 public class HttpAdapter {
 
 	@Activate

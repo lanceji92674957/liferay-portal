@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = Indexer.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = Indexer.class)
 public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 
 	public static final String CLASS_NAME = WikiNode.class.getName();

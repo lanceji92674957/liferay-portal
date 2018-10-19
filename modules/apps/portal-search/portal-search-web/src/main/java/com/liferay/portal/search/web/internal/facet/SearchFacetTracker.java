@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = SearchFacetTracker.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = SearchFacetTracker.class)
 public class SearchFacetTracker {
 
 	public List<SearchFacet> getSearchFacets() {

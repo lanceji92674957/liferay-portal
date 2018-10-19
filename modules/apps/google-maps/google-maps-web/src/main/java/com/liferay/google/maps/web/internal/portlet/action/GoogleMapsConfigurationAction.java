@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mark Wong
  * @author Peter Fellwock
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + GoogleMapsPortletKeys.GOOGLE_MAPS,
 	service = ConfigurationAction.class

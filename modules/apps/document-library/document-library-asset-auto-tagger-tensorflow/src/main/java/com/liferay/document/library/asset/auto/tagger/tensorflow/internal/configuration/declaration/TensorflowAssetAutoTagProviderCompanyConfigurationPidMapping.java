@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = ConfigurationPidMapping.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ConfigurationPidMapping.class)
 public class TensorflowAssetAutoTagProviderCompanyConfigurationPidMapping
 	implements ConfigurationPidMapping {
 

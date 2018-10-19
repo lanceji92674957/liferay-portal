@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Greenwald
  * @author Prathima Shreenath
  */
-@Component(service = {FiftyOneDegreesKnownDevices.class, KnownDevices.class})
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = {FiftyOneDegreesKnownDevices.class, KnownDevices.class})
 public class FiftyOneDegreesKnownDevices implements KnownDevices {
 
 	@Override

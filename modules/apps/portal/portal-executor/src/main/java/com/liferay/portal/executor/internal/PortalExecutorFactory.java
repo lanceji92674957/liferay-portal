@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Shuyang Zhou
  */
-@Component(service = PortalExecutorFactory.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = PortalExecutorFactory.class)
 public class PortalExecutorFactory {
 
 	public static final String DEFAULT_CONFIG_NAME = "default";

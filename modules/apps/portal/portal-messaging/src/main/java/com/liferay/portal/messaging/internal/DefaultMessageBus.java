@@ -59,7 +59,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Michael C. Han
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = Constants.SERVICE_PID + "=com.liferay.portal.messaging.configuration.DestinationWorkerConfiguration",
 	service = {ManagedServiceFactory.class, MessageBus.class}

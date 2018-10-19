@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  * @author Daniel Kocsis
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "model.class.name=com.liferay.calendar.model.CalendarNotificationTemplate",
 	service = {
 		CalendarNotificationTemplateExportImportContentProcessor.class,

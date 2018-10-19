@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DDMFormValidator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DDMFormValidator.class)
 public class DDMFormValidatorImpl implements DDMFormValidator {
 
 	@Override

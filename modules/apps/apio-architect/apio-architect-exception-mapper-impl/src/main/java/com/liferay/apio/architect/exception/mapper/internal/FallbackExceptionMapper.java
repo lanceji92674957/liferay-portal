@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Javier Gamarra
  */
-@Component(service = ExceptionMapper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ExceptionMapper.class)
 public class FallbackExceptionMapper implements ExceptionMapper<Exception> {
 
 	@Override

@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Javier Gamarra
  * @review
  */
-@Component(immediate = true, service = ReusableNestedCollectionRouter.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ReusableNestedCollectionRouter.class)
 public class AddressReusableNestedCollectionRouter
 	implements ReusableNestedCollectionRouter
 		<Address, Long, AddressIdentifier, ClassNameClassPK> {

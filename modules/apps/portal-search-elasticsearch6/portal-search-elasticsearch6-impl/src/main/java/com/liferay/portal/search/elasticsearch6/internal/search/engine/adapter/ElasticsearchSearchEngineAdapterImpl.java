@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dylan Rebelak
  */
-@Component(immediate = true, service = SearchEngineAdapter.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = SearchEngineAdapter.class)
 public class ElasticsearchSearchEngineAdapterImpl
 	implements SearchEngineAdapter {
 

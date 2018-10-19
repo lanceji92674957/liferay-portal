@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Shinn Lok
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"json.web.service.context.name=sync-web",

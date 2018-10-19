@@ -40,7 +40,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Roberto Díaz
  */
-@Component(service = ItemSelectorViewReturnTypeProviderHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ItemSelectorViewReturnTypeProviderHandler.class)
 public class ItemSelectorViewReturnTypeProviderHandlerImpl
 	implements ItemSelectorViewReturnTypeProviderHandler {
 

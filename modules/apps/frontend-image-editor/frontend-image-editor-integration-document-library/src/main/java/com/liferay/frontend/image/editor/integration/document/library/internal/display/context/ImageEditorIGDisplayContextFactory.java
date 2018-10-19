@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Ambrin Chaudhary
  */
-@Component(immediate = true, service = IGDisplayContextFactory.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = IGDisplayContextFactory.class)
 public class ImageEditorIGDisplayContextFactory
 	implements IGDisplayContextFactory {
 

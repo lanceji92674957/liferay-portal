@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = DDMExpressionFunctionTracker.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DDMExpressionFunctionTracker.class)
 public class DDMExpressionFunctionTrackerImpl
 	implements DDMExpressionFunctionTracker {
 

@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Shinn Lok
  */
-@Component(immediate = true, service = {})
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = {})
 public class SyncServiceConfigurationUtil {
 
 	public static String get(String key) {

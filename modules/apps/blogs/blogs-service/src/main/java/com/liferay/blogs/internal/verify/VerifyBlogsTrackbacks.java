@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Alexander Chow
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "verify.process.name=com.liferay.blogs.trackbacks",
 	service = VerifyProcess.class

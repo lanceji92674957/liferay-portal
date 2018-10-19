@@ -109,7 +109,7 @@ import org.osgi.service.component.annotations.Reference;
  * @see    com.liferay.journal.internal.exportimport.creation.strategy.JournalCreationStrategy
  * @see    PortletDataHandler
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "javax.portlet.name=" + JournalPortletKeys.JOURNAL,
 	service = PortletDataHandler.class
 )

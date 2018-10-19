@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(service = FlushIndexRequestExecutor.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = FlushIndexRequestExecutor.class)
 public class FlushIndexRequestExecutorImpl
 	implements FlushIndexRequestExecutor {
 

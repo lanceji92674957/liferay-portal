@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Roberto Díaz
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"item.selector.view.key=" + DLItemSelectorViewConstants.DL_FILE_ITEM_SELECTOR_VIEW_KEY,
 		"item.selector.view.order:Integer=100"

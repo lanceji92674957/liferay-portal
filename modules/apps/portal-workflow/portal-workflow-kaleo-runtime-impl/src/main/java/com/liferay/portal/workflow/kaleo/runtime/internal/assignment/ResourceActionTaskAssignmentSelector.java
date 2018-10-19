@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  * @author Eduardo Lundgren
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "assignee.class.name=com.liferay.portal.kernel.model.ResourceAction",
 	service = TaskAssignmentSelector.class

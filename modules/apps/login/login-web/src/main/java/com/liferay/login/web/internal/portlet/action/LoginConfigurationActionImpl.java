@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @author Julio Camarero
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"javax.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
 		"javax.portlet.name=" + LoginPortletKeys.LOGIN

@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mika Koivisto
  */
-@Component(service = ModelListener.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ModelListener.class)
 public class PasswordPolicyModelListener
 	extends BaseModelListener<PasswordPolicy> {
 

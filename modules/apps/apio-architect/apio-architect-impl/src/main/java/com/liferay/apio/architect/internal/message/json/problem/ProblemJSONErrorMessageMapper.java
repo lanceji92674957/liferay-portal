@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Alejandro Hernández
  */
-@Component(service = ErrorMessageMapper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ErrorMessageMapper.class)
 public class ProblemJSONErrorMessageMapper implements ErrorMessageMapper {
 
 	@Override

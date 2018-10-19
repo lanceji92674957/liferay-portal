@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Juergen Kappler
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "model.class.name=" + PortletConfigurationApplicationType.PortletConfiguration.CLASS_NAME,
 	service = ViewPortletProvider.class

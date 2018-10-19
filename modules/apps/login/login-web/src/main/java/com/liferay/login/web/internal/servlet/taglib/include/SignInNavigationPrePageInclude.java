@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Shuyang Zhou
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"login.web.navigation.position=pre", "service.ranking:Integer=100"

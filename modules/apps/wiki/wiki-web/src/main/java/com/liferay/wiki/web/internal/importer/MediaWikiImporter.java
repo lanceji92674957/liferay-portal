@@ -78,7 +78,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alvaro del Castillo
  * @author Jorge Ferrer
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {"importer=MediaWiki", "page=/wiki/import/mediawiki.jsp"},
 	service = WikiImporter.class
 )

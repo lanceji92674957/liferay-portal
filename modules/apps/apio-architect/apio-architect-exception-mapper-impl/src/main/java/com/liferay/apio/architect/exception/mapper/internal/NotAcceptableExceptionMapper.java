@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Alejandro Hernández
  */
-@Component(service = ExceptionMapper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ExceptionMapper.class)
 public class NotAcceptableExceptionMapper
 	extends WebApplicationExceptionMapper
 	implements ExceptionMapper<NotAcceptableException> {

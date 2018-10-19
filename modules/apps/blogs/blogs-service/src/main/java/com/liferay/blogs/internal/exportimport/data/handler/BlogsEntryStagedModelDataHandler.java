@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Zsolt Berentey
  * @author Roberto Díaz
  */
-@Component(immediate = true, service = StagedModelDataHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = StagedModelDataHandler.class)
 public class BlogsEntryStagedModelDataHandler
 	extends BaseStagedModelDataHandler<BlogsEntry> {
 

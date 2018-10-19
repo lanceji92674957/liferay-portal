@@ -70,7 +70,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Peter Shin
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "path=/knowledge_base/find_kb_article",
 	service = StrutsAction.class
 )

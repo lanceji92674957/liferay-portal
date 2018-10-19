@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mika Koivisto
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portal-security-service-access-policy-portlet",
 		"com.liferay.portlet.display-category=category.hidden",

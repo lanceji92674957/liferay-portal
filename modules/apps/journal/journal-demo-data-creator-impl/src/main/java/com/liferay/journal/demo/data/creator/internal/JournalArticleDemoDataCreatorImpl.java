@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(service = JournalArticleDemoDataCreator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = JournalArticleDemoDataCreator.class)
 public class JournalArticleDemoDataCreatorImpl
 	implements JournalArticleDemoDataCreator {
 

@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  * @author Michael C. Han
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"template.language=freemarker", "template.language=soy",

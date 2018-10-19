@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Hernández
  */
-@Component(service = EntryPointMessageMapperManager.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = EntryPointMessageMapperManager.class)
 public class EntryPointMessageMapperManagerImpl
 	extends MessageMapperBaseManager<EntryPointMessageMapper>
 	implements EntryPointMessageMapperManager {

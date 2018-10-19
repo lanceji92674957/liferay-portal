@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = XStreamConfigurator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = XStreamConfigurator.class)
 public class AssetListXStreamConfigurator implements XStreamConfigurator {
 
 	@Override

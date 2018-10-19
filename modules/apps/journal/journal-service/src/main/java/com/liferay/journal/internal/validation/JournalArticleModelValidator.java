@@ -88,7 +88,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mate Thurzo
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "model.class.name=com.liferay.journal.model.JournalArticle",
 	service = ModelValidator.class

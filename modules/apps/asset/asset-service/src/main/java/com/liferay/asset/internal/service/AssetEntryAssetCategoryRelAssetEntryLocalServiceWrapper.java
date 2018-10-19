@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = ServiceWrapper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ServiceWrapper.class)
 public class AssetEntryAssetCategoryRelAssetEntryLocalServiceWrapper
 	extends AssetEntryLocalServiceWrapper {
 

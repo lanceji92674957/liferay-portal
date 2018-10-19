@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  * @author Stian Sigvartsen
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + PortletKeys.FAST_LOGIN,

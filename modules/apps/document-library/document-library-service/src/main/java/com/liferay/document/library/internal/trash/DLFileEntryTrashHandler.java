@@ -67,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Manuel de la Peña
  * @author Zsolt Berentey
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 	service = TrashHandler.class
 )

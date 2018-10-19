@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(service = FriendlyURLResolver.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = FriendlyURLResolver.class)
 public class AssetDisplayPageFriendlyURLResolver
 	implements FriendlyURLResolver {
 

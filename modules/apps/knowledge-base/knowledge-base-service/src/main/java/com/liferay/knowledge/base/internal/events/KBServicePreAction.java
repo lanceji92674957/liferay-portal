@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Peter Shin
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "key=servlet.service.events.pre", service = LifecycleAction.class
 )
 public class KBServicePreAction extends Action {

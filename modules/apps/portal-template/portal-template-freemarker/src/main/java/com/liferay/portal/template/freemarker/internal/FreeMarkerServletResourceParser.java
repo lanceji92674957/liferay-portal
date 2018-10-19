@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mika Koivisto
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "lang.type=" + TemplateConstants.LANG_TYPE_FTL,
 	service = TemplateResourceParser.class
 )

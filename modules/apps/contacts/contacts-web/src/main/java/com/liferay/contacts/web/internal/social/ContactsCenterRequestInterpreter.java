@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Hai Yu
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "javax.portlet.name=" + ContactsPortletKeys.CONTACTS_CENTER,
 	service = SocialRequestInterpreter.class
 )

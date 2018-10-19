@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(service = EditorConfigContributor.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = EditorConfigContributor.class)
 public class ImageEditorConfigContributor extends BaseEditorConfigContributor {
 
 	@Override

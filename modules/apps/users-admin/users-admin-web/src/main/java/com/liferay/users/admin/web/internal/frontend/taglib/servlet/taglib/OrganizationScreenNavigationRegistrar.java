@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(service = {})
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = {})
 public class OrganizationScreenNavigationRegistrar {
 
 	@Activate

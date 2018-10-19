@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Jonathan Lee
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + MicroblogsPortletKeys.MICROBLOGS,
 	service = SocialActivityInterpreter.class

@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Ambrín Chaudhary
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "editor.name=alloyeditor_bbcode",
 	service = EditorConfigContributor.class
 )

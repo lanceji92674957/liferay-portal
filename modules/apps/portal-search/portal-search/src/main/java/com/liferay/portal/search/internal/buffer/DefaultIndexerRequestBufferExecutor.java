@@ -36,7 +36,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Michael C. Han
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "buffered.execution.mode=DEFAULT",
 	service = IndexerRequestBufferExecutor.class
 )

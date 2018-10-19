@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Samuel Kong
  */
-@Component(property = "path=/wiki/find_page", service = StrutsAction.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,property = "path=/wiki/find_page", service = StrutsAction.class)
 public class FindPageAction extends FindStrutsAction {
 
 	@Override

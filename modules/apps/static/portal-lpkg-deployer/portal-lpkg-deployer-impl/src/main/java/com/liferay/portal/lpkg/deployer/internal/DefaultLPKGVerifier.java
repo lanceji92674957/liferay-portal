@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Shuyang Zhou
  */
-@Component(immediate = true, service = LPKGVerifier.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = LPKGVerifier.class)
 public class DefaultLPKGVerifier implements LPKGVerifier {
 
 	@Activate

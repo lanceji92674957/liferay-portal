@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"editor.config.key=fragmenEntryLinkRichTextEditor",
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES

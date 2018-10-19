@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @author Peter Fellwock
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + WebFormPortletKeys.WEB_FORM,
 	service = ConfigurationAction.class

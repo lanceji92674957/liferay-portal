@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
-@Component(service = PageMessageMapper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = PageMessageMapper.class)
 public class HALPageMessageMapper<T> implements PageMessageMapper<T> {
 
 	@Override

@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = FormNavigatorEntryConfigurationHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = FormNavigatorEntryConfigurationHelper.class)
 public class FormNavigatorEntryConfigurationHelperImpl
 	implements FormNavigatorEntryConfigurationHelper {
 

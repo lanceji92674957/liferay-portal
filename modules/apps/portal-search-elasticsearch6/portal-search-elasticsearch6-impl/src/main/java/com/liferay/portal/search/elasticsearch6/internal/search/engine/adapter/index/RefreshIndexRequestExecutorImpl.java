@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(service = RefreshIndexRequestExecutor.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = RefreshIndexRequestExecutor.class)
 public class RefreshIndexRequestExecutorImpl
 	implements RefreshIndexRequestExecutor {
 

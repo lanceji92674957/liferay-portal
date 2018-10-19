@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mate Thurzo
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + JournalContentPortletKeys.JOURNAL_CONTENT,
 	service = ExportImportPortletPreferencesProcessor.class

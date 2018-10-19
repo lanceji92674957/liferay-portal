@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Akos Thurzo
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	enabled = false, immediate = true, service = UpgradeStepRegistrator.class
 )
 public class QuartzServiceUpgrade implements UpgradeStepRegistrator {

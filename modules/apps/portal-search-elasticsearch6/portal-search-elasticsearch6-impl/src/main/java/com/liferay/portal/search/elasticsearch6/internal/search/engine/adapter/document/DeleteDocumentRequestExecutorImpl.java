@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dylan Rebelak
  */
-@Component(immediate = true, service = DeleteDocumentRequestExecutor.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DeleteDocumentRequestExecutor.class)
 public class DeleteDocumentRequestExecutorImpl
 	implements DeleteDocumentRequestExecutor {
 

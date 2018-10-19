@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jorge Ferrer
  */
-@Component(service = ConvertProcess.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ConvertProcess.class)
 public class WikiCreoleConvertProcess extends BaseConvertProcess {
 
 	@Override

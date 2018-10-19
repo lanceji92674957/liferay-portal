@@ -35,7 +35,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = Object.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = Object.class)
 public class PortletPanelAppAdapterRegistry {
 
 	@Activate

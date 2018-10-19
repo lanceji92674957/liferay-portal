@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Roberto Díaz
  */
-@Component(service = KBArticleAttachmentKBUploadFileEntryHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = KBArticleAttachmentKBUploadFileEntryHandler.class)
 public class KBArticleAttachmentKBUploadFileEntryHandler
 	implements UploadFileEntryHandler {
 

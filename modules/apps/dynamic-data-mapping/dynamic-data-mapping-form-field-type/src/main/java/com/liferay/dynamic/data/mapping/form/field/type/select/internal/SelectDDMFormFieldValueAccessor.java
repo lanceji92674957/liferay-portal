@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Renato Rego
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "ddm.form.field.type.name=select",
 	service =
 		{DDMFormFieldValueAccessor.class, SelectDDMFormFieldValueAccessor.class}

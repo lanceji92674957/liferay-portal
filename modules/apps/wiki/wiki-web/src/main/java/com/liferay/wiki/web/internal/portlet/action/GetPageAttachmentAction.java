@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jorge Ferrer
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "path=/wiki/get_page_attachment", service = StrutsAction.class
 )
 public class GetPageAttachmentAction extends BaseStrutsAction {

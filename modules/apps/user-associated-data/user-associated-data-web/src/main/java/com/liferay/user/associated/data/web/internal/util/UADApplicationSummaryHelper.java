@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true, service = UADApplicationSummaryHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = UADApplicationSummaryHelper.class)
 public class UADApplicationSummaryHelper {
 
 	public SearchContainer<UADApplicationSummaryDisplay> createSearchContainer(

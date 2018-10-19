@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Ambrin Chaudhary
  */
-@Component(immediate = true, service = DLDisplayContextFactory.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DLDisplayContextFactory.class)
 public class ImageEditorDLDisplayContextFactory
 	implements DLDisplayContextFactory {
 

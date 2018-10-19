@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Alexander Chow
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "verify.process.name=com.liferay.bookmarks.service",
 	service = VerifyProcess.class

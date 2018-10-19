@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Hernández
  * @review
  */
-@Component(immediate = true, service = BlogSubscriptionModelService.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = BlogSubscriptionModelService.class)
 public class BlogSubscriptionModelService {
 
 	/**

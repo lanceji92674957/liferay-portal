@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  * @author Alejandro Tardín
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "adaptive.media.format=html",
 	service = ExportImportContentProcessor.class
 )

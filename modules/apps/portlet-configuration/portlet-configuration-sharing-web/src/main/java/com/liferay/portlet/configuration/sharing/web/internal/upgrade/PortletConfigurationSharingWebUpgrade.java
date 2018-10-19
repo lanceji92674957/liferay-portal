@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Peter Fellwock
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = UpgradeStepRegistrator.class)
 public class PortletConfigurationSharingWebUpgrade
 	implements UpgradeStepRegistrator {
 

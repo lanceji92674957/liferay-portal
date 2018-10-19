@@ -69,7 +69,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(service = ImporterFactory.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ImporterFactory.class)
 public class ImporterFactory {
 
 	public static final String RESOURCES_DIR =

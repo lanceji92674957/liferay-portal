@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DDMFormRuleConverter.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DDMFormRuleConverter.class)
 public class DDMFormRuleConverter {
 
 	public List<DDMFormRule> convert(

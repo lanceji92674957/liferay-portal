@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alexander Chow
  * @author Raymond Augé
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "lang.type=" + TemplateConstants.LANG_TYPE_VM,
 	service = TemplateResourceParser.class
 )

@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(service = PortalCapabilityLocator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = PortalCapabilityLocator.class)
 public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 
 	@Override

@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
 * @author Rafael Praxedes
 */
-@Component(factory = DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,factory = DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME)
 public class CalculateFunction extends SetPropertyFunction<String> {
 
 	@Override

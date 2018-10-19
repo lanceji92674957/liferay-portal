@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = AssetListExceptionRequestHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = AssetListExceptionRequestHandler.class)
 public class AssetListExceptionRequestHandler {
 
 	public void handlePortalException(

@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Alejandro Hernández
  */
-@Component(immediate = true, service = ExceptionMapper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ExceptionMapper.class)
 public class SecurityExceptionMapper
 	implements ExceptionMapper<SecurityException> {
 

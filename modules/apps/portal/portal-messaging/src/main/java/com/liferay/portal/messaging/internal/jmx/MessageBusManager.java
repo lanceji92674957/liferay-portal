@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"jmx.objectname=com.liferay.portal.messaging:classification=message_bus,name=MessageBusManager",

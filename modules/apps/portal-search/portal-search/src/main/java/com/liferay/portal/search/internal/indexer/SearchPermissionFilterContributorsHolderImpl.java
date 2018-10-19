@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author André de Oliveira
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, service = SearchPermissionFilterContributorsHolder.class
 )
 public class SearchPermissionFilterContributorsHolderImpl

@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = WikiPageUADTestHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = WikiPageUADTestHelper.class)
 public class WikiPageUADTestHelper {
 
 	public WikiPage addWikiPage(long userId) throws Exception {

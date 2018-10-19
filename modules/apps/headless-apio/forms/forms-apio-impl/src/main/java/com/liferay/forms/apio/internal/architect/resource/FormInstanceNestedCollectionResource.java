@@ -71,7 +71,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Victor Oliveira
  */
-@Component(immediate = true, service = NestedCollectionResource.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = NestedCollectionResource.class)
 public class FormInstanceNestedCollectionResource
 	implements NestedCollectionResource
 		<DDMFormInstance, Long, FormInstanceIdentifier, Long,

@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Julio Camarero
  * @review
  */
-@Component(service = ErrorMessageMapper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ErrorMessageMapper.class)
 public class HALErrorMessageMapper implements ErrorMessageMapper {
 
 	@Override

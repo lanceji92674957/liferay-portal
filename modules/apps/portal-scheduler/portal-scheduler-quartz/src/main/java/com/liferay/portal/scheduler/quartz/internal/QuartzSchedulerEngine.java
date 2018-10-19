@@ -82,7 +82,7 @@ import org.quartz.spi.OperableTrigger;
  * @author Tina Tian
  * @author Edward C. Han
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	enabled = false, immediate = true,
 	service = {QuartzSchedulerEngine.class, SchedulerEngine.class}
 )

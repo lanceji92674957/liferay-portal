@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = ImageBlogsUploadResponseHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ImageBlogsUploadResponseHandler.class)
 public class ImageBlogsUploadResponseHandler implements UploadResponseHandler {
 
 	@Override

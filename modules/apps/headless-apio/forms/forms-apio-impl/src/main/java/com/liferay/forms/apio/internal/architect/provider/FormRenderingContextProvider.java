@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Victor Oliveira
  */
-@Component(immediate = true, service = Provider.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = Provider.class)
 public class FormRenderingContextProvider
 	implements Provider<DDMFormRenderingContext> {
 

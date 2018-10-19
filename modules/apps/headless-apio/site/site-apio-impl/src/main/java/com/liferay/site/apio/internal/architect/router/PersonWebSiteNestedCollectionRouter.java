@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Eduardo Perez
  */
-@Component(immediate = true, service = NestedCollectionRouter.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = NestedCollectionRouter.class)
 public class PersonWebSiteNestedCollectionRouter
 	extends BaseUserAccountWebSiteNestedCollectionRouter<PersonIdentifier>
 	implements NestedCollectionRouter

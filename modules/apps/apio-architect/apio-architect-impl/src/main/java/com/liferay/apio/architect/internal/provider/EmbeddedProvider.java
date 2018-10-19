@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
-@Component(service = Provider.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = Provider.class)
 public class EmbeddedProvider implements Provider<Embedded> {
 
 	public Embedded createContext(HttpServletRequest httpServletRequest) {

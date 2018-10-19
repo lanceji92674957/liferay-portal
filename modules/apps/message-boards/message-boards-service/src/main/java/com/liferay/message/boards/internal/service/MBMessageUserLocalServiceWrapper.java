@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = ServiceWrapper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ServiceWrapper.class)
 public class MBMessageUserLocalServiceWrapper extends UserLocalServiceWrapper {
 
 	public MBMessageUserLocalServiceWrapper() {

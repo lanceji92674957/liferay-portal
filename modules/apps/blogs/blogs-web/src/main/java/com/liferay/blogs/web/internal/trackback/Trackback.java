@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alexander Chow
  * @author André de Oliveira
  */
-@Component(service = Trackback.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = Trackback.class)
 public class Trackback {
 
 	public void addTrackback(

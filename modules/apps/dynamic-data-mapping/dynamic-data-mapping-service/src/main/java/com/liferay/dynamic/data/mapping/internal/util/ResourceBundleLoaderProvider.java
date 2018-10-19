@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Jürgen Kappler
  */
-@Component(service = ResourceBundleLoaderProvider.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ResourceBundleLoaderProvider.class)
 public class ResourceBundleLoaderProvider {
 
 	public ResourceBundleLoader getResourceBundleLoader(

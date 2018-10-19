@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true, service = SelectedUserHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = SelectedUserHelper.class)
 public class SelectedUserHelper {
 
 	public User getSelectedUser(PortletRequest portletRequest)

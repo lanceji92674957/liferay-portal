@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eduardo Garcia
  */
-@Component(service = ItemSelectorCriterionHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ItemSelectorCriterionHandler.class)
 public class JournalItemSelectorCriterionHandler
 	extends BaseItemSelectorCriterionHandler<JournalItemSelectorCriterion> {
 

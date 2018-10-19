@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Stian Sigvartsen
  */
-@Component(service = ConfigurationBeanDeclaration.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ConfigurationBeanDeclaration.class)
 public class GoogleAuthorizationCompanyServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 

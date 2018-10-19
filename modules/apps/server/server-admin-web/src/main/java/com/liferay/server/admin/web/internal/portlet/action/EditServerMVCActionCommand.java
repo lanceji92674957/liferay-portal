@@ -96,7 +96,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shuyang Zhou
  * @author Philip Jones
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"javax.portlet.name=" + PortletKeys.SERVER_ADMIN,
 		"mvc.command.name=/server_admin/edit_server"

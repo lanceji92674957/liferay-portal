@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = ExpandoQueryContributor.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ExpandoQueryContributor.class)
 public class BaseIndexerExpandoQueryContributor
 	implements ExpandoQueryContributor {
 

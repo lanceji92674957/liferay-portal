@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Hernández
  */
-@Component(service = ErrorMessageMapperManager.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ErrorMessageMapperManager.class)
 public class ErrorMessageMapperManagerImpl
 	extends MessageMapperBaseManager<ErrorMessageMapper>
 	implements ErrorMessageMapperManager {

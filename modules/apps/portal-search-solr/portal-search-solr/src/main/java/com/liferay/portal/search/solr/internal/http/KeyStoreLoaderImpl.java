@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
  * @author László Csontos
  * @author André de Oliveira
  */
-@Component(immediate = true, service = KeyStoreLoader.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = KeyStoreLoader.class)
 public class KeyStoreLoaderImpl implements KeyStoreLoader {
 
 	@Override

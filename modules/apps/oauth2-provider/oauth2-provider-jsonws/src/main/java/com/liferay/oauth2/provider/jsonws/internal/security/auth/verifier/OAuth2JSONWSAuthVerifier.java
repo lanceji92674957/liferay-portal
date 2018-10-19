@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Tomas Polesovsky
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "auth.verifier.OAuth2JSONWSAuthVerifier.urls.includes=/api/jsonws/*",
 	service = AuthVerifier.class
 )

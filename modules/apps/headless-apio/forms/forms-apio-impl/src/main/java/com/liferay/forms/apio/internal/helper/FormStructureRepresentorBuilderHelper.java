@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Javier Gamarra
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, service = FormStructureRepresentorBuilderHelper.class
 )
 public class FormStructureRepresentorBuilderHelper {

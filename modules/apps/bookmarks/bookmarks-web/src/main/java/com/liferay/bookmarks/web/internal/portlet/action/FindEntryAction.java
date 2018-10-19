@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Juan Fernández
  * @author Sergio González
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "path=/bookmarks/find_entry", service = StrutsAction.class
 )
 public class FindEntryAction extends BaseStrutsAction {

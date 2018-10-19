@@ -19,7 +19,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Supritha Sundaram
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"auth.public.path=/portal/wedeploy/access_token",

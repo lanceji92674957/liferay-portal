@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Charles May
  * @author Drew Brokke
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-users-admin",

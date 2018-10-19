@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Supritha Sundaram
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"javax.portlet.name=" + WeDeployAuthPortletKeys.WEDEPLOY_AUTH,
 		"mvc.command.name=/wedeploy_auth/authorize_user"

@@ -51,7 +51,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Minhchau Dang
  * @author Samuel Ziemer
  */
-@Component(service = {})
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = {})
 public class AbortedMultipartUploadCleaner {
 
 	@Activate

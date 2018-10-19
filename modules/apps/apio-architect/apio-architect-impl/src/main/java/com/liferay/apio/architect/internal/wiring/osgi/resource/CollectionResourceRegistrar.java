@@ -41,7 +41,7 @@ import org.slf4j.Logger;
  *
  * @author Alejandro Hernández
  */
-@Component(immediate = true, service = {})
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = {})
 public class CollectionResourceRegistrar {
 
 	@Activate

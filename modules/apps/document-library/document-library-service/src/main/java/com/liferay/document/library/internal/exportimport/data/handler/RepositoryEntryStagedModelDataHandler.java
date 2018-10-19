@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mate Thurzo
  */
-@Component(immediate = true, service = StagedModelDataHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = StagedModelDataHandler.class)
 public class RepositoryEntryStagedModelDataHandler
 	extends BaseStagedModelDataHandler<RepositoryEntry> {
 

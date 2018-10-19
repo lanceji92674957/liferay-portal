@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = WorkflowValidator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = WorkflowValidator.class)
 public class DefaultWorkflowValidator implements WorkflowValidator {
 
 	@Override

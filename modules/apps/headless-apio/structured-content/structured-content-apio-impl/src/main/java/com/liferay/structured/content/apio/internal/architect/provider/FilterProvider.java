@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Cristina González
  */
-@Component(service = Provider.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = Provider.class)
 public class FilterProvider implements Provider<Filter> {
 
 	@Override

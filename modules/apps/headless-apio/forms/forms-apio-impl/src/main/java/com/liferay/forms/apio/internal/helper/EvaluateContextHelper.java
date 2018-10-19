@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Paulo Cruz
  */
-@Component(immediate = true, service = EvaluateContextHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = EvaluateContextHelper.class)
 public final class EvaluateContextHelper {
 
 	public FormContextWrapper evaluateContext(

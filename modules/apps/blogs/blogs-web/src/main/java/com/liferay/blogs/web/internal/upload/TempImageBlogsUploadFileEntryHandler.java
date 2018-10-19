@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = TempImageBlogsUploadFileEntryHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = TempImageBlogsUploadFileEntryHandler.class)
 public class TempImageBlogsUploadFileEntryHandler
 	extends ImageBlogsUploadFileEntryHandler {
 

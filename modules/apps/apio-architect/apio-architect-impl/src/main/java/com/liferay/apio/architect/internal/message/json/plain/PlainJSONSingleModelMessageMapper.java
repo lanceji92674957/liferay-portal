@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
-@Component(service = SingleModelMessageMapper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = SingleModelMessageMapper.class)
 public class PlainJSONSingleModelMessageMapper<T>
 	implements SingleModelMessageMapper<T> {
 

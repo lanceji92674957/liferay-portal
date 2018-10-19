@@ -57,7 +57,7 @@ import org.slf4j.Logger;
 /**
  * @author Alejandro Hernández
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	service = {
 		IdentifierClassManager.class, NameManager.class,
 		RepresentableManager.class

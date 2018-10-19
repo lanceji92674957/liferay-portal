@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Iván Zaera
  * @author Roberto Díaz
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "item.selector.view.key=" + WikiItemSelectorViewConstants.ITEM_SELECTOR_VIEW_KEY,
 	service = ItemSelectorView.class
 )

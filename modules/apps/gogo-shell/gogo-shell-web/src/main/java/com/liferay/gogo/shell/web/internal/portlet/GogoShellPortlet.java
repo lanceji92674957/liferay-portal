@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gregory Amerson
  * @author David Truong
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",

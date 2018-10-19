@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = PreFilterContributorHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = PreFilterContributorHelper.class)
 public class PreFilterContributorHelperImpl
 	implements PreFilterContributorHelper {
 

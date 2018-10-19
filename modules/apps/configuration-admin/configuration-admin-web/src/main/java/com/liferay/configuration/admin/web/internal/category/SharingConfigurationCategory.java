@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Adolfo Pérez
  */
-@Component(service = ConfigurationCategory.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ConfigurationCategory.class)
 public class SharingConfigurationCategory implements ConfigurationCategory {
 
 	@Override

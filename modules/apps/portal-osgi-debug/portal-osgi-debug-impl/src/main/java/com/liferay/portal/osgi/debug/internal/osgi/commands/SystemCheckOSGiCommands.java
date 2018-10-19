@@ -36,7 +36,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Tina Tian
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {"osgi.command.function=check", "osgi.command.scope=system"},
 	service = SystemCheckOSGiCommands.class

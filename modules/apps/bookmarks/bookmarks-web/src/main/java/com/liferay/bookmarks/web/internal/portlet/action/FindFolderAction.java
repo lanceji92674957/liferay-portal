@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alexander Chow
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "path=/bookmarks/find_folder", service = StrutsAction.class
 )
 public class FindFolderAction extends FindStrutsAction {

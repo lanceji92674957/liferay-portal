@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Julio Camarero
  * @author Peter Fellwock
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"javax.portlet.name=" + FlagsPortletKeys.FLAGS,
 		"mvc.command.name=/flags/edit_entry"

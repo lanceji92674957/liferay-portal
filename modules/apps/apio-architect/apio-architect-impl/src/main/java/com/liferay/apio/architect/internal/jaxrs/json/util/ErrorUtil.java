@@ -39,7 +39,7 @@ import org.slf4j.Logger;
  *
  * @author Alejandro Hernández
  */
-@Component(service = ErrorUtil.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ErrorUtil.class)
 public class ErrorUtil {
 
 	/**

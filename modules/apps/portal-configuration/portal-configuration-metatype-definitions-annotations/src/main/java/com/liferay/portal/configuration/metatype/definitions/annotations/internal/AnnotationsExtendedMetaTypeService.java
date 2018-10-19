@@ -25,7 +25,7 @@ import org.osgi.service.metatype.MetaTypeService;
 /**
  * @author Iván Zaera
  */
-@Component(service = ExtendedMetaTypeService.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ExtendedMetaTypeService.class)
 public class AnnotationsExtendedMetaTypeService
 	implements ExtendedMetaTypeService {
 

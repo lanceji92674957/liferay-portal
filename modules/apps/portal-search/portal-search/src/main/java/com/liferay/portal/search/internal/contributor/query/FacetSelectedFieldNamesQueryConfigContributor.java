@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "service.ranking:Integer=" + (DefaultSelectedFieldNamesQueryConfigContributor.RANKING - 1),
 	service = QueryConfigContributor.class

@@ -36,7 +36,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Mate Thurzo
  */
-@Component(immediate = true, service = {})
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = {})
 @ProviderType
 public class XStreamConfiguratorRegistryUtil {
 

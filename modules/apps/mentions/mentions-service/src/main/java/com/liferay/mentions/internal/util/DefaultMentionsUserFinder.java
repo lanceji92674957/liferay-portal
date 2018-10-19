@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(service = MentionsUserFinder.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = MentionsUserFinder.class)
 public class DefaultMentionsUserFinder implements MentionsUserFinder {
 
 	@Override

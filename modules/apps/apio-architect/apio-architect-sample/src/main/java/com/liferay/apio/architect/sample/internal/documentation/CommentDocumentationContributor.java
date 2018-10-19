@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Víctor Galán
  */
-@Component(service = CustomDocumentationContributor.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = CustomDocumentationContributor.class)
 public class CommentDocumentationContributor
 	implements CustomDocumentationContributor {
 

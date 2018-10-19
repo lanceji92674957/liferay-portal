@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Sergio González
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + JournalPortletKeys.JOURNAL,
 	service = AssetRendererFactory.class

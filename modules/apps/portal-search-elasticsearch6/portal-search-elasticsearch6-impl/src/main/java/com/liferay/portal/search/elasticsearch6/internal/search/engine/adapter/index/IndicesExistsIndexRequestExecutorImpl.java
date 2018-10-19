@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(service = IndicesExistsIndexRequestExecutor.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = IndicesExistsIndexRequestExecutor.class)
 public class IndicesExistsIndexRequestExecutorImpl
 	implements IndicesExistsIndexRequestExecutor {
 

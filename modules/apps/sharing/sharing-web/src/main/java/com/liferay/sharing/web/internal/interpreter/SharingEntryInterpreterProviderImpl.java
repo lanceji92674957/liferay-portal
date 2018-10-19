@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = SharingEntryInterpreterProvider.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = SharingEntryInterpreterProvider.class)
 public class SharingEntryInterpreterProviderImpl
 	implements SharingEntryInterpreterProvider {
 

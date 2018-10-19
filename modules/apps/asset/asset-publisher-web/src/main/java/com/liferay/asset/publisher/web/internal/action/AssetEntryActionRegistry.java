@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = AssetEntryActionRegistry.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = AssetEntryActionRegistry.class)
 public class AssetEntryActionRegistry {
 
 	public List<AssetEntryAction> getAssetEntryActions(String className) {

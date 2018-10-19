@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = DLUploadResponseHandler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = DLUploadResponseHandler.class)
 public class DLUploadResponseHandler implements UploadResponseHandler {
 
 	@Override

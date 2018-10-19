@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Daniel Kocsis
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "model.class.name=com.liferay.dynamic.data.mapping.storage.DDMFormValues",
 	service = {
 		DDMFormValuesExportImportContentProcessor.class,

@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcellus Tavares
  * @author Norbert Kocsis
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "node.type=FORK", service = NodeValidator.class
 )
 public class ForkNodeValidator extends BaseNodeValidator<Fork> {

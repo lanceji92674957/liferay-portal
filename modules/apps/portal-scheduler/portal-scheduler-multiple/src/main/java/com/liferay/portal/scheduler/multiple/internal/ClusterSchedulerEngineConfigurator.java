@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tina Tian
  */
-@Component(immediate = true, service = ClusterSchedulerEngineConfigurator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = ClusterSchedulerEngineConfigurator.class)
 public class ClusterSchedulerEngineConfigurator {
 
 	@Activate

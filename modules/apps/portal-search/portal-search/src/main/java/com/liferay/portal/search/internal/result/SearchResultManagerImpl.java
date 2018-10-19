@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Adolfo Pérez
  * @author André de Oliveira
  */
-@Component(immediate = true, service = SearchResultManager.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = SearchResultManager.class)
 public class SearchResultManagerImpl implements SearchResultManager {
 
 	@Reference(

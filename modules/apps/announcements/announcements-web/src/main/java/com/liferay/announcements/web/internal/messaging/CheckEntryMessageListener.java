@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Tina Tian
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	service = {
 		CheckEntryMessageListener.class,

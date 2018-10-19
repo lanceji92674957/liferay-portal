@@ -94,7 +94,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = AssetHelper.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = AssetHelper.class)
 public class AssetHelperImpl implements AssetHelper {
 
 	@Override

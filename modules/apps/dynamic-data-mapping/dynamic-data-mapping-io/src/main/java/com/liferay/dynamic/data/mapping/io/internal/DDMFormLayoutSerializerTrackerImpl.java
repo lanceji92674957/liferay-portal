@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = DDMFormLayoutSerializerTracker.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = DDMFormLayoutSerializerTracker.class)
 public class DDMFormLayoutSerializerTrackerImpl
 	implements DDMFormLayoutSerializerTracker {
 

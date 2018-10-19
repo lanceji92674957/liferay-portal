@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Mate Thurzo
  */
-@Component(immediate = true, service = RelationshipManager.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = RelationshipManager.class)
 public class RelationshipManagerImpl implements RelationshipManager {
 
 	@Override

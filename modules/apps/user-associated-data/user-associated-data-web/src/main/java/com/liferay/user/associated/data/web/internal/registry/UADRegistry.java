@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = UADRegistry.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = UADRegistry.class)
 public class UADRegistry {
 
 	public List<UADDisplay> getApplicationUADDisplays(String applicationKey) {

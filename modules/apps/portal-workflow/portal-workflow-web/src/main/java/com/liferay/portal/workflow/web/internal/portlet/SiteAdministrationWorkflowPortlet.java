@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Adam Brandizzi
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-workflow",

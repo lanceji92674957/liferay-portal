@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Roberto Díaz
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "service.ranking:Integer=1",
 	service = OrganizationMembershipPolicy.class
 )

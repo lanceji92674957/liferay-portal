@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Wade Cao
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = {
 		"javax.portlet.name=" + SearchAdminPortletKeys.SEARCH_ADMIN,
 		"mvc.command.name=/search_admin/edit"

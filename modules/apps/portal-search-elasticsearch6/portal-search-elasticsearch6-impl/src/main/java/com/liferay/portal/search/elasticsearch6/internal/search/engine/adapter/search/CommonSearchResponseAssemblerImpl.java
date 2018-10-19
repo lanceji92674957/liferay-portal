@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = CommonSearchResponseAssembler.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = CommonSearchResponseAssembler.class)
 public class CommonSearchResponseAssemblerImpl
 	implements CommonSearchResponseAssembler {
 

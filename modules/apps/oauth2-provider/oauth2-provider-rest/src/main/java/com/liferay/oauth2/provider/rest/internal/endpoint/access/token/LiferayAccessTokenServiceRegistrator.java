@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Tomas Polesovsky
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = {
 		"block.unsecure.requests=true", "can.support.public.clients=true",

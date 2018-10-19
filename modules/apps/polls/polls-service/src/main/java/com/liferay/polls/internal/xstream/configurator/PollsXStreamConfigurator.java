@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Mate Thurzo
  */
-@Component(immediate = true, service = XStreamConfigurator.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = XStreamConfigurator.class)
 public class PollsXStreamConfigurator implements XStreamConfigurator {
 
 	@Override

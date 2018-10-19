@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = BackgroundTaskManager.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = BackgroundTaskManager.class)
 public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 
 	@Override

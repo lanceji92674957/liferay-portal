@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	enabled = false, immediate = true,
 	property = {
 		"after-filter=Session Max Allowed Filter", "servlet-context-name=",

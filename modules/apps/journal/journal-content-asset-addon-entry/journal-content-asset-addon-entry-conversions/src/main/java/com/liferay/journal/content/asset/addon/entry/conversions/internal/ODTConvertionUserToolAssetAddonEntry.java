@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Julio Camarero
  */
-@Component(immediate = true, service = UserToolAssetAddonEntry.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = UserToolAssetAddonEntry.class)
 public class ODTConvertionUserToolAssetAddonEntry
 	extends BaseConvertionUserToolAssetAddonEntry
 	implements UserToolAssetAddonEntry {

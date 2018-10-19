@@ -116,7 +116,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Hugo Huijser
  * @author Tibor Lipusz
  */
-@Component(immediate = true, service = Indexer.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,immediate = true, service = Indexer.class)
 public class JournalArticleIndexer
 	extends BaseIndexer<JournalArticle> implements DDMStructureIndexer {
 

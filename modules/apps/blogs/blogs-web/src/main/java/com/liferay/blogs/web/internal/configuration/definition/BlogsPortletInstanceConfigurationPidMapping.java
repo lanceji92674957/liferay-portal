@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Sergio González
  */
-@Component(service = ConfigurationPidMapping.class)
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,service = ConfigurationPidMapping.class)
 public class BlogsPortletInstanceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 

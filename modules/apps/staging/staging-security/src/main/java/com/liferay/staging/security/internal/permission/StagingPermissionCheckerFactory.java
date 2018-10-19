@@ -31,7 +31,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Tomas Polesovsky
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true, property = "service.ranking:Integer=1000",
 	service = PermissionCheckerFactory.class
 )

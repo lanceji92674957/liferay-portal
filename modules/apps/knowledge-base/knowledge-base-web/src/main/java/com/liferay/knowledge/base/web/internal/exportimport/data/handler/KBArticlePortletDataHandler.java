@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sorin Pop
  * @author Tamas Molnar
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	property = "javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ARTICLE,
 	service = PortletDataHandler.class
 )

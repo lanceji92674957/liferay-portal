@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adam Brandizzi
  * @author André de Oliveira
  */
-@Component(
+@Component(configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.IGNORE,
 	immediate = true,
 	property = "javax.portlet.name=" + ModifiedFacetPortletKeys.MODIFIED_FACET,
 	service = PortletSharedSearchContributor.class
