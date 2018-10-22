@@ -199,13 +199,10 @@ public class ProxyTestUtil {
 				proxyMethod.getMethodName(), proxyMethod.getFunction());
 		}
 
-		private ProxyTestInvocationHandler() {
-			_proxyActions = new HashMap<>();
-			_results = new HashMap<>();
-		}
-
-		private final Map<String, List<Object[]>> _proxyActions;
-		private final Map<String, Function<Object[], Object>> _results;
+		private final Map<String, List<Object[]>> _proxyActions =
+			new HashMap<>();
+		private final Map<String, Function<Object[], Object>> _results =
+			new HashMap<>();
 
 	}
 
