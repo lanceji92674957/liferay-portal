@@ -27,15 +27,11 @@ import org.junit.Test;
 public class FallbackSettingsTest {
 
 	public FallbackSettingsTest() {
-		_settings = ProxyTestUtil.getProxy(Settings.class);
-
 		_fallbackKeys = new FallbackKeys();
 
 		_fallbackKeys.add("key1", "key2", "key3");
 		_fallbackKeys.add("key2", "key7");
 		_fallbackKeys.add("key3", "key5");
-
-		_fallbackSettings = new FallbackSettings(_settings, _fallbackKeys);
 	}
 
 	@Test
@@ -44,8 +40,8 @@ public class FallbackSettingsTest {
 
 		String[] mockValues = {"value"};
 
-		ProxyTestUtil.updateProxy(
-			_settings,
+		Settings settings = ProxyTestUtil.getProxy(
+			Settings.class,
 			ProxyTestUtil.getProxyMethod(
 				"getValues",
 				(Object[] args) -> {
@@ -56,29 +52,37 @@ public class FallbackSettingsTest {
 					return null;
 				}));
 
-		String[] values = _fallbackSettings.getValues("key1", defaultValues);
+		FallbackSettings fallbackSettings = new FallbackSettings(
+			settings, _fallbackKeys);
+
+		String[] values = fallbackSettings.getValues("key1", defaultValues);
 
 		Assert.assertArrayEquals(mockValues, values);
 
-		verifyHasSettingValue("getValues", "key1", "key2");
+		verifyHasSettingValue(settings, "getValues", "key1", "key2");
 	}
 
 	@Test
 	public void testGetValuesWhenUnconfigured() {
+		Settings settings = ProxyTestUtil.getProxy(Settings.class);
+
+		FallbackSettings fallbackSettings = new FallbackSettings(
+			settings, _fallbackKeys);
+
 		String[] defaultValues = {"default"};
 
-		String[] values = _fallbackSettings.getValues("key1", defaultValues);
+		String[] values = fallbackSettings.getValues("key1", defaultValues);
 
 		Assert.assertArrayEquals(defaultValues, values);
 
 		verifyNoSettingValue(
-			"getValues", defaultValues, "key1", "key2", "key3");
+			settings, "getValues", defaultValues, "key1", "key2", "key3");
 	}
 
 	@Test
 	public void testGetValueWhenConfigured() {
-		ProxyTestUtil.updateProxy(
-			_settings,
+		Settings settings = ProxyTestUtil.getProxy(
+			Settings.class,
 			ProxyTestUtil.getProxyMethod(
 				"getValue",
 				(Object[] args) -> {
@@ -89,25 +93,36 @@ public class FallbackSettingsTest {
 					return null;
 				}));
 
-		String value = _fallbackSettings.getValue("key1", "default");
+		FallbackSettings fallbackSettings = new FallbackSettings(
+			settings, _fallbackKeys);
+
+		String value = fallbackSettings.getValue("key1", "default");
 
 		Assert.assertEquals("value", value);
 
-		verifyHasSettingValue("getValue", "key1", "key2");
+		verifyHasSettingValue(settings, "getValue", "key1", "key2");
 	}
 
 	@Test
 	public void testGetValueWhenUnconfigured() {
-		String value = _fallbackSettings.getValue("key1", "default");
+		Settings settings = ProxyTestUtil.getProxy(Settings.class);
+
+		FallbackSettings fallbackSettings = new FallbackSettings(
+			settings, _fallbackKeys);
+
+		String value = fallbackSettings.getValue("key1", "default");
 
 		Assert.assertEquals("default", value);
 
-		verifyNoSettingValue("getValue", "default", "key1", "key2", "key3");
+		verifyNoSettingValue(
+			settings, "getValue", "default", "key1", "key2", "key3");
 	}
 
-	protected void verifyHasSettingValue(String methodName, String... keys) {
+	protected void verifyHasSettingValue(
+		Settings settings, String methodName, String... keys) {
+
 		List<Object[]> argumentsList = ProxyTestUtil.getArgumentsList(
-			_settings, methodName);
+			settings, methodName);
 
 		Assert.assertEquals(
 			argumentsList.toString(), keys.length, argumentsList.size());
@@ -119,10 +134,11 @@ public class FallbackSettingsTest {
 	}
 
 	protected void verifyNoSettingValue(
-		String methodName, Object defaultValue, String... keys) {
+		Settings settings, String methodName, Object defaultValue,
+		String... keys) {
 
 		List<Object[]> argumentsList = ProxyTestUtil.getArgumentsList(
-			_settings, methodName);
+			settings, methodName);
 
 		Assert.assertEquals(
 			argumentsList.toString(), keys.length + 1, argumentsList.size());
@@ -137,7 +153,5 @@ public class FallbackSettingsTest {
 	}
 
 	private final FallbackKeys _fallbackKeys;
-	private final FallbackSettings _fallbackSettings;
-	private final Settings _settings;
 
 }

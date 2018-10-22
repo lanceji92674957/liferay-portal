@@ -79,13 +79,6 @@ public class ProxyTestUtil {
 		return new ProxyMethod(methodName, function);
 	}
 
-	public static void updateProxy(Object proxy, ProxyMethod proxyMethod) {
-		ProxyTestInvocationHandler proxyTestInvocationHandler =
-			_getInvocationHandler(proxy);
-
-		proxyTestInvocationHandler.registerMethod(proxyMethod);
-	}
-
 	public static class ProxyMethod {
 
 		public Function<Object[], Object> getFunction() {
