@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.resource.ResourceRetriever;
 import com.liferay.portal.kernel.resource.manager.ResourceManager;
 import com.liferay.portal.kernel.test.ProxyTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.util.Map;
 import java.util.Properties;
@@ -80,7 +81,7 @@ public class PropertiesSettingsTest {
 
 		ResourceRetriever resourceRetriever = ProxyTestUtil.getProxy(
 			ResourceRetriever.class,
-			ProxyTestUtil.getProxyMethod(
+			new ObjectValuePair<>(
 				"getInputStream",
 				args -> new UnsyncByteArrayInputStream(
 					expectedValue.getBytes())));
@@ -89,7 +90,7 @@ public class PropertiesSettingsTest {
 			_mockLocationVariableResolver, "_resourceManager",
 			ProxyTestUtil.getProxy(
 				ResourceManager.class,
-				ProxyTestUtil.getProxyMethod(
+				new ObjectValuePair<>(
 					"getResourceRetriever",
 					args -> {
 						if ("multiple.txt".equals(args[0])) {
@@ -130,7 +131,7 @@ public class PropertiesSettingsTest {
 
 		ResourceRetriever resourceRetriever = ProxyTestUtil.getProxy(
 			ResourceRetriever.class,
-			ProxyTestUtil.getProxyMethod(
+			new ObjectValuePair<>(
 				"getInputStream",
 				args -> new UnsyncByteArrayInputStream(
 					expectedValue.getBytes())));
@@ -139,7 +140,7 @@ public class PropertiesSettingsTest {
 			_mockLocationVariableResolver, "_resourceManager",
 			ProxyTestUtil.getProxy(
 				ResourceManager.class,
-				ProxyTestUtil.getProxyMethod(
+				new ObjectValuePair<>(
 					"getResourceRetriever",
 					args -> {
 						if ("single.txt".equals(args[0])) {

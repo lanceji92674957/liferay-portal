@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.kernel.test.ProxyTestUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class FallbackSettingsTest {
 
 		Settings settings = ProxyTestUtil.getProxy(
 			Settings.class,
-			ProxyTestUtil.getProxyMethod(
+			new ObjectValuePair<>(
 				"getValues",
 				args -> {
 					if ("key2".equals(args[0]) && (null == args[1])) {
@@ -83,7 +84,7 @@ public class FallbackSettingsTest {
 	public void testGetValueWhenConfigured() {
 		Settings settings = ProxyTestUtil.getProxy(
 			Settings.class,
-			ProxyTestUtil.getProxyMethod(
+			new ObjectValuePair<>(
 				"getValue",
 				args -> {
 					if ("key2".equals(args[0]) && (null == args[1])) {

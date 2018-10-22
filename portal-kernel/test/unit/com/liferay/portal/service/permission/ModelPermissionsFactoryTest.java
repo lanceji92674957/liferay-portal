@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.ProxyTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -50,14 +51,14 @@ public class ModelPermissionsFactoryTest {
 			RoleLocalServiceUtil.class, "_service",
 			ProxyTestUtil.getProxy(
 				RoleLocalService.class,
-				ProxyTestUtil.getProxyMethod(
+				new ObjectValuePair<>(
 					"getRole",
 					args -> {
 						if (args.length == 2) {
 							if (RoleConstants.GUEST.equals(args[1])) {
 								return ProxyTestUtil.getProxy(
 									Role.class,
-									ProxyTestUtil.getProxyMethod(
+									new ObjectValuePair<>(
 										"getName",
 										arguments -> RoleConstants.GUEST));
 							}
@@ -66,7 +67,7 @@ public class ModelPermissionsFactoryTest {
 
 								return ProxyTestUtil.getProxy(
 									Role.class,
-									ProxyTestUtil.getProxyMethod(
+									new ObjectValuePair<>(
 										"getName",
 										arguments ->
 											RoleConstants.ORGANIZATION_USER));
@@ -74,7 +75,7 @@ public class ModelPermissionsFactoryTest {
 							else if (RoleConstants.POWER_USER.equals(args[1])) {
 								return ProxyTestUtil.getProxy(
 									Role.class,
-									ProxyTestUtil.getProxyMethod(
+									new ObjectValuePair<>(
 										"getName",
 										arguments -> RoleConstants.POWER_USER));
 							}
@@ -83,7 +84,7 @@ public class ModelPermissionsFactoryTest {
 
 								return ProxyTestUtil.getProxy(
 									Role.class,
-									ProxyTestUtil.getProxyMethod(
+									new ObjectValuePair<>(
 										"getName",
 										arguments ->
 											RoleConstants.SITE_MEMBER));
@@ -209,10 +210,10 @@ public class ModelPermissionsFactoryTest {
 			ResourceActionsUtil.class, "_resourceActions",
 			ProxyTestUtil.getProxy(
 				ResourceActions.class,
-				ProxyTestUtil.getProxyMethod(
+				new ObjectValuePair<>(
 					"getModelResourceGroupDefaultActions",
 					args -> Arrays.asList(ActionKeys.VIEW)),
-				ProxyTestUtil.getProxyMethod(
+				new ObjectValuePair<>(
 					"getModelResourceGuestDefaultActions",
 					args -> Arrays.asList(ActionKeys.VIEW))));
 

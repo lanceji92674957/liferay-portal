@@ -15,12 +15,14 @@
 package com.liferay.portal.kernel.test;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,18 +50,24 @@ public class ProxyTestUtil {
 	public static <T> T getProxy(Class<T> interfaceClass) {
 		return (T)ProxyUtil.newProxyInstance(
 			_getClassLoader(interfaceClass), new Class<?>[] {interfaceClass},
-			new ProxyTestInvocationHandler());
+			new ProxyTestInvocationHandler(Collections.emptyMap()));
 	}
 
 	public static <T> T getProxy(
-		Class<T> interfaceClass, ProxyMethod... proxyMethods) {
+		Class<T> interfaceClass,
+		ObjectValuePair
+			<String, Function<Object[], Object>>... objectValuePairs) {
+
+		HashMap<String, Function<Object[], Object>> functions = new HashMap<>();
+
+		for (ObjectValuePair<String, Function<Object[], Object>>
+				objectValuePair : objectValuePairs) {
+
+			functions.put(objectValuePair.getKey(), objectValuePair.getValue());
+		}
 
 		ProxyTestInvocationHandler proxyTestInvocationHandler =
-			new ProxyTestInvocationHandler();
-
-		for (ProxyMethod proxyMethod : proxyMethods) {
-			proxyTestInvocationHandler.registerMethod(proxyMethod);
-		}
+			new ProxyTestInvocationHandler(functions);
 
 		return (T)ProxyUtil.newProxyInstance(
 			_getClassLoader(interfaceClass), new Class<?>[] {interfaceClass},
@@ -71,34 +79,6 @@ public class ProxyTestUtil {
 			_getInvocationHandler(proxy);
 
 		return proxyTestInvocationHandler.getProxyActions();
-	}
-
-	public static ProxyMethod getProxyMethod(
-		String methodName, Function<Object[], Object> function) {
-
-		return new ProxyMethod(methodName, function);
-	}
-
-	public static class ProxyMethod {
-
-		public Function<Object[], Object> getFunction() {
-			return _function;
-		}
-
-		public String getMethodName() {
-			return _methodName;
-		}
-
-		private ProxyMethod(
-			String methodName, Function<Object[], Object> function) {
-
-			_methodName = methodName;
-			_function = function;
-		}
-
-		private final Function<Object[], Object> _function;
-		private final String _methodName;
-
 	}
 
 	private static ClassLoader _getClassLoader(Class<?> clazz) {
@@ -153,7 +133,7 @@ public class ProxyTestUtil {
 				argumentsList.add(args);
 			}
 
-			Function<Object[], Object> expectedFunction = _results.get(
+			Function<Object[], Object> expectedFunction = _functions.get(
 				methodName);
 
 			if (expectedFunction != null) {
@@ -187,14 +167,14 @@ public class ProxyTestUtil {
 			return method.getDefaultValue();
 		}
 
-		public void registerMethod(ProxyMethod proxyMethod) {
-			_results.put(
-				proxyMethod.getMethodName(), proxyMethod.getFunction());
+		private ProxyTestInvocationHandler(
+			Map<String, Function<Object[], Object>> functions) {
+
+			_functions = functions;
 		}
 
+		private final Map<String, Function<Object[], Object>> _functions;
 		private final Map<String, List<Object[]>> _proxyActions =
-			new HashMap<>();
-		private final Map<String, Function<Object[], Object>> _results =
 			new HashMap<>();
 
 	}

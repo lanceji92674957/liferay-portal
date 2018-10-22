@@ -119,7 +119,7 @@ public class DateUtilTest {
 			DateFormatFactoryUtil.class, "_fastDateFormatFactory",
 			ProxyTestUtil.getProxy(
 				DateFormatFactory.class,
-				ProxyTestUtil.getProxyMethod(
+				new ObjectValuePair<>(
 					"getSimpleDateFormat",
 					args -> {
 						if ((args[0] instanceof String) &&
@@ -147,7 +147,7 @@ public class DateUtilTest {
 			CalendarFactoryUtil.class, "_calendarFactory",
 			ProxyTestUtil.getProxy(
 				CalendarFactory.class,
-				ProxyTestUtil.getProxyMethod(
+				new ObjectValuePair<>(
 					"getCalendar", args -> new GregorianCalendar())));
 
 		Assert.assertEquals(
@@ -159,7 +159,7 @@ public class DateUtilTest {
 			DateFormatFactoryUtil.class, "_fastDateFormatFactory",
 			ProxyTestUtil.getProxy(
 				DateFormatFactory.class,
-				ProxyTestUtil.getProxyMethod(
+				new ObjectValuePair<>(
 					"getSimpleDateFormat",
 					args -> {
 						if ((args.length == 1) && pattern.equals(args[0])) {

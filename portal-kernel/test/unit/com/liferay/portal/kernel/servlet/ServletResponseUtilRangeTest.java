@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -57,7 +58,7 @@ public class ServletResponseUtilRangeTest {
 		PropsUtil.setProps(
 			ProxyTestUtil.getProxy(
 				Props.class,
-				ProxyTestUtil.getProxyMethod(
+				new ObjectValuePair<>(
 					"get",
 					args -> {
 						if ((args.length == 1) &&
@@ -159,13 +160,13 @@ public class ServletResponseUtilRangeTest {
 			FileUtil.class, "_file",
 			ProxyTestUtil.getProxy(
 				com.liferay.portal.kernel.util.File.class,
-				ProxyTestUtil.getProxyMethod(
+				new ObjectValuePair<>(
 					"createTempFile",
 					args -> new File(
 						StringBundler.concat(
 							SystemProperties.TMP_DIR, StringPool.SLASH,
 							GetterUtil.getString(System.currentTimeMillis())))),
-				ProxyTestUtil.getProxyMethod(
+				new ObjectValuePair<>(
 					"delete", args -> ((File)args[0]).delete())));
 
 		byte[] content = new byte[1000];
@@ -201,7 +202,7 @@ public class ServletResponseUtilRangeTest {
 	protected void setUpRange(String rangeHeader) {
 		_request = ProxyTestUtil.getProxy(
 			HttpServletRequest.class,
-			ProxyTestUtil.getProxyMethod(
+			new ObjectValuePair<>(
 				"getHeader",
 				args -> {
 					if (args[0] == HttpHeaders.RANGE) {

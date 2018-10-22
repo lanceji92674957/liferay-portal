@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.test.ProxyTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 
@@ -39,7 +40,7 @@ public class PortletCategoryComparatorTest {
 			LanguageUtil.class, "_language",
 			ProxyTestUtil.getProxy(
 				Language.class,
-				ProxyTestUtil.getProxyMethod(
+				new ObjectValuePair<>(
 					"get",
 					args -> {
 						if ((args.length == 2) &&

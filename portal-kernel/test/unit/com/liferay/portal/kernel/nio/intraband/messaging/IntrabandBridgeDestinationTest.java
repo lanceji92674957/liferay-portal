@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -83,7 +84,7 @@ public class IntrabandBridgeDestinationTest {
 
 		_messageBus = ProxyTestUtil.getProxy(
 			MessageBus.class,
-			ProxyTestUtil.getProxyMethod(
+			new ObjectValuePair<>(
 				"getDestination",
 				args -> {
 					if (args[0].equals(_baseDestination.getName())) {

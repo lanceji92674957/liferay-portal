@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.kernel.test.ProxyTestUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class PortletPreferencesSettingsTest {
 	public void setUp() {
 		_portletPreferences = ProxyTestUtil.getProxy(
 			PortletPreferences.class,
-			ProxyTestUtil.getProxyMethod(
+			new ObjectValuePair<>(
 				"getValue",
 				args -> {
 					if (_PORTLET_PREFERENCES_SINGLE_KEY.equals(args[0])) {
@@ -42,7 +43,7 @@ public class PortletPreferencesSettingsTest {
 
 					return null;
 				}),
-			ProxyTestUtil.getProxyMethod(
+			new ObjectValuePair<>(
 				"getValues",
 				args -> {
 					if (_PORTLET_PREFERENCES_MULTIPLE_KEY.equals(args[0])) {

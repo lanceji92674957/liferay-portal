@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.dao.db;
 
 import com.liferay.portal.kernel.test.ProxyTestUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Connection;
@@ -42,8 +43,7 @@ public class DBInspectorUnitTest {
 
 		DatabaseMetaData databaseMetaData = ProxyTestUtil.getProxy(
 			DatabaseMetaData.class,
-			ProxyTestUtil.getProxyMethod(
-				"storesLowerCaseIdentifiers", args -> true));
+			new ObjectValuePair<>("storesLowerCaseIdentifiers", args -> true));
 
 		dbInspector.normalizeName(_TABLE_NAME, databaseMetaData);
 
@@ -117,14 +117,12 @@ public class DBInspectorUnitTest {
 		throws SQLException {
 
 		ResultSet resultSet = ProxyTestUtil.getProxy(
-			ResultSet.class,
-			ProxyTestUtil.getProxyMethod("next", args -> hasColumn));
+			ResultSet.class, new ObjectValuePair<>("next", args -> hasColumn));
 
 		DatabaseMetaData databaseMetaData = ProxyTestUtil.getProxy(
 			DatabaseMetaData.class,
-			ProxyTestUtil.getProxyMethod(
-				"storesLowerCaseIdentifiers", args -> true),
-			ProxyTestUtil.getProxyMethod(
+			new ObjectValuePair<>("storesLowerCaseIdentifiers", args -> true),
+			new ObjectValuePair<>(
 				"getColumns",
 				args -> {
 					if (args[2].equals(StringUtil.toLowerCase(tableName)) &&
@@ -138,13 +136,12 @@ public class DBInspectorUnitTest {
 
 		_preparedStatement = ProxyTestUtil.getProxy(
 			PreparedStatement.class,
-			ProxyTestUtil.getProxyMethod("executeQuery", args -> resultSet));
+			new ObjectValuePair<>("executeQuery", args -> resultSet));
 
 		_connection = ProxyTestUtil.getProxy(
 			Connection.class,
-			ProxyTestUtil.getProxyMethod(
-				"getMetaData", args -> databaseMetaData),
-			ProxyTestUtil.getProxyMethod(
+			new ObjectValuePair<>("getMetaData", args -> databaseMetaData),
+			new ObjectValuePair<>(
 				"prepareStatement", args -> _preparedStatement));
 	}
 

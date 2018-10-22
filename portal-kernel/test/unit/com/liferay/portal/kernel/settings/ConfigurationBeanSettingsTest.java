@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.resource.ResourceRetriever;
 import com.liferay.portal.kernel.resource.manager.ResourceManager;
 import com.liferay.portal.kernel.test.ProxyTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -90,13 +91,13 @@ public class ConfigurationBeanSettingsTest {
 			_mockLocationVariableResolver, "_resourceManager",
 			ProxyTestUtil.getProxy(
 				ResourceManager.class,
-				ProxyTestUtil.getProxyMethod(
+				new ObjectValuePair<>(
 					"getResourceRetriever",
 					arguments -> {
 						if ("template.ftl".equals(arguments[0])) {
 							return ProxyTestUtil.getProxy(
 								ResourceRetriever.class,
-								ProxyTestUtil.getProxyMethod(
+								new ObjectValuePair<>(
 									"getInputStream",
 									args -> new UnsyncByteArrayInputStream(
 										expectedValue.getBytes())));

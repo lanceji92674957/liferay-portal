@@ -16,11 +16,13 @@ package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.kernel.test.ProxyTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 //import com.liferay.portal.util.FileImpl;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Collections;
 
 import java.util.List;
 
@@ -105,13 +107,13 @@ public class LocationVariableResolverTest {
 			_locationVariableResolver, "_settingsLocatorHelper",
 			ProxyTestUtil.getProxy(
 				SettingsLocatorHelper.class,
-				ProxyTestUtil.getProxyMethod(
+				new ObjectValuePair<>(
 					"getServerSettings",
 					arguments -> {
 						if ("com.liferay.portal".equals(arguments[0])) {
 							return ProxyTestUtil.getProxy(
 								Settings.class,
-								ProxyTestUtil.getProxyMethod(
+								new ObjectValuePair<>(
 									"getValue",
 									args -> {
 										if ("admin.email.from.address".equals(

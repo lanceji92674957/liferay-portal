@@ -15,6 +15,7 @@
 package com.liferay.portlet.social.util;
 
 import com.liferay.portal.kernel.test.ProxyTestUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -37,7 +38,7 @@ public class SocialCounterPeriodUtilTest {
 		PropsUtil.setProps(
 			ProxyTestUtil.getProxy(
 				Props.class,
-				ProxyTestUtil.getProxyMethod(
+				new ObjectValuePair<>(
 					"get",
 					args -> {
 						if ((args.length == 1) &&

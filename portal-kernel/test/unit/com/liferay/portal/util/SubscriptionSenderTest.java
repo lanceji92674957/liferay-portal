@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ProxyTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
@@ -44,11 +45,11 @@ public class SubscriptionSenderTest {
 			CompanyLocalServiceUtil.class, "_service",
 			ProxyTestUtil.getProxy(
 				CompanyLocalService.class,
-				ProxyTestUtil.getProxyMethod(
+				new ObjectValuePair<>(
 					"getCompany",
 					arguments -> ProxyTestUtil.getProxy(
 						Company.class,
-						ProxyTestUtil.getProxyMethod(
+						new ObjectValuePair<>(
 							"getPortalURL",
 							args -> {
 								if (args[0].equals(0L)) {
@@ -65,7 +66,7 @@ public class SubscriptionSenderTest {
 			GroupLocalServiceUtil.class, "_service",
 			ProxyTestUtil.getProxy(
 				GroupLocalService.class,
-				ProxyTestUtil.getProxyMethod(
+				new ObjectValuePair<>(
 					"getGroup",
 					arguments -> {
 						if ((arguments.length == 1) &&
