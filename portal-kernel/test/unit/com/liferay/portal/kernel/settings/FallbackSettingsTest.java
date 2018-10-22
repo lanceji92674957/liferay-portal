@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.settings;
 import com.liferay.portal.kernel.test.ProxyTestUtil;
 
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -107,10 +106,8 @@ public class FallbackSettingsTest {
 	}
 
 	protected void verifyHasSettingValue(String methodName, String... keys) {
-		Map<String, List<Object[]>> proxyActions =
-			ProxyTestUtil.getProxyActions(_settings);
-
-		List<Object[]> argumentsList = proxyActions.get(methodName);
+		List<Object[]> argumentsList = ProxyTestUtil.getArgumentsList(
+			_settings, methodName);
 
 		Assert.assertEquals(
 			argumentsList.toString(), keys.length, argumentsList.size());
@@ -124,10 +121,8 @@ public class FallbackSettingsTest {
 	protected void verifyNoSettingValue(
 		String methodName, Object defaultValue, String... keys) {
 
-		Map<String, List<Object[]>> proxyActions =
-			ProxyTestUtil.getProxyActions(_settings);
-
-		List<Object[]> argumentsList = proxyActions.get(methodName);
+		List<Object[]> argumentsList = ProxyTestUtil.getArgumentsList(
+			_settings, methodName);
 
 		Assert.assertEquals(
 			argumentsList.toString(), keys.length + 1, argumentsList.size());

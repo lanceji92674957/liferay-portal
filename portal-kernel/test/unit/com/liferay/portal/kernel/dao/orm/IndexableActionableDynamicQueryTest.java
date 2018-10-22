@@ -81,10 +81,8 @@ public class IndexableActionableDynamicQueryTest {
 	}
 
 	protected void verifyDocumentsUpdated(Document... documents) {
-		Map<String, List<Object[]>> proxyActions =
-			ProxyTestUtil.getProxyActions(indexWriterHelper);
-
-		List<Object[]> argumentsList = proxyActions.get("updateDocuments");
+		List<Object[]> argumentsList = ProxyTestUtil.getArgumentsList(
+			indexWriterHelper, "updateDocuments");
 
 		Assert.assertTrue(
 			argumentsList.toString(),

@@ -53,10 +53,8 @@ public class DBInspectorUnitTest {
 		Assert.assertNull(
 			proxyActions.toString(), proxyActions.get("getMetaData"));
 
-		proxyActions = ProxyTestUtil.getProxyActions(databaseMetaData);
-
-		List<Object[]> argumentsList = proxyActions.get(
-			"storesLowerCaseIdentifiers");
+		List<Object[]> argumentsList = ProxyTestUtil.getArgumentsList(
+			databaseMetaData, "storesLowerCaseIdentifiers");
 
 		Assert.assertTrue(
 			argumentsList.toString(), argumentsList.contains(null));

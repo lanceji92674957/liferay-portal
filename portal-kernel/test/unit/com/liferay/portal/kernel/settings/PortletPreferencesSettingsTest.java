@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.settings;
 import com.liferay.portal.kernel.test.ProxyTestUtil;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -118,10 +117,8 @@ public class PortletPreferencesSettingsTest {
 
 		_portletPreferencesSettings.setValue("key", "value");
 
-		Map<String, List<Object[]>> proxyActions =
-			ProxyTestUtil.getProxyActions(_portletPreferences);
-
-		List<Object[]> argumentsList = proxyActions.get("setValue");
+		List<Object[]> argumentsList = ProxyTestUtil.getArgumentsList(
+			_portletPreferences, "setValue");
 
 		Assert.assertTrue(
 			argumentsList.toString(),
@@ -136,10 +133,8 @@ public class PortletPreferencesSettingsTest {
 
 		_portletPreferencesSettings.setValues("key", values);
 
-		Map<String, List<Object[]>> proxyActions =
-			ProxyTestUtil.getProxyActions(_portletPreferences);
-
-		List<Object[]> argumentsList = proxyActions.get("setValues");
+		List<Object[]> argumentsList = ProxyTestUtil.getArgumentsList(
+			_portletPreferences, "setValues");
 
 		Assert.assertTrue(
 			argumentsList.toString(),
@@ -150,10 +145,8 @@ public class PortletPreferencesSettingsTest {
 	public void testStoreIsPerformedOnPortletPreferences() throws Exception {
 		_portletPreferencesSettings.store();
 
-		Map<String, List<Object[]>> proxyActions =
-			ProxyTestUtil.getProxyActions(_portletPreferences);
-
-		List<Object[]> argumentsList = proxyActions.get("store");
+		List<Object[]> argumentsList = ProxyTestUtil.getArgumentsList(
+			_portletPreferences, "store");
 
 		Assert.assertTrue(
 			argumentsList.toString(), argumentsList.contains(null));

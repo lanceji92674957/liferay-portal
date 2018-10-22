@@ -31,6 +31,14 @@ import java.util.function.Function;
  */
 public class ProxyTestUtil {
 
+	public static List<Object[]> getArgumentsList(
+		Object proxy, String methodName) {
+
+		Map<String, List<Object[]>> proxyActions = getProxyActions(proxy);
+
+		return proxyActions.get(methodName);
+	}
+
 	public static <T> T getDummyProxy(Class<T> clazz) {
 		return (T)ProxyUtil.newProxyInstance(
 			_getClassLoader(clazz), new Class<?>[] {clazz},

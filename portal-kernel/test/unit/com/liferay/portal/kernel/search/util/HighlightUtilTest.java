@@ -25,7 +25,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -54,10 +53,8 @@ public class HighlightUtilTest {
 
 		Assert.assertEquals(Collections.singleton(fieldValue), queryTerms);
 
-		Map<String, List<Object[]>> proxyActions =
-			ProxyTestUtil.getProxyActions(document);
-
-		List<Object[]> argumentsList = proxyActions.get("addText");
+		List<Object[]> argumentsList = ProxyTestUtil.getArgumentsList(
+			document, "addText");
 
 		Assert.assertTrue(
 			argumentsList.toString(),
