@@ -82,7 +82,7 @@ public class PropertiesSettingsTest {
 			ResourceRetriever.class,
 			ProxyTestUtil.getProxyMethod(
 				"getInputStream",
-				(Object[] args) -> new UnsyncByteArrayInputStream(
+				args -> new UnsyncByteArrayInputStream(
 					expectedValue.getBytes())));
 
 		ReflectionTestUtil.setFieldValue(
@@ -91,7 +91,7 @@ public class PropertiesSettingsTest {
 				ResourceManager.class,
 				ProxyTestUtil.getProxyMethod(
 					"getResourceRetriever",
-					(Object[] args) -> {
+					args -> {
 						if ("multiple.txt".equals(args[0])) {
 							return resourceRetriever;
 						}
@@ -132,7 +132,7 @@ public class PropertiesSettingsTest {
 			ResourceRetriever.class,
 			ProxyTestUtil.getProxyMethod(
 				"getInputStream",
-				(Object[] args) -> new UnsyncByteArrayInputStream(
+				args -> new UnsyncByteArrayInputStream(
 					expectedValue.getBytes())));
 
 		ReflectionTestUtil.setFieldValue(
@@ -141,7 +141,7 @@ public class PropertiesSettingsTest {
 				ResourceManager.class,
 				ProxyTestUtil.getProxyMethod(
 					"getResourceRetriever",
-					(Object[] args) -> {
+					args -> {
 						if ("single.txt".equals(args[0])) {
 							return resourceRetriever;
 						}

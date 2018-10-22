@@ -43,7 +43,7 @@ public class DBInspectorUnitTest {
 		DatabaseMetaData databaseMetaData = ProxyTestUtil.getProxy(
 			DatabaseMetaData.class,
 			ProxyTestUtil.getProxyMethod(
-				"storesLowerCaseIdentifiers", (Object[] args) -> true));
+				"storesLowerCaseIdentifiers", args -> true));
 
 		dbInspector.normalizeName(_TABLE_NAME, databaseMetaData);
 
@@ -118,15 +118,15 @@ public class DBInspectorUnitTest {
 
 		ResultSet resultSet = ProxyTestUtil.getProxy(
 			ResultSet.class,
-			ProxyTestUtil.getProxyMethod("next", (Object[] args) -> hasColumn));
+			ProxyTestUtil.getProxyMethod("next", args -> hasColumn));
 
 		DatabaseMetaData databaseMetaData = ProxyTestUtil.getProxy(
 			DatabaseMetaData.class,
 			ProxyTestUtil.getProxyMethod(
-				"storesLowerCaseIdentifiers", (Object[] args) -> true),
+				"storesLowerCaseIdentifiers", args -> true),
 			ProxyTestUtil.getProxyMethod(
 				"getColumns",
-				(Object[] args) -> {
+				args -> {
 					if (args[2].equals(StringUtil.toLowerCase(tableName)) &&
 						args[3].equals(columnName)) {
 
@@ -138,15 +138,14 @@ public class DBInspectorUnitTest {
 
 		_preparedStatement = ProxyTestUtil.getProxy(
 			PreparedStatement.class,
-			ProxyTestUtil.getProxyMethod(
-				"executeQuery", (Object[] args) -> resultSet));
+			ProxyTestUtil.getProxyMethod("executeQuery", args -> resultSet));
 
 		_connection = ProxyTestUtil.getProxy(
 			Connection.class,
 			ProxyTestUtil.getProxyMethod(
-				"getMetaData", (Object[] args) -> databaseMetaData),
+				"getMetaData", args -> databaseMetaData),
 			ProxyTestUtil.getProxyMethod(
-				"prepareStatement", (Object[] args) -> _preparedStatement));
+				"prepareStatement", args -> _preparedStatement));
 	}
 
 	private void _mockTableWithoutColumn(String tableName, String columnName)

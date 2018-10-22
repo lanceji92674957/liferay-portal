@@ -46,11 +46,11 @@ public class SubscriptionSenderTest {
 				CompanyLocalService.class,
 				ProxyTestUtil.getProxyMethod(
 					"getCompany",
-					(Object[] arguments) -> ProxyTestUtil.getProxy(
+					arguments -> ProxyTestUtil.getProxy(
 						Company.class,
 						ProxyTestUtil.getProxyMethod(
 							"getPortalURL",
-							(Object[] args) -> {
+							args -> {
 								if (args[0].equals(0L)) {
 									return "http://www.portal.com";
 								}
@@ -67,7 +67,7 @@ public class SubscriptionSenderTest {
 				GroupLocalService.class,
 				ProxyTestUtil.getProxyMethod(
 					"getGroup",
-					(Object[] arguments) -> {
+					arguments -> {
 						if ((arguments.length == 1) &&
 							arguments[0].equals(100L)) {
 

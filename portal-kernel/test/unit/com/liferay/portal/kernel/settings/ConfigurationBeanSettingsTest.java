@@ -92,15 +92,14 @@ public class ConfigurationBeanSettingsTest {
 				ResourceManager.class,
 				ProxyTestUtil.getProxyMethod(
 					"getResourceRetriever",
-					(Object[] arguments) -> {
+					arguments -> {
 						if ("template.ftl".equals(arguments[0])) {
 							return ProxyTestUtil.getProxy(
 								ResourceRetriever.class,
 								ProxyTestUtil.getProxyMethod(
 									"getInputStream",
-									(Object[] args) ->
-										new UnsyncByteArrayInputStream(
-											expectedValue.getBytes())));
+									args -> new UnsyncByteArrayInputStream(
+										expectedValue.getBytes())));
 						}
 
 						return null;

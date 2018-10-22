@@ -121,7 +121,7 @@ public class DateUtilTest {
 				DateFormatFactory.class,
 				ProxyTestUtil.getProxyMethod(
 					"getSimpleDateFormat",
-					(Object[] args) -> {
+					args -> {
 						if ((args[0] instanceof String) &&
 							(args[1] instanceof TimeZone)) {
 
@@ -148,8 +148,7 @@ public class DateUtilTest {
 			ProxyTestUtil.getProxy(
 				CalendarFactory.class,
 				ProxyTestUtil.getProxyMethod(
-					"getCalendar",
-					(Object[] args) -> new GregorianCalendar())));
+					"getCalendar", args -> new GregorianCalendar())));
 
 		Assert.assertEquals(
 			expected, DateUtil.getDaysBetween(date1, date2, null));
@@ -162,7 +161,7 @@ public class DateUtilTest {
 				DateFormatFactory.class,
 				ProxyTestUtil.getProxyMethod(
 					"getSimpleDateFormat",
-					(Object[] args) -> {
+					args -> {
 						if ((args.length == 1) && pattern.equals(args[0])) {
 							return new SimpleDateFormat(
 								(String)args[0], LocaleUtil.SPAIN);

@@ -42,7 +42,7 @@ public class LocaleUtilTest {
 				Language.class,
 				ProxyTestUtil.getProxyMethod(
 					"isAvailableLocale",
-					(Object[] args) -> {
+					args -> {
 						if (Locale.US.equals(args[0])) {
 							return true;
 						}

@@ -85,7 +85,7 @@ public class IntrabandBridgeDestinationTest {
 			MessageBus.class,
 			ProxyTestUtil.getProxyMethod(
 				"getDestination",
-				(Object[] args) -> {
+				args -> {
 					if (args[0].equals(_baseDestination.getName())) {
 						return _baseDestination;
 					}

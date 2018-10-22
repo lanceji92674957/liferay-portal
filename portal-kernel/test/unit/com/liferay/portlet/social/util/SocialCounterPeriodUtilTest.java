@@ -39,7 +39,7 @@ public class SocialCounterPeriodUtilTest {
 				Props.class,
 				ProxyTestUtil.getProxyMethod(
 					"get",
-					(Object[] args) -> {
+					args -> {
 						if ((args.length == 1) &&
 							PropsKeys.SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH.
 								equals(args[0])) {

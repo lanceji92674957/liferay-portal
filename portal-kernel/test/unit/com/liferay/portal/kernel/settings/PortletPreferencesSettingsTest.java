@@ -35,7 +35,7 @@ public class PortletPreferencesSettingsTest {
 			PortletPreferences.class,
 			ProxyTestUtil.getProxyMethod(
 				"getValue",
-				(Object[] args) -> {
+				args -> {
 					if (_PORTLET_PREFERENCES_SINGLE_KEY.equals(args[0])) {
 						return _PORTLET_PREFERENCES_SINGLE_VALUE;
 					}
@@ -44,7 +44,7 @@ public class PortletPreferencesSettingsTest {
 				}),
 			ProxyTestUtil.getProxyMethod(
 				"getValues",
-				(Object[] args) -> {
+				args -> {
 					if (_PORTLET_PREFERENCES_MULTIPLE_KEY.equals(args[0])) {
 						return _PORTLET_PREFERENCES_MULTIPLE_VALUES;
 					}

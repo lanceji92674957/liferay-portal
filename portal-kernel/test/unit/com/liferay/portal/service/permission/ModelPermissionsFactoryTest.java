@@ -52,15 +52,14 @@ public class ModelPermissionsFactoryTest {
 				RoleLocalService.class,
 				ProxyTestUtil.getProxyMethod(
 					"getRole",
-					(Object[] args) -> {
+					args -> {
 						if (args.length == 2) {
 							if (RoleConstants.GUEST.equals(args[1])) {
 								return ProxyTestUtil.getProxy(
 									Role.class,
 									ProxyTestUtil.getProxyMethod(
 										"getName",
-										(Object[] arguments) ->
-											RoleConstants.GUEST));
+										arguments -> RoleConstants.GUEST));
 							}
 							else if (RoleConstants.ORGANIZATION_USER.equals(
 										args[1])) {
@@ -69,7 +68,7 @@ public class ModelPermissionsFactoryTest {
 									Role.class,
 									ProxyTestUtil.getProxyMethod(
 										"getName",
-										(Object[] arguments) ->
+										arguments ->
 											RoleConstants.ORGANIZATION_USER));
 							}
 							else if (RoleConstants.POWER_USER.equals(args[1])) {
@@ -77,8 +76,7 @@ public class ModelPermissionsFactoryTest {
 									Role.class,
 									ProxyTestUtil.getProxyMethod(
 										"getName",
-										(Object[] arguments) ->
-											RoleConstants.POWER_USER));
+										arguments -> RoleConstants.POWER_USER));
 							}
 							else if (RoleConstants.SITE_MEMBER.equals(
 										args[1])) {
@@ -87,7 +85,7 @@ public class ModelPermissionsFactoryTest {
 									Role.class,
 									ProxyTestUtil.getProxyMethod(
 										"getName",
-										(Object[] arguments) ->
+										arguments ->
 											RoleConstants.SITE_MEMBER));
 							}
 						}
@@ -213,10 +211,10 @@ public class ModelPermissionsFactoryTest {
 				ResourceActions.class,
 				ProxyTestUtil.getProxyMethod(
 					"getModelResourceGroupDefaultActions",
-					(Object[] args) -> Arrays.asList(ActionKeys.VIEW)),
+					args -> Arrays.asList(ActionKeys.VIEW)),
 				ProxyTestUtil.getProxyMethod(
 					"getModelResourceGuestDefaultActions",
-					(Object[] args) -> Arrays.asList(ActionKeys.VIEW))));
+					args -> Arrays.asList(ActionKeys.VIEW))));
 
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
 			mockHttpServletRequest, className);

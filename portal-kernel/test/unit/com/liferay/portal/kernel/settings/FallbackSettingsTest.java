@@ -44,7 +44,7 @@ public class FallbackSettingsTest {
 			Settings.class,
 			ProxyTestUtil.getProxyMethod(
 				"getValues",
-				(Object[] args) -> {
+				args -> {
 					if ("key2".equals(args[0]) && (null == args[1])) {
 						return mockValues;
 					}
@@ -85,7 +85,7 @@ public class FallbackSettingsTest {
 			Settings.class,
 			ProxyTestUtil.getProxyMethod(
 				"getValue",
-				(Object[] args) -> {
+				args -> {
 					if ("key2".equals(args[0]) && (null == args[1])) {
 						return "value";
 					}

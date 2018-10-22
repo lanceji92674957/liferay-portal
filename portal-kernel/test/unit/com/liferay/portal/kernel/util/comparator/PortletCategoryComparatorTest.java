@@ -41,7 +41,7 @@ public class PortletCategoryComparatorTest {
 				Language.class,
 				ProxyTestUtil.getProxyMethod(
 					"get",
-					(Object[] args) -> {
+					args -> {
 						if ((args.length == 2) &&
 							LocaleUtil.SPAIN.equals(args[0])) {
 

@@ -107,13 +107,13 @@ public class LocationVariableResolverTest {
 				SettingsLocatorHelper.class,
 				ProxyTestUtil.getProxyMethod(
 					"getServerSettings",
-					(Object[] arguments) -> {
+					arguments -> {
 						if ("com.liferay.portal".equals(arguments[0])) {
 							return ProxyTestUtil.getProxy(
 								Settings.class,
 								ProxyTestUtil.getProxyMethod(
 									"getValue",
-									(Object[] args) -> {
+									args -> {
 										if ("admin.email.from.address".equals(
 												args[0])) {
 

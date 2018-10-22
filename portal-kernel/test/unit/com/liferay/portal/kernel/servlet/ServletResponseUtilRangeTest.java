@@ -59,7 +59,7 @@ public class ServletResponseUtilRangeTest {
 				Props.class,
 				ProxyTestUtil.getProxyMethod(
 					"get",
-					(Object[] args) -> {
+					args -> {
 						if ((args.length == 1) &&
 							PropsKeys.WEB_SERVER_SERVLET_MAX_RANGE_FIELDS.
 								equals(args[0])) {
@@ -161,12 +161,12 @@ public class ServletResponseUtilRangeTest {
 				com.liferay.portal.kernel.util.File.class,
 				ProxyTestUtil.getProxyMethod(
 					"createTempFile",
-					(Object[] args) -> new File(
+					args -> new File(
 						StringBundler.concat(
 							SystemProperties.TMP_DIR, StringPool.SLASH,
 							GetterUtil.getString(System.currentTimeMillis())))),
 				ProxyTestUtil.getProxyMethod(
-					"delete", (Object[] args) -> ((File)args[0]).delete())));
+					"delete", args -> ((File)args[0]).delete())));
 
 		byte[] content = new byte[1000];
 
@@ -203,7 +203,7 @@ public class ServletResponseUtilRangeTest {
 			HttpServletRequest.class,
 			ProxyTestUtil.getProxyMethod(
 				"getHeader",
-				(Object[] args) -> {
+				args -> {
 					if (args[0] == HttpHeaders.RANGE) {
 						return rangeHeader;
 					}
