@@ -39,19 +39,21 @@ public class ProxyTestUtil {
 		return proxyActions.get(methodName);
 	}
 
-	public static <T> T getDummyProxy(Class<T> clazz) {
+	public static <T> T getDummyProxy(Class<T> interfaceClass) {
 		return (T)ProxyUtil.newProxyInstance(
-			_getClassLoader(clazz), new Class<?>[] {clazz},
+			_getClassLoader(interfaceClass), new Class<?>[] {interfaceClass},
 			(proxy, method, args) -> method.getDefaultValue());
 	}
 
-	public static <T> T getProxy(Class<T> clazz) {
+	public static <T> T getProxy(Class<T> interfaceClass) {
 		return (T)ProxyUtil.newProxyInstance(
-			_getClassLoader(clazz), new Class<?>[] {clazz},
+			_getClassLoader(interfaceClass), new Class<?>[] {interfaceClass},
 			new ProxyTestInvocationHandler());
 	}
 
-	public static <T> T getProxy(Class<T> clazz, ProxyMethod... proxyMethods) {
+	public static <T> T getProxy(
+		Class<T> interfaceClass, ProxyMethod... proxyMethods) {
+
 		ProxyTestInvocationHandler proxyTestInvocationHandler =
 			new ProxyTestInvocationHandler();
 
@@ -60,7 +62,7 @@ public class ProxyTestUtil {
 		}
 
 		return (T)ProxyUtil.newProxyInstance(
-			_getClassLoader(clazz), new Class<?>[] {clazz},
+			_getClassLoader(interfaceClass), new Class<?>[] {interfaceClass},
 			proxyTestInvocationHandler);
 	}
 
