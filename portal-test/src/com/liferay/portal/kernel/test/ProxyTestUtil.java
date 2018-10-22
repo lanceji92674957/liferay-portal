@@ -22,7 +22,6 @@ import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,15 +34,12 @@ import org.junit.Assert;
  */
 public class ProxyTestUtil {
 
-	public static final List<ProxyAction> noINTERACTION =
-		Collections.emptyList();
-
 	public static void assertAction(
 		Object proxy, List<ProxyAction> expectedActions) {
 
 		List<ProxyAction> proxyActions = _fetchProxyActions(proxy);
 
-		if (expectedActions == noINTERACTION) {
+		if (expectedActions.isEmpty()) {
 			Assert.assertTrue(proxyActions.isEmpty());
 		}
 

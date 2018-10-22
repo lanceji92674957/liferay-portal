@@ -23,6 +23,7 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -88,8 +89,7 @@ public class IndexableActionableDynamicQueryTest {
 	}
 
 	protected void verifyNoDocumentsUpdated() {
-		ProxyTestUtil.assertAction(
-			indexWriterHelper, ProxyTestUtil.noINTERACTION);
+		ProxyTestUtil.assertAction(indexWriterHelper, Collections.emptyList());
 	}
 
 	protected Document document1;
