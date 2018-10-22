@@ -37,13 +37,7 @@ public class ProxyTestUtil {
 	public static void assertAction(
 		Object proxy, List<ProxyAction> expectedActions) {
 
-		List<ProxyAction> proxyActions = _fetchProxyActions(proxy);
-
-		if (expectedActions.isEmpty()) {
-			Assert.assertTrue(proxyActions.isEmpty());
-		}
-
-		Assert.assertTrue(proxyActions.equals(expectedActions));
+		Assert.assertEquals(expectedActions, _fetchProxyActions(proxy));
 	}
 
 	public static boolean containsAction(
