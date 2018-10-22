@@ -27,23 +27,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.junit.Assert;
-
 /**
  * @author Lance Ji
  */
 public class ProxyTestUtil {
 
-	public static void assertAction(
-		Object proxy, List<ProxyAction> expectedActions) {
-
-		Assert.assertEquals(expectedActions, _fetchProxyActions(proxy));
-	}
-
 	public static boolean containsAction(
 		Object proxy, ProxyAction... expectedActions) {
 
-		List<ProxyAction> proxyActions = _fetchProxyActions(proxy);
+		List<ProxyAction> proxyActions = fetchProxyActions(proxy);
 
 		int length = expectedActions.length;
 
@@ -64,6 +56,13 @@ public class ProxyTestUtil {
 		}
 
 		return false;
+	}
+
+	public static List<ProxyAction> fetchProxyActions(Object proxy) {
+		ProxyTestInvocationHandler proxyTestInvocationHandler =
+			_getInvocationHandler(proxy);
+
+		return proxyTestInvocationHandler.getProxyActions();
 	}
 
 	public static <T> T getDummyProxy(Class<T> clazz) {
@@ -176,13 +175,6 @@ public class ProxyTestUtil {
 		private final Function<Object[], Object> _function;
 		private final String _methodName;
 
-	}
-
-	private static List<ProxyAction> _fetchProxyActions(Object proxy) {
-		ProxyTestInvocationHandler proxyTestInvocationHandler =
-			_getInvocationHandler(proxy);
-
-		return proxyTestInvocationHandler.getProxyActions();
 	}
 
 	private static ClassLoader _getClassLoader(Class<?> clazz) {

@@ -107,10 +107,9 @@ public class FallbackSettingsTest {
 	}
 
 	protected void verifyHasSettingValue(String methodName, String... keys) {
-		List<ProxyTestUtil.ProxyAction> proxyActions =
-			_getNoDefaultValueActions(methodName, keys);
-
-		ProxyTestUtil.assertAction(_settings, proxyActions);
+		Assert.assertEquals(
+			_getNoDefaultValueActions(methodName, keys),
+			ProxyTestUtil.fetchProxyActions(_settings));
 	}
 
 	protected void verifyNoSettingValue(
@@ -123,7 +122,8 @@ public class FallbackSettingsTest {
 			ProxyTestUtil.getProxyAction(
 				methodName, new Object[] {keys[0], defaultValue}));
 
-		ProxyTestUtil.assertAction(_settings, proxyActions);
+		Assert.assertEquals(
+			proxyActions, ProxyTestUtil.fetchProxyActions(_settings));
 	}
 
 	private List<ProxyTestUtil.ProxyAction> _getNoDefaultValueActions(
