@@ -24,6 +24,7 @@ import com.liferay.registry.RegistryUtil;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -80,19 +81,19 @@ public class IndexableActionableDynamicQueryTest {
 	}
 
 	protected void verifyDocumentsUpdated(Document... documents) {
-		List<ProxyTestUtil.ProxyAction> proxyActions =
+		Map<String, List<Object[]>> proxyActions =
 			ProxyTestUtil.getProxyActions(indexWriterHelper);
 
+		List<Object[]> argumentsList = proxyActions.get("updateDocuments");
+
 		Assert.assertTrue(
-			proxyActions.toString(),
-			proxyActions.contains(
-				ProxyTestUtil.getProxyAction(
-					"updateDocuments",
-					new Object[] {null, 0L, Arrays.asList(documents), false})));
+			argumentsList.toString(),
+			argumentsList.contains(
+				new Object[] {null, 0L, Arrays.asList(documents), false}));
 	}
 
 	protected void verifyNoDocumentsUpdated() {
-		List<ProxyTestUtil.ProxyAction> proxyActions =
+		Map<String, List<Object[]>> proxyActions =
 			ProxyTestUtil.getProxyActions(indexWriterHelper);
 
 		Assert.assertTrue(proxyActions.toString(), proxyActions.isEmpty());

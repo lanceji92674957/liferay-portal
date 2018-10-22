@@ -24,6 +24,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -46,21 +47,19 @@ public class DBInspectorUnitTest {
 
 		dbInspector.normalizeName(_TABLE_NAME, databaseMetaData);
 
-		List<ProxyTestUtil.ProxyAction> proxyActions =
+		Map<String, List<Object[]>> proxyActions =
 			ProxyTestUtil.getProxyActions(_connection);
 
-		Assert.assertFalse(
-			proxyActions.toString(),
-			proxyActions.contains(
-				ProxyTestUtil.getProxyAction("getMetaData", null)));
+		Assert.assertNull(
+			proxyActions.toString(), proxyActions.get("getMetaData"));
 
 		proxyActions = ProxyTestUtil.getProxyActions(databaseMetaData);
 
+		List<Object[]> argumentsList = proxyActions.get(
+			"storesLowerCaseIdentifiers");
+
 		Assert.assertTrue(
-			proxyActions.toString(),
-			proxyActions.contains(
-				ProxyTestUtil.getProxyAction(
-					"storesLowerCaseIdentifiers", null)));
+			argumentsList.toString(), argumentsList.contains(null));
 	}
 
 	@Test
@@ -102,13 +101,11 @@ public class DBInspectorUnitTest {
 
 		dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME);
 
-		List<ProxyTestUtil.ProxyAction> proxyActions =
+		Map<String, List<Object[]>> proxyActions =
 			ProxyTestUtil.getProxyActions(_preparedStatement);
 
-		Assert.assertFalse(
-			proxyActions.toString(),
-			proxyActions.contains(
-				ProxyTestUtil.getProxyAction("executeQuery", null)));
+		Assert.assertNull(
+			proxyActions.toString(), proxyActions.get("executeQuery"));
 	}
 
 	private void _mockTableWithColumn(String tableName, String columnName)

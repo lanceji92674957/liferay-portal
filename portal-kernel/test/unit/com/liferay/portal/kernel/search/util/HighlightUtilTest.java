@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -53,17 +54,17 @@ public class HighlightUtilTest {
 
 		Assert.assertEquals(Collections.singleton(fieldValue), queryTerms);
 
-		List<ProxyTestUtil.ProxyAction> proxyActions =
+		Map<String, List<Object[]>> proxyActions =
 			ProxyTestUtil.getProxyActions(document);
 
+		List<Object[]> argumentsList = proxyActions.get("addText");
+
 		Assert.assertTrue(
-			proxyActions.toString(),
-			proxyActions.contains(
-				ProxyTestUtil.getProxyAction(
-					"addText",
-					new Object[] {
-						"snippet_".concat(snippetFieldName), fieldValue
-					})));
+			argumentsList.toString(),
+			argumentsList.contains(
+				new Object[] {
+					"snippet_".concat(snippetFieldName), fieldValue
+				}));
 	}
 
 	@Test

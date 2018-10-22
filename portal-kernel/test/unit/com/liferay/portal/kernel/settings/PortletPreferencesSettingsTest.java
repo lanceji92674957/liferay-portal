@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.settings;
 import com.liferay.portal.kernel.test.ProxyTestUtil;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -117,14 +118,14 @@ public class PortletPreferencesSettingsTest {
 
 		_portletPreferencesSettings.setValue("key", "value");
 
-		List<ProxyTestUtil.ProxyAction> proxyActions =
+		Map<String, List<Object[]>> proxyActions =
 			ProxyTestUtil.getProxyActions(_portletPreferences);
 
+		List<Object[]> argumentsList = proxyActions.get("setValue");
+
 		Assert.assertTrue(
-			proxyActions.toString(),
-			proxyActions.contains(
-				ProxyTestUtil.getProxyAction(
-					"setValue", new Object[] {"key", "value"})));
+			argumentsList.toString(),
+			argumentsList.contains(new Object[] {"key", "value"}));
 	}
 
 	@Test
@@ -135,26 +136,27 @@ public class PortletPreferencesSettingsTest {
 
 		_portletPreferencesSettings.setValues("key", values);
 
-		List<ProxyTestUtil.ProxyAction> proxyActions =
+		Map<String, List<Object[]>> proxyActions =
 			ProxyTestUtil.getProxyActions(_portletPreferences);
 
+		List<Object[]> argumentsList = proxyActions.get("setValues");
+
 		Assert.assertTrue(
-			proxyActions.toString(),
-			proxyActions.contains(
-				ProxyTestUtil.getProxyAction(
-					"setValues", new Object[] {"key", values})));
+			argumentsList.toString(),
+			argumentsList.contains(new Object[] {"key", values}));
 	}
 
 	@Test
 	public void testStoreIsPerformedOnPortletPreferences() throws Exception {
 		_portletPreferencesSettings.store();
 
-		List<ProxyTestUtil.ProxyAction> proxyActions =
+		Map<String, List<Object[]>> proxyActions =
 			ProxyTestUtil.getProxyActions(_portletPreferences);
 
+		List<Object[]> argumentsList = proxyActions.get("store");
+
 		Assert.assertTrue(
-			proxyActions.toString(),
-			proxyActions.contains(ProxyTestUtil.getProxyAction("store", null)));
+			argumentsList.toString(), argumentsList.contains(null));
 	}
 
 	private static final String _DEFAULT_SETTINGS_MULTIPLE_KEY = "defaultKeys";

@@ -21,7 +21,6 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,13 +56,7 @@ public class ProxyTestUtil {
 			proxyTestInvocationHandler);
 	}
 
-	public static ProxyAction getProxyAction(
-		String methodName, Object[] arguments) {
-
-		return new ProxyAction(methodName, arguments);
-	}
-
-	public static List<ProxyAction> getProxyActions(Object proxy) {
+	public static Map<String, List<Object[]>> getProxyActions(Object proxy) {
 		ProxyTestInvocationHandler proxyTestInvocationHandler =
 			_getInvocationHandler(proxy);
 
@@ -83,50 +76,6 @@ public class ProxyTestUtil {
 		for (ProxyMethod proxyMethod : proxyMethods) {
 			proxyTestInvocationHandler.registerMethod(proxyMethod);
 		}
-	}
-
-	public static class ProxyAction {
-
-		@Override
-		public boolean equals(Object object) {
-			if (this == object) {
-				return true;
-			}
-
-			if ((object == null) || (getClass() != object.getClass())) {
-				return false;
-			}
-
-			ProxyAction proxyAction = (ProxyAction)object;
-
-			if (!_methodName.equals(proxyAction._methodName)) {
-				return false;
-			}
-
-			return Arrays.deepEquals(_arguments, proxyAction._arguments);
-		}
-
-		public Object[] getArguments() {
-			return _arguments;
-		}
-
-		public String getMethodName() {
-			return _methodName;
-		}
-
-		@Override
-		public int hashCode() {
-			return Arrays.hashCode(_arguments) ^ _methodName.hashCode();
-		}
-
-		private ProxyAction(String methodName, Object[] arguments) {
-			_methodName = methodName;
-			_arguments = arguments;
-		}
-
-		private final Object[] _arguments;
-		private final String _methodName;
-
 	}
 
 	public static class ProxyMethod {
@@ -177,7 +126,7 @@ public class ProxyTestUtil {
 	private static class ProxyTestInvocationHandler
 		implements InvocationHandler {
 
-		public List<ProxyAction> getProxyActions() {
+		public Map<String, List<Object[]>> getProxyActions() {
 			return _proxyActions;
 		}
 
@@ -192,7 +141,15 @@ public class ProxyTestUtil {
 			}
 
 			if (!"toString".equals(methodName)) {
-				_proxyActions.add(new ProxyAction(methodName, args));
+				List<Object[]> argumentsList = _proxyActions.get(methodName);
+
+				if (argumentsList == null) {
+					argumentsList = new ArrayList<>();
+
+					_proxyActions.put(methodName, argumentsList);
+				}
+
+				argumentsList.add(args);
 			}
 
 			Function<Object[], Object> expectedFunction = _results.get(
@@ -235,11 +192,11 @@ public class ProxyTestUtil {
 		}
 
 		private ProxyTestInvocationHandler() {
-			_proxyActions = new ArrayList<>();
+			_proxyActions = new HashMap<>();
 			_results = new HashMap<>();
 		}
 
-		private final List<ProxyAction> _proxyActions;
+		private final Map<String, List<Object[]>> _proxyActions;
 		private final Map<String, Function<Object[], Object>> _results;
 
 	}

@@ -16,8 +16,8 @@ package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.kernel.test.ProxyTestUtil;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -107,37 +107,38 @@ public class FallbackSettingsTest {
 	}
 
 	protected void verifyHasSettingValue(String methodName, String... keys) {
+		Map<String, List<Object[]>> proxyActions =
+			ProxyTestUtil.getProxyActions(_settings);
+
+		List<Object[]> argumentsList = proxyActions.get(methodName);
+
 		Assert.assertEquals(
-			_getNoDefaultValueActions(methodName, keys),
-			ProxyTestUtil.getProxyActions(_settings));
+			argumentsList.toString(), keys.length, argumentsList.size());
+
+		for (int i = 0; i < keys.length; i++) {
+			Assert.assertArrayEquals(
+				new Object[] {keys[i], null}, argumentsList.get(i));
+		}
 	}
 
 	protected void verifyNoSettingValue(
 		String methodName, Object defaultValue, String... keys) {
 
-		List<ProxyTestUtil.ProxyAction> proxyActions =
-			_getNoDefaultValueActions(methodName, keys);
+		Map<String, List<Object[]>> proxyActions =
+			ProxyTestUtil.getProxyActions(_settings);
 
-		proxyActions.add(
-			ProxyTestUtil.getProxyAction(
-				methodName, new Object[] {keys[0], defaultValue}));
+		List<Object[]> argumentsList = proxyActions.get(methodName);
 
 		Assert.assertEquals(
-			proxyActions, ProxyTestUtil.getProxyActions(_settings));
-	}
+			argumentsList.toString(), keys.length + 1, argumentsList.size());
 
-	private List<ProxyTestUtil.ProxyAction> _getNoDefaultValueActions(
-		String methodName, String... keys) {
+		Assert.assertArrayEquals(
+			new Object[] {keys[0], defaultValue}, argumentsList.get(0));
 
-		List<ProxyTestUtil.ProxyAction> proxyActions = new ArrayList<>();
-
-		for (String key : keys) {
-			proxyActions.add(
-				ProxyTestUtil.getProxyAction(
-					methodName, new Object[] {key, null}));
+		for (int i = 1; i < keys.length; i++) {
+			Assert.assertArrayEquals(
+				new Object[] {keys[i], null}, argumentsList.get(i));
 		}
-
-		return proxyActions;
 	}
 
 	private final FallbackKeys _fallbackKeys;
