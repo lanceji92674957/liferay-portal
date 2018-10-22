@@ -32,32 +32,6 @@ import java.util.function.Function;
  */
 public class ProxyTestUtil {
 
-	public static boolean containsAction(
-		Object proxy, ProxyAction... expectedActions) {
-
-		List<ProxyAction> proxyActions = getProxyActions(proxy);
-
-		int length = expectedActions.length;
-
-		if (proxyActions.size() < length) {
-			return false;
-		}
-
-		int index = 0;
-
-		for (ProxyAction proxyAction : proxyActions) {
-			if (proxyAction.equals(expectedActions[index])) {
-				index++;
-			}
-		}
-
-		if (index == length) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public static <T> T getDummyProxy(Class<T> clazz) {
 		return (T)ProxyUtil.newProxyInstance(
 			_getClassLoader(clazz), new Class<?>[] {clazz},

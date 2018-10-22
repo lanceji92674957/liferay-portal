@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -52,9 +53,12 @@ public class HighlightUtilTest {
 
 		Assert.assertEquals(Collections.singleton(fieldValue), queryTerms);
 
+		List<ProxyTestUtil.ProxyAction> proxyActions =
+			ProxyTestUtil.getProxyActions(document);
+
 		Assert.assertTrue(
-			ProxyTestUtil.containsAction(
-				document,
+			proxyActions.toString(),
+			proxyActions.contains(
 				ProxyTestUtil.getProxyAction(
 					"addText",
 					new Object[] {

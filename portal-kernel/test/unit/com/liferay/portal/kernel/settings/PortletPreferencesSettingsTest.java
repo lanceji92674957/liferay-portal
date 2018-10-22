@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.kernel.test.ProxyTestUtil;
 
+import java.util.List;
+
 import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
@@ -115,9 +117,12 @@ public class PortletPreferencesSettingsTest {
 
 		_portletPreferencesSettings.setValue("key", "value");
 
+		List<ProxyTestUtil.ProxyAction> proxyActions =
+			ProxyTestUtil.getProxyActions(_portletPreferences);
+
 		Assert.assertTrue(
-			ProxyTestUtil.containsAction(
-				_portletPreferences,
+			proxyActions.toString(),
+			proxyActions.contains(
 				ProxyTestUtil.getProxyAction(
 					"setValue", new Object[] {"key", "value"})));
 	}
@@ -130,9 +135,12 @@ public class PortletPreferencesSettingsTest {
 
 		_portletPreferencesSettings.setValues("key", values);
 
+		List<ProxyTestUtil.ProxyAction> proxyActions =
+			ProxyTestUtil.getProxyActions(_portletPreferences);
+
 		Assert.assertTrue(
-			ProxyTestUtil.containsAction(
-				_portletPreferences,
+			proxyActions.toString(),
+			proxyActions.contains(
 				ProxyTestUtil.getProxyAction(
 					"setValues", new Object[] {"key", values})));
 	}
@@ -141,10 +149,12 @@ public class PortletPreferencesSettingsTest {
 	public void testStoreIsPerformedOnPortletPreferences() throws Exception {
 		_portletPreferencesSettings.store();
 
+		List<ProxyTestUtil.ProxyAction> proxyActions =
+			ProxyTestUtil.getProxyActions(_portletPreferences);
+
 		Assert.assertTrue(
-			ProxyTestUtil.containsAction(
-				_portletPreferences,
-				ProxyTestUtil.getProxyAction("store", null)));
+			proxyActions.toString(),
+			proxyActions.contains(ProxyTestUtil.getProxyAction("store", null)));
 	}
 
 	private static final String _DEFAULT_SETTINGS_MULTIPLE_KEY = "defaultKeys";

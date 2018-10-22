@@ -23,6 +23,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -44,14 +46,19 @@ public class DBInspectorUnitTest {
 
 		dbInspector.normalizeName(_TABLE_NAME, databaseMetaData);
 
+		List<ProxyTestUtil.ProxyAction> proxyActions =
+			ProxyTestUtil.getProxyActions(_connection);
+
 		Assert.assertFalse(
-			ProxyTestUtil.containsAction(
-				_connection,
+			proxyActions.toString(),
+			proxyActions.contains(
 				ProxyTestUtil.getProxyAction("getMetaData", null)));
 
+		proxyActions = ProxyTestUtil.getProxyActions(databaseMetaData);
+
 		Assert.assertTrue(
-			ProxyTestUtil.containsAction(
-				databaseMetaData,
+			proxyActions.toString(),
+			proxyActions.contains(
 				ProxyTestUtil.getProxyAction(
 					"storesLowerCaseIdentifiers", null)));
 	}
@@ -95,9 +102,12 @@ public class DBInspectorUnitTest {
 
 		dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME);
 
+		List<ProxyTestUtil.ProxyAction> proxyActions =
+			ProxyTestUtil.getProxyActions(_preparedStatement);
+
 		Assert.assertFalse(
-			ProxyTestUtil.containsAction(
-				_preparedStatement,
+			proxyActions.toString(),
+			proxyActions.contains(
 				ProxyTestUtil.getProxyAction("executeQuery", null)));
 	}
 
