@@ -35,7 +35,7 @@ public class ProxyTestUtil {
 	public static boolean containsAction(
 		Object proxy, ProxyAction... expectedActions) {
 
-		List<ProxyAction> proxyActions = fetchProxyActions(proxy);
+		List<ProxyAction> proxyActions = getProxyActions(proxy);
 
 		int length = expectedActions.length;
 
@@ -56,13 +56,6 @@ public class ProxyTestUtil {
 		}
 
 		return false;
-	}
-
-	public static List<ProxyAction> fetchProxyActions(Object proxy) {
-		ProxyTestInvocationHandler proxyTestInvocationHandler =
-			_getInvocationHandler(proxy);
-
-		return proxyTestInvocationHandler.getProxyActions();
 	}
 
 	public static <T> T getDummyProxy(Class<T> clazz) {
@@ -94,6 +87,13 @@ public class ProxyTestUtil {
 		String methodName, Object[] arguments) {
 
 		return new ProxyAction(methodName, arguments);
+	}
+
+	public static List<ProxyAction> getProxyActions(Object proxy) {
+		ProxyTestInvocationHandler proxyTestInvocationHandler =
+			_getInvocationHandler(proxy);
+
+		return proxyTestInvocationHandler.getProxyActions();
 	}
 
 	public static ProxyMethod getProxyMethod(

@@ -90,7 +90,7 @@ public class IndexableActionableDynamicQueryTest {
 
 	protected void verifyNoDocumentsUpdated() {
 		List<ProxyTestUtil.ProxyAction> proxyActions =
-			ProxyTestUtil.fetchProxyActions(indexWriterHelper);
+			ProxyTestUtil.getProxyActions(indexWriterHelper);
 
 		Assert.assertTrue(proxyActions.toString(), proxyActions.isEmpty());
 	}
