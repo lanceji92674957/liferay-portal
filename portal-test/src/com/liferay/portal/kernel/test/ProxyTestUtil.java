@@ -22,7 +22,6 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,12 +44,6 @@ public class ProxyTestUtil {
 		return (T)ProxyUtil.newProxyInstance(
 			_getClassLoader(interfaceClass), new Class<?>[] {interfaceClass},
 			(proxy, method, args) -> method.getDefaultValue());
-	}
-
-	public static <T> T getProxy(Class<T> interfaceClass) {
-		return (T)ProxyUtil.newProxyInstance(
-			_getClassLoader(interfaceClass), new Class<?>[] {interfaceClass},
-			new ProxyTestInvocationHandler(Collections.emptyMap()));
 	}
 
 	public static <T> T getProxy(
