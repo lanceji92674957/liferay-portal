@@ -53,46 +53,10 @@ public class ModelPermissionsFactoryTest {
 				RoleLocalService.class,
 				new ObjectValuePair<>(
 					"getRole",
-					args -> {
-						if (args.length == 2) {
-							if (RoleConstants.GUEST.equals(args[1])) {
-								return ProxyTestUtil.getProxy(
-									Role.class,
-									new ObjectValuePair<>(
-										"getName",
-										arguments -> RoleConstants.GUEST));
-							}
-							else if (RoleConstants.ORGANIZATION_USER.equals(
-										args[1])) {
-
-								return ProxyTestUtil.getProxy(
-									Role.class,
-									new ObjectValuePair<>(
-										"getName",
-										arguments ->
-											RoleConstants.ORGANIZATION_USER));
-							}
-							else if (RoleConstants.POWER_USER.equals(args[1])) {
-								return ProxyTestUtil.getProxy(
-									Role.class,
-									new ObjectValuePair<>(
-										"getName",
-										arguments -> RoleConstants.POWER_USER));
-							}
-							else if (RoleConstants.SITE_MEMBER.equals(
-										args[1])) {
-
-								return ProxyTestUtil.getProxy(
-									Role.class,
-									new ObjectValuePair<>(
-										"getName",
-										arguments ->
-											RoleConstants.SITE_MEMBER));
-							}
-						}
-
-						return null;
-					})));
+					args -> ProxyTestUtil.getProxy(
+						Role.class,
+						new ObjectValuePair<>(
+							"getName", arguments -> args[1])))));
 	}
 
 	@Test

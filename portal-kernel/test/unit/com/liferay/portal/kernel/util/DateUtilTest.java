@@ -22,7 +22,6 @@ import java.text.SimpleDateFormat;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.TimeZone;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -121,15 +120,7 @@ public class DateUtilTest {
 				DateFormatFactory.class,
 				new ObjectValuePair<>(
 					"getSimpleDateFormat",
-					args -> {
-						if ((args[0] instanceof String) &&
-							(args[1] instanceof TimeZone)) {
-
-							return new TestSimpleDateFormat((String)args[0]);
-						}
-
-						return null;
-					})));
+					args -> new TestSimpleDateFormat((String)args[0]))));
 
 		DateFormat utcDateFormat = DateUtil.getUTCFormat("19721223");
 
@@ -161,14 +152,8 @@ public class DateUtilTest {
 				DateFormatFactory.class,
 				new ObjectValuePair<>(
 					"getSimpleDateFormat",
-					args -> {
-						if ((args.length == 1) && pattern.equals(args[0])) {
-							return new SimpleDateFormat(
-								(String)args[0], LocaleUtil.SPAIN);
-						}
-
-						return null;
-					})));
+					args -> new SimpleDateFormat(
+						(String)args[0], LocaleUtil.SPAIN))));
 
 		DateFormat dateFormat = DateUtil.getISOFormat(text);
 
