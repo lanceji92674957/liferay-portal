@@ -68,10 +68,17 @@ public class ProxyTestUtil {
 	}
 
 	public static Map<String, List<Object[]>> getProxyActions(Object proxy) {
-		ProxyTestInvocationHandler proxyTestInvocationHandler =
-			_getInvocationHandler(proxy);
+		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
+			proxy);
 
-		return proxyTestInvocationHandler.getProxyActions();
+		if (invocationHandler instanceof ProxyTestInvocationHandler) {
+			ProxyTestInvocationHandler proxyTestInvocationHandler =
+				(ProxyTestInvocationHandler)invocationHandler;
+
+			return proxyTestInvocationHandler.getProxyActions();
+		}
+
+		throw new IllegalArgumentException("Not a proxy test instance");
 	}
 
 	private static ClassLoader _getClassLoader(Class<?> clazz) {
@@ -82,19 +89,6 @@ public class ProxyTestUtil {
 		}
 
 		return classLoader;
-	}
-
-	private static ProxyTestInvocationHandler _getInvocationHandler(
-		Object proxy) {
-
-		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
-			proxy);
-
-		if (invocationHandler instanceof ProxyTestInvocationHandler) {
-			return (ProxyTestInvocationHandler)invocationHandler;
-		}
-
-		throw new IllegalArgumentException("Not a proxy test instance");
 	}
 
 	private static class ProxyTestInvocationHandler
