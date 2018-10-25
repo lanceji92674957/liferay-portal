@@ -14,29 +14,25 @@
 
 package com.liferay.portal.kernel.settings;
 
+import com.liferay.portal.kernel.test.ProxyTestUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
+
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-import org.mockito.InOrder;
-import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Iván Zaera
  */
-public class FallbackSettingsTest extends PowerMockito {
+public class FallbackSettingsTest {
 
 	public FallbackSettingsTest() {
-		_settings = mock(Settings.class);
-
 		_fallbackKeys = new FallbackKeys();
 
 		_fallbackKeys.add("key1", "key2", "key3");
 		_fallbackKeys.add("key2", "key7");
 		_fallbackKeys.add("key3", "key5");
-
-		_fallbackSettings = new FallbackSettings(_settings, _fallbackKeys);
 	}
 
 	@Test
@@ -45,76 +41,121 @@ public class FallbackSettingsTest extends PowerMockito {
 
 		String[] mockValues = {"value"};
 
-		when(
-			_settings.getValues("key2", null)
-		).thenReturn(
-			mockValues
-		);
+		Settings settings = ProxyTestUtil.getProxy(
+			Settings.class,
+			new ObjectValuePair<>(
+				"getValues",
+				args -> {
+					if ("key2".equals(args[0]) && (null == args[1])) {
+						return mockValues;
+					}
 
-		String[] values = _fallbackSettings.getValues("key1", defaultValues);
+					return null;
+				}));
+
+		FallbackSettings fallbackSettings = new FallbackSettings(
+			settings, _fallbackKeys);
+
+		String[] values = fallbackSettings.getValues("key1", defaultValues);
 
 		Assert.assertArrayEquals(mockValues, values);
 
-		verifyGetValues("key1", "key2");
+		verifyHasSettingValue(settings, "getValues", "key1", "key2");
 	}
 
 	@Test
 	public void testGetValuesWhenUnconfigured() {
+		Settings settings = ProxyTestUtil.getProxy(Settings.class);
+
+		FallbackSettings fallbackSettings = new FallbackSettings(
+			settings, _fallbackKeys);
+
 		String[] defaultValues = {"default"};
 
-		String[] values = _fallbackSettings.getValues("key1", defaultValues);
+		String[] values = fallbackSettings.getValues("key1", defaultValues);
 
 		Assert.assertArrayEquals(defaultValues, values);
 
-		verifyGetValues("key1", "key2", "key3");
+		verifyNoSettingValue(
+			settings, "getValues", defaultValues, "key1", "key2", "key3");
 	}
 
 	@Test
 	public void testGetValueWhenConfigured() {
-		when(
-			_settings.getValue("key2", null)
-		).thenReturn(
-			"value"
-		);
+		Settings settings = ProxyTestUtil.getProxy(
+			Settings.class,
+			new ObjectValuePair<>(
+				"getValue",
+				args -> {
+					if ("key2".equals(args[0]) && (null == args[1])) {
+						return "value";
+					}
 
-		String value = _fallbackSettings.getValue("key1", "default");
+					return null;
+				}));
+
+		FallbackSettings fallbackSettings = new FallbackSettings(
+			settings, _fallbackKeys);
+
+		String value = fallbackSettings.getValue("key1", "default");
 
 		Assert.assertEquals("value", value);
 
-		verifyGetValue("key1", "key2");
+		verifyHasSettingValue(settings, "getValue", "key1", "key2");
 	}
 
 	@Test
 	public void testGetValueWhenUnconfigured() {
-		String value = _fallbackSettings.getValue("key1", "default");
+		Settings settings = ProxyTestUtil.getProxy(Settings.class);
+
+		FallbackSettings fallbackSettings = new FallbackSettings(
+			settings, _fallbackKeys);
+
+		String value = fallbackSettings.getValue("key1", "default");
 
 		Assert.assertEquals("default", value);
 
-		verifyGetValue("key1", "key2", "key3");
+		verifyNoSettingValue(
+			settings, "getValue", "default", "key1", "key2", "key3");
 	}
 
-	protected void verifyGetValue(String... keys) {
-		InOrder inOrder = Mockito.inOrder(_settings);
+	protected void verifyHasSettingValue(
+		Settings settings, String methodName, String... keys) {
 
-		for (String key : keys) {
-			inOrder.verify(_settings);
+		List<Object[]> argumentsList = ProxyTestUtil.getArgumentsList(
+			settings, methodName);
 
-			_settings.getValue(key, null);
+		Assert.assertEquals(
+			argumentsList.toString(), keys.length, argumentsList.size());
+
+		for (int i = 0; i < keys.length; i++) {
+			Assert.assertArrayEquals(
+				new Object[] {keys[i], null}, argumentsList.get(i));
 		}
 	}
 
-	protected void verifyGetValues(String... keys) {
-		InOrder inOrder = Mockito.inOrder(_settings);
+	protected void verifyNoSettingValue(
+		Settings settings, String methodName, Object defaultValue,
+		String... keys) {
 
-		for (String key : keys) {
-			inOrder.verify(_settings);
+		List<Object[]> argumentsList = ProxyTestUtil.getArgumentsList(
+			settings, methodName);
 
-			_settings.getValues(key, null);
+		int argumentsSize = argumentsList.size();
+
+		Assert.assertEquals(
+			argumentsList.toString(), keys.length + 1, argumentsSize);
+
+		for (int i = 1; i < keys.length; i++) {
+			Assert.assertArrayEquals(
+				new Object[] {keys[i], null}, argumentsList.get(i));
 		}
+
+		Assert.assertArrayEquals(
+			new Object[] {keys[0], defaultValue},
+			argumentsList.get(argumentsSize - 1));
 	}
 
 	private final FallbackKeys _fallbackKeys;
-	private final FallbackSettings _fallbackSettings;
-	private final Settings _settings;
 
 }

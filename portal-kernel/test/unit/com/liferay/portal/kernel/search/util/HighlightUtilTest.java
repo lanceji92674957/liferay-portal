@@ -17,18 +17,18 @@ package com.liferay.portal.kernel.search.util;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
+import com.liferay.portal.kernel.test.ProxyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 
 /**
  * @author Tibor Lipusz
@@ -130,7 +130,7 @@ public class HighlightUtilTest {
 	}
 
 	protected void assertAddSnippet(String snippet, String fieldValue) {
-		Document document = Mockito.mock(Document.class);
+		Document document = ProxyTestUtil.getProxy(Document.class);
 
 		Set<String> queryTerms = new HashSet<>();
 
@@ -141,11 +141,14 @@ public class HighlightUtilTest {
 
 		Assert.assertEquals(Collections.singleton(fieldValue), queryTerms);
 
-		Mockito.verify(
-			document
-		).addText(
-			"snippet_".concat(snippetFieldName), fieldValue
-		);
+		List<Object[]> argumentsList = ProxyTestUtil.getArgumentsList(
+			document, "addText");
+
+		Assert.assertEquals(argumentsList.toString(), 1, argumentsList.size());
+		Assert.assertArrayEquals(
+			argumentsList.toString(),
+			new Object[] {"snippet_".concat(snippetFieldName), fieldValue},
+			argumentsList.get(0));
 	}
 
 	protected void assertHighlight(

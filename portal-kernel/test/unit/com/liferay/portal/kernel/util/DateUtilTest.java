@@ -14,34 +14,24 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.test.ProxyTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.TimeZone;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Alexander Chow
  * @author Manuel de la Peña
  * @author Raymond Augé
  */
-@PrepareForTest({CalendarFactoryUtil.class, DateFormatFactoryUtil.class})
-@RunWith(PowerMockRunner.class)
-public class DateUtilTest extends PowerMockito {
+public class DateUtilTest {
 
 	@Test
 	public void testEquals() throws Exception {
@@ -89,7 +79,7 @@ public class DateUtilTest extends PowerMockito {
 
 	@Test
 	public void testGetISOFormatAny() {
-		_testGetISOFormat(Mockito.anyString(), "yyyyMMddHHmmssz");
+		_testGetISOFormat("AnyString", "yyyyMMddHHmmssz");
 	}
 
 	@Test
@@ -127,31 +117,31 @@ public class DateUtilTest extends PowerMockito {
 		_testGetUTCFormat("19721223", "yyyyMMdd");
 	}
 
-	private void _mockDateUtilPattern(String pattern) {
-		mockStatic(DateFormatFactoryUtil.class);
-
-		when(
-			DateFormatFactoryUtil.getSimpleDateFormat(pattern)
-		).thenReturn(
-			new SimpleDateFormat(pattern, LocaleUtil.SPAIN)
-		);
+	private void _mockDateUtilPattern() {
+		ReflectionTestUtil.setFieldValue(
+			DateFormatFactoryUtil.class, "_fastDateFormatFactory",
+			ProxyTestUtil.getProxy(
+				DateFormatFactory.class,
+				new ObjectValuePair<>(
+					"getSimpleDateFormat",
+					args -> new SimpleDateFormat(
+						(String)args[0], LocaleUtil.SPAIN))));
 	}
 
 	private void _testGetDaysBetween(Date date1, Date date2, int expected) {
-		mockStatic(CalendarFactoryUtil.class);
-
-		when(
-			CalendarFactoryUtil.getCalendar()
-		).thenReturn(
-			new GregorianCalendar()
-		);
+		ReflectionTestUtil.setFieldValue(
+			CalendarFactoryUtil.class, "_calendarFactory",
+			ProxyTestUtil.getProxy(
+				CalendarFactory.class,
+				new ObjectValuePair<>(
+					"getCalendar", args -> new GregorianCalendar())));
 
 		Assert.assertEquals(
-			expected, DateUtil.getDaysBetween(date1, date2, _timeZone));
+			expected, DateUtil.getDaysBetween(date1, date2, null));
 	}
 
 	private void _testGetISOFormat(String text, String pattern) {
-		_mockDateUtilPattern(pattern);
+		_mockDateUtilPattern();
 
 		DateFormat dateFormat = DateUtil.getISOFormat(text);
 
@@ -161,25 +151,13 @@ public class DateUtilTest extends PowerMockito {
 	}
 
 	private void _testGetUTCFormat(String date, String pattern) {
-		mockStatic(DateFormatFactoryUtil.class);
-
-		when(
-			DateFormatFactoryUtil.getSimpleDateFormat(
-				Mockito.anyString(), Mockito.any(TimeZone.class))
-		).thenAnswer(
-			new Answer<SimpleDateFormat>() {
-
-				@Override
-				public SimpleDateFormat answer(
-						InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					return new TestSimpleDateFormat(
-						(String)invocationOnMock.getArguments()[0]);
-				}
-
-			}
-		);
+		ReflectionTestUtil.setFieldValue(
+			DateFormatFactoryUtil.class, "_fastDateFormatFactory",
+			ProxyTestUtil.getProxy(
+				DateFormatFactory.class,
+				new ObjectValuePair<>(
+					"getSimpleDateFormat",
+					args -> new TestSimpleDateFormat((String)args[0]))));
 
 		DateFormat utcDateFormat = DateUtil.getUTCFormat(date);
 
@@ -191,9 +169,6 @@ public class DateUtilTest extends PowerMockito {
 
 		Assert.assertEquals(testSimpleDateFormat.getPattern(), pattern);
 	}
-
-	@Mock
-	private TimeZone _timeZone;
 
 	private static class TestSimpleDateFormat extends SimpleDateFormat {
 

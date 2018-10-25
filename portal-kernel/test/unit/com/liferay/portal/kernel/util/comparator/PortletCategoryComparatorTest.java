@@ -17,40 +17,25 @@ package com.liferay.portal.kernel.util.comparator;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.PortletCategory;
+import com.liferay.portal.kernel.test.ProxyTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
-
-import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.mockito.Matchers;
-import org.mockito.Mock;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Eduardo Garcia
  */
-@PrepareForTest(LanguageUtil.class)
-@RunWith(PowerMockRunner.class)
-public class PortletCategoryComparatorTest extends PowerMockito {
+public class PortletCategoryComparatorTest {
 
 	@Before
 	public void setUp() {
-		when(
-			_props.get(Matchers.anyString())
-		).thenReturn(
-			null
-		);
-
-		PropsUtil.setProps(_props);
+		PropsUtil.setProps(ProxyTestUtil.getDummyProxy(Props.class));
 
 		setUpLanguageUtil();
 	}
@@ -70,26 +55,26 @@ public class PortletCategoryComparatorTest extends PowerMockito {
 	}
 
 	protected void setUpLanguageUtil() {
-		LanguageUtil languageUtil = new LanguageUtil();
+		ReflectionTestUtil.setFieldValue(
+			LanguageUtil.class, "_language",
+			ProxyTestUtil.getProxy(
+				Language.class,
+				new ObjectValuePair<>(
+					"get",
+					args -> {
+						if ((args.length == 2) &&
+							LocaleUtil.SPAIN.equals(args[0])) {
 
-		languageUtil.setLanguage(_language);
+							if ("area".equals(args[1])) {
+								return "Area";
+							}
+							else if ("zone".equals(args[1])) {
+								return "Zona";
+							}
+						}
 
-		whenLanguageGet(LocaleUtil.SPAIN, "area", "Área");
-		whenLanguageGet(LocaleUtil.SPAIN, "zone", "Zona");
+						return null;
+					})));
 	}
-
-	protected void whenLanguageGet(Locale locale, String key, String value) {
-		when(
-			_language.get(Matchers.eq(locale), Matchers.eq(key))
-		).thenReturn(
-			value
-		);
-	}
-
-	@Mock
-	private Language _language;
-
-	@Mock
-	private Props _props;
 
 }
