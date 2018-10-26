@@ -114,18 +114,23 @@ public class DateUtilTest {
 
 	@Test
 	public void testGetUTCFormat() {
-		_testGetUTCFormat("19721223", "yyyyMMdd");
-	}
-
-	private void _mockDateUtilPattern() {
 		ReflectionTestUtil.setFieldValue(
 			DateFormatFactoryUtil.class, "_fastDateFormatFactory",
 			ProxyTestUtil.getProxy(
 				DateFormatFactory.class,
 				new ObjectValuePair<>(
 					"getSimpleDateFormat",
-					args -> new SimpleDateFormat(
-						(String)args[0], LocaleUtil.SPAIN))));
+					args -> new TestSimpleDateFormat((String)args[0]))));
+
+		DateFormat utcDateFormat = DateUtil.getUTCFormat("19721223");
+
+		Assert.assertNotNull(utcDateFormat);
+		Assert.assertTrue(utcDateFormat instanceof SimpleDateFormat);
+
+		TestSimpleDateFormat testSimpleDateFormat =
+			(TestSimpleDateFormat)utcDateFormat;
+
+		Assert.assertEquals("yyyyMMdd", testSimpleDateFormat.getPattern());
 	}
 
 	private void _testGetDaysBetween(Date date1, Date date2, int expected) {
@@ -141,33 +146,20 @@ public class DateUtilTest {
 	}
 
 	private void _testGetISOFormat(String text, String pattern) {
-		_mockDateUtilPattern();
-
-		DateFormat dateFormat = DateUtil.getISOFormat(text);
-
-		SimpleDateFormat simpleDateFormat = (SimpleDateFormat)dateFormat;
-
-		Assert.assertEquals(pattern, simpleDateFormat.toPattern());
-	}
-
-	private void _testGetUTCFormat(String date, String pattern) {
 		ReflectionTestUtil.setFieldValue(
 			DateFormatFactoryUtil.class, "_fastDateFormatFactory",
 			ProxyTestUtil.getProxy(
 				DateFormatFactory.class,
 				new ObjectValuePair<>(
 					"getSimpleDateFormat",
-					args -> new TestSimpleDateFormat((String)args[0]))));
+					args -> new SimpleDateFormat(
+						(String)args[0], LocaleUtil.SPAIN))));
 
-		DateFormat utcDateFormat = DateUtil.getUTCFormat(date);
+		DateFormat dateFormat = DateUtil.getISOFormat(text);
 
-		Assert.assertNotNull(utcDateFormat);
-		Assert.assertTrue(utcDateFormat instanceof SimpleDateFormat);
+		SimpleDateFormat simpleDateFormat = (SimpleDateFormat)dateFormat;
 
-		TestSimpleDateFormat testSimpleDateFormat =
-			(TestSimpleDateFormat)utcDateFormat;
-
-		Assert.assertEquals(testSimpleDateFormat.getPattern(), pattern);
+		Assert.assertEquals(pattern, simpleDateFormat.toPattern());
 	}
 
 	private static class TestSimpleDateFormat extends SimpleDateFormat {

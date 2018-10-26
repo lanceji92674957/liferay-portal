@@ -43,7 +43,13 @@ public class IndexableActionableDynamicQueryTest {
 
 		document3 = ProxyTestUtil.getDummyProxy(Document.class);
 
-		RegistryUtil.setRegistry(createRegistry());
+		Registry registry = new BasicRegistryImpl();
+
+		registry.registerService(
+			PortalExecutorManager.class,
+			ProxyTestUtil.getDummyProxy(PortalExecutorManager.class));
+
+		RegistryUtil.setRegistry(registry);
 
 		indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
@@ -72,16 +78,6 @@ public class IndexableActionableDynamicQueryTest {
 		indexableActionableDynamicQuery.addDocuments(document3);
 
 		verifyDocumentsUpdated(document1, document2, document3);
-	}
-
-	protected Registry createRegistry() {
-		Registry registry = new BasicRegistryImpl();
-
-		registry.registerService(
-			PortalExecutorManager.class,
-			ProxyTestUtil.getDummyProxy(PortalExecutorManager.class));
-
-		return registry;
 	}
 
 	protected void verifyDocumentsUpdated(Document... documents) {

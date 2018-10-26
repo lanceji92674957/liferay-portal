@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -33,28 +32,10 @@ import org.junit.Test;
  */
 public class PortletCategoryComparatorTest {
 
-	@Before
-	public void setUp() {
-		PropsUtil.setProps(ProxyTestUtil.getDummyProxy(Props.class));
-
-		setUpLanguageUtil();
-	}
-
 	@Test
 	public void testCompareLocalized() {
-		PortletCategory portletCategory1 = new PortletCategory("area");
-		PortletCategory portletCategory2 = new PortletCategory("zone");
+		PropsUtil.setProps(ProxyTestUtil.getDummyProxy(Props.class));
 
-		PortletCategoryComparator portletCategoryComparator =
-			new PortletCategoryComparator(LocaleUtil.SPAIN);
-
-		int value = portletCategoryComparator.compare(
-			portletCategory1, portletCategory2);
-
-		Assert.assertTrue(value < 0);
-	}
-
-	protected void setUpLanguageUtil() {
 		ReflectionTestUtil.setFieldValue(
 			LanguageUtil.class, "_language",
 			ProxyTestUtil.getProxy(
@@ -75,6 +56,17 @@ public class PortletCategoryComparatorTest {
 
 						return null;
 					})));
+
+		PortletCategory portletCategory1 = new PortletCategory("area");
+		PortletCategory portletCategory2 = new PortletCategory("zone");
+
+		PortletCategoryComparator portletCategoryComparator =
+			new PortletCategoryComparator(LocaleUtil.SPAIN);
+
+		int value = portletCategoryComparator.compare(
+			portletCategory1, portletCategory2);
+
+		Assert.assertTrue(value < 0);
 	}
 
 }

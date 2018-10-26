@@ -55,8 +55,34 @@ public class ServletResponseUtilRangeTest {
 
 	@Before
 	public void setUp() {
-		setUpFileUtil();
-		setUpPropsUtil();
+		ReflectionTestUtil.setFieldValue(
+			FileUtil.class, "_file",
+			ProxyTestUtil.getProxy(
+				com.liferay.portal.kernel.util.File.class,
+				new ObjectValuePair<>(
+					"createTempFile",
+					args -> new File(
+						StringBundler.concat(
+							SystemProperties.TMP_DIR, StringPool.SLASH,
+							GetterUtil.getString(System.currentTimeMillis())))),
+				new ObjectValuePair<>(
+					"delete", args -> ((File)args[0]).delete())));
+
+		PropsUtil.setProps(
+			ProxyTestUtil.getProxy(
+				Props.class,
+				new ObjectValuePair<>(
+					"get",
+					args -> {
+						if ((args.length == 1) &&
+							PropsKeys.WEB_SERVER_SERVLET_MAX_RANGE_FIELDS.
+								equals(args[0])) {
+
+							return "10";
+						}
+
+						return "";
+					})));
 	}
 
 	@Test
@@ -171,39 +197,6 @@ public class ServletResponseUtilRangeTest {
 		Assert.assertEquals(range.getStart(), start);
 		Assert.assertEquals(range.getEnd(), end);
 		Assert.assertEquals(range.getLength(), length);
-	}
-
-	protected void setUpFileUtil() {
-		ReflectionTestUtil.setFieldValue(
-			FileUtil.class, "_file",
-			ProxyTestUtil.getProxy(
-				com.liferay.portal.kernel.util.File.class,
-				new ObjectValuePair<>(
-					"createTempFile",
-					args -> new File(
-						StringBundler.concat(
-							SystemProperties.TMP_DIR, StringPool.SLASH,
-							GetterUtil.getString(System.currentTimeMillis())))),
-				new ObjectValuePair<>(
-					"delete", args -> ((File)args[0]).delete())));
-	}
-
-	protected void setUpPropsUtil() {
-		PropsUtil.setProps(
-			ProxyTestUtil.getProxy(
-				Props.class,
-				new ObjectValuePair<>(
-					"get",
-					args -> {
-						if ((args.length == 1) &&
-							PropsKeys.WEB_SERVER_SERVLET_MAX_RANGE_FIELDS.
-								equals(args[0])) {
-
-							return "10";
-						}
-
-						return "";
-					})));
 	}
 
 	protected void setUpRange(String rangeHeader) {

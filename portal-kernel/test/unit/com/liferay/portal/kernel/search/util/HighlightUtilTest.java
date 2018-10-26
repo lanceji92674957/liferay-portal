@@ -39,7 +39,27 @@ public class HighlightUtilTest {
 
 	@Test
 	public void testAddSnippet() {
-		assertAddSnippet("<liferay-hl>Hello World</liferay-hl>", "Hello World");
+		String fieldValue = "Hello World";
+		Document document = ProxyTestUtil.getProxy(Document.class);
+
+		Set<String> queryTerms = new HashSet<>();
+
+		String snippetFieldName = RandomTestUtil.randomString();
+
+		HighlightUtil.addSnippet(
+			document, queryTerms, "<liferay-hl>Hello World</liferay-hl>",
+			snippetFieldName);
+
+		Assert.assertEquals(Collections.singleton(fieldValue), queryTerms);
+
+		List<Object[]> argumentsList = ProxyTestUtil.getArgumentsList(
+			document, "addText");
+
+		Assert.assertEquals(argumentsList.toString(), 1, argumentsList.size());
+		Assert.assertArrayEquals(
+			argumentsList.toString(),
+			new Object[] {"snippet_".concat(snippetFieldName), fieldValue},
+			argumentsList.get(0));
 	}
 
 	@Test
@@ -127,28 +147,6 @@ public class HighlightUtilTest {
 
 		assertHighlight("Hello   ", "Hello   ");
 		assertHighlight("   Hello", "   Hello");
-	}
-
-	protected void assertAddSnippet(String snippet, String fieldValue) {
-		Document document = ProxyTestUtil.getProxy(Document.class);
-
-		Set<String> queryTerms = new HashSet<>();
-
-		String snippetFieldName = RandomTestUtil.randomString();
-
-		HighlightUtil.addSnippet(
-			document, queryTerms, snippet, snippetFieldName);
-
-		Assert.assertEquals(Collections.singleton(fieldValue), queryTerms);
-
-		List<Object[]> argumentsList = ProxyTestUtil.getArgumentsList(
-			document, "addText");
-
-		Assert.assertEquals(argumentsList.toString(), 1, argumentsList.size());
-		Assert.assertArrayEquals(
-			argumentsList.toString(),
-			new Object[] {"snippet_".concat(snippetFieldName), fieldValue},
-			argumentsList.get(0));
 	}
 
 	protected void assertHighlight(
