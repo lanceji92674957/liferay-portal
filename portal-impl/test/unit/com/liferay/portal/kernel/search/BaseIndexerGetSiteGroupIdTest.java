@@ -54,9 +54,14 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		setUpGroupLocalServiceUtil();
-		setUpPropsUtil();
-		setUpRegistryUtil();
+		ReflectionTestUtil.setFieldValue(
+			GroupLocalServiceUtil.class, "_service", _groupLocalService);
+
+		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
+
+		Registry registry = new BasicRegistryImpl();
+
+		RegistryUtil.setRegistry(registry);
 
 		_indexer = new TestIndexer();
 	}
