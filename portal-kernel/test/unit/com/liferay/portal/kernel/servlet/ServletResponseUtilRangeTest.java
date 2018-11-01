@@ -35,7 +35,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -63,7 +62,6 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
-		setUpBrowserSniffer();
 		setUpFileUtil();
 		setUpPropsUtil();
 	}
@@ -73,7 +71,7 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 		setUpRange(_request, "bytes=1-3,3-8,9-11,12-12,30-");
 
 		List<Range> ranges = ServletResponseUtil.getRanges(
-			_request, _response, 1000);
+			_request, null, 1000);
 
 		Assert.assertEquals(ranges.toString(), 5, ranges.size());
 		assertRange(ranges.get(0), 1, 3, 3);
@@ -96,14 +94,14 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 		setUpRange(_request, "bytes=-500");
 
 		List<Range> ranges = ServletResponseUtil.getRanges(
-			_request, _response, length);
+			_request, null, length);
 
 		Assert.assertEquals(ranges.toString(), 1, ranges.size());
 		assertRange(ranges.get(0), 9500, 9999, 500);
 
 		setUpRange(_request, "bytes=9500-");
 
-		ranges = ServletResponseUtil.getRanges(_request, _response, length);
+		ranges = ServletResponseUtil.getRanges(_request, null, length);
 
 		Assert.assertEquals(ranges.toString(), 1, ranges.size());
 		assertRange(ranges.get(0), 9500, 9999, 500);
@@ -112,7 +110,7 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 
 		setUpRange(_request, "bytes=0-0,-1");
 
-		ranges = ServletResponseUtil.getRanges(_request, _response, length);
+		ranges = ServletResponseUtil.getRanges(_request, null, length);
 
 		Assert.assertEquals(ranges.toString(), 2, ranges.size());
 		assertRange(ranges.get(0), 0, 0, 1);
@@ -124,7 +122,7 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 
 		setUpRange(_request, "bytes=500-600,601-999");
 
-		ranges = ServletResponseUtil.getRanges(_request, _response, length);
+		ranges = ServletResponseUtil.getRanges(_request, null, length);
 
 		Assert.assertEquals(ranges.toString(), 2, ranges.size());
 		assertRange(ranges.get(0), 500, 600, 101);
@@ -132,7 +130,7 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 
 		setUpRange(_request, "bytes=500-700,601-999");
 
-		ranges = ServletResponseUtil.getRanges(_request, _response, length);
+		ranges = ServletResponseUtil.getRanges(_request, null, length);
 
 		Assert.assertEquals(ranges.toString(), 2, ranges.size());
 		assertRange(ranges.get(0), 500, 700, 201);
@@ -144,7 +142,7 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 		setUpRange(_request, "bytes=0-999");
 
 		List<Range> ranges = ServletResponseUtil.getRanges(
-			_request, _response, 1000);
+			_request, null, 1000);
 
 		Assert.assertEquals(ranges.toString(), 1, ranges.size());
 		assertRange(ranges.get(0), 0, 999, 1000);
@@ -180,18 +178,6 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 		Assert.assertEquals(range.getStart(), start);
 		Assert.assertEquals(range.getEnd(), end);
 		Assert.assertEquals(range.getLength(), length);
-	}
-
-	protected void setUpBrowserSniffer() {
-		BrowserSnifferUtil browserSnifferUtil = new BrowserSnifferUtil();
-
-		browserSnifferUtil.setBrowserSniffer(_browserSniffer);
-
-		when(
-			_browserSniffer.isIe(Matchers.any(HttpServletRequest.class))
-		).thenReturn(
-			false
-		);
 	}
 
 	protected void setUpFileUtil() {
@@ -260,7 +246,7 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 		setUpRange(_request, "bytes=0-9,980-989,980-999,990-999");
 
 		List<Range> ranges = ServletResponseUtil.getRanges(
-			_request, _response, content.length);
+			_request, null, content.length);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
@@ -320,9 +306,6 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 		"multipart/byteranges; boundary=";
 
 	@Mock
-	private BrowserSniffer _browserSniffer;
-
-	@Mock
 	private com.liferay.portal.kernel.util.File _file;
 
 	@Mock
@@ -330,8 +313,5 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 
 	@Mock
 	private HttpServletRequest _request;
-
-	@Mock
-	private HttpServletResponse _response;
 
 }
