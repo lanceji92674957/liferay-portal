@@ -524,8 +524,8 @@ public class ManifestElement {
 				{
 					throw new BundleException(NLS.bind(Msg.MANIFEST_INVALID_LINE_NOCOLON, line), BundleException.MANIFEST_ERROR);
 				}
-				String header = line.substring(0, colon).trim();
-				String value = line.substring(colon + 1).trim();
+				String header = trimSubstring(line, 0, colon);
+				String value = trimSubstring(line, colon + 1, line.length());
 				headers.put(header, value);
 			}
 		} finally {
@@ -583,6 +583,18 @@ public class ManifestElement {
 		String result = buffer.toString("UTF8"); //$NON-NLS-1$
 		buffer.reset();
 		return result;
+	}
+
+	private static String trimSubstring(String s, int beginIndex, int endIndex) {
+		while ((beginIndex < endIndex) && (s.charAt(beginIndex) <= ' ')) {
+			beginIndex++;
+		}
+
+		while ((beginIndex < endIndex) && (s.charAt(endIndex - 1) <= ' ')) {
+			endIndex--;
+		}
+
+		return s.substring(beginIndex, endIndex);
 	}
 
 	public String toString() {
