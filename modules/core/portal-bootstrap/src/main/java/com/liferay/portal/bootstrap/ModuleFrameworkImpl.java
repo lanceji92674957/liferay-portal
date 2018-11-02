@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -88,12 +87,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.CountDownLatch;
 import java.util.jar.Attributes;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
@@ -104,6 +99,7 @@ import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkEvent;
@@ -115,6 +111,7 @@ import org.osgi.framework.startlevel.BundleStartLevel;
 import org.osgi.framework.startlevel.FrameworkStartLevel;
 import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.FrameworkWiring;
+import org.osgi.util.tracker.BundleTracker;
 
 import org.springframework.beans.factory.BeanIsAbstractException;
 import org.springframework.context.ApplicationContext;
@@ -1172,6 +1169,16 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			bundleStartLevel.setStartLevel(
 				PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL);
 
+			if (_log.isDebugEnabled()) {
+				_log.debug("Starting initial bundle " + bundle);
+			}
+
+			bundle.start();
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Started bundle " + bundle);
+			}
+
 			return bundle;
 		}
 		catch (Exception e) {
@@ -1497,81 +1504,48 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 		}
 
-		for (Bundle bundle : bundles.values()) {
-			if (!_isFragmentBundle(bundle)) {
-				bundle.stop();
-			}
-		}
-
 		Bundle[] initialBundles = bundleContext.getBundles();
 
 		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
 			FrameworkStartLevel.class);
 
-		final DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<>();
-
 		frameworkStartLevel.setStartLevel(
-			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL,
-			new FrameworkListener() {
+			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL);
+
+		final Set<Bundle> bundlesSet = new HashSet<>();
+
+		for (Bundle bundle : bundles.values()) {
+			if (!_isFragmentBundle(bundle)) {
+				bundlesSet.add(bundle);
+			}
+		}
+
+		if (!bundlesSet.isEmpty()) {
+			final CountDownLatch countDownLatch = new CountDownLatch(1);
+
+			BundleTracker<Void> bundleTracker = new BundleTracker<Void>(
+				_framework.getBundleContext(), Bundle.ACTIVE, null) {
 
 				@Override
-				public void frameworkEvent(FrameworkEvent frameworkEvent) {
-					defaultNoticeableFuture.set(frameworkEvent);
+				public Void addingBundle(
+					Bundle trackedBundle, BundleEvent bundleEvent) {
+
+					if (bundlesSet.remove(trackedBundle)) {
+						if (bundlesSet.isEmpty()) {
+							countDownLatch.countDown();
+
+							close();
+						}
+					}
+
+					return null;
 				}
 
-			});
+			};
 
-		FrameworkEvent frameworkEvent = defaultNoticeableFuture.get();
+			bundleTracker.open();
 
-		if (frameworkEvent.getType() != FrameworkEvent.STARTLEVEL_CHANGED) {
-			ReflectionUtil.throwException(frameworkEvent.getThrowable());
-		}
-
-		Runtime runtime = Runtime.getRuntime();
-
-		ExecutorService executorService = Executors.newFixedThreadPool(
-			runtime.availableProcessors(),
-			new NamedThreadFactory(
-				"ModuleFramework-Static-Bundles", Thread.NORM_PRIORITY,
-				ModuleFrameworkImpl.class.getClassLoader()));
-
-		List<Future<Void>> futures = new ArrayList<>();
-
-		FrameworkWiring frameworkWiring = _framework.adapt(
-			FrameworkWiring.class);
-
-		frameworkWiring.resolveBundles(bundles.values());
-
-		for (final Bundle bundle : bundles.values()) {
-			if (!_isFragmentBundle(bundle)) {
-				futures.add(
-					executorService.submit(
-						new Callable<Void>() {
-
-							@Override
-							public Void call() throws BundleException {
-								bundle.start();
-
-								return null;
-							}
-
-						}));
-			}
-		}
-
-		executorService.shutdown();
-
-		for (Future<Void> future : futures) {
-			try {
-				future.get();
-			}
-			catch (ExecutionException ee) {
-				throwableCollector.collect(ee.getCause());
-			}
-			catch (InterruptedException ie) {
-				throwableCollector.collect(ie);
-			}
+			countDownLatch.await();
 		}
 
 		throwableCollector.rethrow();
@@ -1585,6 +1559,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				fragmentBundles.add(bundle);
 			}
 		}
+
+		FrameworkWiring frameworkWiring = _framework.adapt(
+			FrameworkWiring.class);
 
 		frameworkWiring.resolveBundles(fragmentBundles);
 

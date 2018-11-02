@@ -77,7 +77,6 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 
 import java.util.Map;
-import java.util.concurrent.FutureTask;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -273,20 +272,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			SchedulerEngineHelper.class,
 			SingleDestinationMessageSenderFactory.class);
 
-		FutureTask<Void> springInitTask = new FutureTask<>(
-			() -> {
-				super.contextInitialized(servletContextEvent);
-
-				return null;
-			});
-
-		Thread springInitThread = new Thread(
-			springInitTask, "Portal Spring Init Thread");
-
-		springInitThread.setDaemon(true);
-
-		springInitThread.start();
-
 		try {
 			ModuleFrameworkUtilAdapter.registerContext(
 				_arrayApplicationContext);
@@ -299,12 +284,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			throw new RuntimeException(e);
 		}
 
-		try {
-			springInitTask.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		super.contextInitialized(servletContextEvent);
 
 		InitUtil.registerSpringInitialized();
 
