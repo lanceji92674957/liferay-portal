@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+>
+
+	<!-- Infrastructure -->
+
+	<bean class="com.liferay.portal.kernel.util.InfrastructureUtil" factory-method="getTransactionManager" id="originalLiferayTransactionManager" />
+	<bean class="com.liferay.portal.spring.extender.internal.bean.ModuleDataSourceFactory" id="com.liferay.portal.spring.extender.internal.bean.ModuleDataSourceFactory" />
+	<bean factory-bean="com.liferay.portal.spring.extender.internal.bean.ModuleDataSourceFactory" factory-method="getDataSource" id="liferayDataSource" />
+
+	<!-- Hibernate Bridge -->
+
+	<bean class="com.liferay.portal.spring.extender.internal.hibernate.configuration.ModuleHibernateConfiguration" id="liferayHibernateSessionFactory">
+		<property name="dataSource" ref="liferayDataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="javax.persistence.validation.mode">none</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- Hibernate Integration -->
+
+	<bean class="com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper" factory-method="createVerifySessionFactoryWrapper" id="liferaySessionFactory">
+		<constructor-arg>
+			<bean class="com.liferay.portal.spring.extender.internal.hibernate.session.ModuleSessionFactory">
+				<property name="sessionFactoryImplementor" ref="liferayHibernateSessionFactory" />
+			</bean>
+		</constructor-arg>
+	</bean>
+	<bean class="com.liferay.portal.spring.hibernate.PortletTransactionManagerFactory" factory-method="create" id="liferayTransactionManager">
+		<constructor-arg ref="liferayDataSource" />
+		<constructor-arg ref="originalLiferayTransactionManager" />
+		<constructor-arg ref="liferayHibernateSessionFactory" />
+	</bean>
+	<bean class="com.liferay.portal.spring.transaction.TransactionExecutorFactory" factory-method="createTransactionExecutor" id="transactionExecutor">
+		<constructor-arg ref="liferayTransactionManager" />
+		<constructor-arg value="false" />
+	</bean>
+
+	<!-- Persistence -->
+
+	<bean abstract="true" id="basePersistence">
+		<property name="dataSource" ref="liferayDataSource" />
+		<property name="sessionFactory" ref="liferaySessionFactory" />
+	</bean>
+
+	<!-- AOP Transaction -->
+
+	<bean class="com.liferay.portal.dao.jdbc.aop.DynamicDataSourceAdviceFactoryUtil" factory-method="createDynamicDataSourceAdvice" id="transactionAdvice">
+		<constructor-arg>
+			<bean class="com.liferay.portal.spring.transaction.TransactionInterceptor">
+				<property name="transactionExecutor" ref="transactionExecutor" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<!-- AOP Retry -->
+
+	<bean class="com.liferay.portal.spring.aop.RetryAdvice" id="retryAdvice">
+		<property name="nextMethodInterceptor" ref="transactionAdvice" />
+	</bean>
+
+	<!-- AOP ServiceContext -->
+
+	<bean class="com.liferay.portal.service.ServiceContextAdvice" id="serviceContextAdvice">
+		<property name="nextMethodInterceptor" ref="retryAdvice" />
+	</bean>
+
+	<!-- AOP SystemEvent -->
+
+	<bean class="com.liferay.portal.systemevent.SystemEventAdvice" id="systemEventAdvice">
+		<property name="nextMethodInterceptor" ref="serviceContextAdvice" />
+	</bean>
+
+	<!-- AOP Indexable -->
+
+	<bean class="com.liferay.portal.search.IndexableAdvice" id="indexableAdvice">
+		<property name="nextMethodInterceptor" ref="systemEventAdvice" />
+	</bean>
+
+	<!-- AOP BufferedIncrement -->
+
+	<bean class="com.liferay.portal.increment.BufferedIncrementAdvice" id="bufferedIncrementAdvice">
+		<property name="nextMethodInterceptor" ref="indexableAdvice" />
+	</bean>
+
+	<!-- AOP ThreadLocalCache -->
+
+	<bean class="com.liferay.portal.cache.thread.local.ThreadLocalCacheAdvice" id="threadLocalCacheAdvice">
+		<property name="nextMethodInterceptor" ref="bufferedIncrementAdvice" />
+	</bean>
+
+	<!-- AOP Async -->
+
+	<bean class="com.liferay.portal.messaging.async.AsyncAdvice" id="asyncAdvice">
+		<property name="defaultDestinationName" value="liferay/async_service" />
+		<property name="nextMethodInterceptor" ref="threadLocalCacheAdvice" />
+	</bean>
+
+	<!-- AOP ServiceMonitor -->
+
+	<bean class="com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice" id="serviceMonitorAdvice">
+		<property name="nextMethodInterceptor" ref="asyncAdvice" />
+	</bean>
+
+	<!-- AOP PortalResiliency -->
+
+	<bean class="com.liferay.portal.resiliency.service.PortalResiliencyAdvice" id="portalResiliencyAdvice">
+		<property name="nextMethodInterceptor" ref="serviceMonitorAdvice" />
+	</bean>
+
+	<!-- AOP AccessControl -->
+
+	<bean class="com.liferay.portal.security.access.control.AccessControlAdvice" id="accessControlAdvice">
+		<property name="nextMethodInterceptor" ref="portalResiliencyAdvice" />
+	</bean>
+
+	<!-- AOP Skip -->
+
+	<bean class="com.liferay.portal.spring.aop.SkipAdvice" id="serviceAdvice">
+		<property name="nextMethodInterceptor" ref="accessControlAdvice" />
+	</bean>
+
+	<!-- AOP Clusterable -->
+
+	<bean class="com.liferay.portal.cluster.ClusterableChainableMethodAdviceInjector">
+		<property name="parentChainableMethodAdvice" ref="serviceAdvice" />
+	</bean>
+
+	<!-- AOP Integration -->
+
+	<bean class="com.liferay.portal.spring.aop.AopProxyFactoryImpl" id="aopProxyFactory">
+		<property name="methodInterceptor" ref="serviceAdvice" />
+	</bean>
+	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator">
+		<property name="aopProxyFactory" ref="aopProxyFactory" />
+		<property name="beanMatcher">
+			<bean class="com.liferay.portal.spring.aop.ServiceBeanMatcher" />
+		</property>
+	</bean>
+
+	<!-- Cleaner -->
+
+	<bean class="com.liferay.portal.spring.context.PortletBeanFactoryCleaner" />
+</beans>
