@@ -32,11 +32,13 @@ import com.liferay.portal.kernel.resiliency.spi.MockSPI;
 import com.liferay.portal.kernel.resiliency.spi.MockSPIProvider;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
+import com.liferay.portal.kernel.test.ProxyTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -58,8 +60,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mockito;
-
 /**
  * @author Shuyang Zhou
  */
@@ -77,20 +77,24 @@ public class IntrabandBridgeDestinationTest {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		_messageBus = Mockito.mock(MessageBus.class);
-
-		registry.registerService(MessageBus.class, _messageBus);
-
 		_baseDestination = new SynchronousDestination();
 
 		_baseDestination.setName(
 			IntrabandBridgeDestinationTest.class.getName());
 
-		Mockito.when(
-			_messageBus.getDestination(_baseDestination.getName())
-		).thenReturn(
-			_baseDestination
-		);
+		_messageBus = ProxyTestUtil.getProxy(
+			MessageBus.class,
+			new ObjectValuePair<>(
+				"getDestination",
+				args -> {
+					if (args[0].equals(_baseDestination.getName())) {
+						return _baseDestination;
+					}
+
+					return null;
+				}));
+
+		registry.registerService(MessageBus.class, _messageBus);
 
 		_intrabandBridgeDestination = new IntrabandBridgeDestination(
 			_baseDestination);

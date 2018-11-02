@@ -14,16 +14,16 @@
 
 package com.liferay.portal.kernel.settings;
 
+import com.liferay.portal.kernel.test.ProxyTestUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
+
+import java.util.List;
+
 import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.mockito.Matchers;
-import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Iván Zaera
@@ -32,23 +32,26 @@ public class PortletPreferencesSettingsTest {
 
 	@Before
 	public void setUp() {
-		_portletPreferences = PowerMockito.mock(PortletPreferences.class);
+		_portletPreferences = ProxyTestUtil.getProxy(
+			PortletPreferences.class,
+			new ObjectValuePair<>(
+				"getValue",
+				args -> {
+					if (_PORTLET_PREFERENCES_SINGLE_KEY.equals(args[0])) {
+						return _PORTLET_PREFERENCES_SINGLE_VALUE;
+					}
 
-		Mockito.when(
-			_portletPreferences.getValue(
-				Matchers.eq(_PORTLET_PREFERENCES_SINGLE_KEY),
-				Matchers.anyString())
-		).thenReturn(
-			_PORTLET_PREFERENCES_SINGLE_VALUE
-		);
+					return null;
+				}),
+			new ObjectValuePair<>(
+				"getValues",
+				args -> {
+					if (_PORTLET_PREFERENCES_MULTIPLE_KEY.equals(args[0])) {
+						return _PORTLET_PREFERENCES_MULTIPLE_VALUES;
+					}
 
-		Mockito.when(
-			_portletPreferences.getValues(
-				Matchers.eq(_PORTLET_PREFERENCES_MULTIPLE_KEY),
-				(String[])Matchers.any())
-		).thenReturn(
-			_PORTLET_PREFERENCES_MULTIPLE_VALUES
-		);
+					return null;
+				}));
 
 		ModifiableSettings modifiableSettings = new MemorySettings();
 
@@ -115,9 +118,12 @@ public class PortletPreferencesSettingsTest {
 
 		_portletPreferencesSettings.setValue("key", "value");
 
-		Mockito.verify(_portletPreferences);
+		List<Object[]> argumentsList = ProxyTestUtil.getArgumentsList(
+			_portletPreferences, "setValue");
 
-		_portletPreferences.setValue("key", "value");
+		Assert.assertTrue(
+			argumentsList.toString(),
+			argumentsList.contains(new Object[] {"key", "value"}));
 	}
 
 	@Test
@@ -128,18 +134,23 @@ public class PortletPreferencesSettingsTest {
 
 		_portletPreferencesSettings.setValues("key", values);
 
-		Mockito.verify(_portletPreferences);
+		List<Object[]> argumentsList = ProxyTestUtil.getArgumentsList(
+			_portletPreferences, "setValues");
 
-		_portletPreferences.setValues("key", values);
+		Assert.assertTrue(
+			argumentsList.toString(),
+			argumentsList.contains(new Object[] {"key", values}));
 	}
 
 	@Test
 	public void testStoreIsPerformedOnPortletPreferences() throws Exception {
 		_portletPreferencesSettings.store();
 
-		Mockito.verify(_portletPreferences);
+		List<Object[]> argumentsList = ProxyTestUtil.getArgumentsList(
+			_portletPreferences, "store");
 
-		_portletPreferences.store();
+		Assert.assertTrue(
+			argumentsList.toString(), argumentsList.contains(null));
 	}
 
 	private static final String _DEFAULT_SETTINGS_MULTIPLE_KEY = "defaultKeys";

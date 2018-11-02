@@ -14,22 +14,28 @@
 
 package com.liferay.portal.kernel.settings;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.resource.ResourceRetriever;
+import com.liferay.portal.kernel.resource.manager.ResourceManager;
+import com.liferay.portal.kernel.test.ProxyTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Iván Zaera
  */
-public class ConfigurationBeanSettingsTest extends PowerMockito {
+public class ConfigurationBeanSettingsTest {
 
 	@Before
 	public void setUp() {
 		_configurationBean = new ConfigurationBean();
 
-		_mockLocationVariableResolver = mock(LocationVariableResolver.class);
+		_mockLocationVariableResolver = new LocationVariableResolver(
+			null, (SettingsLocatorHelper)null);
 
 		_configurationBeanSettings = new ConfigurationBeanSettings(
 			_mockLocationVariableResolver, _configurationBean, null);
@@ -79,21 +85,26 @@ public class ConfigurationBeanSettingsTest extends PowerMockito {
 
 	@Test
 	public void testGetValueWithLocationVariable() {
-		when(
-			_mockLocationVariableResolver.isLocationVariable(
-				_configurationBean.locationVariableValue())
-		).thenReturn(
-			true
-		);
-
 		String expectedValue = "Once upon a time...";
 
-		when(
-			_mockLocationVariableResolver.resolve(
-				_configurationBean.locationVariableValue())
-		).thenReturn(
-			expectedValue
-		);
+		ReflectionTestUtil.setFieldValue(
+			_mockLocationVariableResolver, "_resourceManager",
+			ProxyTestUtil.getProxy(
+				ResourceManager.class,
+				new ObjectValuePair<>(
+					"getResourceRetriever",
+					arguments -> {
+						if ("template.ftl".equals(arguments[0])) {
+							return ProxyTestUtil.getProxy(
+								ResourceRetriever.class,
+								new ObjectValuePair<>(
+									"getInputStream",
+									args -> new UnsyncByteArrayInputStream(
+										expectedValue.getBytes())));
+						}
+
+						return null;
+					})));
 
 		Assert.assertEquals(
 			expectedValue,
