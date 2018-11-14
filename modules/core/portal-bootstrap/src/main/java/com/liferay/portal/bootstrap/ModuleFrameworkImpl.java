@@ -94,6 +94,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 import java.util.jar.Attributes;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
@@ -1659,6 +1660,24 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			fileInstallBundle.stop(Bundle.STOP_TRANSIENT);
 		}
 
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		Bundle[] bundles = bundleContext.getBundles();
+
+		for (Bundle bundle : bundles) {
+			BundleStartLevel bundleStartLevel = bundle.adapt(
+				BundleStartLevel.class);
+
+			if ((bundle.getBundleId() == 0) || _isFragmentBundle(bundle) ||
+				(bundleStartLevel.getStartLevel() !=
+					PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL)) {
+
+				continue;
+			}
+
+			bundle.stop();
+		}
+
 		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
 			FrameworkStartLevel.class);
 
@@ -1682,12 +1701,19 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			ReflectionUtil.throwException(frameworkEvent.getThrowable());
 		}
 
-		BundleContext bundleContext = _framework.getBundleContext();
+		Runtime runtime = Runtime.getRuntime();
 
-		for (Bundle bundle : bundleContext.getBundles()) {
-			if (installedBundles.contains(bundle) ||
-				((bundle.getState() != Bundle.INSTALLED) &&
-				 (bundle.getState() != Bundle.RESOLVED))) {
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			runtime.availableProcessors(),
+			new NamedThreadFactory(
+				"ModuleFramework-Dynamic-Bundles", Thread.NORM_PRIORITY,
+				ModuleFrameworkImpl.class.getClassLoader()));
+
+		List<FutureTask<Void>> futureTasks = new ArrayList<>();
+
+		for (final Bundle bundle : bundles) {
+			if ((bundle.getState() != Bundle.INSTALLED) &&
+				(bundle.getState() != Bundle.RESOLVED)) {
 
 				continue;
 			}
@@ -1706,15 +1732,33 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			if (bundleStartLevel.getStartLevel() ==
 					PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL) {
 
-				try {
-					bundle.start();
-				}
-				catch (BundleException be) {
-					_log.error(
-						"Unable to start bundle " + bundle.getSymbolicName(),
-						be);
-				}
+				FutureTask<Void> futureTask = new FutureTask<>(
+					new Callable() {
+
+						@Override
+						public Object call() throws Exception {
+							try {
+								bundle.start();
+							}
+							catch (BundleException be) {
+								_log.error(
+									"Unable to start bundle " + bundle.getSymbolicName(),
+									be);
+							}
+
+							return null;
+						}
+
+					});
+
+				executorService.submit(futureTask);
+
+				futureTasks.add(futureTask);
 			}
+		}
+
+		for (FutureTask<Void> futureTask : futureTasks) {
+			futureTask.get();
 		}
 
 		if (fileInstallBundle != null) {
