@@ -327,9 +327,6 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 		"multipart/byteranges; boundary=";
 
 	@Mock
-	private BrowserSniffer _browserSniffer;
-
-	@Mock
 	private com.liferay.portal.kernel.util.File _file;
 
 	@Mock
