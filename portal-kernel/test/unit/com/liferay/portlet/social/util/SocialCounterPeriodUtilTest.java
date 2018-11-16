@@ -22,7 +22,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -30,8 +30,8 @@ import org.junit.Test;
  */
 public class SocialCounterPeriodUtilTest {
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() {
 		PropsTestUtil.set(PropsKeys.SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH, "1");
 	}
 

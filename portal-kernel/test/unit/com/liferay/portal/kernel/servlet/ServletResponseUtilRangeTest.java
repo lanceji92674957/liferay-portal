@@ -38,6 +38,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -58,13 +59,16 @@ import org.springframework.mock.web.MockHttpServletResponse;
 @RunWith(PowerMockRunner.class)
 public class ServletResponseUtilRangeTest extends PowerMockito {
 
+	@BeforeClass
+	public static void setUpClass() {
+		PropsTestUtil.set(PropsKeys.WEB_SERVER_SERVLET_MAX_RANGE_FIELDS, "10");
+	}
+
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
 		setUpFileUtil();
-
-		PropsTestUtil.set(PropsKeys.WEB_SERVER_SERVLET_MAX_RANGE_FIELDS, "10");
 	}
 
 	@Test
