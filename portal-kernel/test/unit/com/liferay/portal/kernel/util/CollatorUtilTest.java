@@ -77,9 +77,7 @@ public class CollatorUtilTest {
 	public void testGetInstanceWithoutProperty() {
 		ReflectionTestUtil.setFieldValue(
 			PropsUtil.class, "_props",
-			ProxyUtil.newProxyInstance(
-				CollatorUtilTest.class.getClassLoader(),
-				new Class<?>[] {Props.class}, (proxy, method, args) -> null));
+			ProxyFactory.newDummyInstance(Props.class));
 
 		Collator collator = CollatorUtil.getInstance(Locale.US);
 
