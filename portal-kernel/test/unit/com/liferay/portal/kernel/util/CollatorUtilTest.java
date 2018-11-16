@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.PropsTestUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 
@@ -72,9 +71,7 @@ public class CollatorUtilTest {
 
 	@Test
 	public void testGetInstanceWithoutProperty() {
-		ReflectionTestUtil.setFieldValue(
-			PropsUtil.class, "_props",
-			ProxyFactory.newDummyInstance(Props.class));
+		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
 
 		Collator collator = CollatorUtil.getInstance(Locale.US);
 
