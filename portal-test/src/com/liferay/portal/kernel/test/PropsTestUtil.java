@@ -47,7 +47,7 @@ public class PropsTestUtil {
 
 		@Override
 		public String get(String key, Filter filter) {
-			return null;
+			return _results.get(key);
 		}
 
 		@Override
