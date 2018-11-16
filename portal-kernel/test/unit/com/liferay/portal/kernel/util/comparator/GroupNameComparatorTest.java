@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.util.comparator;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupWrapper;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -33,9 +32,7 @@ public class GroupNameComparatorTest {
 
 	@Before
 	public void setUp() {
-		ReflectionTestUtil.setFieldValue(
-			PropsUtil.class, "_props",
-			ProxyFactory.newDummyInstance(Props.class));
+		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
 
 		setUpGroups();
 	}
