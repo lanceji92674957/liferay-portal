@@ -63,7 +63,8 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 		MockitoAnnotations.initMocks(this);
 
 		setUpFileUtil();
-		setUpPropsUtil();
+
+		PropsTestUtil.set(PropsKeys.WEB_SERVER_SERVLET_MAX_RANGE_FIELDS, "10");
 	}
 
 	@Test
@@ -238,10 +239,6 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 
 			}
 		);
-	}
-
-	protected void setUpPropsUtil() {
-		PropsTestUtil.set(PropsKeys.WEB_SERVER_SERVLET_MAX_RANGE_FIELDS, "10");
 	}
 
 	protected void setUpRange(HttpServletRequest request, String rangeHeader) {
