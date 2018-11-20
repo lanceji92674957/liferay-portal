@@ -16,17 +16,13 @@ package com.liferay.portal.search.test;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.portal.kernel.comment.Comment;
-import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.RelatedSearchResult;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.result.SearchResultTranslator;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
-import com.liferay.portal.kernel.util.FastDateFormatFactory;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -37,7 +33,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
@@ -54,8 +49,6 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 
 		setUpRegistryUtil();
 
-		setUpClassNameLocalService();
-		setUpFastDateFormatFactoryUtil();
 		setUpIndexerRegistry();
 		setUpPropsUtil();
 		setUpSearchResultTranslator();
@@ -100,31 +93,6 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 
 	protected abstract SearchResultTranslator createSearchResultTranslator();
 
-	protected void setUpClassNameLocalService() throws Exception {
-		ClassName className = Mockito.mock(ClassName.class);
-
-		when(
-			classNameLocalService.getClassName(
-				SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME_ID)
-		).thenReturn(
-			className
-		);
-
-		when(
-			className.getClassName()
-		).thenReturn(
-			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME
-		);
-	}
-
-	protected void setUpFastDateFormatFactoryUtil() {
-		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
-			new FastDateFormatFactoryUtil();
-
-		fastDateFormatFactoryUtil.setFastDateFormatFactory(
-			mock(FastDateFormatFactory.class));
-	}
-
 	protected void setUpIndexerRegistry() {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -146,9 +114,6 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 	protected void setUpSearchResultTranslator() {
 		searchResultTranslator = createSearchResultTranslator();
 	}
-
-	@Mock
-	protected ClassNameLocalService classNameLocalService;
 
 	protected SearchResultTranslator searchResultTranslator;
 
