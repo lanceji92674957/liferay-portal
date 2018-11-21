@@ -40,11 +40,16 @@ public abstract class BaseSearchResultUtilTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpRegistryUtil();
+		Registry registry = new BasicRegistryImpl();
 
-		setUpIndexerRegistry();
-		setUpPropsUtil();
-		setUpSearchResultTranslator();
+		RegistryUtil.setRegistry(registry);
+
+		registry.registerService(
+			IndexerRegistry.class, new TestIndexerRegistry());
+
+		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
+
+		searchResultTranslator = createSearchResultTranslator();
 	}
 
 	protected void assertEmptyCommentRelatedSearchResults(
@@ -85,25 +90,6 @@ public abstract class BaseSearchResultUtilTestCase {
 	}
 
 	protected abstract SearchResultTranslator createSearchResultTranslator();
-
-	protected void setUpIndexerRegistry() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		registry.registerService(
-			IndexerRegistry.class, new TestIndexerRegistry());
-	}
-
-	protected void setUpPropsUtil() {
-		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
-	}
-
-	protected void setUpRegistryUtil() {
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
-	}
-
-	protected void setUpSearchResultTranslator() {
-		searchResultTranslator = createSearchResultTranslator();
-	}
 
 	protected SearchResultTranslator searchResultTranslator;
 
