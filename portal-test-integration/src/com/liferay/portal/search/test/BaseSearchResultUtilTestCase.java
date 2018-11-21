@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.test;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
@@ -106,9 +105,6 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 
 	protected void setUpRegistryUtil() {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
-
-		mockStatic(
-			AssetRendererFactoryRegistryUtil.class, Mockito.CALLS_REAL_METHODS);
 	}
 
 	protected void setUpSearchResultTranslator() {
