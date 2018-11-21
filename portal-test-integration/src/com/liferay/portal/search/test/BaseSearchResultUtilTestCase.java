@@ -74,12 +74,6 @@ public abstract class BaseSearchResultUtilTestCase {
 			fileEntryRelatedSearchResults.isEmpty());
 	}
 
-	protected void assertEmptyVersions(SearchResult searchResult) {
-		List<String> versions = searchResult.getVersions();
-
-		Assert.assertTrue(versions.toString(), versions.isEmpty());
-	}
-
 	protected SearchResult assertOneSearchResult(Document document) {
 		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
 			searchResultTranslator, document);
