@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.test;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
@@ -33,7 +32,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import org.powermock.api.mockito.PowerMockito;
@@ -106,9 +104,6 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 
 	protected void setUpRegistryUtil() {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
-
-		mockStatic(
-			AssetRendererFactoryRegistryUtil.class, Mockito.CALLS_REAL_METHODS);
 	}
 
 	protected void setUpSearchResultTranslator() {
