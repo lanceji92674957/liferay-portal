@@ -42,14 +42,17 @@ import javax.portlet.PortletResponse;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author André de Oliveira
  */
+@RunWith(MockitoJUnitRunner.class)
 public class SearchResultUtilJournalArticleTest
 	extends BaseSearchResultUtilTestCase {
 
