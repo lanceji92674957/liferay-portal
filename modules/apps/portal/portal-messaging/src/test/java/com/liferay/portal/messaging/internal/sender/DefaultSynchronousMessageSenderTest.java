@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.messaging.SerialDestination;
 import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.messaging.internal.DefaultMessageBus;
+import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
@@ -48,7 +49,7 @@ public class DefaultSynchronousMessageSenderTest {
 
 	@Before
 	public void setUp() {
-		Registry registry = Mockito.mock(Registry.class);
+		/*Registry registry = Mockito.mock(Registry.class);
 
 		Mockito.when(
 			registry.getRegistry()
@@ -60,18 +61,20 @@ public class DefaultSynchronousMessageSenderTest {
 			registry.setRegistry(registry)
 		).thenReturn(
 			registry
-		);
+		);*/
+
+		Registry registry = new BasicRegistryImpl();
 
 		ServiceTracker<Object, Object> serviceTracker = Mockito.mock(
 			ServiceTracker.class);
 
-		Mockito.when(
+		/*Mockito.when(
 			registry.trackServices(
 				(Class<Object>)Matchers.any(),
 				(ServiceTrackerCustomizer<Object, Object>)Matchers.any())
 		).thenReturn(
 			serviceTracker
-		);
+		);*/
 
 		RegistryUtil.setRegistry(null);
 		RegistryUtil.setRegistry(registry);
