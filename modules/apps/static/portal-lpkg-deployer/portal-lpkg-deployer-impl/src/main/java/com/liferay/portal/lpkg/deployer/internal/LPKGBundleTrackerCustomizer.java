@@ -55,6 +55,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.JarInputStream;
@@ -91,10 +92,27 @@ public class LPKGBundleTrackerCustomizer
 		_bundleContext = bundleContext;
 		_urls = urls;
 		_overrideFileNames = overrideFileNames;
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			List<Bundle> bundles = _symbolicNameBundleMap.computeIfAbsent(
+				bundle.getSymbolicName(), symbolicName -> new ArrayList());
+
+			if (!bundles.contains(bundle)) {
+				bundles.add(bundle);
+			}
+		}
 	}
 
 	@Override
 	public List<Bundle> addingBundle(Bundle bundle, BundleEvent bundleEvent) {
+		List<Bundle> symbolicNameBundles =
+			_symbolicNameBundleMap.computeIfAbsent(
+				bundle.getSymbolicName(), symbolicName -> new ArrayList());
+
+		if (!symbolicNameBundles.contains(bundle)) {
+			symbolicNameBundles.add(bundle);
+		}
+
 		if (bundle.getEntry(_MARKER_FILE) != null) {
 			try {
 				bundle.uninstall();
@@ -373,6 +391,13 @@ public class LPKGBundleTrackerCustomizer
 	public void removedBundle(
 		Bundle bundle, BundleEvent bundleEvent, List<Bundle> bundles) {
 
+		List<Bundle> symbolicNameBundles = _symbolicNameBundleMap.get(
+			bundle.getSymbolicName());
+
+		if (symbolicNameBundles != null) {
+			symbolicNameBundles.remove(bundle);
+		}
+
 		if (bundle.getState() != Bundle.UNINSTALLED) {
 			return;
 		}
@@ -460,7 +485,10 @@ public class LPKGBundleTrackerCustomizer
 			Version version = new Version(
 				attributes.getValue(Constants.BUNDLE_VERSION));
 
-			for (Bundle installedBundle : _bundleContext.getBundles()) {
+			for (Bundle installedBundle :
+					_symbolicNameBundleMap.getOrDefault(
+						symbolicName, Collections.emptyList())) {
+
 				if (symbolicName.equals(installedBundle.getSymbolicName()) &&
 					version.equals(installedBundle.getVersion()) &&
 					!location.equals(installedBundle.getLocation())) {
@@ -765,6 +793,8 @@ public class LPKGBundleTrackerCustomizer
 	private final BundleContext _bundleContext;
 	private final Set<String> _outdatedRemoteAppIds = new HashSet<>();
 	private final Set<String> _overrideFileNames;
+	private Map<String, List<Bundle>> _symbolicNameBundleMap =
+		new ConcurrentHashMap<>();
 	private final Map<String, URL> _urls;
 
 }
