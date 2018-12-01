@@ -239,10 +239,10 @@ public class LPKGIndexValidator {
 		}
 
 		IndexValidator indexValidator = _indexValidatorFactory.create(
-			targetPlatformIndexURIs);
+			Collections.<URI>emptyList());
 
 		try {
-			List<String> messages = indexValidator.validate(lpkgIndexURIs);
+			List<String> messages = indexValidator.validate(allIndexURIs);
 
 			if (!messages.isEmpty()) {
 				StringBundler sb = new StringBundler((messages.size() * 3) + 1);
