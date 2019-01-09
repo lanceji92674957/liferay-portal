@@ -18,15 +18,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.language.LanguageImpl;
 import com.liferay.users.admin.kernel.util.UserInitialsGenerator;
 
 import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import org.mockito.Matchers;
-import org.mockito.Mockito;
 
 /**
  * @author Drew Brokke
@@ -168,16 +166,14 @@ public class UserInitialsGeneratorImplTest {
 	}
 
 	private void _setUpLanguageUtil(String returnValue) throws Exception {
-		Language language = Mockito.mock(Language.class);
+		Language language = new LanguageImpl() {
 
-		Mockito.doReturn(
-			returnValue
-		).when(
-			language
-		).get(
-			Matchers.any(Locale.class), Matchers.anyString(),
-			Matchers.anyString()
-		);
+			@Override
+			public String get(Locale locale, String key, String defaultValue) {
+				return returnValue;
+			}
+
+		};
 
 		LanguageUtil languageUtil = new LanguageUtil();
 
