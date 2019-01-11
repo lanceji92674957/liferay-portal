@@ -69,7 +69,7 @@ public class AddressUtilTest {
 
 	@Test
 	public void testGetCountryNameOptionalLocalized() {
-		_address = _setCountry(_address);
+		_setCountry();
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -85,7 +85,7 @@ public class AddressUtilTest {
 
 	@Test
 	public void testGetCountryNameOptionalNotLocalized() {
-		_address = _setCountry(_address);
+		_setCountry();
 
 		Optional<String> countryNameOptional =
 			AddressUtil.getCountryNameOptional(_address);
@@ -140,7 +140,7 @@ public class AddressUtilTest {
 		Assert.assertFalse(regionNameOptional.isPresent());
 	}
 
-	private Address _setCountry(Address address) {
+	private void _setCountry() {
 		Country country = new CountryWrapper(null) {
 
 			@Override
@@ -160,7 +160,7 @@ public class AddressUtilTest {
 
 		};
 
-		address = new AddressWrapper(null) {
+		_address = new AddressWrapper(null) {
 
 			@Override
 			public Country getCountry() {
@@ -168,8 +168,6 @@ public class AddressUtilTest {
 			}
 
 		};
-
-		return address;
 	}
 
 	private static final String _COUNTRY_NAME = RandomTestUtil.randomString();
