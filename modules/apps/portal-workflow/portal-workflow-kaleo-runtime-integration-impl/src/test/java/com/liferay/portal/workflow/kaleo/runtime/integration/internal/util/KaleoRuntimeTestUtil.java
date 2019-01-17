@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.runtime.integration.internal.util;
 
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstanceWrapper;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 
 import java.util.Arrays;
@@ -45,20 +46,20 @@ public class KaleoRuntimeTestUtil {
 	public static KaleoTaskAssignmentInstance mockKaleoTaskAssignmentInstance(
 		String returnAssigneeClassName, long returnAssigneeClassPK) {
 
-		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance = Mockito.mock(
-			KaleoTaskAssignmentInstance.class);
+		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance =
+			new KaleoTaskAssignmentInstanceWrapper(null) {
 
-		Mockito.when(
-			kaleoTaskAssignmentInstance.getAssigneeClassName()
-		).thenReturn(
-			returnAssigneeClassName
-		);
+				@Override
+				public String getAssigneeClassName() {
+					return returnAssigneeClassName;
+				}
 
-		Mockito.when(
-			kaleoTaskAssignmentInstance.getAssigneeClassPK()
-		).thenReturn(
-			returnAssigneeClassPK
-		);
+				@Override
+				public long getAssigneeClassPK() {
+					return returnAssigneeClassPK;
+				}
+
+			};
 
 		return kaleoTaskAssignmentInstance;
 	}
