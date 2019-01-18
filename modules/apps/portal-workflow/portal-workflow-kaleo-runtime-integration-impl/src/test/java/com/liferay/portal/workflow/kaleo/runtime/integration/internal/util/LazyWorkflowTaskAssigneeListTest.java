@@ -45,28 +45,23 @@ public class LazyWorkflowTaskAssigneeListTest {
 				User.class.getName(), 2)
 		};
 
-		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken(
-				kaleoTaskAssignmentInstances);
-
 		KaleoTaskAssignmentInstanceLocalService
 			kaleoTaskAssignmentInstanceLocalService =
 				new TestKaleoTaskAssignmentInstanceLocalServiceWrapper(null);
 
 		LazyWorkflowTaskAssigneeList lazyWorkflowTaskAssigneeList =
 			new LazyWorkflowTaskAssigneeList(
-				kaleoTaskInstanceToken,
+				KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken(
+					kaleoTaskAssignmentInstances),
 				kaleoTaskAssignmentInstanceLocalService);
 
 		lazyWorkflowTaskAssigneeList.initWorkflowTaskAssignees();
-
-		int actualSize = lazyWorkflowTaskAssigneeList.size();
 
 		Assert.assertFalse(((TestKaleoTaskAssignmentInstanceLocalServiceWrapper)
 			kaleoTaskAssignmentInstanceLocalService).
 				isGetKaleoTaskAssignmentInstancesCountExecuted());
 
-		Assert.assertEquals(2, actualSize);
+		Assert.assertEquals(2, lazyWorkflowTaskAssigneeList.size());
 	}
 
 	@Test

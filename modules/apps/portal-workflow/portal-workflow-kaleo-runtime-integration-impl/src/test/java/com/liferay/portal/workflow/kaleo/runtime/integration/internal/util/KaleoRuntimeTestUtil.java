@@ -46,53 +46,47 @@ public class KaleoRuntimeTestUtil {
 	public static KaleoTaskAssignmentInstance mockKaleoTaskAssignmentInstance(
 		String returnAssigneeClassName, long returnAssigneeClassPK) {
 
-		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance =
-			new KaleoTaskAssignmentInstanceWrapper(null) {
+		return new KaleoTaskAssignmentInstanceWrapper(null) {
 
-				@Override
-				public String getAssigneeClassName() {
-					return returnAssigneeClassName;
-				}
+			@Override
+			public String getAssigneeClassName() {
+				return returnAssigneeClassName;
+			}
 
-				@Override
-				public long getAssigneeClassPK() {
-					return returnAssigneeClassPK;
-				}
+			@Override
+			public long getAssigneeClassPK() {
+				return returnAssigneeClassPK;
+			}
 
-			};
-
-		return kaleoTaskAssignmentInstance;
+		};
 	}
 
 	public static KaleoTaskInstanceToken mockKaleoTaskInstanceToken(
 		KaleoTaskAssignmentInstance... returnKaleoTaskAssignmentInstances) {
 
-		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			new KaleoTaskInstanceTokenWrapper(null) {
+		return new KaleoTaskInstanceTokenWrapper(null) {
 
-				@Override
-				public KaleoTaskAssignmentInstance
-					getFirstKaleoTaskAssignmentInstance() {
+			@Override
+			public KaleoTaskAssignmentInstance
+				getFirstKaleoTaskAssignmentInstance() {
 
-					if ((returnKaleoTaskAssignmentInstances.length == 0) ||
-						(returnKaleoTaskAssignmentInstances.length > 1)) {
+				if ((returnKaleoTaskAssignmentInstances.length == 0) ||
+					(returnKaleoTaskAssignmentInstances.length > 1)) {
 
-						return null;
-					}
-
-					return returnKaleoTaskAssignmentInstances[0];
+					return null;
 				}
 
-				@Override
-				public List<KaleoTaskAssignmentInstance>
-					getKaleoTaskAssignmentInstances() {
+				return returnKaleoTaskAssignmentInstances[0];
+			}
 
-					return Arrays.asList(returnKaleoTaskAssignmentInstances);
-				}
+			@Override
+			public List<KaleoTaskAssignmentInstance>
+				getKaleoTaskAssignmentInstances() {
 
-			};
+				return Arrays.asList(returnKaleoTaskAssignmentInstances);
+			}
 
-		return kaleoTaskInstanceToken;
+		};
 	}
 
 }
