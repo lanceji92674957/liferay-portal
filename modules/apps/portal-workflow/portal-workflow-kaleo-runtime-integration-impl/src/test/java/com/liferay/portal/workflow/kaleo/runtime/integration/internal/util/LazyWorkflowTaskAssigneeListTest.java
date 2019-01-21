@@ -31,9 +31,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.mockito.Mockito;
-import org.mockito.verification.VerificationMode;
-
 /**
  * @author Marcellus Tavares
  */
@@ -224,24 +221,6 @@ public class LazyWorkflowTaskAssigneeListTest {
 				kaleoTaskAssignmentInstanceLocalService);
 
 		lazyWorkflowTaskAssigneeList.get(0);
-	}
-
-	protected void verifyGetFirstKaleoTaskAssignmentInstanceCall(
-		KaleoTaskInstanceToken kaleoTaskInstanceToken,
-		VerificationMode verificationMode) {
-
-		Mockito.verify(
-			kaleoTaskInstanceToken, verificationMode
-		).getFirstKaleoTaskAssignmentInstance();
-	}
-
-	protected void verifyGetKaleoTaskAssignmentInstancesCall(
-		KaleoTaskInstanceToken kaleoTaskInstanceToken,
-		VerificationMode verificationMode) {
-
-		Mockito.verify(
-			kaleoTaskInstanceToken, verificationMode
-		).getKaleoTaskAssignmentInstances();
 	}
 
 	private class TestKaleoTaskAssignmentInstanceLocalServiceWrapper
