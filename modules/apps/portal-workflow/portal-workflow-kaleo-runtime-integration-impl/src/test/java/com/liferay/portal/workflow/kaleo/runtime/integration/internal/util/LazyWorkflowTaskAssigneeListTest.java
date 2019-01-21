@@ -28,7 +28,6 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLoca
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.mockito.verification.VerificationMode;
 
@@ -226,18 +225,6 @@ public class LazyWorkflowTaskAssigneeListTest {
 		Mockito.verify(
 			kaleoTaskInstanceToken, verificationMode
 		).getKaleoTaskAssignmentInstances();
-	}
-
-	protected void verifyGetKaleoTaskAssignmentInstancesCountCall(
-		KaleoTaskAssignmentInstanceLocalService
-			kaleoTaskAssignmentInstanceLocalService,
-		VerificationMode verificationMode) {
-
-		Mockito.verify(
-			kaleoTaskAssignmentInstanceLocalService, verificationMode
-		).getKaleoTaskAssignmentInstancesCount(
-			Matchers.anyLong()
-		);
 	}
 
 	private class TestKaleoTaskAssignmentInstanceLocalServiceWrapper
