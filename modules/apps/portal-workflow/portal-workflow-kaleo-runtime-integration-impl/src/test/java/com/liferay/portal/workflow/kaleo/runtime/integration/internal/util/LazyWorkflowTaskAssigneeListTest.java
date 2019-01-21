@@ -79,11 +79,15 @@ public class LazyWorkflowTaskAssigneeListTest {
 
 		long kaleoTaskInstanceTokenId = RandomTestUtil.randomLong();
 
-		Mockito.when(
-			kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId()
-		).thenReturn(
-			kaleoTaskInstanceTokenId
-		);
+		kaleoTaskInstanceToken =
+			new KaleoTaskInstanceTokenWrapper(kaleoTaskInstanceToken) {
+
+				@Override
+				public long getKaleoTaskInstanceTokenId() {
+					return kaleoTaskInstanceTokenId;
+				}
+
+			};
 
 		int expectedCount = RandomTestUtil.randomInt();
 
@@ -133,6 +137,9 @@ public class LazyWorkflowTaskAssigneeListTest {
 			KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken(
 				kaleoTaskAssignmentInstances);
 
+		kaleoTaskInstanceToken = new TestKaleoTaskInstanceTokenWrapper(
+			kaleoTaskInstanceToken);
+
 		KaleoTaskAssignmentInstanceLocalService
 			kaleoTaskAssignmentInstanceLocalService =
 				ProxyFactory.newDummyInstance(
@@ -146,11 +153,13 @@ public class LazyWorkflowTaskAssigneeListTest {
 		WorkflowTaskAssignee workflowTaskAssignee =
 			lazyWorkflowTaskAssigneeList.get(1);
 
-		verifyGetKaleoTaskAssignmentInstancesCall(
-			kaleoTaskInstanceToken, Mockito.atLeastOnce());
+		Assert.assertTrue(
+			((TestKaleoTaskInstanceTokenWrapper)kaleoTaskInstanceToken).
+				isGetKaleoTaskAssignmentInstancesExecuted());
 
-		verifyGetFirstKaleoTaskAssignmentInstanceCall(
-			kaleoTaskInstanceToken, Mockito.never());
+		Assert.assertFalse(
+			((TestKaleoTaskInstanceTokenWrapper)kaleoTaskInstanceToken).
+				isGetFirstKaleoTaskAssignmentInstanceExecuted());
 
 		KaleoRuntimeTestUtil.assertWorkflowTaskAssignee(
 			User.class.getName(), 2, workflowTaskAssignee);
@@ -170,6 +179,9 @@ public class LazyWorkflowTaskAssigneeListTest {
 			KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken(
 				kaleoTaskAssignmentInstance);
 
+		kaleoTaskInstanceToken = new TestKaleoTaskInstanceTokenWrapper(
+			kaleoTaskInstanceToken);
+
 		KaleoTaskAssignmentInstanceLocalService
 			kaleoTaskAssignmentInstanceLocalService =
 				ProxyFactory.newDummyInstance(
@@ -183,11 +195,13 @@ public class LazyWorkflowTaskAssigneeListTest {
 		WorkflowTaskAssignee workflowTaskAssignee =
 			lazyWorkflowTaskAssigneeList.get(0);
 
-		verifyGetKaleoTaskAssignmentInstancesCall(
-			kaleoTaskInstanceToken, Mockito.never());
+		Assert.assertFalse(
+			((TestKaleoTaskInstanceTokenWrapper)kaleoTaskInstanceToken).
+				isGetKaleoTaskAssignmentInstancesExecuted());
 
-		verifyGetFirstKaleoTaskAssignmentInstanceCall(
-			kaleoTaskInstanceToken, Mockito.atLeastOnce());
+		Assert.assertTrue(
+			((TestKaleoTaskInstanceTokenWrapper)kaleoTaskInstanceToken).
+				isGetFirstKaleoTaskAssignmentInstanceExecuted());
 
 		KaleoRuntimeTestUtil.assertWorkflowTaskAssignee(
 			expectedAssigneeClassName, expectedAssigneeClassPK,
