@@ -22,8 +22,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceTokenWrapper;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalServiceWrapper;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -259,6 +262,60 @@ public class LazyWorkflowTaskAssigneeListTest {
 		}
 
 		private boolean _getKaleoTaskAssignmentInstancesCountExecuted;
+
+	}
+
+	private class TestKaleoTaskInstanceTokenWrapper
+		extends KaleoTaskInstanceTokenWrapper {
+
+		@Override
+		public KaleoTaskAssignmentInstance
+			getFirstKaleoTaskAssignmentInstance() {
+
+			setGetFirstKaleoTaskAssignmentInstanceExecuted(true);
+
+			return super.getFirstKaleoTaskAssignmentInstance();
+		}
+
+		@Override
+		public List<KaleoTaskAssignmentInstance>
+			getKaleoTaskAssignmentInstances() {
+
+			setGetKaleoTaskAssignmentInstancesExecuted(true);
+
+			return super.getKaleoTaskAssignmentInstances();
+		}
+
+		public boolean isGetFirstKaleoTaskAssignmentInstanceExecuted() {
+			return _getFirstKaleoTaskAssignmentInstanceExecuted;
+		}
+
+		public boolean isGetKaleoTaskAssignmentInstancesExecuted() {
+			return _getKaleoTaskAssignmentInstancesExecuted;
+		}
+
+		public void setGetFirstKaleoTaskAssignmentInstanceExecuted(
+			boolean getFirstKaleoTaskAssignmentInstanceExecuted) {
+
+			_getFirstKaleoTaskAssignmentInstanceExecuted =
+				getFirstKaleoTaskAssignmentInstanceExecuted;
+		}
+
+		public void setGetKaleoTaskAssignmentInstancesExecuted(
+			boolean getKaleoTaskAssignmentInstancesExecuted) {
+
+			_getKaleoTaskAssignmentInstancesExecuted =
+				getKaleoTaskAssignmentInstancesExecuted;
+		}
+
+		private TestKaleoTaskInstanceTokenWrapper(
+			KaleoTaskInstanceToken kaleoTaskInstanceToken) {
+
+			super(kaleoTaskInstanceToken);
+		}
+
+		private boolean _getFirstKaleoTaskAssignmentInstanceExecuted;
+		private boolean _getKaleoTaskAssignmentInstancesExecuted;
 
 	}
 
