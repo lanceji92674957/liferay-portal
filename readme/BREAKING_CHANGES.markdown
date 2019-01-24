@@ -197,3 +197,34 @@ A limited number of portlets use this property; there are better ways to achieve
 the same results.
 
 ---------------------------------------
+
+### Move TermsOfUseContentProvider out of kernel.util
+- **Date:** 2019-Jan-07
+- **JIRA Ticket:** [LPS-88869](https://issues.liferay.com/browse/LPS-88869)
+
+#### What changed?
+
+TermsOfUseContentProvider was moved out from package com.liferay.portal.kernel.util
+to com.liferay.portal.kernel.term.of.use. The logic of getting TermsOfUseContentProvider
+in TermsOfUseContentProviderRegistryUtil was changed. TermsOfUseContentProviderRegistryUtil
+was renamed to TermsOfUseContentProviderUtil
+
+#### Who is affected?
+
+This affects anyone who used TermsOfUseContentProviderRegistryUtil to lookup
+TermsOfUseContentProvider service. Instead of always returning the first service
+registered, we keep track of the TermsOfUseContentProvider service and update it
+with ServiceProxyFactory now.
+
+#### How should I update my code?
+
+You should check all logic that includes usages of TermsOfUseContentProvider
+since there was some differences when fetching the service. In addition, update
+all usages of TermsOfUseContentProviderRegistryUtil to TermsOfUseContentProviderUtil
+
+#### Why was this change made?
+
+It's one of several steps to clean up kernel provider interfaces to reduce the
+chance of package version lock down.
+
+---------------------------------------
