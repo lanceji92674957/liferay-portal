@@ -333,3 +333,37 @@ It's one of several steps to clean up kernel provider interfaces to reduce the
 chance of package version lock down.
 
 ---------------------------------------
+
+### Switch to use JDK Predicate
+- **Date:** 2019-Jan-14
+- **JIRA Ticket:** [LPS-89139](https://issues.liferay.com/browse/LPS-89139)
+
+#### What changed?
+
+Interface PredicateFilter was replaced with java.util.function.Predicate. As a
+result of that, all implementations of the interface: AggregatePredicateFilter,
+PrefixPredicateFilter, JavaScriptPortletResourcePredicateFilter and
+DDMFormFieldValuePredicateFilter were removed. ArrayUtil_IW was regenerated.
+
+#### Who is affected?
+
+This affects anyone who used PredicateFilter, AggregatePredicateFilter,
+PrefixPredicateFilter, JavaScriptPortletResourcePredicateFilter and
+DDMFormFieldValuePredicateFilter. It also affects any class includes usages of
+ListUtil, MapUtil, ArrayUtil, and ComboServletStaticURLGenerator since the
+implementations above were used in these classes. Any web page using FreeMarker
+with ArrayUtil_IW is also affected.
+
+#### How should I update my code?
+
+Replace usages of PredicateFilter with java.util.function.Predicate. Check usages
+of ListUtil, MapUtil, ArrayUtil and ComboServletStaticURLGenerator to make sure
+they are using the right method signatures. Update FreeMarker template using
+ArrayUtil_IW.
+
+#### Why was this change made?
+
+It's one of several steps to clean up kernel provider interfaces to reduce the
+chance of package version lock down.
+
+---------------------------------------
