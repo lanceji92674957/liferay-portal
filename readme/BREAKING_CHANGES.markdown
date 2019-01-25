@@ -282,3 +282,28 @@ It's one of several steps to clean up kernel provider interfaces to reduce the
 chance of package version lock down.
 
 ---------------------------------------
+
+### Deprecate com.liferay.portal.service.InvokableService
+- **Date:** 2019-Jan-08
+- **JIRA Ticket:** [LPS-88912](https://issues.liferay.com/browse/LPS-88912)
+
+#### What changed?
+
+Interface InvokableService and InvokableLocalService were removed
+
+#### Who is affected?
+
+This affects anyone who used InvokableService and InvokableLocalService
+
+#### How should I update my code?
+
+Remove usages of InvokableService and InvokableLocalService. Make sure to use the
+latest version of ServiceBuilder to generate Implementations for services in case
+there is any compile error after the removal.
+
+#### Why was this change made?
+
+It's one of several steps to clean up kernel provider interfaces to reduce the
+chance of package version lock down.
+
+---------------------------------------
