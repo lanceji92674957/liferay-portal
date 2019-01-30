@@ -14,6 +14,7 @@
 
 package com.liferay.portal.portlet.bridge.soy.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCCommandCache;
@@ -148,13 +149,15 @@ public class SoyPortletHelperTest {
 	}
 
 	private MVCCommandCache _mockEmptyMVCCommandCache() {
-		MVCCommandCache mvcCommandCache = Mockito.mock(MVCCommandCache.class);
-
-		Mockito.when(
-			mvcCommandCache.getMVCCommand(Matchers.anyString())
-		).thenReturn(
-			MVCRenderCommand.EMPTY
-		);
+		MVCCommandCache<MVCRenderCommand> mvcCommandCache =
+			new MVCCommandCache<MVCRenderCommand>(
+				MVCRenderCommand.EMPTY, StringPool.BLANK, StringPool.BLANK,
+				MVCRenderCommand.class, StringPool.BLANK) {
+				@Override
+				public MVCRenderCommand getMVCCommand(String mvcCommandName) {
+					return MVCRenderCommand.EMPTY;
+				}
+			};
 
 		return mvcCommandCache;
 	}
