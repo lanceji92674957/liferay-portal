@@ -16,13 +16,10 @@ package com.liferay.portal.portlet.bridge.soy.internal;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCCommandCache;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.util.HtmlImpl;
-
-import java.net.URL;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -31,8 +28,6 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -73,13 +68,10 @@ public class SoyPortletHelperTest {
 	public void testGetJavaScriptControllerModuleWithoutPackageJSON()
 		throws Exception {
 
-		Bundle bundle = _mockBundleWithoutPackage();
 		MVCCommandCache mvcCommandCache = _mockEmptyMVCCommandCache();
-		FriendlyURLMapper friendlyURLMapper = Mockito.mock(
-			FriendlyURLMapper.class);
 
 		SoyPortletHelper soyPortletHelper = new SoyPortletHelper(
-			bundle, mvcCommandCache, friendlyURLMapper);
+			null, mvcCommandCache, null);
 
 		soyPortletHelper.getJavaScriptLoaderModule("Path");
 	}
@@ -88,11 +80,9 @@ public class SoyPortletHelperTest {
 	public void testGetJavaScriptLoaderModule() throws Exception {
 		Bundle bundle = _mockBundleWithPackageFile();
 		MVCCommandCache mvcCommandCache = _mockEmptyMVCCommandCache();
-		FriendlyURLMapper friendlyURLMapper = Mockito.mock(
-			FriendlyURLMapper.class);
 
 		SoyPortletHelper soyPortletHelper = new SoyPortletHelper(
-			bundle, mvcCommandCache, friendlyURLMapper);
+			bundle, mvcCommandCache, null);
 
 		String javaScriptLoaderModule =
 			soyPortletHelper.getJavaScriptLoaderModule("JavaScriptCommand");
@@ -106,11 +96,9 @@ public class SoyPortletHelperTest {
 	public void testGetJavaScriptLoaderModuleForES6() throws Exception {
 		Bundle bundle = _mockBundleWithPackageFile();
 		MVCCommandCache mvcCommandCache = _mockEmptyMVCCommandCache();
-		FriendlyURLMapper friendlyURLMapper = Mockito.mock(
-			FriendlyURLMapper.class);
 
 		SoyPortletHelper soyPortletHelper = new SoyPortletHelper(
-			bundle, mvcCommandCache, friendlyURLMapper);
+			bundle, mvcCommandCache, null);
 
 		String javaScriptLoaderModule =
 			soyPortletHelper.getJavaScriptLoaderModule("ES6Command");
@@ -123,11 +111,9 @@ public class SoyPortletHelperTest {
 	public void testGetJavaScriptLoaderModuleForSoy() throws Exception {
 		Bundle bundle = _mockBundleWithPackageFile();
 		MVCCommandCache mvcCommandCache = _mockEmptyMVCCommandCache();
-		FriendlyURLMapper friendlyURLMapper = Mockito.mock(
-			FriendlyURLMapper.class);
 
 		SoyPortletHelper soyPortletHelper = new SoyPortletHelper(
-			bundle, mvcCommandCache, friendlyURLMapper);
+			bundle, mvcCommandCache, null);
 
 		String javaScriptLoaderModule =
 			soyPortletHelper.getJavaScriptLoaderModule("SoyCommand");
@@ -135,24 +121,6 @@ public class SoyPortletHelperTest {
 		Assert.assertEquals(
 			"package-with-version@1.0.0/SoyCommand.soy",
 			javaScriptLoaderModule);
-	}
-
-	private Bundle _mockBundleWithoutPackage() {
-		Bundle bundle = Mockito.mock(Bundle.class);
-
-		Mockito.when(
-			bundle.getEntry("package.json")
-		).then(
-			new Answer<URL>() {
-
-				public URL answer(InvocationOnMock invocationOnMock) {
-					return null;
-				}
-
-			}
-		);
-
-		return bundle;
 	}
 
 	private Bundle _mockBundleWithPackageFile() {
