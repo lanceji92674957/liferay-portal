@@ -24,30 +24,20 @@ import com.liferay.portal.util.HtmlImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest(FrameworkUtil.class)
-@RunWith(PowerMockRunner.class)
 public class SoyPortletHelperTest {
 
 	@Before
 	public void setUpFrameworkUtil() {
 		setUpJSONFactoryUtil();
-
-		PowerMockito.spy(FrameworkUtil.class);
 	}
 
 	@Before
