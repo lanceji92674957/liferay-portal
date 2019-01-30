@@ -59,21 +59,16 @@ public class SoyPortletHelperTest {
 	public void testGetJavaScriptControllerModuleWithoutPackageJSON()
 		throws Exception {
 
-		MVCCommandCache mvcCommandCache = _mockEmptyMVCCommandCache();
-
 		SoyPortletHelper soyPortletHelper = new SoyPortletHelper(
-			null, mvcCommandCache, null);
+			null, _mockEmptyMVCCommandCache(), null);
 
 		soyPortletHelper.getJavaScriptLoaderModule("Path");
 	}
 
 	@Test
 	public void testGetJavaScriptLoaderModule() throws Exception {
-		Bundle bundle = _mockBundleWithPackageFile();
-		MVCCommandCache mvcCommandCache = _mockEmptyMVCCommandCache();
-
 		SoyPortletHelper soyPortletHelper = new SoyPortletHelper(
-			bundle, mvcCommandCache, null);
+			_mockBundleWithPackageFile(), _mockEmptyMVCCommandCache(), null);
 
 		String javaScriptLoaderModule =
 			soyPortletHelper.getJavaScriptLoaderModule("JavaScriptCommand");
@@ -85,11 +80,8 @@ public class SoyPortletHelperTest {
 
 	@Test
 	public void testGetJavaScriptLoaderModuleForES6() throws Exception {
-		Bundle bundle = _mockBundleWithPackageFile();
-		MVCCommandCache mvcCommandCache = _mockEmptyMVCCommandCache();
-
 		SoyPortletHelper soyPortletHelper = new SoyPortletHelper(
-			bundle, mvcCommandCache, null);
+			_mockBundleWithPackageFile(), _mockEmptyMVCCommandCache(), null);
 
 		String javaScriptLoaderModule =
 			soyPortletHelper.getJavaScriptLoaderModule("ES6Command");
@@ -100,11 +92,8 @@ public class SoyPortletHelperTest {
 
 	@Test
 	public void testGetJavaScriptLoaderModuleForSoy() throws Exception {
-		Bundle bundle = _mockBundleWithPackageFile();
-		MVCCommandCache mvcCommandCache = _mockEmptyMVCCommandCache();
-
 		SoyPortletHelper soyPortletHelper = new SoyPortletHelper(
-			bundle, mvcCommandCache, null);
+			_mockBundleWithPackageFile(), _mockEmptyMVCCommandCache(), null);
 
 		String javaScriptLoaderModule =
 			soyPortletHelper.getJavaScriptLoaderModule("SoyCommand");
@@ -149,17 +138,16 @@ public class SoyPortletHelperTest {
 	}
 
 	private MVCCommandCache _mockEmptyMVCCommandCache() {
-		MVCCommandCache<MVCRenderCommand> mvcCommandCache =
-			new MVCCommandCache<MVCRenderCommand>(
-				MVCRenderCommand.EMPTY, StringPool.BLANK, StringPool.BLANK,
-				MVCRenderCommand.class, StringPool.BLANK) {
-				@Override
-				public MVCRenderCommand getMVCCommand(String mvcCommandName) {
-					return MVCRenderCommand.EMPTY;
-				}
-			};
+		return new MVCCommandCache<MVCRenderCommand>(
+			MVCRenderCommand.EMPTY, StringPool.BLANK, StringPool.BLANK,
+			MVCRenderCommand.class, StringPool.BLANK) {
 
-		return mvcCommandCache;
+			@Override
+			public MVCRenderCommand getMVCCommand(String mvcCommandName) {
+				return MVCRenderCommand.EMPTY;
+			}
+
+		};
 	}
 
 }
