@@ -37,22 +37,9 @@ import org.osgi.framework.Bundle;
 public class SoyPortletHelperTest {
 
 	@Before
-	public void setUpFrameworkUtil() {
-		setUpJSONFactoryUtil();
-	}
-
-	@Before
-	public void setUpHtmlUtil() {
-		HtmlUtil htmlUtil = new HtmlUtil();
-
-		htmlUtil.setHtml(new HtmlImpl());
-	}
-
-	@Before
-	public void setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+	public void setUp() {
+		_setUpJSONFactoryUtil();
+		_setUpHtmlUtil();
 	}
 
 	@Test(expected = Exception.class)
@@ -148,6 +135,18 @@ public class SoyPortletHelperTest {
 			}
 
 		};
+	}
+
+	private void _setUpHtmlUtil() {
+		HtmlUtil htmlUtil = new HtmlUtil();
+
+		htmlUtil.setHtml(new HtmlImpl());
+	}
+
+	private void _setUpJSONFactoryUtil() {
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 }
