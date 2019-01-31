@@ -253,15 +253,9 @@ public class ItemSelectorImplTest extends PowerMockito {
 				"itemSelectedEventName", _mediaItemSelectorCriterion,
 				_flickrItemSelectorCriterion);
 
-		ThemeDisplay themeDisplay = mock(ThemeDisplay.class);
+		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setScopeGroupId(12345);
-
-		when(
-			themeDisplay.getScopeGroup()
-		).thenReturn(
-			new GroupImpl()
-		);
+		ReflectionTestUtil.setFieldValue(themeDisplay, "_scopeGroup", new GroupImpl());
 
 		return _itemSelectorImpl.getItemSelectorRendering(
 			requestBackedPortletURLFactory, parameters, themeDisplay);
