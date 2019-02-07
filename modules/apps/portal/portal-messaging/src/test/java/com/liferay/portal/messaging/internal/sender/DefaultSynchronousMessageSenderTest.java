@@ -14,10 +14,11 @@
 
 package com.liferay.portal.messaging.internal.sender;
 
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
+import com.liferay.petra.concurrent.NoticeableThreadPoolExecutor;
+import com.liferay.petra.concurrent.ThreadPoolHandlerAdapter;
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -32,6 +33,11 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -105,7 +111,11 @@ public class DefaultSynchronousMessageSenderTest {
 		Mockito.when(
 			_portalExecutorManager.getPortalExecutor(Mockito.anyString())
 		).thenReturn(
-			new ThreadPoolExecutor(1, 1)
+			new NoticeableThreadPoolExecutor(
+				1, 1, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<>(1),
+				Executors.defaultThreadFactory(),
+				new ThreadPoolExecutor.AbortPolicy(),
+				new ThreadPoolHandlerAdapter())
 		);
 
 		Mockito.when(

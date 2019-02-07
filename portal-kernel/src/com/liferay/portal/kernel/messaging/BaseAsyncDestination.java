@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.messaging;
 
+import com.liferay.petra.concurrent.NoticeableExecutorService;
+import com.liferay.petra.concurrent.NoticeableThreadPoolExecutor;
+import com.liferay.petra.concurrent.ThreadPoolHandlerAdapter;
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
-import com.liferay.portal.kernel.concurrent.RejectedExecutionHandler;
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
-import com.liferay.portal.kernel.concurrent.ThreadPoolHandlerAdapter;
-import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -42,6 +42,8 @@ import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.Locale;
 import java.util.Set;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -96,7 +98,7 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 		destinationStatistics.setLargestThreadCount(
 			_threadPoolExecutor.getLargestPoolSize());
 		destinationStatistics.setMaxThreadPoolSize(
-			_threadPoolExecutor.getMaxPoolSize());
+			_threadPoolExecutor.getMaximumPoolSize());
 		destinationStatistics.setMinThreadPoolSize(
 			_threadPoolExecutor.getCorePoolSize());
 		destinationStatistics.setPendingMessageCount(
@@ -133,16 +135,17 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 			_rejectedExecutionHandler = _createRejectionExecutionHandler();
 		}
 
-		ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
-			_workersCoreSize, _workersMaxSize, 60L, TimeUnit.SECONDS, false,
-			_maximumQueueSize, _rejectedExecutionHandler,
-			new NamedThreadFactory(
-				getName(), Thread.NORM_PRIORITY, classLoader),
-			new ThreadPoolHandlerAdapter());
+		NoticeableThreadPoolExecutor noticeableThreadPoolExecutor =
+			new NoticeableThreadPoolExecutor(
+				_workersCoreSize, _workersMaxSize, 60L, TimeUnit.SECONDS,
+				new LinkedBlockingQueue<>(),
+				new NamedThreadFactory(
+					getName(), Thread.NORM_PRIORITY, classLoader),
+				_rejectedExecutionHandler, new ThreadPoolHandlerAdapter());
 
-		ThreadPoolExecutor oldThreadPoolExecutor =
+		NoticeableExecutorService oldThreadPoolExecutor =
 			portalExecutorManager.registerPortalExecutor(
-				getName(), threadPoolExecutor);
+				getName(), noticeableThreadPoolExecutor);
 
 		if (oldThreadPoolExecutor != null) {
 			if (_log.isWarnEnabled()) {
@@ -151,12 +154,13 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 						getName() + " and reuse previous one");
 			}
 
-			threadPoolExecutor.shutdownNow();
+			noticeableThreadPoolExecutor.shutdownNow();
 
-			threadPoolExecutor = oldThreadPoolExecutor;
+			noticeableThreadPoolExecutor =
+				(NoticeableThreadPoolExecutor)oldThreadPoolExecutor;
 		}
 
-		_threadPoolExecutor = threadPoolExecutor;
+		_threadPoolExecutor = noticeableThreadPoolExecutor;
 	}
 
 	@Override
@@ -169,7 +173,7 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 			return;
 		}
 
-		ThreadPoolExecutor threadPoolExecutor = _threadPoolExecutor;
+		NoticeableThreadPoolExecutor threadPoolExecutor = _threadPoolExecutor;
 
 		if (threadPoolExecutor.isShutdown()) {
 			throw new IllegalStateException(
@@ -209,8 +213,8 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 		_workersCoreSize = workersCoreSize;
 
 		if (_threadPoolExecutor != null) {
-			_threadPoolExecutor.adjustPoolSize(
-				workersCoreSize, _workersMaxSize);
+			_threadPoolExecutor.setCorePoolSize(workersCoreSize);
+			_threadPoolExecutor.setMaximumPoolSize(_workersMaxSize);
 		}
 	}
 
@@ -218,8 +222,8 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 		_workersMaxSize = workersMaxSize;
 
 		if (_threadPoolExecutor != null) {
-			_threadPoolExecutor.adjustPoolSize(
-				_workersCoreSize, workersMaxSize);
+			_threadPoolExecutor.setCorePoolSize(_workersCoreSize);
+			_threadPoolExecutor.setMaximumPoolSize(workersMaxSize);
 		}
 	}
 
@@ -234,11 +238,7 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 	protected abstract void dispatch(
 		Set<MessageListener> messageListeners, Message message);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected ThreadPoolExecutor getThreadPoolExecutor() {
+	protected NoticeableThreadPoolExecutor getThreadPoolExecutor() {
 		return _threadPoolExecutor;
 	}
 
@@ -360,26 +360,19 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 		serviceTracker;
 
 	private RejectedExecutionHandler _createRejectionExecutionHandler() {
-		return new RejectedExecutionHandler() {
-
-			@Override
-			public void rejectedExecution(
-				Runnable runnable, ThreadPoolExecutor threadPoolExecutor) {
-
-				if (!_log.isWarnEnabled()) {
-					return;
-				}
-
-				MessageRunnable messageRunnable = (MessageRunnable)runnable;
-
-				_log.warn(
-					StringBundler.concat(
-						"Discarding message ",
-						String.valueOf(messageRunnable.getMessage()),
-						" because it exceeds the maximum queue size of ",
-						String.valueOf(_maximumQueueSize)));
+		return (runnable, threadPoolExecutor) -> {
+			if (!_log.isWarnEnabled()) {
+				return;
 			}
 
+			MessageRunnable messageRunnable = (MessageRunnable)runnable;
+
+			_log.warn(
+				StringBundler.concat(
+					"Discarding message ",
+					String.valueOf(messageRunnable.getMessage()),
+					" because it exceeds the maximum queue size of ",
+					String.valueOf(_maximumQueueSize)));
 		};
 	}
 
@@ -392,7 +385,7 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 
 	private int _maximumQueueSize = Integer.MAX_VALUE;
 	private RejectedExecutionHandler _rejectedExecutionHandler;
-	private ThreadPoolExecutor _threadPoolExecutor;
+	private NoticeableThreadPoolExecutor _threadPoolExecutor;
 	private int _workersCoreSize = _WORKERS_CORE_SIZE;
 	private int _workersMaxSize = _WORKERS_MAX_SIZE;
 
