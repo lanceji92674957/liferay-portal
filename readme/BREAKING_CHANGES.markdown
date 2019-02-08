@@ -213,14 +213,17 @@ was renamed to TermsOfUseContentProviderUtil
 
 This affects anyone who used TermsOfUseContentProviderRegistryUtil to lookup
 TermsOfUseContentProvider service. Instead of always returning the first service
-registered, we keep track of the TermsOfUseContentProvider service and update it
-with ServiceProxyFactory now.
+registered which is random and depends on the order of service is registered,
+we keep track of the TermsOfUseContentProvider service and update it
+with ServiceProxyFactory now which respects service ranking.
 
 #### How should I update my code?
 
-You should check all logic that includes usages of TermsOfUseContentProvider
-since there was some differences when fetching the service. In addition, update
-all usages of TermsOfUseContentProviderRegistryUtil to TermsOfUseContentProviderUtil
+Update the package name of TermsOfUseContentProvider if it is used. Update
+TermsOfUseContentProviderRegistryUtil to TermsOfUseContentProviderUtil if the
+usage is in portal-web. Remove the usage of
+TermsOfUseContentProviderRegistryUtil in modules and use @Reference annotation
+to fetch the TermsOfUseContentProvider service instead.
 
 #### Why was this change made?
 
