@@ -267,7 +267,7 @@ chance of package version lock down.
 
 Function.java and Supplier.java in package com.liferay.portal.kernel.util were
 removed. Their usages were replaced with java.util.function.Function and
-java.util.function.Supplier. GetterUtil_IW should be regenerated.
+java.util.function.Supplier.
 
 #### Who is affected?
 
