@@ -89,22 +89,8 @@ public class LazyWorkflowTaskAssigneeListTest {
 
 		TestKaleoTaskAssignmentInstanceLocalServiceWrapper
 			kaleoTaskAssignmentInstanceLocalService =
-				new TestKaleoTaskAssignmentInstanceLocalServiceWrapper() {
-
-					@Override
-					public int getKaleoTaskAssignmentInstancesCount(
-						long instanceTokenId) {
-
-						setGetInstancesCountExecuted(true);
-
-						if (kaleoTaskInstanceTokenId == instanceTokenId) {
-							return expectedCount;
-						}
-
-						return -1;
-					}
-
-				};
+				new TestKaleoTaskAssignmentInstanceLocalServiceWrapper(
+					kaleoTaskInstanceTokenId, expectedCount);
 
 		LazyWorkflowTaskAssigneeList lazyWorkflowTaskAssigneeList =
 			new LazyWorkflowTaskAssigneeList(
@@ -218,25 +204,33 @@ public class LazyWorkflowTaskAssigneeListTest {
 
 			_getInstancesCountExecuted = true;
 
-			return super.getKaleoTaskAssignmentInstancesCount(
-				kaleoTaskInstanceTokenId);
+			if (_targetInstanceTokenId == kaleoTaskInstanceTokenId) {
+				return _expectedCount;
+			}
+
+			return -1;
 		}
 
 		public boolean isGetInstancesCountExecuted() {
 			return _getInstancesCountExecuted;
 		}
 
-		public void setGetInstancesCountExecuted(
-			boolean getInstancesCountExecuted) {
-
-			_getInstancesCountExecuted = getInstancesCountExecuted;
-		}
-
 		private TestKaleoTaskAssignmentInstanceLocalServiceWrapper() {
 			super(null);
 		}
 
+		private TestKaleoTaskAssignmentInstanceLocalServiceWrapper(
+			long instanceTokenId, int expectedCount) {
+
+			super(null);
+
+			_targetInstanceTokenId = instanceTokenId;
+			_expectedCount = expectedCount;
+		}
+
+		private int _expectedCount = -1;
 		private boolean _getInstancesCountExecuted;
+		private long _targetInstanceTokenId = -1;
 
 	}
 
