@@ -22,12 +22,11 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceTokenWrapper;
-import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalServiceWrapper;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.mockito.verification.VerificationMode;
 
@@ -49,9 +48,9 @@ public class LazyWorkflowTaskAssigneeListTest {
 			KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken(
 				kaleoTaskAssignmentInstances);
 
-		KaleoTaskAssignmentInstanceLocalService
-			kaleoTaskAssignmentInstanceLocalService = Mockito.mock(
-				KaleoTaskAssignmentInstanceLocalService.class);
+		TestKaleoTaskAssignmentInstanceLocalServiceWrapper
+			kaleoTaskAssignmentInstanceLocalService =
+				new TestKaleoTaskAssignmentInstanceLocalServiceWrapper();
 
 		LazyWorkflowTaskAssigneeList lazyWorkflowTaskAssigneeList =
 			new LazyWorkflowTaskAssigneeList(
@@ -62,8 +61,9 @@ public class LazyWorkflowTaskAssigneeListTest {
 
 		int actualSize = lazyWorkflowTaskAssigneeList.size();
 
-		verifyGetKaleoTaskAssignmentInstancesCountCall(
-			kaleoTaskAssignmentInstanceLocalService, Mockito.never());
+		Assert.assertFalse(
+			kaleoTaskAssignmentInstanceLocalService.
+				isGetInstancesCountExecuted());
 
 		Assert.assertEquals(2, actualSize);
 	}
@@ -85,19 +85,26 @@ public class LazyWorkflowTaskAssigneeListTest {
 
 			};
 
-		KaleoTaskAssignmentInstanceLocalService
-			kaleoTaskAssignmentInstanceLocalService = Mockito.mock(
-				KaleoTaskAssignmentInstanceLocalService.class);
-
 		int expectedCount = RandomTestUtil.randomInt();
 
-		Mockito.when(
-			kaleoTaskAssignmentInstanceLocalService.
-				getKaleoTaskAssignmentInstancesCount(
-					Matchers.eq(kaleoTaskInstanceTokenId))
-		).thenReturn(
-			expectedCount
-		);
+		TestKaleoTaskAssignmentInstanceLocalServiceWrapper
+			kaleoTaskAssignmentInstanceLocalService =
+				new TestKaleoTaskAssignmentInstanceLocalServiceWrapper() {
+
+					@Override
+					public int getKaleoTaskAssignmentInstancesCount(
+						long instanceTokenId) {
+
+						setGetInstancesCountExecuted(true);
+
+						if (kaleoTaskInstanceTokenId == instanceTokenId) {
+							return expectedCount;
+						}
+
+						return -1;
+					}
+
+				};
 
 		LazyWorkflowTaskAssigneeList lazyWorkflowTaskAssigneeList =
 			new LazyWorkflowTaskAssigneeList(
@@ -106,8 +113,9 @@ public class LazyWorkflowTaskAssigneeListTest {
 
 		int actualCount = lazyWorkflowTaskAssigneeList.size();
 
-		verifyGetKaleoTaskAssignmentInstancesCountCall(
-			kaleoTaskAssignmentInstanceLocalService, Mockito.atLeastOnce());
+		Assert.assertTrue(
+			kaleoTaskAssignmentInstanceLocalService.
+				isGetInstancesCountExecuted());
 
 		Assert.assertEquals(expectedCount, actualCount);
 	}
@@ -201,16 +209,35 @@ public class LazyWorkflowTaskAssigneeListTest {
 		).getKaleoTaskAssignmentInstances();
 	}
 
-	protected void verifyGetKaleoTaskAssignmentInstancesCountCall(
-		KaleoTaskAssignmentInstanceLocalService
-			kaleoTaskAssignmentInstanceLocalService,
-		VerificationMode verificationMode) {
+	private class TestKaleoTaskAssignmentInstanceLocalServiceWrapper
+		extends KaleoTaskAssignmentInstanceLocalServiceWrapper {
 
-		Mockito.verify(
-			kaleoTaskAssignmentInstanceLocalService, verificationMode
-		).getKaleoTaskAssignmentInstancesCount(
-			Matchers.anyLong()
-		);
+		@Override
+		public int getKaleoTaskAssignmentInstancesCount(
+			long kaleoTaskInstanceTokenId) {
+
+			_getInstancesCountExecuted = true;
+
+			return super.getKaleoTaskAssignmentInstancesCount(
+				kaleoTaskInstanceTokenId);
+		}
+
+		public boolean isGetInstancesCountExecuted() {
+			return _getInstancesCountExecuted;
+		}
+
+		public void setGetInstancesCountExecuted(
+			boolean getInstancesCountExecuted) {
+
+			_getInstancesCountExecuted = getInstancesCountExecuted;
+		}
+
+		private TestKaleoTaskAssignmentInstanceLocalServiceWrapper() {
+			super(null);
+		}
+
+		private boolean _getInstancesCountExecuted;
+
 	}
 
 }
