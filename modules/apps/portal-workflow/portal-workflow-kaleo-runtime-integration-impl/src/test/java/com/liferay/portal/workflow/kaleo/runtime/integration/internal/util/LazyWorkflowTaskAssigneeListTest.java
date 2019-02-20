@@ -151,7 +151,7 @@ public class LazyWorkflowTaskAssigneeListTest {
 		boolean[] executed = {false, false};
 
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			_getkaleoTaskInstanceToken(executed, kaleoTaskAssignmentInstances);
+			_getKaleoTaskInstanceToken(executed, kaleoTaskAssignmentInstances);
 
 		LazyWorkflowTaskAssigneeList lazyWorkflowTaskAssigneeList =
 			new LazyWorkflowTaskAssigneeList(kaleoTaskInstanceToken, null);
@@ -186,7 +186,7 @@ public class LazyWorkflowTaskAssigneeListTest {
 		boolean[] executed = {false, false};
 
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			_getkaleoTaskInstanceToken(executed, kaleoTaskAssignmentInstance);
+			_getKaleoTaskInstanceToken(executed, kaleoTaskAssignmentInstance);
 
 		LazyWorkflowTaskAssigneeList lazyWorkflowTaskAssigneeList =
 			new LazyWorkflowTaskAssigneeList(kaleoTaskInstanceToken, null);
@@ -220,7 +220,7 @@ public class LazyWorkflowTaskAssigneeListTest {
 		lazyWorkflowTaskAssigneeList.get(0);
 	}
 
-	private KaleoTaskInstanceToken _getkaleoTaskInstanceToken(
+	private KaleoTaskInstanceToken _getKaleoTaskInstanceToken(
 		boolean[] executed,
 		KaleoTaskAssignmentInstance... kaleoTaskAssignmentInstances) {
 
