@@ -72,14 +72,6 @@ public interface AssetVocabularyService extends BaseService {
 	public AssetVocabulary fetchVocabulary(long vocabularyId)
 		throws PortalException;
 
-	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetVocabulary> getCompanyVocabularies(long companyId)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetVocabulary> getGroupsVocabularies(long[] groupIds);
 
@@ -140,15 +132,6 @@ public interface AssetVocabularyService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public String getOSGiServiceIdentifier();
-
-	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	AssetUtil#filterVocabularyIds(PermissionChecker, long[])}
-	*/
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetVocabulary> getVocabularies(long[] vocabularyIds)
-		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetVocabulary getVocabulary(long vocabularyId)

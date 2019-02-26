@@ -153,25 +153,6 @@ public class AssetVocabularyServiceSoap {
 		}
 	}
 
-	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
-	@Deprecated
-	public static com.liferay.asset.kernel.model.AssetVocabularySoap[] getCompanyVocabularies(
-		long companyId) throws RemoteException {
-		try {
-			java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> returnValue =
-				AssetVocabularyServiceUtil.getCompanyVocabularies(companyId);
-
-			return com.liferay.asset.kernel.model.AssetVocabularySoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.asset.kernel.model.AssetVocabularySoap[] getGroupsVocabularies(
 		long[] groupIds) throws RemoteException {
 		try {
@@ -391,26 +372,6 @@ public class AssetVocabularyServiceSoap {
 					name, start, end, obc);
 
 			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	AssetUtil#filterVocabularyIds(PermissionChecker, long[])}
-	*/
-	@Deprecated
-	public static com.liferay.asset.kernel.model.AssetVocabularySoap[] getVocabularies(
-		long[] vocabularyIds) throws RemoteException {
-		try {
-			java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> returnValue =
-				AssetVocabularyServiceUtil.getVocabularies(vocabularyIds);
-
-			return com.liferay.asset.kernel.model.AssetVocabularySoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
