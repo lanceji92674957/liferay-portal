@@ -857,39 +857,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			description, summary, url, layoutUuid, height, width, priority);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #updateEntry(long, long, Date, Date, String, long, String,
-	 *             long, long[], String[], boolean, boolean, Date, Date, Date,
-	 *             Date, String, String, String, String, String, String, int,
-	 *             int, Double)}
-	 */
-	@Deprecated
-	@Override
-	public AssetEntry updateEntry(
-			long userId, long groupId, Date createDate, Date modifiedDate,
-			String className, long classPK, String classUuid, long classTypeId,
-			long[] categoryIds, String[] tagNames, boolean visible,
-			Date startDate, Date endDate, Date expirationDate, String mimeType,
-			String title, String description, String summary, String url,
-			String layoutUuid, int height, int width, Integer priority,
-			boolean sync)
-		throws PortalException {
-
-		Double priorityDouble = null;
-
-		if (priority != null) {
-			priorityDouble = priority.doubleValue();
-		}
-
-		return assetEntryLocalService.updateEntry(
-			userId, groupId, createDate, modifiedDate, className, classPK,
-			classUuid, classTypeId, categoryIds, tagNames, true, visible,
-			startDate, endDate, null, expirationDate, mimeType, title,
-			description, summary, url, layoutUuid, height, width,
-			priorityDouble);
-	}
-
 	@Override
 	public AssetEntry updateEntry(
 			long userId, long groupId, String className, long classPK,
@@ -918,35 +885,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			userId, groupId, null, null, className, classPK, null, 0,
 			categoryIds, tagNames, true, true, null, null, null, null, null,
 			null, null, null, null, null, 0, 0, (Double)null);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #updateEntry(String, long, Date, Date, boolean, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public AssetEntry updateEntry(
-			String className, long classPK, Date publishDate, boolean visible)
-		throws PortalException {
-
-		return assetEntryLocalService.updateEntry(
-			className, classPK, publishDate, null, true, visible);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #updateEntry(String, long, Date, Date, boolean, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public AssetEntry updateEntry(
-			String className, long classPK, Date publishDate,
-			Date expirationDate, boolean visible)
-		throws PortalException {
-
-		return assetEntryLocalService.updateEntry(
-			className, classPK, publishDate, expirationDate, true, visible);
 	}
 
 	@Override
@@ -1060,22 +998,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		throws PortalException {
 
 		validate(groupId, className, 0L, classTypePK, categoryIds, tagNames);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #validate(long,
-	 *             String, long, long[], String[])}
-	 */
-	@Deprecated
-	@Override
-	public void validate(
-			long groupId, String className, long[] categoryIds,
-			String[] tagNames)
-		throws PortalException {
-
-		validate(
-			groupId, className, AssetCategoryConstants.ALL_CLASS_TYPE_PK,
-			categoryIds, tagNames);
 	}
 
 	protected SearchContext buildSearchContext(
