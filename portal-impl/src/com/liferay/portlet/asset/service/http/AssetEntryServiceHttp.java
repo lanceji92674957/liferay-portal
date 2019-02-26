@@ -381,47 +381,6 @@ public class AssetEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(
-		HttpPrincipal httpPrincipal, long groupId, java.util.Date createDate,
-		java.util.Date modifiedDate, String className, long classPK,
-		String classUuid, long classTypeId, long[] categoryIds,
-		String[] tagNames, boolean visible, java.util.Date startDate,
-		java.util.Date endDate, java.util.Date expirationDate, String mimeType,
-		String title, String description, String summary, String url,
-		String layoutUuid, int height, int width, Integer priority, boolean sync)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
-					"updateEntry", _updateEntryParameterTypes10);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					createDate, modifiedDate, className, classPK, classUuid,
-					classTypeId, categoryIds, tagNames, visible, startDate,
-					endDate, expirationDate, mimeType, title, description,
-					summary, url, layoutUuid, height, width, priority, sync);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.asset.kernel.model.AssetEntry)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(AssetEntryServiceHttp.class);
 	private static final Class<?>[] _fetchEntryParameterTypes0 = new Class[] {
 			long.class
@@ -462,13 +421,5 @@ public class AssetEntryServiceHttp {
 			java.util.Date.class, java.util.Date.class, String.class,
 			String.class, String.class, String.class, String.class, String.class,
 			int.class, int.class, Double.class
-		};
-	private static final Class<?>[] _updateEntryParameterTypes10 = new Class[] {
-			long.class, java.util.Date.class, java.util.Date.class, String.class,
-			long.class, String.class, long.class, long[].class, String[].class,
-			boolean.class, java.util.Date.class, java.util.Date.class,
-			java.util.Date.class, String.class, String.class, String.class,
-			String.class, String.class, String.class, int.class, int.class,
-			Integer.class, boolean.class
 		};
 }
