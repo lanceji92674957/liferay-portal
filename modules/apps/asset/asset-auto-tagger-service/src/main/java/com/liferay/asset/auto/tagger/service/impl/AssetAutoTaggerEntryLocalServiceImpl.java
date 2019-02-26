@@ -18,12 +18,19 @@ import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.service.base.AssetAutoTaggerEntryLocalServiceBaseImpl;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.portal.aop.AopService;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Alejandro Tardín
  */
+@Component(
+	property = "model.class.name=com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry",
+	service = AopService.class
+)
 public class AssetAutoTaggerEntryLocalServiceImpl
 	extends AssetAutoTaggerEntryLocalServiceBaseImpl {
 
