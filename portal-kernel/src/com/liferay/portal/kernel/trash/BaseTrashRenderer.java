@@ -19,7 +19,6 @@ import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.Locale;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -30,15 +29,6 @@ public abstract class BaseTrashRenderer implements TrashRenderer {
 
 	@Override
 	public String getIconCssClass() {
-		return StringPool.BLANK;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String getIconPath(PortletRequest portletRequest) {
 		return StringPool.BLANK;
 	}
 
