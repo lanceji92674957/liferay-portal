@@ -17,9 +17,6 @@ package com.liferay.portal.kernel.trash;
 import com.liferay.petra.string.StringPool;
 import com.liferay.trash.kernel.util.TrashUtil;
 
-import java.util.Locale;
-
-import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
