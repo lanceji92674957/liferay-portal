@@ -33,28 +33,9 @@ public abstract class BaseTrashRenderer implements TrashRenderer {
 		return StringPool.BLANK;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String getIconPath(PortletRequest portletRequest) {
-		return StringPool.BLANK;
-	}
-
 	@Override
 	public String getNewName(String oldName, String token) {
 		return TrashUtil.getNewName(oldName, token);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getSummary(PortletRequest, javax.portlet.PortletResponse)}
-	 */
-	@Deprecated
-	@Override
-	public String getSummary(Locale locale) {
-		return getSummary(null, null);
 	}
 
 	@Override
