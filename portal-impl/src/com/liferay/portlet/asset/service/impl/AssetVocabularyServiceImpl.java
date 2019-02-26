@@ -139,18 +139,6 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 		return vocabulary;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public List<AssetVocabulary> getCompanyVocabularies(long companyId)
-		throws PortalException {
-
-		return filterVocabularies(
-			assetVocabularyLocalService.getCompanyVocabularies(companyId));
-	}
-
 	@Override
 	public List<AssetVocabulary> getGroupsVocabularies(long[] groupIds) {
 		return getGroupsVocabularies(groupIds, null);
@@ -309,19 +297,6 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			groupId, name, start, end, false, obc);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             AssetUtil#filterVocabularyIds(PermissionChecker, long[])}
-	 */
-	@Deprecated
-	@Override
-	public List<AssetVocabulary> getVocabularies(long[] vocabularyIds)
-		throws PortalException {
-
-		return filterVocabularies(
-			assetVocabularyLocalService.getVocabularies(vocabularyIds));
-	}
-
 	@Override
 	public AssetVocabulary getVocabulary(long vocabularyId)
 		throws PortalException {
@@ -389,33 +364,6 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 		return assetVocabularyLocalService.updateVocabulary(
 			vocabularyId, title, titleMap, descriptionMap, settings,
 			serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	protected List<AssetVocabulary> filterVocabularies(
-			List<AssetVocabulary> vocabularies)
-		throws PortalException {
-
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		vocabularies = ListUtil.copy(vocabularies);
-
-		Iterator<AssetVocabulary> itr = vocabularies.iterator();
-
-		while (itr.hasNext()) {
-			AssetVocabulary vocabulary = itr.next();
-
-			if (!AssetVocabularyPermission.contains(
-					permissionChecker, vocabulary, ActionKeys.VIEW)) {
-
-				itr.remove();
-			}
-		}
-
-		return vocabularies;
 	}
 
 }
