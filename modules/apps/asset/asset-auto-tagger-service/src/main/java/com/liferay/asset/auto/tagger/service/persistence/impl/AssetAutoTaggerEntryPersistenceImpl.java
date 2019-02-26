@@ -21,9 +21,11 @@ import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.model.impl.AssetAutoTaggerEntryImpl;
 import com.liferay.asset.auto.tagger.model.impl.AssetAutoTaggerEntryModelImpl;
 import com.liferay.asset.auto.tagger.service.persistence.AssetAutoTaggerEntryPersistence;
+import com.liferay.asset.auto.tagger.service.persistence.impl.constants.AssetAutoTaggerPersistenceConstants;
 
 import com.liferay.petra.string.StringBundler;
 
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -31,6 +33,7 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -38,9 +41,14 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 import java.io.Serializable;
 
@@ -50,6 +58,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import javax.sql.DataSource;
 
 /**
  * The persistence implementation for the asset auto tagger entry service.
@@ -61,6 +71,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@Component(service = AssetAutoTaggerEntryPersistence.class)
 @ProviderType
 public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<AssetAutoTaggerEntry>
 	implements AssetAutoTaggerEntryPersistence {
@@ -1285,7 +1296,6 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 
 		setModelImplClass(AssetAutoTaggerEntryImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1295,7 +1305,7 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 	 */
 	@Override
 	public void cacheResult(AssetAutoTaggerEntry assetAutoTaggerEntry) {
-		entityCache.putResult(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(entityCacheEnabled,
 			AssetAutoTaggerEntryImpl.class,
 			assetAutoTaggerEntry.getPrimaryKey(), assetAutoTaggerEntry);
 
@@ -1316,8 +1326,7 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 	@Override
 	public void cacheResult(List<AssetAutoTaggerEntry> assetAutoTaggerEntries) {
 		for (AssetAutoTaggerEntry assetAutoTaggerEntry : assetAutoTaggerEntries) {
-			if (entityCache.getResult(
-						AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
+			if (entityCache.getResult(entityCacheEnabled,
 						AssetAutoTaggerEntryImpl.class,
 						assetAutoTaggerEntry.getPrimaryKey()) == null) {
 				cacheResult(assetAutoTaggerEntry);
@@ -1353,7 +1362,7 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 	 */
 	@Override
 	public void clearCache(AssetAutoTaggerEntry assetAutoTaggerEntry) {
-		entityCache.removeResult(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(entityCacheEnabled,
 			AssetAutoTaggerEntryImpl.class, assetAutoTaggerEntry.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1369,7 +1378,7 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (AssetAutoTaggerEntry assetAutoTaggerEntry : assetAutoTaggerEntries) {
-			entityCache.removeResult(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(entityCacheEnabled,
 				AssetAutoTaggerEntryImpl.class,
 				assetAutoTaggerEntry.getPrimaryKey());
 
@@ -1588,7 +1597,7 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!AssetAutoTaggerEntryModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else
@@ -1652,7 +1661,7 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 			}
 		}
 
-		entityCache.putResult(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(entityCacheEnabled,
 			AssetAutoTaggerEntryImpl.class,
 			assetAutoTaggerEntry.getPrimaryKey(), assetAutoTaggerEntry, false);
 
@@ -1925,26 +1934,27 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 	/**
 	 * Initializes the asset auto tagger entry persistence.
 	 */
-	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
-				AssetAutoTaggerEntryModelImpl.FINDER_CACHE_ENABLED,
-				AssetAutoTaggerEntryImpl.class,
+	@Activate
+	public void activate() {
+		AssetAutoTaggerEntryModelImpl.setEntityCacheEnabled(entityCacheEnabled);
+		AssetAutoTaggerEntryModelImpl.setFinderCacheEnabled(finderCacheEnabled);
+
+		_finderPathWithPaginationFindAll = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, AssetAutoTaggerEntryImpl.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
-				AssetAutoTaggerEntryModelImpl.FINDER_CACHE_ENABLED,
-				AssetAutoTaggerEntryImpl.class,
+		_finderPathWithoutPaginationFindAll = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, AssetAutoTaggerEntryImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 				new String[0]);
 
-		_finderPathCountAll = new FinderPath(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
-				AssetAutoTaggerEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+		_finderPathCountAll = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, Long.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 				new String[0]);
 
-		_finderPathWithPaginationFindByAssetEntryId = new FinderPath(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
-				AssetAutoTaggerEntryModelImpl.FINDER_CACHE_ENABLED,
-				AssetAutoTaggerEntryImpl.class,
+		_finderPathWithPaginationFindByAssetEntryId = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, AssetAutoTaggerEntryImpl.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAssetEntryId",
 				new String[] {
 					Long.class.getName(),
@@ -1953,22 +1963,20 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 					OrderByComparator.class.getName()
 				});
 
-		_finderPathWithoutPaginationFindByAssetEntryId = new FinderPath(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
-				AssetAutoTaggerEntryModelImpl.FINDER_CACHE_ENABLED,
-				AssetAutoTaggerEntryImpl.class,
+		_finderPathWithoutPaginationFindByAssetEntryId = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, AssetAutoTaggerEntryImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByAssetEntryId", new String[] { Long.class.getName() },
 				AssetAutoTaggerEntryModelImpl.ASSETENTRYID_COLUMN_BITMASK |
 				AssetAutoTaggerEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
 
-		_finderPathCountByAssetEntryId = new FinderPath(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
-				AssetAutoTaggerEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+		_finderPathCountByAssetEntryId = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, Long.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"countByAssetEntryId", new String[] { Long.class.getName() });
 
-		_finderPathWithPaginationFindByAssetTagId = new FinderPath(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
-				AssetAutoTaggerEntryModelImpl.FINDER_CACHE_ENABLED,
-				AssetAutoTaggerEntryImpl.class,
+		_finderPathWithPaginationFindByAssetTagId = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, AssetAutoTaggerEntryImpl.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAssetTagId",
 				new String[] {
 					Long.class.getName(),
@@ -1977,45 +1985,67 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 					OrderByComparator.class.getName()
 				});
 
-		_finderPathWithoutPaginationFindByAssetTagId = new FinderPath(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
-				AssetAutoTaggerEntryModelImpl.FINDER_CACHE_ENABLED,
-				AssetAutoTaggerEntryImpl.class,
+		_finderPathWithoutPaginationFindByAssetTagId = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, AssetAutoTaggerEntryImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAssetTagId",
 				new String[] { Long.class.getName() },
 				AssetAutoTaggerEntryModelImpl.ASSETTAGID_COLUMN_BITMASK |
 				AssetAutoTaggerEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
 
-		_finderPathCountByAssetTagId = new FinderPath(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
-				AssetAutoTaggerEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+		_finderPathCountByAssetTagId = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, Long.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAssetTagId",
 				new String[] { Long.class.getName() });
 
-		_finderPathFetchByA_A = new FinderPath(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
-				AssetAutoTaggerEntryModelImpl.FINDER_CACHE_ENABLED,
-				AssetAutoTaggerEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
-				"fetchByA_A",
+		_finderPathFetchByA_A = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, AssetAutoTaggerEntryImpl.class,
+				FINDER_CLASS_NAME_ENTITY, "fetchByA_A",
 				new String[] { Long.class.getName(), Long.class.getName() },
 				AssetAutoTaggerEntryModelImpl.ASSETENTRYID_COLUMN_BITMASK |
 				AssetAutoTaggerEntryModelImpl.ASSETTAGID_COLUMN_BITMASK);
 
-		_finderPathCountByA_A = new FinderPath(AssetAutoTaggerEntryModelImpl.ENTITY_CACHE_ENABLED,
-				AssetAutoTaggerEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+		_finderPathCountByA_A = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, Long.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_A",
 				new String[] { Long.class.getName(), Long.class.getName() });
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(AssetAutoTaggerEntryImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = CompanyProviderWrapper.class)
+	@Override
+	@Reference(target = AssetAutoTaggerPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(configuration.get(
+					"value.object.column.bitmask.enabled.com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry"),
+				true);
+	}
+
+	@Override
+	@Reference(target = AssetAutoTaggerPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(target = AssetAutoTaggerPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+	@Reference(service = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
-	@ServiceReference(type = EntityCache.class)
+	@Reference
 	protected EntityCache entityCache;
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_ASSETAUTOTAGGERENTRY = "SELECT assetAutoTaggerEntry FROM AssetAutoTaggerEntry assetAutoTaggerEntry";
 	private static final String _SQL_SELECT_ASSETAUTOTAGGERENTRY_WHERE = "SELECT assetAutoTaggerEntry FROM AssetAutoTaggerEntry assetAutoTaggerEntry WHERE ";

@@ -20,7 +20,7 @@ import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
 import com.liferay.asset.auto.tagger.service.persistence.AssetAutoTaggerEntryPersistence;
 
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -38,11 +38,12 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
+
+import org.osgi.service.component.annotations.Reference;
 
 import java.io.Serializable;
 
@@ -64,7 +65,7 @@ import javax.sql.DataSource;
 @ProviderType
 public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements AssetAutoTaggerEntryLocalService,
-		IdentifiableOSGiService {
+		AopService, IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -321,71 +322,17 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 		return assetAutoTaggerEntryPersistence.update(assetAutoTaggerEntry);
 	}
 
-	/**
-	 * Returns the asset auto tagger entry local service.
-	 *
-	 * @return the asset auto tagger entry local service
-	 */
-	public AssetAutoTaggerEntryLocalService getAssetAutoTaggerEntryLocalService() {
-		return assetAutoTaggerEntryLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			AssetAutoTaggerEntryLocalService.class,
+			IdentifiableOSGiService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Sets the asset auto tagger entry local service.
-	 *
-	 * @param assetAutoTaggerEntryLocalService the asset auto tagger entry local service
-	 */
-	public void setAssetAutoTaggerEntryLocalService(
-		AssetAutoTaggerEntryLocalService assetAutoTaggerEntryLocalService) {
-		this.assetAutoTaggerEntryLocalService = assetAutoTaggerEntryLocalService;
-	}
-
-	/**
-	 * Returns the asset auto tagger entry persistence.
-	 *
-	 * @return the asset auto tagger entry persistence
-	 */
-	public AssetAutoTaggerEntryPersistence getAssetAutoTaggerEntryPersistence() {
-		return assetAutoTaggerEntryPersistence;
-	}
-
-	/**
-	 * Sets the asset auto tagger entry persistence.
-	 *
-	 * @param assetAutoTaggerEntryPersistence the asset auto tagger entry persistence
-	 */
-	public void setAssetAutoTaggerEntryPersistence(
-		AssetAutoTaggerEntryPersistence assetAutoTaggerEntryPersistence) {
-		this.assetAutoTaggerEntryPersistence = assetAutoTaggerEntryPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry",
-			assetAutoTaggerEntryLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry");
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		assetAutoTaggerEntryLocalService = (AssetAutoTaggerEntryLocalService)aopProxy;
 	}
 
 	/**
@@ -430,12 +377,9 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = AssetAutoTaggerEntryLocalService.class)
 	protected AssetAutoTaggerEntryLocalService assetAutoTaggerEntryLocalService;
-	@BeanReference(type = AssetAutoTaggerEntryPersistence.class)
+	@Reference
 	protected AssetAutoTaggerEntryPersistence assetAutoTaggerEntryPersistence;
-	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }
