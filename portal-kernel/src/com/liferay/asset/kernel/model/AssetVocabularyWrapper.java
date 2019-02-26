@@ -353,15 +353,6 @@ public class AssetVocabularyWrapper extends BaseModelWrapper<AssetVocabulary>
 	}
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties() {
-		return model.getSettingsProperties();
-	}
-
-	/**
 	* Returns the title of this asset vocabulary.
 	*
 	* @return the title of this asset vocabulary
@@ -522,16 +513,6 @@ public class AssetVocabularyWrapper extends BaseModelWrapper<AssetVocabulary>
 	@Override
 	public boolean isMultiValued() {
 		return model.isMultiValued();
-	}
-
-	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	#isRequired(long, long)}
-	*/
-	@Deprecated
-	@Override
-	public boolean isRequired(long classNameId) {
-		return model.isRequired(classNameId);
 	}
 
 	@Override
@@ -707,16 +688,6 @@ public class AssetVocabularyWrapper extends BaseModelWrapper<AssetVocabulary>
 	@Override
 	public void setSettings(String settings) {
 		model.setSettings(settings);
-	}
-
-	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
-	@Deprecated
-	@Override
-	public void setSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties) {
-		model.setSettingsProperties(settingsProperties);
 	}
 
 	/**
