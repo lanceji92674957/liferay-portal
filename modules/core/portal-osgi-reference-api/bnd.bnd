@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal OSGi Reference API
+Bundle-SymbolicName: com.liferay.portal.osgi.reference.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.osgi.reference

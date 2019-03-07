@@ -106,6 +106,7 @@ Export-Package:\
 	com.ibm.crypto.provider,\
 	\
 	com.liferay.ibm.icu.*;version='4.0.1',\
+	com.liferay.portal.osgi.reference.spi;version='1.0.0',\
 	\
 	com.sun.security.auth.module,\
 	com.sun.syndication;version='1.0',\
@@ -328,6 +329,8 @@ Provide-Capability:\
 		version:Version=3.1
 -includeresource:\
 	-@lib/com.liferay.portal.app.license.api.jar,\
+	-@lib/com.liferay.portal.osgi.reference.api.jar,\
+	-@lib/com.liferay.portal.osgi.reference.spi.jar,\
 	@../../../lib/development/activation.jar,\
 	@../../../lib/development/jms.jar,\
 	@../../../lib/development/mail.jar,\
