@@ -16,7 +16,6 @@ package com.liferay.portal.osgi.reference.internal;
 
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.osgi.reference.spi.asm.StaticReferenceASMParserUtil;
@@ -29,6 +28,7 @@ import java.net.URL;
 
 import java.util.Collections;
 import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.List;
 
 import org.osgi.framework.Bundle;
@@ -76,23 +76,31 @@ public class StaticReferenceBundleTrackerCustomizer
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		for (String staticReferenceClass : staticReferenceClasses) {
-			URL url = bundle.getResource(
-				staticReferenceClass.replace(CharPool.PERIOD, CharPool.SLASH) +
-					".class");
+		Enumeration<URL> enumeration = bundle.findEntries("/", "*.class", true);
 
-			if (url == null) {
-				continue;
-			}
+		if (enumeration == null) {
+			return null;
+		}
+
+		while (enumeration.hasMoreElements()) {
+			URL url = enumeration.nextElement();
 
 			try (InputStream inputStream = url.openStream()) {
 				StreamUtil.transfer(inputStream, unsyncByteArrayOutputStream);
 
 				StaticReferenceASMParserUtil.parseStaticReferences(
 					unsyncByteArrayOutputStream.toByteArray(),
-					(fieldName, service) ->
+					(fieldName, service) -> {
+						String file = url.getFile();
+
+						String className = file.replace('/', '.');
+
+						className = className.substring(
+							1, className.length() - 6);
+
 						staticReferenceResolver.registerStaticReference(
-							staticReferenceClass, fieldName, service));
+							className, fieldName, service);
+					});
 			}
 			catch (IOException ioe) {
 				throw new UncheckedIOException(ioe);
