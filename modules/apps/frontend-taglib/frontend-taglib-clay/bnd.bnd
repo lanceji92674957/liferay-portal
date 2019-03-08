@@ -35,6 +35,9 @@ Liferay-JS-Submodules-Bridge:\
 	clay-sticker,\
 	clay-table,\
 	clay-tooltip
+Liferay-Static-Reference-Classes:\
+	com.liferay.frontend.taglib.clay.servlet.taglib.soy.ManagementToolbarTag,\
+	com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\

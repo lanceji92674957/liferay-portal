@@ -16,17 +16,16 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.soy.base;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.clay.internal.ClayTagContextContributorsProvider;
-import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.contributor.ClayTagContextContributor;
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.osgi.reference.StaticReference;
 
 import java.util.List;
 import java.util.Map;
@@ -78,13 +77,7 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 
 	@Override
 	public String getModule() {
-		NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
-
-		if (npmResolver == null) {
-			return StringPool.BLANK;
-		}
-
-		return npmResolver.resolveModuleName(
+		return _npmResolver.resolveModuleName(
 			StringBundler.concat(
 				"clay-", _moduleBaseName, "/lib/", _componentBaseName));
 	}
@@ -172,6 +165,9 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 			clayTagContextContributor.populate(getContext());
 		}
 	}
+
+	@StaticReference
+	private static NPMResolver _npmResolver;
 
 	private String _componentBaseName;
 	private String _moduleBaseName;

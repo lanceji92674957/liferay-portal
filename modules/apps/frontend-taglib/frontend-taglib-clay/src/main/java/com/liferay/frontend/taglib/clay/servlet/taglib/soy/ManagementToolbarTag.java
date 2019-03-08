@@ -15,7 +15,6 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.display.context.ManagementToolbarDefaults;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.ManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
@@ -31,6 +30,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.osgi.reference.StaticReference;
 
 import java.util.HashMap;
 import java.util.List;
@@ -150,13 +150,7 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 	@Override
 	public String getModule() {
-		NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
-
-		if (npmResolver == null) {
-			return StringPool.BLANK;
-		}
-
-		return npmResolver.resolveModuleName(
+		return _npmResolver.resolveModuleName(
 			"frontend-taglib-clay/management_toolbar/ManagementToolbar.es");
 	}
 
@@ -488,6 +482,9 @@ public class ManagementToolbarTag extends BaseClayTag {
 	private static final String[] _NAMESPACED_PARAMS = {
 		"infoPanelId", "searchContainerId", "searchFormName", "searchInputName"
 	};
+
+	@StaticReference
+	private static NPMResolver _npmResolver;
 
 	private ManagementToolbarDisplayContext _managementToolbarDisplayContext;
 

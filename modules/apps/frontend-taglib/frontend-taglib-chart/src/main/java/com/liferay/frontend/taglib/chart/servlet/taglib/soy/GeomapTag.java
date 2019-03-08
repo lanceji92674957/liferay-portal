@@ -15,10 +15,9 @@
 package com.liferay.frontend.taglib.chart.servlet.taglib.soy;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.frontend.taglib.chart.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.chart.model.geomap.GeomapConfig;
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.osgi.reference.StaticReference;
 
 import java.util.Map;
 
@@ -40,13 +39,7 @@ public class GeomapTag extends TemplateRendererTag {
 
 	@Override
 	public String getModule() {
-		NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
-
-		if (npmResolver == null) {
-			return StringPool.BLANK;
-		}
-
-		return npmResolver.resolveModuleName(
+		return _npmResolver.resolveModuleName(
 			"clay-charts/lib/" + _moduleBaseName);
 	}
 
@@ -59,6 +52,9 @@ public class GeomapTag extends TemplateRendererTag {
 	public void setId(String id) {
 		putValue("id", id);
 	}
+
+	@StaticReference
+	private static NPMResolver _npmResolver;
 
 	private final String _moduleBaseName;
 

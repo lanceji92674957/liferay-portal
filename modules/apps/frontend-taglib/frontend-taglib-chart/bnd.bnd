@@ -21,6 +21,9 @@ Export-Package:\
 	com.liferay.frontend.taglib.chart.model.predictive,\
 	com.liferay.frontend.taglib.chart.servlet.taglib.soy,\
 	com.liferay.frontend.taglib.chart.servlet.taglib.soy.base
+Liferay-Static-Reference-Classes:\
+	com.liferay.frontend.taglib.chart.servlet.taglib.soy.GeomapTag,\
+	com.liferay.frontend.taglib.chart.servlet.taglib.soy.base.BaseChartTag
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\

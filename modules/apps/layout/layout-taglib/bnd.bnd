@@ -5,6 +5,8 @@ Export-Package:\
 	com.liferay.layout.taglib.servlet.taglib,\
 	com.liferay.layout.taglib.servlet.taglib.soy
 Liferay-JS-Config: /META-INF/resources/config.js
+Liferay-Static-Reference-Classes:\
+	com.liferay.layout.taglib.servlet.taglib.soy.SelectLayoutTag
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\

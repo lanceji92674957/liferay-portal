@@ -4,6 +4,8 @@ Bundle-Version: 4.0.0
 Export-Package:\
 	com.liferay.flags.taglib.servlet.taglib,\
 	com.liferay.flags.taglib.servlet.taglib.soy
+Liferay-Static-Reference-Classes:\
+	com.liferay.flags.taglib.servlet.taglib.soy.FlagsTag
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\
