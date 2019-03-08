@@ -15,7 +15,11 @@
 package com.liferay.portal.osgi.reference.spi.asm;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.osgi.reference.StaticReference;
+
+import java.lang.reflect.Modifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +57,22 @@ public class StaticReferenceASMParserUtil {
 				continue;
 			}
 
+			int access = fieldAnnotationFieldVisitor._access;
+
+			if (!Modifier.isStatic(access) || Modifier.isFinal(access)) {
+				String fieldName = fieldAnnotationFieldVisitor._fieldName;
+
+				if (!Modifier.isStatic(access)) {
+					_logInvalidField(classReader, fieldName, "non-static");
+				}
+
+				if (Modifier.isFinal(access)) {
+					_logInvalidField(classReader, fieldName, "final");
+				}
+
+				continue;
+			}
+
 			String service = fieldAnnotationVisitor._service;
 
 			if (service == null) {
@@ -73,8 +93,22 @@ public class StaticReferenceASMParserUtil {
 		}
 	}
 
+	private static void _logInvalidField(
+		ClassReader classReader, String fieldName, String reason) {
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				StringBundler.concat(
+					"Invalid StaticReference in ", classReader.getClassName(),
+					" on field ", fieldName, " because the field is ", reason));
+		}
+	}
+
 	private StaticReferenceASMParserUtil() {
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		StaticReferenceASMParserUtil.class);
 
 	private static class FieldAnnotationClassVisitor extends ClassVisitor {
 
@@ -84,7 +118,7 @@ public class StaticReferenceASMParserUtil {
 			Object value) {
 
 			FieldAnnotationFieldVisitor fieldAnnotationFieldVisitor =
-				new FieldAnnotationFieldVisitor(name, descriptor);
+				new FieldAnnotationFieldVisitor(access, name, descriptor);
 
 			_fieldAnnotationFieldVisitors.add(fieldAnnotationFieldVisitor);
 
@@ -116,10 +150,11 @@ public class StaticReferenceASMParserUtil {
 		}
 
 		private FieldAnnotationFieldVisitor(
-			String fieldName, String fieldDescriptor) {
+			int access, String fieldName, String fieldDescriptor) {
 
 			super(Opcodes.ASM5);
 
+			_access = access;
 			_fieldName = fieldName;
 			_fieldDescriptor = fieldDescriptor;
 		}
@@ -132,6 +167,7 @@ public class StaticReferenceASMParserUtil {
 			_ANNOTATION_DESCRIPTOR = type.getDescriptor();
 		}
 
+		private final int _access;
 		private FieldAnnotationVisitor _fieldAnnotationVisitor;
 		private final String _fieldDescriptor;
 		private final String _fieldName;

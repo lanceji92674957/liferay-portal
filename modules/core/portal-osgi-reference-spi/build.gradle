@@ -1,4 +1,5 @@
 dependencies {
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	compileOnly group: "org.ow2.asm", name: "asm", version: "7.0"
 	compileOnly project(":core:petra:petra-string")
