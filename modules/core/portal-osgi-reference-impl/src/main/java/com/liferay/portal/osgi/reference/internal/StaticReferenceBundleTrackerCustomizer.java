@@ -16,8 +16,6 @@ package com.liferay.portal.osgi.reference.internal;
 
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.osgi.reference.spi.asm.StaticReferenceASMParserUtil;
 
 import java.io.IOException;
@@ -27,9 +25,7 @@ import java.io.UncheckedIOException;
 import java.net.URL;
 
 import java.util.Collections;
-import java.util.Dictionary;
 import java.util.Enumeration;
-import java.util.List;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -54,13 +50,9 @@ public class StaticReferenceBundleTrackerCustomizer
 	public StaticReferenceResolver addingBundle(
 		Bundle bundle, BundleEvent bundleEvent) {
 
-		Dictionary<String, String> headers = bundle.getHeaders(
-			StringPool.BLANK);
+		String name = bundle.getSymbolicName();
 
-		List<String> staticReferenceClasses = StringUtil.split(
-			headers.get("Liferay-Static-Reference-Classes"));
-
-		if (staticReferenceClasses.isEmpty()) {
+		if (!name.endsWith(".taglib")) {
 			return null;
 		}
 
