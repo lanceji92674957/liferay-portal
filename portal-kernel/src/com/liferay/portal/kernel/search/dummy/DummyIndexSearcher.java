@@ -46,19 +46,6 @@ public class DummyIndexSearcher implements IndexSearcher {
 		return _getHits();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #search(SearchContext, Query)}
-	 */
-	@Deprecated
-	@Override
-	public Hits search(
-		String searchEngineId, long companyId, Query query, Sort[] sort,
-		int start, int end) {
-
-		return _getHits();
-	}
-
 	@Override
 	public long searchCount(SearchContext searchContext, Query query) {
 		return 0;
