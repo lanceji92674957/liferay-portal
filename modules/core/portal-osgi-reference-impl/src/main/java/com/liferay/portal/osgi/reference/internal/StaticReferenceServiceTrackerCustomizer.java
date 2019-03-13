@@ -36,32 +36,29 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class StaticReferenceServiceTrackerCustomizer
 	implements ServiceTrackerCustomizer<Object, Object> {
 
-	public StaticReferenceServiceTrackerCustomizer(
-		StaticReferenceResolver staticReferenceResolver) {
-
-		_staticReferenceResolver = staticReferenceResolver;
+	public StaticReferenceServiceTrackerCustomizer(Bundle bundle) {
+		_bundle = bundle;
 	}
 
 	@Override
-	public Object addingService(ServiceReference<Object> serviceReference) {
-		synchronized (_staticReferenceResolver) {
-			int index = Collections.binarySearch(
-				_serviceReferences, serviceReference,
-				Comparator.reverseOrder());
+	public synchronized Object addingService(
+		ServiceReference<Object> serviceReference) {
 
-			if (index >= 0) {
-				return null;
-			}
+		int index = Collections.binarySearch(
+			_serviceReferences, serviceReference, Comparator.reverseOrder());
 
-			index = -index - 1;
+		if (index >= 0) {
+			return null;
+		}
 
-			_serviceReferences.add(index, serviceReference);
+		index = -index - 1;
 
-			if (_injectedServiceReference == null) {
-				_cannotResolve = false;
+		_serviceReferences.add(index, serviceReference);
 
-				_staticReferenceResolver.serviceChanged(false);
-			}
+		if (_injectedServiceReference == null) {
+			_cannotResolve = false;
+
+			_tryInjectService();
 		}
 
 		return serviceReference;
@@ -109,22 +106,20 @@ public class StaticReferenceServiceTrackerCustomizer
 	}
 
 	@Override
-	public void removedService(
+	public synchronized void removedService(
 		ServiceReference<Object> serviceReference, Object object) {
 
-		synchronized (_staticReferenceResolver) {
-			_serviceReferences.remove(serviceReference);
+		_serviceReferences.remove(serviceReference);
 
-			if (serviceReference == _injectedServiceReference) {
-				_injectedServiceReference = null;
+		if (serviceReference == _injectedServiceReference) {
+			_injectedServiceReference = null;
 
-				_staticReferenceResolver.serviceChanged(true);
-			}
+			_tryInjectService();
 		}
 	}
 
-	public boolean tryResolveService(Bundle bundle) {
-		BundleContext bundleContext = bundle.getBundleContext();
+	private void _tryInjectService() {
+		BundleContext bundleContext = _bundle.getBundleContext();
 
 		for (ServiceReference<Object> serviceReference : _serviceReferences) {
 			Object service = bundleContext.getService(serviceReference);
@@ -137,7 +132,7 @@ public class StaticReferenceServiceTrackerCustomizer
 
 			for (Map.Entry<String, String> entry : _classAndFieldNames) {
 				try {
-					Class<?> clazz = bundle.loadClass(entry.getKey());
+					Class<?> clazz = _bundle.loadClass(entry.getKey());
 
 					Field field = clazz.getDeclaredField(entry.getValue());
 
@@ -150,14 +145,13 @@ public class StaticReferenceServiceTrackerCustomizer
 				}
 			}
 
-			return true;
+			return;
 		}
 
 		_cannotResolve = true;
-
-		return false;
 	}
 
+	private final Bundle _bundle;
 	private boolean _cannotResolve;
 	private final List<Map.Entry<String, String>> _classAndFieldNames =
 		new ArrayList<>();
@@ -165,6 +159,5 @@ public class StaticReferenceServiceTrackerCustomizer
 	private final List<ServiceReference<Object>> _serviceReferences =
 		new ArrayList<>();
 	private ServiceTracker<?, ?> _serviceTracker;
-	private final StaticReferenceResolver _staticReferenceResolver;
 
 }

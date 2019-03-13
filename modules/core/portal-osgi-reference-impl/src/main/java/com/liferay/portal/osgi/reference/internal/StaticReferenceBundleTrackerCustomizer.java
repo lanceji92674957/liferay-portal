@@ -24,13 +24,11 @@ import java.io.UncheckedIOException;
 
 import java.net.URL;
 
-import java.util.Collections;
 import java.util.Enumeration;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
-import org.osgi.framework.wiring.FrameworkWiring;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
@@ -39,10 +37,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 public class StaticReferenceBundleTrackerCustomizer
 	implements BundleTrackerCustomizer<StaticReferenceResolver> {
 
-	public StaticReferenceBundleTrackerCustomizer(
-		FrameworkWiring frameworkWiring, BundleContext bundleContext) {
-
-		_frameworkWiring = frameworkWiring;
+	public StaticReferenceBundleTrackerCustomizer(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 	}
 
@@ -56,23 +51,17 @@ public class StaticReferenceBundleTrackerCustomizer
 			return null;
 		}
 
-		if ((bundleEvent == null) ||
-			(bundleEvent.getType() == BundleEvent.STARTING)) {
-
-			_frameworkWiring.refreshBundles(Collections.singleton(bundle));
-		}
-
 		StaticReferenceResolver staticReferenceResolver =
-			new StaticReferenceResolver(_frameworkWiring, bundle);
-
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
+			new StaticReferenceResolver(bundle);
 
 		Enumeration<URL> enumeration = bundle.findEntries("/", "*.class", true);
 
 		if (enumeration == null) {
 			return null;
 		}
+
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
 
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
@@ -113,10 +102,6 @@ public class StaticReferenceBundleTrackerCustomizer
 	public void modifiedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
 		StaticReferenceResolver staticReferenceResolver) {
-
-		if (bundleEvent.getType() == BundleEvent.STARTING) {
-			staticReferenceResolver.tryResolve();
-		}
 	}
 
 	@Override
@@ -128,6 +113,5 @@ public class StaticReferenceBundleTrackerCustomizer
 	}
 
 	private final BundleContext _bundleContext;
-	private final FrameworkWiring _frameworkWiring;
 
 }

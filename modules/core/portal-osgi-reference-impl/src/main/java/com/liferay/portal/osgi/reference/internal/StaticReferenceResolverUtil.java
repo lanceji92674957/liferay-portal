@@ -26,17 +26,6 @@ import org.osgi.framework.Bundle;
  */
 public class StaticReferenceResolverUtil {
 
-	public static boolean isTryResolve(Bundle bundle) {
-		StaticReferenceResolver staticReferenceResolver =
-			_staticReferenceResolvers.get(bundle.getBundleId());
-
-		if (staticReferenceResolver == null) {
-			return false;
-		}
-
-		return staticReferenceResolver.isTryResolve();
-	}
-
 	public static void setStaticReferenceResolver(
 		StaticReferenceResolver staticReferenceResolver) {
 

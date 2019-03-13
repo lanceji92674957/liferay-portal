@@ -14,25 +14,19 @@
 
 package com.liferay.portal.osgi.reference.internal;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleException;
-import org.osgi.framework.wiring.FrameworkWiring;
 
 /**
  * @author Preston Crary
  */
 public class StaticReferenceResolver {
 
-	public StaticReferenceResolver(
-		FrameworkWiring frameworkWiring, Bundle bundle) {
-
-		_frameworkWiring = frameworkWiring;
+	public StaticReferenceResolver(Bundle bundle) {
 		_bundle = bundle;
 	}
 
@@ -49,7 +43,7 @@ public class StaticReferenceResolver {
 		return _bundle;
 	}
 
-	public synchronized boolean isTryResolve() {
+	public boolean isTryResolve() {
 		for (StaticReferenceServiceTrackerCustomizer
 				staticReferenceServiceTrackerCustomizer :
 					_staticReferenceServiceTrackerCustomizers.values()) {
@@ -83,7 +77,7 @@ public class StaticReferenceResolver {
 			(key, staticReferenceServiceTrackerCustomizer) -> {
 				if (staticReferenceServiceTrackerCustomizer == null) {
 					staticReferenceServiceTrackerCustomizer =
-						new StaticReferenceServiceTrackerCustomizer(this);
+						new StaticReferenceServiceTrackerCustomizer(_bundle);
 				}
 
 				staticReferenceServiceTrackerCustomizer.addServiceReferences(
@@ -93,46 +87,7 @@ public class StaticReferenceResolver {
 			});
 	}
 
-	public void serviceChanged(boolean injectedServiceRemoved) {
-		try {
-			if (injectedServiceRemoved) {
-				_bundle.stop();
-
-				_frameworkWiring.refreshBundles(Collections.singleton(_bundle));
-			}
-
-			if (isTryResolve()) {
-				_bundle.start();
-			}
-		}
-		catch (BundleException be) {
-			throw new RuntimeException(be);
-		}
-	}
-
-	public synchronized void tryResolve() {
-		for (StaticReferenceServiceTrackerCustomizer
-				staticReferenceServiceTrackerCustomizer :
-					_staticReferenceServiceTrackerCustomizers.values()) {
-
-			if (!staticReferenceServiceTrackerCustomizer.tryResolveService(
-					_bundle)) {
-
-				try {
-					_bundle.stop();
-				}
-				catch (BundleException be) {
-					throw new RuntimeException(be);
-				}
-
-				_frameworkWiring.refreshBundles(Collections.singleton(_bundle));
-			}
-		}
-	}
-
-	public synchronized void visitUnresolvedStaticReferences(
-		Consumer<String> consumer) {
-
+	public void visitUnresolvedStaticReferences(Consumer<String> consumer) {
 		for (Map.Entry<String, StaticReferenceServiceTrackerCustomizer> entry :
 				_staticReferenceServiceTrackerCustomizers.entrySet()) {
 
@@ -146,7 +101,6 @@ public class StaticReferenceResolver {
 	}
 
 	private final Bundle _bundle;
-	private final FrameworkWiring _frameworkWiring;
 	private final Map<String, StaticReferenceServiceTrackerCustomizer>
 		_staticReferenceServiceTrackerCustomizers = new HashMap<>();
 
