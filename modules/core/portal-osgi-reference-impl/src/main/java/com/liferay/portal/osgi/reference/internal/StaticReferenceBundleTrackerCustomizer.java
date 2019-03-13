@@ -47,7 +47,7 @@ public class StaticReferenceBundleTrackerCustomizer
 
 		String name = bundle.getSymbolicName();
 
-		if (!name.endsWith(".taglib")) {
+		if (!name.endsWith(".taglib") && !name.endsWith(".web")) {
 			return null;
 		}
 
