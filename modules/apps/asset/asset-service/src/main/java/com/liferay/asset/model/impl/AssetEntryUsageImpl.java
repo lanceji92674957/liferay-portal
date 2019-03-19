@@ -16,9 +16,17 @@ package com.liferay.asset.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.aop.AopService;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Pavel Savinov
  */
+@Component(
+	property = "model.class.name=com.liferay.asset.model.AssetEntryUsage",
+	service = AopService.class
+)
 @ProviderType
 public class AssetEntryUsageImpl extends AssetEntryUsageBaseImpl {
 }
