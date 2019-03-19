@@ -47,15 +47,8 @@ public class AssetListEntryPermission {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.asset.list.model.AssetListEntry)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.asset.list.model.AssetListEntry)"
 	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<AssetListEntry> modelResourcePermission) {
-
-		_assetListEntryModelResourcePermission = modelResourcePermission;
-	}
-
 	private static ModelResourcePermission<AssetListEntry>
 		_assetListEntryModelResourcePermission;
 

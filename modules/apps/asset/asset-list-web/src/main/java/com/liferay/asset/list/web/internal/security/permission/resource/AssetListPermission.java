@@ -35,15 +35,8 @@ public class AssetListPermission {
 	}
 
 	@Reference(
-		target = "(resource.name=" + AssetListConstants.RESOURCE_NAME + ")",
-		unbind = "-"
+		target = "(resource.name=" + AssetListConstants.RESOURCE_NAME + ")"
 	)
-	protected void setPortletResourcePermission(
-		PortletResourcePermission portletResourcePermission) {
-
-		_portletResourcePermission = portletResourcePermission;
-	}
-
 	private static PortletResourcePermission _portletResourcePermission;
 
 }
