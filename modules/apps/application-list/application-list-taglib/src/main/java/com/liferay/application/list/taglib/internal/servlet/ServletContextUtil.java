@@ -30,13 +30,8 @@ public class ServletContextUtil {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.application.list.taglib)",
-		unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.application.list.taglib)"
 	)
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	private static ServletContext _servletContext;
 
 }
