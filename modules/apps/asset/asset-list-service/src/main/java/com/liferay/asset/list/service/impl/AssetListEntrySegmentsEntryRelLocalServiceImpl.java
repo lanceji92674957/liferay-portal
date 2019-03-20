@@ -15,6 +15,9 @@
 package com.liferay.asset.list.service.impl;
 
 import com.liferay.asset.list.service.base.AssetListEntrySegmentsEntryRelLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * The implementation of the asset list entry segments entry rel local service.
@@ -29,6 +32,10 @@ import com.liferay.asset.list.service.base.AssetListEntrySegmentsEntryRelLocalSe
  * @author Brian Wing Shun Chan
  * @see AssetListEntrySegmentsEntryRelLocalServiceBaseImpl
  */
+@Component(
+	property = "model.class.name=com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel",
+	service = AopService.class
+)
 public class AssetListEntrySegmentsEntryRelLocalServiceImpl
 	extends AssetListEntrySegmentsEntryRelLocalServiceBaseImpl {
 
