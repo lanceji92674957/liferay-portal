@@ -18,6 +18,7 @@ import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.exception.AssetListEntryTitleException;
 import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
 import com.liferay.asset.list.service.base.AssetListEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,6 +35,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -65,7 +67,7 @@ public class AssetListEntryLocalServiceImpl
 
 		assetListEntryPersistence.update(assetListEntry);
 
-		assetListEntryAssetEntryRelLocalService.addAssetListEntryAssetEntryRel(
+		_assetListEntryAssetEntryRelLocalService.addAssetListEntryAssetEntryRel(
 			assetListEntryId, assetEntryId, serviceContext);
 	}
 
@@ -172,7 +174,7 @@ public class AssetListEntryLocalServiceImpl
 
 		assetListEntryPersistence.update(assetListEntry);
 
-		assetListEntryAssetEntryRelLocalService.
+		_assetListEntryAssetEntryRelLocalService.
 			deleteAssetListEntryAssetEntryRel(assetListEntryId, position);
 	}
 
@@ -227,8 +229,9 @@ public class AssetListEntryLocalServiceImpl
 
 		assetListEntryPersistence.update(assetListEntry);
 
-		assetListEntryAssetEntryRelLocalService.moveAssetListEntryAssetEntryRel(
-			assetListEntryId, position, newPosition);
+		_assetListEntryAssetEntryRelLocalService.
+			moveAssetListEntryAssetEntryRel(
+				assetListEntryId, position, newPosition);
 	}
 
 	@Override
@@ -303,5 +306,9 @@ public class AssetListEntryLocalServiceImpl
 			throw new DuplicateAssetListEntryTitleException();
 		}
 	}
+
+	@Reference
+	private AssetListEntryAssetEntryRelLocalService
+		_assetListEntryAssetEntryRelLocalService;
 
 }
