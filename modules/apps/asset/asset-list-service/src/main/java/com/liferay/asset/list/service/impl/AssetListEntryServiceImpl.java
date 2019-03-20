@@ -15,26 +15,35 @@
 package com.liferay.asset.list.service.impl;
 
 import com.liferay.asset.list.constants.AssetListActionKeys;
-import com.liferay.asset.list.constants.AssetListConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.base.AssetListEntryServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Jürgen Kappler
  */
+@Component(
+	property = {
+		"json.web.service.context.name=assetlist",
+		"json.web.service.context.path=AssetListEntry"
+	},
+	service = AopService.class
+)
 public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 
 	@Override
@@ -244,18 +253,22 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 				assetListEntryId, typeSettingsProperties);
 	}
 
-	private static volatile ModelResourcePermission<AssetListEntry>
-		_assetListEntryModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				AssetListEntryServiceImpl.class,
-				"_assetListEntryModelResourcePermission", AssetListEntry.class);
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				AssetListEntryServiceImpl.class, "_portletResourcePermission",
-				AssetListConstants.RESOURCE_NAME);
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.asset.list.model.AssetListEntry)"
+	)
+	private volatile ModelResourcePermission<AssetListEntry>
+		_assetListEntryModelResourcePermission;
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(resource.name=com.liferay.asset.list)"
+	)
+	private volatile PortletResourcePermission _portletResourcePermission;
 
 }

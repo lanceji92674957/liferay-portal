@@ -19,6 +19,7 @@ import com.liferay.asset.list.exception.AssetListEntryTitleException;
 import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.base.AssetListEntryLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -32,9 +33,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jürgen Kappler
  */
+@Component(
+	property = "model.class.name=com.liferay.asset.list.model.AssetListEntry",
+	service = AopService.class
+)
 public class AssetListEntryLocalServiceImpl
 	extends AssetListEntryLocalServiceBaseImpl {
 
