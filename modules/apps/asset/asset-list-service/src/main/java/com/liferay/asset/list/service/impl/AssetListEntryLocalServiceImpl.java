@@ -22,6 +22,7 @@ import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.base.AssetListEntryLocalServiceBaseImpl;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 
@@ -38,9 +38,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Jürgen Kappler
  */
+@Component(
+	property = "model.class.name=com.liferay.asset.list.model.AssetListEntry",
+	service = AopService.class
+)
 public class AssetListEntryLocalServiceImpl
 	extends AssetListEntryLocalServiceBaseImpl {
 
@@ -436,7 +443,7 @@ public class AssetListEntryLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = SegmentsEntryLocalService.class)
+	@Reference
 	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 }
