@@ -28,6 +28,7 @@ import com.liferay.calendar.internal.notification.NotificationSenderFactory;
 import com.liferay.calendar.internal.notification.NotificationTemplateContextFactory;
 import com.liferay.calendar.internal.recurrence.RecurrenceSplit;
 import com.liferay.calendar.internal.recurrence.RecurrenceSplitter;
+import com.liferay.calendar.internal.util.CalendarUtil;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarBookingConstants;
@@ -1037,22 +1038,8 @@ public class CalendarBookingLocalServiceImpl
 				calendarBooking.getParentCalendarBooking());
 		}
 
-		Calendar calendar = calendarBooking.getCalendar();
-
-		long groupId = calendar.getGroupId();
-
-		try {
-			Group group = groupLocalService.getGroup(groupId);
-
-			return group.isStagingGroup();
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-
-			return false;
-		}
+		return CalendarUtil.isStagingCalendar(
+			groupLocalService, calendarBooking.getCalendar());
 	}
 
 	@Override

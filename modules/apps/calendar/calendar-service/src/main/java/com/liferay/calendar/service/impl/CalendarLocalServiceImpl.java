@@ -20,6 +20,7 @@ import com.liferay.calendar.exception.RequiredCalendarException;
 import com.liferay.calendar.exporter.CalendarDataFormat;
 import com.liferay.calendar.exporter.CalendarDataHandler;
 import com.liferay.calendar.exporter.CalendarDataHandlerFactory;
+import com.liferay.calendar.internal.util.CalendarUtil;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarNotificationTemplateLocalService;
@@ -254,23 +255,7 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 
 	@Override
 	public boolean isStagingCalendar(Calendar calendar) {
-		long groupId = calendar.getGroupId();
-
-		try {
-			Group group = groupLocalService.getGroup(groupId);
-
-			return group.isStagingGroup();
-		}
-		catch (PortalException pe) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-
-			return false;
-		}
+		return CalendarUtil.isStagingCalendar(groupLocalService, calendar);
 	}
 
 	@Override
