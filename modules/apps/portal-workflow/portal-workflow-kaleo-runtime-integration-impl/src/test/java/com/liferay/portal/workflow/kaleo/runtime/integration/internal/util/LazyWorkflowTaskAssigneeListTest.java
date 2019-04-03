@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceTokenWrapper;
@@ -73,15 +72,13 @@ public class LazyWorkflowTaskAssigneeListTest {
 
 		lazyWorkflowTaskAssigneeList.initWorkflowTaskAssignees();
 
-		int actualSize = lazyWorkflowTaskAssigneeList.size();
+		Assert.assertEquals(2, lazyWorkflowTaskAssigneeList.size());
 
 		Assert.assertFalse(
 			"Method getKaleoTaskAssignmentInstancesCount should not be " +
 				"invoked on kaleoTaskAssignmentInstanceLocalService",
 			_executedMethodsSet.contains(
 				"getKaleoTaskAssignmentInstancesCount"));
-
-		Assert.assertEquals(2, actualSize);
 	}
 
 	@Test
@@ -130,15 +127,13 @@ public class LazyWorkflowTaskAssigneeListTest {
 				kaleoTaskInstanceToken,
 				kaleoTaskAssignmentInstanceLocalService);
 
-		int actualCount = lazyWorkflowTaskAssigneeList.size();
+		Assert.assertEquals(expectedCount, lazyWorkflowTaskAssigneeList.size());
 
 		Assert.assertTrue(
 			"Method getKaleoTaskAssignmentInstancesCount should be invoked " +
 				"on kaleoTaskAssignmentInstanceLocalService",
 			_executedMethodsSet.contains(
 				"getKaleoTaskAssignmentInstancesCount"));
-
-		Assert.assertEquals(expectedCount, actualCount);
 	}
 
 	@Test
@@ -156,8 +151,8 @@ public class LazyWorkflowTaskAssigneeListTest {
 		LazyWorkflowTaskAssigneeList lazyWorkflowTaskAssigneeList =
 			new LazyWorkflowTaskAssigneeList(kaleoTaskInstanceToken, null);
 
-		WorkflowTaskAssignee workflowTaskAssignee =
-			lazyWorkflowTaskAssigneeList.get(1);
+		KaleoRuntimeTestUtil.assertWorkflowTaskAssignee(
+			User.class.getName(), 2, lazyWorkflowTaskAssigneeList.get(1));
 
 		Assert.assertTrue(
 			"Method getKaleoTaskAssignmentInstances should be invoked on " +
@@ -169,9 +164,6 @@ public class LazyWorkflowTaskAssigneeListTest {
 				"invoked on kaleoTaskInstanceToken",
 			_executedMethodsSet.contains(
 				"getFirstKaleoTaskAssignmentInstance"));
-
-		KaleoRuntimeTestUtil.assertWorkflowTaskAssignee(
-			User.class.getName(), 2, workflowTaskAssignee);
 	}
 
 	@Test
@@ -190,8 +182,9 @@ public class LazyWorkflowTaskAssigneeListTest {
 		LazyWorkflowTaskAssigneeList lazyWorkflowTaskAssigneeList =
 			new LazyWorkflowTaskAssigneeList(kaleoTaskInstanceToken, null);
 
-		WorkflowTaskAssignee workflowTaskAssignee =
-			lazyWorkflowTaskAssigneeList.get(0);
+		KaleoRuntimeTestUtil.assertWorkflowTaskAssignee(
+			expectedAssigneeClassName, expectedAssigneeClassPK,
+			lazyWorkflowTaskAssigneeList.get(0));
 
 		Assert.assertFalse(
 			"Method getKaleoTaskAssignmentInstances should not be invoked on " +
@@ -203,10 +196,6 @@ public class LazyWorkflowTaskAssigneeListTest {
 				"kaleoTaskInstanceToken",
 			_executedMethodsSet.contains(
 				"getFirstKaleoTaskAssignmentInstance"));
-
-		KaleoRuntimeTestUtil.assertWorkflowTaskAssignee(
-			expectedAssigneeClassName, expectedAssigneeClassPK,
-			workflowTaskAssignee);
 	}
 
 	@Test(expected = IndexOutOfBoundsException.class)
