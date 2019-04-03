@@ -151,30 +151,7 @@ public class LazyWorkflowTaskAssigneeListTest {
 		};
 
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			new KaleoTaskInstanceTokenWrapper(
-				KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken(
-					kaleoTaskAssignmentInstances)) {
-
-				@Override
-				public KaleoTaskAssignmentInstance
-					getFirstKaleoTaskAssignmentInstance() {
-
-					_executedMethodsSet.add(
-						"getFirstKaleoTaskAssignmentInstance");
-
-					return super.getFirstKaleoTaskAssignmentInstance();
-				}
-
-				@Override
-				public List<KaleoTaskAssignmentInstance>
-					getKaleoTaskAssignmentInstances() {
-
-					_executedMethodsSet.add("getKaleoTaskAssignmentInstances");
-
-					return super.getKaleoTaskAssignmentInstances();
-				}
-
-			};
+			_getKaleoTaskInstanceToken(kaleoTaskAssignmentInstances);
 
 		LazyWorkflowTaskAssigneeList lazyWorkflowTaskAssigneeList =
 			new LazyWorkflowTaskAssigneeList(kaleoTaskInstanceToken, null);
@@ -208,30 +185,7 @@ public class LazyWorkflowTaskAssigneeListTest {
 				expectedAssigneeClassName, expectedAssigneeClassPK);
 
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			new KaleoTaskInstanceTokenWrapper(
-				KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken(
-					kaleoTaskAssignmentInstance)) {
-
-				@Override
-				public KaleoTaskAssignmentInstance
-					getFirstKaleoTaskAssignmentInstance() {
-
-					_executedMethodsSet.add(
-						"getFirstKaleoTaskAssignmentInstance");
-
-					return super.getFirstKaleoTaskAssignmentInstance();
-				}
-
-				@Override
-				public List<KaleoTaskAssignmentInstance>
-					getKaleoTaskAssignmentInstances() {
-
-					_executedMethodsSet.add("getKaleoTaskAssignmentInstances");
-
-					return super.getKaleoTaskAssignmentInstances();
-				}
-
-			};
+			_getKaleoTaskInstanceToken(kaleoTaskAssignmentInstance);
 
 		LazyWorkflowTaskAssigneeList lazyWorkflowTaskAssigneeList =
 			new LazyWorkflowTaskAssigneeList(kaleoTaskInstanceToken, null);
@@ -264,6 +218,34 @@ public class LazyWorkflowTaskAssigneeListTest {
 			new LazyWorkflowTaskAssigneeList(kaleoTaskInstanceToken, null);
 
 		lazyWorkflowTaskAssigneeList.get(0);
+	}
+
+	private KaleoTaskInstanceToken _getKaleoTaskInstanceToken(
+		KaleoTaskAssignmentInstance... kaleoTaskAssignmentInstances) {
+
+		return new KaleoTaskInstanceTokenWrapper(
+			KaleoRuntimeTestUtil.mockKaleoTaskInstanceToken(
+				kaleoTaskAssignmentInstances)) {
+
+			@Override
+			public KaleoTaskAssignmentInstance
+				getFirstKaleoTaskAssignmentInstance() {
+
+				_executedMethodsSet.add("getFirstKaleoTaskAssignmentInstance");
+
+				return super.getFirstKaleoTaskAssignmentInstance();
+			}
+
+			@Override
+			public List<KaleoTaskAssignmentInstance>
+				getKaleoTaskAssignmentInstances() {
+
+				_executedMethodsSet.add("getKaleoTaskAssignmentInstances");
+
+				return super.getKaleoTaskAssignmentInstances();
+			}
+
+		};
 	}
 
 	private final Set<String> _executedMethodsSet = new HashSet<>();
