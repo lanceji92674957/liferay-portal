@@ -20,15 +20,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseIndexer;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
-import com.liferay.portal.kernel.search.TermQueryFactoryUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.powwow.model.PowwowMeeting;
@@ -59,53 +56,6 @@ public class PowwowMeetingIndexer extends BaseIndexer {
 	@Override
 	public String getClassName() {
 		return PowwowMeeting.class.getName();
-	}
-
-	@Override
-	public void postProcessSearchQuery(
-			BooleanQuery searchQuery, SearchContext searchContext)
-		throws Exception {
-
-		super.postProcessSearchQuery(searchQuery, searchContext);
-
-		BooleanQuery participantTypeBooleanQuery =
-			BooleanQueryFactoryUtil.create(searchContext);
-
-		String[] powwowParticipantKeys = GetterUtil.getStringValues(
-			searchContext.getAttribute("powwowParticipantKeys"));
-
-		for (String powwowParticipantKey : powwowParticipantKeys) {
-			participantTypeBooleanQuery.add(
-				TermQueryFactoryUtil.create(
-					searchContext, "powwowParticipantKeys",
-					powwowParticipantKey),
-				BooleanClauseOccur.SHOULD);
-		}
-
-		long userId = GetterUtil.getLong(
-			searchContext.getAttribute(Field.USER_ID));
-
-		if (userId > 0) {
-			participantTypeBooleanQuery.addTerm(Field.USER_ID, userId);
-		}
-
-		searchQuery.add(participantTypeBooleanQuery, BooleanClauseOccur.MUST);
-
-		int[] statuses = (int[])searchContext.getAttribute("statuses");
-
-		if (statuses.length > 0) {
-			BooleanQuery statusesQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
-
-			for (int status : statuses) {
-				statusesQuery.add(
-					TermQueryFactoryUtil.create(
-						searchContext, "status", status),
-					BooleanClauseOccur.SHOULD);
-			}
-
-			searchQuery.add(statusesQuery, BooleanClauseOccur.MUST);
-		}
 	}
 
 	protected void addSearchUserId(

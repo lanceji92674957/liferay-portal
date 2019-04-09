@@ -228,12 +228,6 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 	}
 
 	@Override
-	public void postProcessContextQuery(
-			BooleanQuery contextQuery, SearchContext searchContext)
-		throws Exception {
-	}
-
-	@Override
 	public void postProcessSearchQuery(
 			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
 			SearchContext searchContext)
@@ -241,12 +235,6 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 
 		_indexerQueryBuilderImpl.addSearchTermsFromModel(
 			searchQuery, searchContext);
-	}
-
-	@Override
-	public void postProcessSearchQuery(
-			BooleanQuery searchQuery, SearchContext searchContext)
-		throws Exception {
 	}
 
 	@Override

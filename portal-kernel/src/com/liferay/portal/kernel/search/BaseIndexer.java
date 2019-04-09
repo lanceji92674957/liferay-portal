@@ -427,18 +427,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		throws Exception {
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #postProcessContextBooleanFilter(BooleanFilter,
-	 *             SearchContext)}
-	 */
-	@Deprecated
-	@Override
-	public void postProcessContextQuery(
-			BooleanQuery contextQuery, SearchContext searchContext)
-		throws Exception {
-	}
-
 	@Override
 	public void postProcessSearchQuery(
 			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
@@ -452,18 +440,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			addSearchTerm(searchQuery, searchContext, Field.TITLE, false);
 			addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 		}
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #postProcessSearchQuery(BooleanQuery, BooleanFilter,
-	 *             SearchContext)}
-	 */
-	@Deprecated
-	@Override
-	public void postProcessSearchQuery(
-			BooleanQuery searchQuery, SearchContext searchContext)
-		throws Exception {
 	}
 
 	@Override
@@ -1227,8 +1203,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 		_addSearchTerms(searchQuery, fullQueryBooleanFilter, searchContext);
 
-		doPostProcessSearchQuery(this, searchQuery, searchContext);
-
 		Map<String, Facet> facets = searchContext.getFacets();
 
 		BooleanFilter facetBooleanFilter = new BooleanFilter();
@@ -1342,27 +1316,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			Document document, Locale locale, String snippet,
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), added strictly to support
-	 *             backwards compatibility of {@link
-	 *             Indexer#postProcessSearchQuery(BooleanQuery, SearchContext)}
-	 */
-	@Deprecated
-	protected void doPostProcessSearchQuery(
-			Indexer<?> indexer, BooleanQuery searchQuery,
-			SearchContext searchContext)
-		throws Exception {
-
-		indexer.postProcessSearchQuery(searchQuery, searchContext);
-
-		for (IndexerPostProcessor indexerPostProcessor :
-				indexer.getIndexerPostProcessors()) {
-
-			indexerPostProcessor.postProcessSearchQuery(
-				searchQuery, searchContext);
-		}
-	}
 
 	protected abstract void doReindex(String className, long classPK)
 		throws Exception;
