@@ -33,14 +33,6 @@ import java.util.Map;
 public class SanitizerUtil {
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public static Sanitizer getSanitizer() {
-		return null;
-	}
-
-	/**
 	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #sanitize(long,
 	 *             long, long, String, long, String, String)}
 	 */
@@ -192,13 +184,6 @@ public class SanitizerUtil {
 		}
 
 		return content;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setSanitizer(Sanitizer sanitizer) {
 	}
 
 	private static final ServiceTrackerList<Sanitizer> _sanitizers =
