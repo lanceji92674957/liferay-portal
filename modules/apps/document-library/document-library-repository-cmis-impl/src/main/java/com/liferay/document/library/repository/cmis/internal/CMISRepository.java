@@ -943,15 +943,6 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public String[][] getSupportedParameters() {
-		return _cmisRepositoryHandler.getSupportedParameters();
-	}
-
 	@Override
 	public void initRepository() throws PortalException {
 		try {

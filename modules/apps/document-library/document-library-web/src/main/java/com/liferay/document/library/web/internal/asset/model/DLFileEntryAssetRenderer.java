@@ -23,7 +23,6 @@ import com.liferay.document.library.kernel.document.conversion.DocumentConversio
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryPermission;
 import com.liferay.petra.string.CharPool;
@@ -54,7 +53,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.asset.DLFileEntryDDMFormValuesReader;
 import com.liferay.trash.TrashHelper;
 
-import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.ActionRequest;
@@ -74,27 +72,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DLFileEntryAssetRenderer
 	extends BaseJSPAssetRenderer<FileEntry> implements TrashRenderer {
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	public DLFileEntryAssetRenderer(
-		FileEntry fileEntry, FileVersion fileVersion) {
-
-		this(fileEntry, fileVersion, DLFileEntryLocalServiceUtil.getService());
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	public DLFileEntryAssetRenderer(
-		FileEntry fileEntry, FileVersion fileVersion,
-		DLFileEntryLocalService dlFileEntryLocalService) {
-
-		this(fileEntry, fileVersion, dlFileEntryLocalService, null, null);
-	}
 
 	public DLFileEntryAssetRenderer(
 		FileEntry fileEntry, FileVersion fileVersion,
@@ -144,15 +121,6 @@ public class DLFileEntryAssetRenderer
 		}
 
 		return null;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public Date getDisplayDate() {
-		return _fileEntry.getModifiedDate();
 	}
 
 	@Override
@@ -530,7 +498,7 @@ public class DLFileEntryAssetRenderer
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
 	private final DLFileEntryLocalService _dlFileEntryLocalService;
-	private DLURLHelper _dlURLHelper;
+	private final DLURLHelper _dlURLHelper;
 	private final FileEntry _fileEntry;
 	private FileVersion _fileVersion;
 	private final TrashHelper _trashHelper;
