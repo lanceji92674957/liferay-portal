@@ -1237,8 +1237,8 @@ public class StagingImpl implements Staging {
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
-		else if ((e instanceof LayoutImportException) ||
-				 (cause instanceof LayoutImportException)) {
+		else if (e instanceof LayoutImportException ||
+				 cause instanceof LayoutImportException) {
 
 			LayoutImportException lie = null;
 
