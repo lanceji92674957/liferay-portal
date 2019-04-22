@@ -467,7 +467,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	@Reference(
 		target = "(model.class.name=com.liferay.journal.model.JournalFolder)"
 	)
-	private static volatile ModelResourcePermission<JournalFolder>
+	private volatile ModelResourcePermission<JournalFolder>
 		_journalFolderModelResourcePermission;
 
 	@Reference(
