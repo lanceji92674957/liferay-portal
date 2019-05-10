@@ -16,6 +16,7 @@ package com.liferay.portal.background.task.service.impl;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.background.task.internal.BackgroundTaskImpl;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.base.BackgroundTaskLocalServiceBaseImpl;
@@ -44,7 +45,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.File;
 import java.io.InputStream;
@@ -56,10 +56,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Daniel Kocsis
  * @author Michael C. Han
  */
+@Component(
+	property = "model.class.name=com.liferay.portal.background.task.model.BackgroundTask",
+	service = AopService.class
+)
 public class BackgroundTaskLocalServiceImpl
 	extends BackgroundTaskLocalServiceBaseImpl {
 
@@ -738,12 +745,14 @@ public class BackgroundTaskLocalServiceImpl
 		return backgroundTask;
 	}
 
+	@Reference(unbind = "-")
 	protected void setBackgroundTaskStatusRegistry(
 		BackgroundTaskStatusRegistry backgroundTaskStatusRegistry) {
 
 		_backgroundTaskStatusRegistry = backgroundTaskStatusRegistry;
 	}
 
+	@Reference(unbind = "-")
 	protected void setBackgroundTaskThreadLocalManager(
 		BackgroundTaskThreadLocalManager backgroundTaskThreadLocalManager) {
 
@@ -753,10 +762,7 @@ public class BackgroundTaskLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		BackgroundTaskLocalServiceImpl.class);
 
-	@ServiceReference(type = BackgroundTaskStatusRegistry.class)
 	private BackgroundTaskStatusRegistry _backgroundTaskStatusRegistry;
-
-	@ServiceReference(type = BackgroundTaskThreadLocalManager.class)
 	private BackgroundTaskThreadLocalManager _backgroundTaskThreadLocalManager;
 
 }
