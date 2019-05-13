@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 
+import java.io.InputStream;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -144,9 +145,9 @@ public class LPKGDeployerRegistrar {
 			return;
 		}
 
-		try {
+		try (InputStream inputStream = url.openStream()) {
 			Properties properties = PropertiesUtil.load(
-				url.openStream(), StringPool.ISO_8859_1);
+				inputStream, StringPool.ISO_8859_1);
 
 			long remoteAppId = GetterUtil.getLong(
 				properties.getProperty("remote-app-id"));
