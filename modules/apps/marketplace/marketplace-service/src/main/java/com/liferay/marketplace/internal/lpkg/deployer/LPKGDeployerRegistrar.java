@@ -127,9 +127,18 @@ public class LPKGDeployerRegistrar {
 				required, null);
 		}
 
+		List<Module> modules = _moduleLocalService.getModules(app.getAppId());
+
+		_register(properties, app, modules);
+	}
+
+	private void _register(
+			Properties properties, App app, List<Module> modules)
+		throws Exception {
+
 		Set<Tuple> oldTuples = new HashSet<>();
 
-		for (Module module : _moduleLocalService.getModules(app.getAppId())) {
+		for (Module module : modules) {
 			oldTuples.add(
 				new Tuple(
 					module.getModuleId(), module.getBundleSymbolicName(),
