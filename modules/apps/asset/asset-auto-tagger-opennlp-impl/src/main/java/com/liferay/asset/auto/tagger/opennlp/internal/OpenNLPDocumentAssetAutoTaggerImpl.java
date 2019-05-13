@@ -81,9 +81,13 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 		}
 
 		SentenceDetectorME sentenceDetectorME = new SentenceDetectorME(
-			_sentenceModel);
+			_modelsHolder.getSentenceModel());
 
-		TokenizerME tokenizerME = new TokenizerME(_tokenizerModel);
+		TokenizerME tokenizerME = new TokenizerME(
+			_modelsHolder.getTokenizerModel());
+
+		List<TokenNameFinderModel> tokenNameFinderModels =
+			_modelsHolder.getTokenNameFinderModels();
 
 		return Stream.of(
 			sentenceDetectorME.sentDetect(content)
@@ -91,7 +95,7 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 			tokenizerME::tokenize
 		).map(
 			tokens -> _getTagNames(
-				tokens,
+				tokenNameFinderModels, tokens,
 				openNLPDocumentAssetAutoTaggerCompanyConfiguration.
 					confidenceThreshold())
 		).flatMap(
@@ -111,31 +115,14 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) throws IOException {
-		Bundle bundle = bundleContext.getBundle();
-
-		_sentenceModel = new SentenceModel(
-			bundle.getResource(
-				"/lib/org.apache.opennlp.model.en.sent-1.5.0-bin.bin"));
-		_tokenizerModel = new TokenizerModel(
-			bundle.getResource(
-				"/lib/org.apache.opennlp.model.en.token-1.5.0-bin.bin"));
-		_tokenNameFinderModels = Arrays.asList(
-			new TokenNameFinderModel(
-				bundle.getResource(
-					"/lib/org.apache.opennlp.model.en.ner.location-1.5.0-" +
-						"bin.bin")),
-			new TokenNameFinderModel(
-				bundle.getResource(
-					"/lib/org.apache.opennlp.model.en.ner.organization-1.5.0-" +
-						"bin.bin")),
-			new TokenNameFinderModel(
-				bundle.getResource(
-					"/lib/org.apache.opennlp.model.en.ner.person-1.5.0-" +
-						"bin.bin")));
+		_modelsHolder = new ModelsHolder(bundleContext.getBundle());
 	}
 
-	private String[] _getTagNames(String[] tokens, double confidenceThreshold) {
-		Stream<TokenNameFinderModel> stream = _tokenNameFinderModels.stream();
+	private String[] _getTagNames(
+		List<TokenNameFinderModel> tokenNameFinderModels, String[] tokens,
+		double confidenceThreshold) {
+
+		Stream<TokenNameFinderModel> stream = tokenNameFinderModels.stream();
 
 		return Span.spansToStrings(
 			stream.map(
@@ -169,8 +156,88 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	private SentenceModel _sentenceModel;
-	private TokenizerModel _tokenizerModel;
-	private List<TokenNameFinderModel> _tokenNameFinderModels;
+	private ModelsHolder _modelsHolder;
+
+	private static class ModelsHolder {
+
+		public SentenceModel getSentenceModel() throws IOException {
+			SentenceModel sentenceModel = _sentenceModel;
+
+			if (sentenceModel != null) {
+				return sentenceModel;
+			}
+
+			synchronized (this) {
+				if (_sentenceModel == null) {
+					_sentenceModel = new SentenceModel(
+						_bundle.getResource(
+							"/lib/org.apache.opennlp.model.en.sent-1.5.0-" +
+								"bin.bin"));
+				}
+
+				return _sentenceModel;
+			}
+		}
+
+		public TokenizerModel getTokenizerModel() throws IOException {
+			TokenizerModel tokenizerModel = _tokenizerModel;
+
+			if (tokenizerModel != null) {
+				return tokenizerModel;
+			}
+
+			synchronized (this) {
+				if (_tokenizerModel == null) {
+					_tokenizerModel = new TokenizerModel(
+						_bundle.getResource(
+							"/lib/org.apache.opennlp.model.en.token-1.5.0-" +
+								"bin.bin"));
+				}
+
+				return _tokenizerModel;
+			}
+		}
+
+		public List<TokenNameFinderModel> getTokenNameFinderModels()
+			throws IOException {
+
+			List<TokenNameFinderModel> tokenNameFinderModels =
+				_tokenNameFinderModels;
+
+			if (tokenNameFinderModels != null) {
+				return tokenNameFinderModels;
+			}
+
+			synchronized (this) {
+				if (_tokenNameFinderModels == null) {
+					_tokenNameFinderModels = Arrays.asList(
+						new TokenNameFinderModel(
+							_bundle.getResource(
+								"/lib/org.apache.opennlp.model.en.ner." +
+									"location-1.5.0-bin.bin")),
+						new TokenNameFinderModel(
+							_bundle.getResource(
+								"/lib/org.apache.opennlp.model.en.ner." +
+									"organization-1.5.0-bin.bin")),
+						new TokenNameFinderModel(
+							_bundle.getResource(
+								"/lib/org.apache.opennlp.model.en.ner.person-" +
+									"1.5.0-bin.bin")));
+				}
+
+				return _tokenNameFinderModels;
+			}
+		}
+
+		private ModelsHolder(Bundle bundle) {
+			_bundle = bundle;
+		}
+
+		private final Bundle _bundle;
+		private volatile SentenceModel _sentenceModel;
+		private volatile TokenizerModel _tokenizerModel;
+		private volatile List<TokenNameFinderModel> _tokenNameFinderModels;
+
+	}
 
 }
