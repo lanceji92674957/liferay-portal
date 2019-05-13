@@ -83,55 +83,6 @@ public class LPKGDeployerRegistrar {
 	protected void setRelease(Release release) {
 	}
 
-	private void _doRegister(Bundle lpkgBundle) throws Exception {
-		URL url = lpkgBundle.getEntry("liferay-marketplace.properties");
-
-		if (url == null) {
-			return;
-		}
-
-		Properties properties = PropertiesUtil.load(
-			url.openStream(), StringPool.ISO_8859_1);
-
-		long remoteAppId = GetterUtil.getLong(
-			properties.getProperty("remote-app-id"));
-		String version = properties.getProperty("version");
-
-		if ((remoteAppId <= 0) || Validator.isNull(version)) {
-			return;
-		}
-
-		String title = properties.getProperty("title");
-		String description = properties.getProperty("description");
-		String category = properties.getProperty("category");
-		String iconURL = properties.getProperty("icon-url");
-		boolean required = GetterUtil.getBoolean(
-			properties.getProperty("required"));
-
-		App app = _appLocalService.fetchRemoteApp(remoteAppId);
-
-		if (app != null) {
-			if (!Objects.equals(title, app.getTitle()) ||
-				!Objects.equals(description, app.getDescription()) ||
-				!Objects.equals(category, app.getCategory()) ||
-				!Objects.equals(iconURL, app.getIconURL()) ||
-				(required != app.isRequired())) {
-
-				app = null;
-			}
-		}
-
-		if (app == null) {
-			app = _appLocalService.updateApp(
-				0, remoteAppId, title, description, category, iconURL, version,
-				required, null);
-		}
-
-		List<Module> modules = _moduleLocalService.getModules(app.getAppId());
-
-		_register(properties, app, modules);
-	}
-
 	private void _register(
 			Properties properties, App app, List<Module> modules)
 		throws Exception {
@@ -187,8 +138,54 @@ public class LPKGDeployerRegistrar {
 	}
 
 	private void _register(Bundle lpkgBundle) {
+		URL url = lpkgBundle.getEntry("liferay-marketplace.properties");
+
+		if (url == null) {
+			return;
+		}
+
 		try {
-			_doRegister(lpkgBundle);
+			Properties properties = PropertiesUtil.load(
+				url.openStream(), StringPool.ISO_8859_1);
+
+			long remoteAppId = GetterUtil.getLong(
+				properties.getProperty("remote-app-id"));
+			String version = properties.getProperty("version");
+
+			if ((remoteAppId <= 0) || Validator.isNull(version)) {
+				return;
+			}
+
+			String title = properties.getProperty("title");
+			String description = properties.getProperty("description");
+			String category = properties.getProperty("category");
+			String iconURL = properties.getProperty("icon-url");
+			boolean required = GetterUtil.getBoolean(
+				properties.getProperty("required"));
+
+			App app = _appLocalService.fetchRemoteApp(remoteAppId);
+
+			if (app != null) {
+				if (!Objects.equals(title, app.getTitle()) ||
+					!Objects.equals(description, app.getDescription()) ||
+					!Objects.equals(category, app.getCategory()) ||
+					!Objects.equals(iconURL, app.getIconURL()) ||
+					(required != app.isRequired())) {
+
+					app = null;
+				}
+			}
+
+			if (app == null) {
+				app = _appLocalService.updateApp(
+					0, remoteAppId, title, description, category, iconURL,
+					version, required, null);
+			}
+
+			List<Module> modules = _moduleLocalService.getModules(
+				app.getAppId());
+
+			_register(properties, app, modules);
 		}
 		catch (Exception e) {
 			_log.error(
