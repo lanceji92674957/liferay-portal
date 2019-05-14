@@ -21,6 +21,7 @@ import com.liferay.marketplace.service.ModuleLocalService;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
@@ -34,6 +35,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -65,10 +67,37 @@ public class LPKGDeployerRegistrar {
 		Map<Bundle, List<Bundle>> deployedLPKGBundles =
 			_lpkgDeployer.getDeployedLPKGBundles();
 
+		Map<Long, App> appMap = new HashMap<>();
+		Map<Long, List<Module>> moduleMap = new HashMap<>();
+
+		if (!deployedLPKGBundles.isEmpty()) {
+			for (App app : _appLocalService.getApps(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+				appMap.put(app.getRemoteAppId(), app);
+			}
+
+			for (Module module : _moduleLocalService.getModules(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+				moduleMap.compute(
+					module.getAppId(),
+					(key, value) -> {
+						if (value == null) {
+							value = new ArrayList<>();
+						}
+
+						value.add(module);
+
+						return value;
+					});
+			}
+		}
+
 		for (Map.Entry<Bundle, List<Bundle>> entry :
 				deployedLPKGBundles.entrySet()) {
 
-			_register(entry.getKey());
+			_register(entry.getKey(), appMap, moduleMap);
 		}
 	}
 
@@ -167,7 +196,10 @@ public class LPKGDeployerRegistrar {
 		}
 	}
 
-	private void _register(Bundle lpkgBundle) {
+	private void _register(
+		Bundle lpkgBundle, Map<Long, App> appMap,
+		Map<Long, List<Module>> modulesMap) {
+
 		URL url = lpkgBundle.getEntry("liferay-marketplace.properties");
 
 		if (url == null) {
@@ -186,12 +218,19 @@ public class LPKGDeployerRegistrar {
 				return;
 			}
 
-			App app = _appLocalService.fetchRemoteApp(remoteAppId);
+			App app = null;
+
+			if (appMap == null) {
+				app = _appLocalService.fetchRemoteApp(remoteAppId);
+			}
+			else {
+				app = appMap.get(remoteAppId);
+			}
 
 			List<Module> modules = null;
 
-			if (app != null) {
-				modules = _moduleLocalService.getModules(app.getAppId());
+			if ((app != null) && (modulesMap != null)) {
+				modules = modulesMap.get(app.getAppId());
 			}
 
 			_register(properties, app, remoteAppId, version, modules);
@@ -216,7 +255,7 @@ public class LPKGDeployerRegistrar {
 			@Override
 			public void bundleChanged(BundleEvent bundleEvent) {
 				if (bundleEvent.getType() == BundleEvent.STARTED) {
-					_register(bundleEvent.getBundle());
+					_register(bundleEvent.getBundle(), null, null);
 				}
 			}
 
