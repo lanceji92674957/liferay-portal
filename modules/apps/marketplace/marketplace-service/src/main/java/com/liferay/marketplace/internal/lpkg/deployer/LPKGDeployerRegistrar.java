@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 
 import java.io.InputStream;
+
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -71,14 +72,16 @@ public class LPKGDeployerRegistrar {
 		Map<Long, List<Module>> moduleMap = new HashMap<>();
 
 		if (!deployedLPKGBundles.isEmpty()) {
-			for (App app : _appLocalService.getApps(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+			for (App app :
+					_appLocalService.getApps(
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
 
 				appMap.put(app.getRemoteAppId(), app);
 			}
 
-			for (Module module : _moduleLocalService.getModules(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+			for (Module module :
+					_moduleLocalService.getModules(
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
 
 				moduleMap.compute(
 					module.getAppId(),
@@ -114,6 +117,53 @@ public class LPKGDeployerRegistrar {
 	}
 
 	private void _register(
+		Bundle lpkgBundle, Map<Long, App> appMap,
+		Map<Long, List<Module>> modulesMap) {
+
+		URL url = lpkgBundle.getEntry("liferay-marketplace.properties");
+
+		if (url == null) {
+			return;
+		}
+
+		try (InputStream inputStream = url.openStream()) {
+			Properties properties = PropertiesUtil.load(
+				inputStream, StringPool.ISO_8859_1);
+
+			long remoteAppId = GetterUtil.getLong(
+				properties.getProperty("remote-app-id"));
+			String version = properties.getProperty("version");
+
+			if ((remoteAppId <= 0) || Validator.isNull(version)) {
+				return;
+			}
+
+			App app = null;
+
+			if (appMap == null) {
+				app = _appLocalService.fetchRemoteApp(remoteAppId);
+			}
+			else {
+				app = appMap.get(remoteAppId);
+			}
+
+			List<Module> modules = null;
+
+			if ((app != null) && (modulesMap != null)) {
+				modules = modulesMap.get(app.getAppId());
+			}
+
+			_register(properties, app, remoteAppId, version, modules);
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to track installed app " +
+					lpkgBundle.getSymbolicName() + " with Marketplace",
+				e);
+		}
+	}
+
+	private void _register(
 			Properties properties, App app, long remoteAppId, String version,
 			List<Module> modules)
 		throws Exception {
@@ -138,8 +188,8 @@ public class LPKGDeployerRegistrar {
 
 		if (app == null) {
 			app = _appLocalService.updateApp(
-				0, remoteAppId, title, description, category, iconURL,
-				version, required, null);
+				0, remoteAppId, title, description, category, iconURL, version,
+				required, null);
 		}
 
 		if (modules == null) {
@@ -193,53 +243,6 @@ public class LPKGDeployerRegistrar {
 			_moduleLocalService.addModule(
 				app.getAppId(), tuple._symbolicName, tuple._version,
 				tuple._contextName);
-		}
-	}
-
-	private void _register(
-		Bundle lpkgBundle, Map<Long, App> appMap,
-		Map<Long, List<Module>> modulesMap) {
-
-		URL url = lpkgBundle.getEntry("liferay-marketplace.properties");
-
-		if (url == null) {
-			return;
-		}
-
-		try (InputStream inputStream = url.openStream()) {
-			Properties properties = PropertiesUtil.load(
-				inputStream, StringPool.ISO_8859_1);
-
-			long remoteAppId = GetterUtil.getLong(
-				properties.getProperty("remote-app-id"));
-			String version = properties.getProperty("version");
-
-			if ((remoteAppId <= 0) || Validator.isNull(version)) {
-				return;
-			}
-
-			App app = null;
-
-			if (appMap == null) {
-				app = _appLocalService.fetchRemoteApp(remoteAppId);
-			}
-			else {
-				app = appMap.get(remoteAppId);
-			}
-
-			List<Module> modules = null;
-
-			if ((app != null) && (modulesMap != null)) {
-				modules = modulesMap.get(app.getAppId());
-			}
-
-			_register(properties, app, remoteAppId, version, modules);
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to track installed app " +
-					lpkgBundle.getSymbolicName() + " with Marketplace",
-				e);
 		}
 	}
 
