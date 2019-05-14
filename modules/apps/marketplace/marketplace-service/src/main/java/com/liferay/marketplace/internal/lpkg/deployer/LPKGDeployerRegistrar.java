@@ -85,8 +85,37 @@ public class LPKGDeployerRegistrar {
 	}
 
 	private void _register(
-			Properties properties, App app, List<Module> modules)
+			Properties properties, App app, long remoteAppId, String version,
+			List<Module> modules)
 		throws Exception {
+
+		String title = properties.getProperty("title");
+		String description = properties.getProperty("description");
+		String category = properties.getProperty("category");
+		String iconURL = properties.getProperty("icon-url");
+		boolean required = GetterUtil.getBoolean(
+			properties.getProperty("required"));
+
+		if (app != null) {
+			if (!Objects.equals(title, app.getTitle()) ||
+				!Objects.equals(description, app.getDescription()) ||
+				!Objects.equals(category, app.getCategory()) ||
+				!Objects.equals(iconURL, app.getIconURL()) ||
+				(required != app.isRequired())) {
+
+				app = null;
+			}
+		}
+
+		if (app == null) {
+			app = _appLocalService.updateApp(
+				0, remoteAppId, title, description, category, iconURL,
+				version, required, null);
+		}
+
+		if (modules == null) {
+			modules = _moduleLocalService.getModules(app.getAppId());
+		}
 
 		Set<Tuple> oldTuples = new HashSet<>();
 
@@ -157,36 +186,15 @@ public class LPKGDeployerRegistrar {
 				return;
 			}
 
-			String title = properties.getProperty("title");
-			String description = properties.getProperty("description");
-			String category = properties.getProperty("category");
-			String iconURL = properties.getProperty("icon-url");
-			boolean required = GetterUtil.getBoolean(
-				properties.getProperty("required"));
-
 			App app = _appLocalService.fetchRemoteApp(remoteAppId);
 
+			List<Module> modules = null;
+
 			if (app != null) {
-				if (!Objects.equals(title, app.getTitle()) ||
-					!Objects.equals(description, app.getDescription()) ||
-					!Objects.equals(category, app.getCategory()) ||
-					!Objects.equals(iconURL, app.getIconURL()) ||
-					(required != app.isRequired())) {
-
-					app = null;
-				}
+				modules = _moduleLocalService.getModules(app.getAppId());
 			}
 
-			if (app == null) {
-				app = _appLocalService.updateApp(
-					0, remoteAppId, title, description, category, iconURL,
-					version, required, null);
-			}
-
-			List<Module> modules = _moduleLocalService.getModules(
-				app.getAppId());
-
-			_register(properties, app, modules);
+			_register(properties, app, remoteAppId, version, modules);
 		}
 		catch (Exception e) {
 			_log.error(
