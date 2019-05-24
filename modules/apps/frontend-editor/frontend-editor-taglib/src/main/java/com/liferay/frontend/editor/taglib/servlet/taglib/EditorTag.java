@@ -47,6 +47,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -385,9 +386,7 @@ public class EditorTag extends BaseValidatorTagSupport {
 
 		setNamespacedAttribute(
 			httpServletRequest, "data",
-			ProxyUtil.newProxyInstance(
-				ClassLoader.getSystemClassLoader(), new Class<?>[] {Map.class},
-				new LazyDataInvocationHandler()));
+			_mapProxyProviderFunction.apply(new LazyDataInvocationHandler()));
 	}
 
 	private String _getConfigKey() {
@@ -532,6 +531,10 @@ public class EditorTag extends BaseValidatorTagSupport {
 		PropsKeys.EDITOR_WYSIWYG_DEFAULT);
 
 	private static final String _TOOLBAR_SET_DEFAULT = "liferay";
+
+	private static final Function<InvocationHandler, Map>
+		_mapProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			Map.class);
 
 	private boolean _allowBrowseDocuments = true;
 	private boolean _autoCreate = true;
